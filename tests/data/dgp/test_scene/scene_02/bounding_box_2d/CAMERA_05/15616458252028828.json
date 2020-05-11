@@ -1,0 +1,69 @@
+{
+  "annotations": [
+    {
+      "area": 3219,
+      "attributes": {},
+      "box": {
+        "h": 37,
+        "w": 87,
+        "x": 614,
+        "y": 526
+      },
+      "class_id": 2,
+      "instance_id": 715214751,
+      "iscrowd": false
+    },
+    {
+      "area": 2808,
+      "attributes": {},
+      "box": {
+        "h": 36,
+        "w": 78,
+        "x": 761,
+        "y": 525
+      },
+      "class_id": 2,
+      "instance_id": 2110970748,
+      "iscrowd": false
+    },
+    {
+      "area": 1612,
+      "attributes": {},
+      "box": {
+        "h": 26,
+        "w": 62,
+        "x": 749,
+        "y": 550
+      },
+      "class_id": 2,
+      "instance_id": 2556950328,
+      "iscrowd": false
+    },
+    {
+      "area": 11316,
+      "attributes": {},
+      "box": {
+        "h": 69,
+        "w": 164,
+        "x": 503,
+        "y": 495
+      },
+      "class_id": 1,
+      "instance_id": 3527146084,
+      "iscrowd": false
+    },
+    {
+      "area": 2624,
+      "attributes": {},
+      "box": {
+        "h": 32,
+        "w": 82,
+        "x": 523,
+        "y": 520
+      },
+      "class_id": 2,
+      "instance_id": 3668932913,
+      "iscrowd": false
+    }
+  ]
+}

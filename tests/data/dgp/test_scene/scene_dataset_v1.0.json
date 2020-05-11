@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "available_annotation_types": [
+      0,
+      1
+    ],
+    "bucket_path": {
+      "value": "TRI_INTERNAL_ONLY"
+    },
+    "creation_date": "2020-05-08",
+    "creator": "ml@tri.global",
+    "description": "Unittest Test Scene Dataset",
+    "name": "unittest_scene_dataset",
+    "origin": "INTERNAL",
+    "raw_path": {
+      "value": "TRI_INTERNAL_ONLY"
+    },
+    "version": "1"
+  },
+  "scene_splits": {
+    "0": {
+      "filenames": [
+      	"scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json",
+      	"scene_02/scene_fe9f29d3bde25d182dcf88caf1011acd8cc13624.json"
+      ]
+    },
+    "1": {
+      "filenames": [
+        "scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json",
+      	"scene_02/scene_fe9f29d3bde25d182dcf88caf1011acd8cc13624.json"
+      ]
+    }
+  }
+}

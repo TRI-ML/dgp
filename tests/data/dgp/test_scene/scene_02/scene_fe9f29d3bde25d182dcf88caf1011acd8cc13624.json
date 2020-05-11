@@ -1,0 +1,857 @@
+{
+  "data": [
+    {
+      "datum": {
+        "point_cloud": {
+          "annotations": {
+            "1": "bounding_box_3d/LIDAR/15616458250027900.json"
+          },
+          "filename": "point_cloud/LIDAR/15616458250027900.npz",
+          "metadata": {},
+          "point_fields": [],
+          "point_format": [
+            "X",
+            "Y",
+            "Z",
+            "INTENSITY"
+          ],
+          "pose": {
+            "rotation": {
+              "qw": -0.701507293064849,
+              "qx": -0.005770785693231001,
+              "qy": 0.015431988162520002,
+              "qz": 0.712471802635488
+            },
+            "translation": {
+              "x": 111.45486229951824,
+              "y": -2261.3842407442175,
+              "z": -12.733956682582992
+            }
+          }
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "LIDAR",
+        "timestamp": "2464-11-12T01:04:10.027900Z"
+      },
+      "key": "2504076f8a5d7b56696e5938eef364256281e804",
+      "next_key": "",
+      "prev_key": "8060ee6e11a59335baef639af9881f06276d86cf"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_01/15616458250027900.json",
+            "1": "bounding_box_3d/CAMERA_01/15616458249936530.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_01/15616458249936530.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.026737673843549,
+              "qx": 0.010073240707172,
+              "qy": -0.7046769876230721,
+              "qz": 0.708952727432206
+            },
+            "translation": {
+              "x": 111.67133170999641,
+              "y": -2262.8032891568937,
+              "z": -11.14430549826587
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_01",
+        "timestamp": "2464-11-12T01:04:09.936530Z"
+      },
+      "key": "2050436a0bed451c45a7cd3f0ab9cab2e9b5216f",
+      "next_key": "",
+      "prev_key": "94d2a825e7efb020bb6a79a4196003cee863e081"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_05/15616458250027900.json",
+            "1": "bounding_box_3d/CAMERA_05/15616458249936530.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_05/15616458249936530.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.304385087431559,
+              "qx": 0.30227730504870104,
+              "qy": -0.6333704409210771,
+              "qz": 0.6440652404603241
+            },
+            "translation": {
+              "x": 111.8415099171323,
+              "y": -2262.8453927741903,
+              "z": -11.125282283208845
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_05",
+        "timestamp": "2464-11-12T01:04:09.936530Z"
+      },
+      "key": "4eb3efc14eebf085905f15fd334e9ef3dcd152c1",
+      "next_key": "",
+      "prev_key": "c80ac79b82a10faf7c17a73307186576cec1a083"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_06/15616458250027900.json",
+            "1": "bounding_box_3d/CAMERA_06/15616458249936530.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_06/15616458249936530.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": 0.3094128061743,
+              "qx": -0.332425373787537,
+              "qy": -0.627460071821294,
+              "qz": 0.632495805920937
+            },
+            "translation": {
+              "x": 110.97219253292165,
+              "y": -2262.846122593118,
+              "z": -11.19356886200419
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_06",
+        "timestamp": "2464-11-12T01:04:09.936530Z"
+      },
+      "key": "32bfe434973c7b3fa742ce955debafd211e97c57",
+      "next_key": "",
+      "prev_key": "9ad65962ecc8c367af4ae71ec2e8c71c89fdaa7e"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_07/15616458250027900.json",
+            "1": "bounding_box_3d/CAMERA_07/15616458249936530.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_07/15616458249936530.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.617968419234546,
+              "qx": 0.623853853416071,
+              "qy": -0.332191776572331,
+              "qz": 0.344339986037626
+            },
+            "translation": {
+              "x": 111.81825645400964,
+              "y": -2262.4313553874504,
+              "z": -11.14427596300068
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_07",
+        "timestamp": "2464-11-12T01:04:09.936530Z"
+      },
+      "key": "4fc6300299fb51341b4e521503ece5cd96443184",
+      "next_key": "",
+      "prev_key": "3dd01103bb34bbed9ec8b8210a4bca87adf7ee63"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_08/15616458250027900.json",
+            "1": "bounding_box_3d/CAMERA_08/15616458249936530.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_08/15616458249936530.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.6196394552156801,
+              "qx": 0.6370433227734571,
+              "qy": 0.33247468256698504,
+              "qz": -0.315726679109874
+            },
+            "translation": {
+              "x": 110.93134665409706,
+              "y": -2262.4099494070624,
+              "z": -11.17953434223646
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_08",
+        "timestamp": "2464-11-12T01:04:09.936530Z"
+      },
+      "key": "af8ef5088767a54a6b88266b9109ecaf44009497",
+      "next_key": "",
+      "prev_key": "9f5103c7c965103cfc9084c7f3a12ce0643c43fa"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_09/15616458250027900.json",
+            "1": "bounding_box_3d/CAMERA_09/15616458249936530.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_09/15616458249936530.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.709680353959914,
+              "qx": 0.704472865391225,
+              "qy": 0.006552993865234001,
+              "qz": 0.005369860539106
+            },
+            "translation": {
+              "x": 111.54045551661851,
+              "y": -2261.47283021645,
+              "z": -11.199511108285467
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_09",
+        "timestamp": "2464-11-12T01:04:09.936530Z"
+      },
+      "key": "bf5b106fcbb34d0a6949c968e0c091243624df6c",
+      "next_key": "",
+      "prev_key": "0065274b90ef246ad3d72bd972fd5825da40d097"
+    },
+    {
+      "datum": {
+        "point_cloud": {
+          "annotations": {
+            "1": "bounding_box_3d/LIDAR/15616458251018358.json"
+          },
+          "filename": "point_cloud/LIDAR/15616458251018358.npz",
+          "metadata": {},
+          "point_fields": [],
+          "point_format": [
+            "X",
+            "Y",
+            "Z",
+            "INTENSITY"
+          ],
+          "pose": {
+            "rotation": {
+              "qw": -0.7014864755837661,
+              "qx": -0.00643004157145,
+              "qy": 0.014893784037226002,
+              "qz": 0.712498108303108
+            },
+            "translation": {
+              "x": 111.43516925360107,
+              "y": -2262.6411226813084,
+              "z": -12.71743392922662
+            }
+          }
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "LIDAR",
+        "timestamp": "2464-11-12T01:04:11.018358Z"
+      },
+      "key": "6a1eca098cb729b63fabd775f7664bbc270b2c8c",
+      "next_key": "",
+      "prev_key": "2504076f8a5d7b56696e5938eef364256281e804"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_01/15616458251018358.json",
+            "1": "bounding_box_3d/CAMERA_01/15616458250936520.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_01/15616458250936520.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.026774750057927003,
+              "qx": 0.009995531443067,
+              "qy": -0.7053335342727101,
+              "qz": 0.708299235874834
+            },
+            "translation": {
+              "x": 111.65115147537942,
+              "y": -2264.0764362556565,
+              "z": -11.130321693139923
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_01",
+        "timestamp": "2464-11-12T01:04:10.936520Z"
+      },
+      "key": "64a846ff4118412e81e71689e140859e3038e00f",
+      "next_key": "",
+      "prev_key": "2050436a0bed451c45a7cd3f0ab9cab2e9b5216f"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_05/15616458251018358.json",
+            "1": "bounding_box_3d/CAMERA_05/15616458250936520.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_05/15616458250936520.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.304677122099694,
+              "qx": 0.30196144677311604,
+              "qy": -0.6339263086851411,
+              "qz": 0.643528220895218
+            },
+            "translation": {
+              "x": 111.82133902289591,
+              "y": -2264.118246897645,
+              "z": -11.111145214502097
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_05",
+        "timestamp": "2464-11-12T01:04:10.936520Z"
+      },
+      "key": "eda53e13e84fab57889d88081cee537b28d75776",
+      "next_key": "",
+      "prev_key": "4eb3efc14eebf085905f15fd334e9ef3dcd152c1"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_06/15616458251018358.json",
+            "1": "bounding_box_3d/CAMERA_06/15616458250936520.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_06/15616458250936520.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": 0.30967404609688803,
+              "qx": -0.33220455505097,
+              "qy": -0.6280240148569091,
+              "qz": 0.631924010890849
+            },
+            "translation": {
+              "x": 110.9520243320044,
+              "y": -2264.1187325313654,
+              "z": -11.179486642300796
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_06",
+        "timestamp": "2464-11-12T01:04:10.936520Z"
+      },
+      "key": "7206c564c1c632fdc60932f770df2b2f39ab3d89",
+      "next_key": "",
+      "prev_key": "32bfe434973c7b3fa742ce955debafd211e97c57"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_07/15616458251018358.json",
+            "1": "bounding_box_3d/CAMERA_07/15616458250936520.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_07/15616458250936520.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.618520137138158,
+              "qx": 0.6232952963257811,
+              "qy": -0.33245695479931403,
+              "qz": 0.34410490658855203
+            },
+            "translation": {
+              "x": 111.79808958346497,
+              "y": -2263.7039955716764,
+              "z": -11.129326471836738
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_07",
+        "timestamp": "2464-11-12T01:04:10.936520Z"
+      },
+      "key": "4cef12c4be4f9b76da8538fb6c15fe15c51acdce",
+      "next_key": "",
+      "prev_key": "4fc6300299fb51341b4e521503ece5cd96443184"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_08/15616458251018358.json",
+            "1": "bounding_box_3d/CAMERA_08/15616458250936520.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_08/15616458250936520.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.620160169948729,
+              "qx": 0.636545648740605,
+              "qy": 0.33277500386061104,
+              "qz": -0.31539149875057504
+            },
+            "translation": {
+              "x": 110.91117928567564,
+              "y": -2263.682402085488,
+              "z": -11.164628196562553
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_08",
+        "timestamp": "2464-11-12T01:04:10.936520Z"
+      },
+      "key": "4db70de2e8393ae3207420c968d4fd13abdb2ea7",
+      "next_key": "",
+      "prev_key": "af8ef5088767a54a6b88266b9109ecaf44009497"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_09/15616458251018358.json",
+            "1": "bounding_box_3d/CAMERA_09/15616458250936520.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_09/15616458250936520.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.710265070013237,
+              "qx": 0.703882456647782,
+              "qy": 0.0065910385216740005,
+              "qz": 0.005438359475007
+            },
+            "translation": {
+              "x": 111.52031208454802,
+              "y": -2262.7451226658845,
+              "z": -11.182913851994364
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_09",
+        "timestamp": "2464-11-12T01:04:10.936520Z"
+      },
+      "key": "b317cef1289e1cdc63c078a42cbf73330dd8a220",
+      "next_key": "",
+      "prev_key": "bf5b106fcbb34d0a6949c968e0c091243624df6c"
+    },
+    {
+      "datum": {
+        "point_cloud": {
+          "annotations": {
+            "1": "bounding_box_3d/LIDAR/15616458252028828.json"
+          },
+          "filename": "point_cloud/LIDAR/15616458252028828.npz",
+          "metadata": {},
+          "point_fields": [],
+          "point_format": [
+            "X",
+            "Y",
+            "Z",
+            "INTENSITY"
+          ],
+          "pose": {
+            "rotation": {
+              "qw": -0.701454166681016,
+              "qx": -0.006703930351764,
+              "qy": 0.014440759943522001,
+              "qz": 0.712536717521232
+            },
+            "translation": {
+              "x": 111.41493320146672,
+              "y": -2263.918036624573,
+              "z": -12.703077512164834
+            }
+          }
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "LIDAR",
+        "timestamp": "2464-11-12T01:04:12.028828Z"
+      },
+      "key": "2ba9c5c623ce0537e1dcc6856e1d151605c027b6",
+      "next_key": "",
+      "prev_key": "6a1eca098cb729b63fabd775f7664bbc270b2c8c"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_01/15616458252028828.json",
+            "1": "bounding_box_3d/CAMERA_01/15616458251936472.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_01/15616458251936472.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.026675419764756,
+              "qx": 0.010024900157219001,
+              "qy": -0.70577839400566,
+              "qz": 0.7078592952783781
+            },
+            "translation": {
+              "x": 111.63133595400431,
+              "y": -2265.342786954348,
+              "z": -11.117845347784975
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_01",
+        "timestamp": "2464-11-12T01:04:11.936472Z"
+      },
+      "key": "2f81ddf658a5ecfcc074620be3af04387a9d217a",
+      "next_key": "",
+      "prev_key": "64a846ff4118412e81e71689e140859e3038e00f"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_05/15616458252028828.json",
+            "1": "bounding_box_3d/CAMERA_05/15616458251936472.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_05/15616458251936472.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.304783099080413,
+              "qx": 0.30180208204338504,
+              "qy": -0.6343991496178041,
+              "qz": 0.6430866852559021
+            },
+            "translation": {
+              "x": 111.80153618508534,
+              "y": -2265.3845471652303,
+              "z": -11.099000777534684
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_05",
+        "timestamp": "2464-11-12T01:04:11.936472Z"
+      },
+      "key": "0f2578fcd12c338705d82988925ad4511a8356b5",
+      "next_key": "",
+      "prev_key": "eda53e13e84fab57889d88081cee537b28d75776"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_06/15616458252028828.json",
+            "1": "bounding_box_3d/CAMERA_06/15616458251936472.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_06/15616458251936472.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": 0.309987527744137,
+              "qx": -0.33195720855035404,
+              "qy": -0.6283936398342991,
+              "qz": 0.631532721044867
+            },
+            "translation": {
+              "x": 110.93221003423827,
+              "y": -2265.384813908222,
+              "z": -11.16714772320681
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_06",
+        "timestamp": "2464-11-12T01:04:11.936472Z"
+      },
+      "key": "eb36c947c983949e32bc50a9e38aa8a8fe036584",
+      "next_key": "",
+      "prev_key": "7206c564c1c632fdc60932f770df2b2f39ab3d89"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_07/15616458252028828.json",
+            "1": "bounding_box_3d/CAMERA_07/15616458251936472.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_07/15616458251936472.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.618877810650446,
+              "qx": 0.622913884040137,
+              "qy": -0.33277598314642404,
+              "qz": 0.34384399601486504
+            },
+            "translation": {
+              "x": 111.77832256401882,
+              "y": -2264.9702317077117,
+              "z": -11.116621266239243
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_07",
+        "timestamp": "2464-11-12T01:04:11.936472Z"
+      },
+      "key": "1fd26abfd6801edfd2c64579ae550036cdaa88b9",
+      "next_key": "",
+      "prev_key": "4cef12c4be4f9b76da8538fb6c15fe15c51acdce"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_08/15616458252028828.json",
+            "1": "bounding_box_3d/CAMERA_08/15616458251936472.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_08/15616458251936472.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.62062401872633,
+              "qx": 0.63612085305801,
+              "qy": 0.33288504546921105,
+              "qz": -0.31521997745652003
+            },
+            "translation": {
+              "x": 110.89140981083308,
+              "y": -2264.9484598446957,
+              "z": -11.151696087757145
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_08",
+        "timestamp": "2464-11-12T01:04:11.936472Z"
+      },
+      "key": "1b2423efc6db20a327001e736dd84f105dc84490",
+      "next_key": "",
+      "prev_key": "4db70de2e8393ae3207420c968d4fd13abdb2ea7"
+    },
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_09/15616458252028828.json",
+            "1": "bounding_box_3d/CAMERA_09/15616458251936472.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_09/15616458251936472.jpg",
+          "height": 1216,
+          "metadata": {},
+          "pose": {
+            "rotation": {
+              "qw": -0.710719106131501,
+              "qx": 0.7034254011586331,
+              "qy": 0.006478693661622001,
+              "qz": 0.005392931753123001
+            },
+            "translation": {
+              "x": 111.50062155906006,
+              "y": -2264.011060010517,
+              "z": -11.16890673407187
+            }
+          },
+          "width": 1936
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "CAMERA_09",
+        "timestamp": "2464-11-12T01:04:11.936472Z"
+      },
+      "key": "5f940a623ba7fe7f109b929e4ce4a7d265165705",
+      "next_key": "",
+      "prev_key": "b317cef1289e1cdc63c078a42cbf73330dd8a220"
+    }
+  ],
+  "description": "DGP scene for unittest.",
+  "log": "TRI_INTERNAL_LOG",
+  "metadata": {},
+  "name": "",
+  "ontologies": {
+    "0": "16322f7584a52ca979ed1c7049f17a7e420e86b1",
+    "1": "16322f7584a52ca979ed1c7049f17a7e420e86b1"
+  },
+  "samples": [
+    {
+      "calibration_key": "64b9fde6360457d8beddcfb06c512fec6e2989d8",
+      "datum_keys": [
+        "2504076f8a5d7b56696e5938eef364256281e804",
+        "2050436a0bed451c45a7cd3f0ab9cab2e9b5216f",
+        "4eb3efc14eebf085905f15fd334e9ef3dcd152c1",
+        "32bfe434973c7b3fa742ce955debafd211e97c57",
+        "4fc6300299fb51341b4e521503ece5cd96443184",
+        "af8ef5088767a54a6b88266b9109ecaf44009497",
+        "bf5b106fcbb34d0a6949c968e0c091243624df6c"
+      ],
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "",
+        "timestamp": "2464-11-12T01:04:10.027900Z"
+      },
+      "metadata": {}
+    },
+    {
+      "calibration_key": "64b9fde6360457d8beddcfb06c512fec6e2989d8",
+      "datum_keys": [
+        "6a1eca098cb729b63fabd775f7664bbc270b2c8c",
+        "64a846ff4118412e81e71689e140859e3038e00f",
+        "eda53e13e84fab57889d88081cee537b28d75776",
+        "7206c564c1c632fdc60932f770df2b2f39ab3d89",
+        "4cef12c4be4f9b76da8538fb6c15fe15c51acdce",
+        "4db70de2e8393ae3207420c968d4fd13abdb2ea7",
+        "b317cef1289e1cdc63c078a42cbf73330dd8a220"
+      ],
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "",
+        "timestamp": "2464-11-12T01:04:11.018358Z"
+      },
+      "metadata": {}
+    },
+    {
+      "calibration_key": "64b9fde6360457d8beddcfb06c512fec6e2989d8",
+      "datum_keys": [
+        "2ba9c5c623ce0537e1dcc6856e1d151605c027b6",
+        "2f81ddf658a5ecfcc074620be3af04387a9d217a",
+        "0f2578fcd12c338705d82988925ad4511a8356b5",
+        "eb36c947c983949e32bc50a9e38aa8a8fe036584",
+        "1fd26abfd6801edfd2c64579ae550036cdaa88b9",
+        "1b2423efc6db20a327001e736dd84f105dc84490",
+        "5f940a623ba7fe7f109b929e4ce4a7d265165705"
+      ],
+      "id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "",
+        "timestamp": "2464-11-12T01:04:12.028828Z"
+      },
+      "metadata": {}
+    }
+  ]
+}

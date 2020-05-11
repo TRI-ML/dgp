@@ -1,0 +1,46 @@
+// Copyright 2020 Parallel Domain.  All rights reserved.
+// Definitions for Parallel Domain Scene-level Metadata
+
+syntax = "proto3";
+
+package dgp.proto;
+
+
+// Parallel Domain Scene-Level Metadata
+// This metadata is derived from the internal representation 
+// Parallel Domain uses to drive it's Scene generation systems.
+message ParallelDomainSceneMetadata {
+  // Location name in PD location library
+  // The location name string will be of the form xx_yy, 
+  // where xx = a two letter region code (eg. SF=San Francisco, SJ=San Jose, ...)
+  //       yy = a descriptive level name (eg. 6thAndMission_medium)
+  //
+  // eg. SF_6thAndMission_medium
+  string location = 1;
+
+  // Time of day environment from PD time_of_day library
+  // The time_of_day name string will be of the form LS_sky_xxx_yyy_zzz_www,
+  // where xxx = descriptive time of day [dawn, noon, afternoon, dusk, evening, night]
+  //       yyy = descriptive sky conditions [clear, mostlySunny, partlyCloudy, overcast]
+  //       zzz = approximate time of day in 24HR clock (eg. 1830, 1950, 0440, ...)
+  //       www = internal code
+  //
+  // eg. LS_sky_afternoon_mostlySunny_1444_HDS035
+  string time_of_day = 2;
+
+  // The environmental params below refer to fixed environment conditions within
+  // a given Scene. eg. if rain_intensity==1.0 there will be torrential rain present
+  // in the entire Scene.
+
+  // Fog intensity [0.0 = clear day, 1.0 = whiteout]
+  float fog_intensity = 3;
+
+  // Rain intensity [0.0 = no rain, 1.0 = torrential rain]
+  float rain_intensity = 4;
+
+  // Road surface wetness [0.0 = completely dry, 1.0 = flooded]
+  float wetness = 5;
+
+  // Streetlight intensity [0.0 = off, 1.0 = completely on]
+  float street_lights = 6;
+}

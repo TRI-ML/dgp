@@ -1,0 +1,290 @@
+{
+  "annotations": [
+    {
+      "area": 22227,
+      "attributes": {},
+      "box": {
+        "h": 93,
+        "w": 239,
+        "x": 714,
+        "y": 611
+      },
+      "class_id": 2,
+      "instance_id": 3162860985,
+      "iscrowd": false
+    },
+    {
+      "area": 12136,
+      "attributes": {},
+      "box": {
+        "h": 74,
+        "w": 164,
+        "x": 1186,
+        "y": 604
+      },
+      "class_id": 2,
+      "instance_id": 2675183418,
+      "iscrowd": false
+    },
+    {
+      "area": 4142,
+      "attributes": {},
+      "box": {
+        "h": 38,
+        "w": 109,
+        "x": 1534,
+        "y": 602
+      },
+      "class_id": 2,
+      "instance_id": 1245564312,
+      "iscrowd": false
+    },
+    {
+      "area": 4305,
+      "attributes": {},
+      "box": {
+        "h": 41,
+        "w": 105,
+        "x": 964,
+        "y": 605
+      },
+      "class_id": 2,
+      "instance_id": 2978048694,
+      "iscrowd": false
+    },
+    {
+      "area": 3772,
+      "attributes": {},
+      "box": {
+        "h": 41,
+        "w": 92,
+        "x": 892,
+        "y": 606
+      },
+      "class_id": 2,
+      "instance_id": 1558880067,
+      "iscrowd": false
+    },
+    {
+      "area": 3276,
+      "attributes": {},
+      "box": {
+        "h": 36,
+        "w": 91,
+        "x": 857,
+        "y": 609
+      },
+      "class_id": 2,
+      "instance_id": 702855053,
+      "iscrowd": false
+    },
+    {
+      "area": 3567,
+      "attributes": {},
+      "box": {
+        "h": 41,
+        "w": 87,
+        "x": 826,
+        "y": 604
+      },
+      "class_id": 2,
+      "instance_id": 1036907190,
+      "iscrowd": false
+    },
+    {
+      "area": 4268,
+      "attributes": {},
+      "box": {
+        "h": 44,
+        "w": 97,
+        "x": 1621,
+        "y": 592
+      },
+      "class_id": 2,
+      "instance_id": 2990471596,
+      "iscrowd": false
+    },
+    {
+      "area": 5016,
+      "attributes": {},
+      "box": {
+        "h": 44,
+        "w": 114,
+        "x": 1069,
+        "y": 611
+      },
+      "class_id": 2,
+      "instance_id": 848568023,
+      "iscrowd": false
+    },
+    {
+      "area": 2624,
+      "attributes": {},
+      "box": {
+        "h": 32,
+        "w": 82,
+        "x": 1727,
+        "y": 597
+      },
+      "class_id": 2,
+      "instance_id": 2467117866,
+      "iscrowd": false
+    },
+    {
+      "area": 110589,
+      "attributes": {},
+      "box": {
+        "h": 193,
+        "w": 573,
+        "x": 104,
+        "y": 581
+      },
+      "class_id": 2,
+      "instance_id": 2463053674,
+      "iscrowd": false
+    },
+    {
+      "area": 37052,
+      "attributes": {},
+      "box": {
+        "h": 118,
+        "w": 314,
+        "x": 412,
+        "y": 607
+      },
+      "class_id": 2,
+      "instance_id": 2443944299,
+      "iscrowd": false
+    },
+    {
+      "area": 17255,
+      "attributes": {},
+      "box": {
+        "h": 85,
+        "w": 203,
+        "x": 1391,
+        "y": 583
+      },
+      "class_id": 2,
+      "instance_id": 1420477341,
+      "iscrowd": false
+    },
+    {
+      "area": 7729,
+      "attributes": {},
+      "box": {
+        "h": 59,
+        "w": 131,
+        "x": 1732,
+        "y": 586
+      },
+      "class_id": 2,
+      "instance_id": 1426550613,
+      "iscrowd": false
+    },
+    {
+      "area": 8556,
+      "attributes": {},
+      "box": {
+        "h": 62,
+        "w": 138,
+        "x": 1650,
+        "y": 576
+      },
+      "class_id": 2,
+      "instance_id": 2481576130,
+      "iscrowd": false
+    },
+    {
+      "area": 1632,
+      "attributes": {},
+      "box": {
+        "h": 32,
+        "w": 51,
+        "x": 0,
+        "y": 602
+      },
+      "class_id": 2,
+      "instance_id": 135457706,
+      "iscrowd": false
+    },
+    {
+      "area": 1848,
+      "attributes": {},
+      "box": {
+        "h": 22,
+        "w": 84,
+        "x": 1786,
+        "y": 594
+      },
+      "class_id": 2,
+      "instance_id": 673396575,
+      "iscrowd": false
+    },
+    {
+      "area": 1426,
+      "attributes": {},
+      "box": {
+        "h": 31,
+        "w": 46,
+        "x": 113,
+        "y": 609
+      },
+      "class_id": 2,
+      "instance_id": 1365080015,
+      "iscrowd": false
+    },
+    {
+      "area": 1659,
+      "attributes": {},
+      "box": {
+        "h": 21,
+        "w": 79,
+        "x": 1733,
+        "y": 594
+      },
+      "class_id": 2,
+      "instance_id": 1179469999,
+      "iscrowd": false
+    },
+    {
+      "area": 1425,
+      "attributes": {},
+      "box": {
+        "h": 19,
+        "w": 75,
+        "x": 1709,
+        "y": 595
+      },
+      "class_id": 2,
+      "instance_id": 3656592464,
+      "iscrowd": false
+    },
+    {
+      "area": 1296,
+      "attributes": {},
+      "box": {
+        "h": 18,
+        "w": 72,
+        "x": 1693,
+        "y": 595
+      },
+      "class_id": 2,
+      "instance_id": 1348824365,
+      "iscrowd": false
+    },
+    {
+      "area": 264,
+      "attributes": {},
+      "box": {
+        "h": 22,
+        "w": 12,
+        "x": 1896,
+        "y": 597
+      },
+      "class_id": 0,
+      "instance_id": 3195657140,
+      "iscrowd": false
+    }
+  ]
+}

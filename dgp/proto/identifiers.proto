@@ -1,0 +1,52 @@
+// Copyright 2019 Toyota Research Institute.  All rights reserved.
+syntax = "proto3";
+
+package dgp.proto;
+
+import "google/protobuf/timestamp.proto";
+
+// Unique identifier to a sample/datum in a specific dataset log
+
+// For certain scenarios, the sample_name will also include the directory/session
+// name to make the sample name unique to the dataset.
+// For internal datasets, this would be the relevant log information
+// for traceability purposes.
+message DatumId {
+  // Log identifier
+  //
+  // For TRI / internal datasets:
+  //   log = <robot_name>/<session_name>/<log_id>.<ext>
+  //
+  // Public datasets:
+  // For e.g. The KITTI raw dataset contains camera 02 images under
+  //    2011_09_26/2011_09_26_drive_0001_sync/image_02/data/0000000042.png
+  // The corresponding unique log_id would be:
+  //   log = 2011_09_26/2011_09_26_drive_0001_sync
+  string log = 1;
+
+  // Datum name (i.e. camera_0, lidar_0)
+  // Alternatively, this serves as a datum identifier for public datasets,
+  // or untraceable datasets
+  //
+  // For public datasets where the datasets are derived from non-sequential logs,
+  // the name might be a sufficient identifier for a datum.
+  // For e.g., filename=rgb/1aa6dd36-aa7f0108.jpg, name=1aa6dd36-aa7f0108
+  //
+  // For datums without unique names, only if the datums can not be traced,
+  // generate a sha1 hash of the datum contents.
+  string name = 2;
+
+  // Timestamp within the log (if available)
+  google.protobuf.Timestamp timestamp = 3;
+
+  // Index within the log (if available)
+  //
+  // For TRI / internal datasets:
+  // Frame index required to find the image within the associated .mkv file.
+  //
+  // For public datasets:
+  // For e.g. The KITTI raw dataset contains camera 02 images under
+  // 2011_09_26/2011_09_26_drive_0001_sync/image_02/data/0000000042.png
+  // The corresponding unique index would be: 42
+  uint64 index = 4;
+}

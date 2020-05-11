@@ -1,0 +1,43 @@
+{
+  "annotations": [
+    {
+      "area": 192,
+      "attributes": {},
+      "box": {
+        "h": 12,
+        "w": 16,
+        "x": 985,
+        "y": 605
+      },
+      "class_id": 2,
+      "instance_id": 497050057,
+      "iscrowd": false
+    },
+    {
+      "area": 15120,
+      "attributes": {},
+      "box": {
+        "h": 112,
+        "w": 135,
+        "x": 894,
+        "y": 607
+      },
+      "class_id": 2,
+      "instance_id": 1545514913,
+      "iscrowd": false
+    },
+    {
+      "area": 616,
+      "attributes": {},
+      "box": {
+        "h": 22,
+        "w": 28,
+        "x": 987,
+        "y": 610
+      },
+      "class_id": 2,
+      "instance_id": 1868710109,
+      "iscrowd": false
+    }
+  ]
+}

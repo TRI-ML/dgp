@@ -1,0 +1,114 @@
+{
+  "items": [
+    {
+      "color": {
+        "b": 100,
+        "g": 60,
+        "r": 0
+      },
+      "id": 3,
+      "isthing": true,
+      "name": "Bus/RV/Caravan",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 100,
+        "g": 80,
+        "r": 0
+      },
+      "id": 4,
+      "isthing": true,
+      "name": "Motorcycle",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 30,
+        "g": 170,
+        "r": 250
+      },
+      "id": 5,
+      "isthing": true,
+      "name": "Wheeled Slow",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 110,
+        "g": 0,
+        "r": 0
+      },
+      "id": 6,
+      "isthing": true,
+      "name": "Train",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 142,
+        "g": 0,
+        "r": 0
+      },
+      "id": 7,
+      "isthing": true,
+      "name": "Towed Object",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 230,
+        "g": 0,
+        "r": 0
+      },
+      "id": 8,
+      "isthing": true,
+      "name": "Bicycle",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 90,
+        "g": 0,
+        "r": 0
+      },
+      "id": 9,
+      "isthing": true,
+      "name": "Trailer",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 60,
+        "g": 20,
+        "r": 220
+      },
+      "id": 0,
+      "isthing": true,
+      "name": "Person",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 70,
+        "g": 0,
+        "r": 0
+      },
+      "id": 1,
+      "isthing": true,
+      "name": "Truck",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 142,
+        "g": 0,
+        "r": 0
+      },
+      "id": 2,
+      "isthing": true,
+      "name": "Car",
+      "supercategory": ""
+    }
+  ]
+}

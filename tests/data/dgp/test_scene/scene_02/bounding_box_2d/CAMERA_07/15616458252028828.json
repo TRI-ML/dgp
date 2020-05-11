@@ -1,0 +1,17 @@
+{
+  "annotations": [
+    {
+      "area": 1056,
+      "attributes": {},
+      "box": {
+        "h": 22,
+        "w": 48,
+        "x": 844,
+        "y": 573
+      },
+      "class_id": 2,
+      "instance_id": 1793247213,
+      "iscrowd": false
+    }
+  ]
+}
