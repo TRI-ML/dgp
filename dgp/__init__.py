@@ -1,18 +1,15 @@
 # Copyright 2019 Toyota Research Institute. All rights reserved.
 import os
 
-__version__ = '0.0.1'
+__version__ = '0.1'
 
 DGP_PATH = os.getenv('DGP_PATH', default=os.getenv('HOME'))
 DGP_DATA_DIR = os.path.join(DGP_PATH, '.dgp')
 DGP_CACHE_DIR = os.path.join(DGP_DATA_DIR, 'cache')
 DGP_DATASETS_CACHE_DIR = os.path.join(DGP_DATA_DIR, 'datasets')
 
-TRI_DGP_S3_BUCKET = "TRI_INTERNAL_ONLY"
 TRI_DGP_FOLDER_PREFIX = "dgp/"
 TRI_RAW_FOLDER_PREFIX = "raw/"
-TRI_DGP_S3_BUCKET_URL = "s3://{}/{}".format(TRI_DGP_S3_BUCKET, TRI_DGP_FOLDER_PREFIX)
-TRI_RAW_S3_BUCKET_URL = "s3://{}/{}".format(TRI_DGP_S3_BUCKET, TRI_RAW_FOLDER_PREFIX)
 TRI_DGP_JSON_PREFIX = "dataset_v"
 
 # DGP Directory structure constants
