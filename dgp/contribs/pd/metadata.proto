@@ -43,4 +43,8 @@ message ParallelDomainSceneMetadata {
 
   // Streetlight intensity [0.0 = off, 1.0 = completely on]
   float street_lights = 6;
+
+  // Batch ID and version for delivery tracking
+  uint32 batch_id = 7;
+  uint32 version = 8;
 }

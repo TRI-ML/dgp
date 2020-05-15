@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='dgp.proto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x1e\x64gp/contribs/pd/metadata.proto\x12\tdgp.proto\"\x9b\x01\n\x1bParallelDomainSceneMetadata\x12\x10\n\x08location\x18\x01 \x01(\t\x12\x13\n\x0btime_of_day\x18\x02 \x01(\t\x12\x15\n\rfog_intensity\x18\x03 \x01(\x02\x12\x16\n\x0erain_intensity\x18\x04 \x01(\x02\x12\x0f\n\x07wetness\x18\x05 \x01(\x02\x12\x15\n\rstreet_lights\x18\x06 \x01(\x02\x62\x06proto3')
+  serialized_pb=_b('\n\x1e\x64gp/contribs/pd/metadata.proto\x12\tdgp.proto\"\xbe\x01\n\x1bParallelDomainSceneMetadata\x12\x10\n\x08location\x18\x01 \x01(\t\x12\x13\n\x0btime_of_day\x18\x02 \x01(\t\x12\x15\n\rfog_intensity\x18\x03 \x01(\x02\x12\x16\n\x0erain_intensity\x18\x04 \x01(\x02\x12\x0f\n\x07wetness\x18\x05 \x01(\x02\x12\x15\n\rstreet_lights\x18\x06 \x01(\x02\x12\x10\n\x08\x62\x61tch_id\x18\x07 \x01(\r\x12\x0f\n\x07version\x18\x08 \x01(\rb\x06proto3')
 )
 
 
@@ -75,6 +75,20 @@ _PARALLELDOMAINSCENEMETADATA = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='batch_id', full_name='dgp.proto.ParallelDomainSceneMetadata.batch_id', index=6,
+      number=7, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='dgp.proto.ParallelDomainSceneMetadata.version', index=7,
+      number=8, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -88,7 +102,7 @@ _PARALLELDOMAINSCENEMETADATA = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=46,
-  serialized_end=201,
+  serialized_end=236,
 )
 
 DESCRIPTOR.message_types_by_name['ParallelDomainSceneMetadata'] = _PARALLELDOMAINSCENEMETADATA
