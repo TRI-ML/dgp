@@ -5,10 +5,16 @@ syntax = "proto3";
 
 package dgp.proto;
 
+// Region type enumeration
+// Used to specify rough geographic region for corresponding Scene
+enum RegionType
+{
+  SYNTHETIC                    = 0;
+  NORTHERN_CALIFORNIA_URBAN    = 1;
+  NORTHERN_CALIFORNIA_SUBURBAN = 2;
+  NORTHERN_CALIFORNIA_HIGHWAY  = 3;
+}
 
-// Parallel Domain Scene-Level Metadata
-// This metadata is derived from the internal representation 
-// Parallel Domain uses to drive it's Scene generation systems.
 message ParallelDomainSceneMetadata {
   // Location name in PD location library
   // The location name string will be of the form xx_yy, 
@@ -16,8 +22,11 @@ message ParallelDomainSceneMetadata {
   //       yy = a descriptive level name (eg. 6thAndMission_medium)
   //
   // eg. SF_6thAndMission_medium
-  string location = 1;
+  string location   = 1;
 
+  // Region type enumeration defining geographic region 
+  RegionType region = 9;  
+  
   // Time of day environment from PD time_of_day library
   // The time_of_day name string will be of the form LS_sky_xxx_yyy_zzz_www,
   // where xxx = descriptive time of day [dawn, noon, afternoon, dusk, evening, night]
@@ -28,10 +37,15 @@ message ParallelDomainSceneMetadata {
   // eg. LS_sky_afternoon_mostlySunny_1444_HDS035
   string time_of_day = 2;
 
-  // The environmental params below refer to fixed environment conditions within
-  // a given Scene. eg. if rain_intensity==1.0 there will be torrential rain present
-  // in the entire Scene.
-
+  // Sun elevation angle, in degrees above the horizon
+  // For night scenarios, this angle will be negative
+  float sun_elevation = 10;
+  // Sun azimuth angle, in degrees anti-clockwise from Rast
+  float sun_azimuth = 11;  
+  // Cloud coverage ratio. Measures the proportion of the sky
+  // hemisphere that is classified as cloudy [0.0 -> 1.0]
+  float cloud_cover = 12;
+  
   // Fog intensity [0.0 = clear day, 1.0 = whiteout]
   float fog_intensity = 3;
 
@@ -46,5 +60,5 @@ message ParallelDomainSceneMetadata {
 
   // Batch ID and version for delivery tracking
   uint32 batch_id = 7;
-  uint32 version = 8;
+  uint32 version = 8;  
 }
