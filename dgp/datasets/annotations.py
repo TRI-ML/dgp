@@ -1,6 +1,8 @@
+import json
 import os
 from collections import OrderedDict
 
+import cv2
 import numpy as np
 from PIL import Image
 
@@ -281,6 +283,15 @@ def parse_annotations_2d_proto(annotation_file, json_category_id_to_contiguous_i
 #-------------------------- Semantic Segmentation Annotations ----------------------------------------#
 
 
+def load_semantic_segmentation_2d_annotations(annotations, annotations_dir, label_lookup_table, ignore_id):
+    segmentation_label = parse_semantic_segmentation_2d_proto(
+        os.path.join(annotations_dir, annotations["semantic_segmentation_2d"]), label_lookup_table, ignore_id
+    )
+    return OrderedDict({
+        "semantic_segmentation_2d": segmentation_label
+    })
+
+
 def parse_semantic_segmentation_2d_proto(annotation_file, label_lookup_table, ignore_id):
     """Parse semantic segmentation 2d annotations from annotation file.
 
@@ -309,6 +320,58 @@ def parse_semantic_segmentation_2d_proto(annotation_file, label_lookup_table, ig
     return segmentation_label
 
 
+#-------------------------- Panoptic Segmentation 2D Annotation ----------------------#
+
+
+def load_panoptic_segmentation_2d_annotations(annotations, annotations_dir, name_to_contiguous_id):
+    instance_masks, class_names, instance_ids = parse_panoptic_segmentation_2d_proto(
+        os.path.join(annotations_dir, annotations["instance_segmentation_2d"])
+    )
+    class_ids = [name_to_contiguous_id[class_name] for class_name in class_names]
+    return OrderedDict({
+        "panoptic_instance_masks": instance_masks,
+        "panoptic_class_names": class_names,
+        "panoptic_instance_ids": np.int64(instance_ids),
+        "panoptic_class_ids": np.int64(class_ids)
+    })
+
+def parse_panoptic_segmentation_2d_proto(annotation_file):
+    """Parse panoptic segmentation 2d annotations from file .
+
+    Parameters
+    ----------
+    annotation_file: str
+        Full path to panoptic image. `index_to_label` JSON is expected to live at the same path with '.json' ending
+
+    Returns
+    -------
+    tuple holding:
+        instance_masks: List[np.bool]
+            (H, W) bool array for each instance in panoptic annotation
+
+        class_names: List[str]
+            Class name for each instance in panoptic annotation
+
+        instance_ids: List[int]
+            Instance IDs for each instance in panoptic annotation
+    """
+    panoptic_image = cv2.imread(annotation_file, cv2.IMREAD_UNCHANGED)
+    with open('{}.json'.format(os.path.splitext(annotation_file)[0])) as _f:
+        index_to_label = json.load(_f)
+
+    instance_masks, class_names, instance_ids = [], [], []
+    for class_name, labels in index_to_label.items():
+        if isinstance(labels, list):
+            for label in labels:
+                instance_id = label['index']
+                if instance_id <= 0:
+                    raise ValueError('`index` field of a thing class is expected to be non-negative')
+
+                # Mask for pixels belonging to this instance
+                instance_masks.append(panoptic_image == instance_id)
+                class_names.append(class_name)
+                instance_ids.append(instance_id)
+    return instance_masks, class_names, instance_ids
 #-------------------------- Depth Annotations ----------------------------------------#
 
 
