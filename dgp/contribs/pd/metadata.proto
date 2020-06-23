@@ -5,28 +5,38 @@ syntax = "proto3";
 
 package dgp.proto;
 
+// Scene type enumeration
+// Used to specify a rough land usage classification for the corresponding Scene
+enum SceneType
+{
+  SYNTHETIC = 0;
+  URBAN     = 1;
+  SUBURBAN  = 2;
+  HIGHWAY   = 3;
+}
+
 // Region type enumeration
 // Used to specify rough geographic region for corresponding Scene
 enum RegionType
 {
-  SYNTHETIC                    = 0;
-  NORTHERN_CALIFORNIA_URBAN    = 1;
-  NORTHERN_CALIFORNIA_SUBURBAN = 2;
-  NORTHERN_CALIFORNIA_HIGHWAY  = 3;
+  SYNTHETIC = 0;
+  NORTHERN_CALIFORNIA = 1;
 }
 
 message ParallelDomainSceneMetadata {
   // Location name in PD location library
-  // The location name string will be of the form xx_yy, 
+  // The location name string will be of the form xx_yy,
   // where xx = a two letter region code (eg. SF=San Francisco, SJ=San Jose, ...)
   //       yy = a descriptive level name (eg. 6thAndMission_medium)
   //
   // eg. SF_6thAndMission_medium
   string location   = 1;
 
-  // Region type enumeration defining geographic region 
-  RegionType region = 9;  
-  
+  // Region type enumeration defining geographic region
+  RegionType region_type = 9;
+  // Scene type enumeration defining scene land usage
+  SceneType scene_type = 10;
+
   // Time of day environment from PD time_of_day library
   // The time_of_day name string will be of the form LS_sky_xxx_yyy_zzz_www,
   // where xxx = descriptive time of day [dawn, noon, afternoon, dusk, evening, night]
@@ -39,13 +49,13 @@ message ParallelDomainSceneMetadata {
 
   // Sun elevation angle, in degrees above the horizon
   // For night scenarios, this angle will be negative
-  float sun_elevation = 10;
+  float sun_elevation = 11;
   // Sun azimuth angle, in degrees anti-clockwise from Rast
-  float sun_azimuth = 11;  
+  float sun_azimuth = 12;
   // Cloud coverage ratio. Measures the proportion of the sky
   // hemisphere that is classified as cloudy [0.0 -> 1.0]
-  float cloud_cover = 12;
-  
+  float cloud_cover = 13;
+
   // Fog intensity [0.0 = clear day, 1.0 = whiteout]
   float fog_intensity = 3;
 
@@ -60,5 +70,6 @@ message ParallelDomainSceneMetadata {
 
   // Batch ID and version for delivery tracking
   uint32 batch_id = 7;
-  uint32 version = 8;  
+  uint32 version = 8;
 }
+// Next ID: 14
