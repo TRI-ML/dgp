@@ -10,14 +10,18 @@ import time
 from collections import OrderedDict
 
 from dgp.datasets import ANNOTATION_KEY_TO_TYPE_ID
-from dgp.datasets.annotations import (get_depth_from_point_cloud,
+from dgp.datasets.annotations import (get_depth_from_point_cloud, 
                                       load_aligned_bounding_box_annotations,
                                       load_bounding_box_2d_annotations,
-                                      load_bounding_box_3d_annotations)
+                                      load_bounding_box_3d_annotations,
+                                      load_panoptic_segmentation_2d_annotations,
+                                      load_semantic_segmentation_2d_annotations)
 from dgp.datasets.base_dataset import (BaseSceneDataset, DatasetMetadata,
                                        _BaseDataset)
 from dgp.utils.geometry import Pose
-from dgp.utils.ontology import build_detection_lookup_tables
+from dgp.utils.ontology import (build_detection_lookup_tables,
+                                build_instance_lookup_tables,
+                                build_semseg_lookup_tables)
 
 
 class _SynchronizedDataset(_BaseDataset):
@@ -89,11 +93,27 @@ class _SynchronizedDataset(_BaseDataset):
                 # TODO: Refactor ontology and _build_detection_lookup_tables to create a map from annotation type to is
                 #       lookup table
                 # For now we assume .BOUNDING_BOX_3D and BOUNDING_BOX_2D has identical ontology
-                ontology_key = "bounding_box_3d" if "bounding_box_3d" in self.dataset_metadata.ontology_table else "bounding_box_2d"
-                ontology = self.dataset_metadata.ontology_table[ontology_key]
+                if "bounding_box_3d" in self.dataset_metadata.ontology_table: 
+                    ontology_key = "bounding_box_3d"
+                    ontology = self.dataset_metadata.ontology_table[ontology_key]
+                    build_detection_lookup_tables(self, ontology)
+                elif "bounding_box_2d" in self.dataset_metadata.ontology_table:
+                    ontology_key = "bounding_box_2d"
+                    ontology = self.dataset_metadata.ontology_table[ontology_key]
+                    build_detection_lookup_tables(self, ontology)
+
+                if "semantic_segmentation_2d" in self.dataset_metadata.ontology_table:
+                    ontology_key = "semantic_segmentation_2d"
+                    ontology = self.dataset_metadata.ontology_table[ontology_key]
+                    build_semseg_lookup_tables(self, ontology)
+
+                if "instance_segmentation_2d" in self.dataset_metadata.ontology_table:
+                    ontology_key = "instance_segmentation_2d"
+                    ontology = self.dataset_metadata.ontology_table[ontology_key]
+                    build_instance_lookup_tables(self, ontology)
             else:
                 ontology = self.dataset_metadata.metadata.ontology
-            build_detection_lookup_tables(self, ontology)
+                build_detection_lookup_tables(self, ontology)
 
     def _build_item_index(self):
         """Builds an index of dataset items that refer to the scene index,
@@ -311,19 +331,32 @@ class _SynchronizedDataset(_BaseDataset):
             annotation_data = load_aligned_bounding_box_annotations(
                 annotations, ann_root_dir, self.json_category_id_to_contiguous_id
             )
+            data.update(annotation_data)
 
         elif "bounding_box_2d" in self.requested_annotations and "bounding_box_2d" in annotations:
             annotation_data = load_bounding_box_2d_annotations(
                 annotations, ann_root_dir, self.json_category_id_to_contiguous_id
             )
+            data.update(annotation_data)
 
         elif "bounding_box_3d" in self.requested_annotations and "bounding_box_3d" in annotations:
             annotation_data = load_bounding_box_3d_annotations(
                 annotations, ann_root_dir, self.json_category_id_to_contiguous_id
             )
-        else:
-            annotation_data = {}
-        data.update(annotation_data)
+            data.update(annotation_data)
+
+        if "semantic_segmentation_2d" in self.requested_annotations and "semantic_segmentation_2d" in annotations:
+            annotation_data = load_semantic_segmentation_2d_annotations(
+                annotations, ann_root_dir, self.semseg_label_lookup, self.VOID_ID
+            )
+            data.update(annotation_data)
+
+        if "instance_segmentation_2d" in self.requested_annotations and "instance_segmentation_2d" in annotations:
+            annotation_data = load_panoptic_segmentation_2d_annotations(
+                annotations, ann_root_dir, self.instance_name_to_contiguous_id
+            )
+            data.update(annotation_data)
+
         return data
 
     def get_point_cloud_from_datum(self, scene_idx, sample_idx_in_scene, datum_idx_in_sample):

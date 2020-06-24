@@ -289,3 +289,82 @@ class BEVImage:
             if texts:
                 cv2.putText(self.data, texts[bidx], tuple(corners2d[0]), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                             COLOR_WHITE, 2, cv2.LINE_AA)
+
+
+def ontology_to_viz_colormap(ontology, void_class_id=255):
+    """Grabs semseg viz-ready colormap from DGP Ontology object
+
+    Parameters
+    ----------
+    ontology: ouroboros.dgp.proto.ontology_pb2.Ontology
+        DGP ontology object for which we want to create a viz-friendly colormap look-up
+
+    void_class_id: int, default: 255
+        Class ID used to denote VOID or IGNORE in ontology
+
+    Returns
+    -------
+    colormap: np.int64 array
+        Shape is (num_classes, 3), where num_classes includes the VOID class
+        `colormap[i, :]` is the BGR triplet for class ID i, with `colormap[-1, :]` being the color for the VOID class
+
+    Notes
+    -----
+    Class ID's are assumed to be contiguous and 0-indexed, with VOID class as the last item in the ontology
+    """
+    assert all([item.id == i for i, item in enumerate(ontology.items[:-1])]) and ontology.items[-1].id == void_class_id
+    colormap = [(item.color.b, item.color.g, item.color.r) for item in ontology.items]
+    return np.array(colormap)
+
+
+def visualize_semantic_segmentation_2d(
+    semantic_segmentation_2d, ontology, void_class_id=255, image=None, alpha=0.3, debug=False
+):
+    """Constructs a visualization of a semseg frame (either ground truth or predictions), provided an ontology
+
+    Parameters
+    ----------
+    semantic_segmentation_2d: np.array
+        Per-pixel class ID's for a single input image, with `void_class_id` being the IGNORE class
+        shape: (H, W)
+
+    ontology: ouroboros.dgp.proto.ontology_pb2.Ontology
+        Ontology under which we want to visualize the semseg frame
+
+    void_class_id: int, default: 255
+        ID in `semantic_segmentation_2d` that denotes VOID or IGNORE
+
+    image: np.uint8 array, default: None
+        If specified then will blend image into visualization with weight `alpha`
+
+    alpha: float, default: 0.3
+        If `image` is specified, then will visualize an image/semseg blend with `alpha` weight given to image
+
+    debug: bool, default: True
+        If True then visualize frame to display
+
+    Returns
+    -------
+    colored_semseg: np.uint8
+        Visualization of `semantic_segmentation_2d` frame, *in BGR*
+        shape: (H, W, 3)
+    """
+    height, width = semantic_segmentation_2d.shape
+
+    # Convert colormap to (num_classes, 3), where num_classes includes VOID and last entry is color for VOID
+    colormap = ontology_to_viz_colormap(ontology, void_class_id=void_class_id)
+
+    # Color per-pixel predictions using the generated color map
+    colored_semseg = np.copy(semantic_segmentation_2d).astype(np.uint8)
+    colored_semseg[semantic_segmentation_2d == void_class_id] = len(colormap) - 1
+    colored_semseg = colormap[colored_semseg.flatten()]
+    colored_semseg = colored_semseg.reshape(height, width, 3).astype(np.uint8)
+
+    if image is not None:
+        colored_semseg = (alpha * image + (1 - alpha) * colored_semseg).astype(np.uint8)
+
+    if debug:
+        cv2.imshow('image', colored_semseg)
+        cv2.waitKey(DEBUG_WAIT_TIME)
+
+    return colored_semseg
