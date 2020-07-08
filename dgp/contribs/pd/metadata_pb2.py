@@ -4,6 +4,7 @@
 
 import sys
 _b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+from google.protobuf.internal import enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
@@ -20,9 +21,69 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='dgp.proto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x1e\x64gp/contribs/pd/metadata.proto\x12\tdgp.proto\"\xbe\x01\n\x1bParallelDomainSceneMetadata\x12\x10\n\x08location\x18\x01 \x01(\t\x12\x13\n\x0btime_of_day\x18\x02 \x01(\t\x12\x15\n\rfog_intensity\x18\x03 \x01(\x02\x12\x16\n\x0erain_intensity\x18\x04 \x01(\x02\x12\x0f\n\x07wetness\x18\x05 \x01(\x02\x12\x15\n\rstreet_lights\x18\x06 \x01(\x02\x12\x10\n\x08\x62\x61tch_id\x18\x07 \x01(\r\x12\x0f\n\x07version\x18\x08 \x01(\rb\x06proto3')
+  serialized_pb=_b('\n\x1e\x64gp/contribs/pd/metadata.proto\x12\tdgp.proto\"\xd5\x02\n\x1bParallelDomainSceneMetadata\x12\x10\n\x08location\x18\x01 \x01(\t\x12*\n\x0bregion_type\x18\t \x01(\x0e\x32\x15.dgp.proto.RegionType\x12(\n\nscene_type\x18\n \x01(\x0e\x32\x14.dgp.proto.SceneType\x12\x13\n\x0btime_of_day\x18\x02 \x01(\t\x12\x15\n\rsun_elevation\x18\x0b \x01(\x02\x12\x13\n\x0bsun_azimuth\x18\x0c \x01(\x02\x12\x13\n\x0b\x63loud_cover\x18\r \x01(\x02\x12\x15\n\rfog_intensity\x18\x03 \x01(\x02\x12\x16\n\x0erain_intensity\x18\x04 \x01(\x02\x12\x0f\n\x07wetness\x18\x05 \x01(\x02\x12\x15\n\rstreet_lights\x18\x06 \x01(\x02\x12\x10\n\x08\x62\x61tch_id\x18\x07 \x01(\r\x12\x0f\n\x07version\x18\x08 \x01(\r*F\n\tSceneType\x12\x13\n\x0fSYNTHETIC_SCENE\x10\x00\x12\t\n\x05URBAN\x10\x01\x12\x0c\n\x08SUBURBAN\x10\x02\x12\x0b\n\x07HIGHWAY\x10\x03*;\n\nRegionType\x12\x14\n\x10SYNTHETIC_REGION\x10\x00\x12\x17\n\x13NORTHERN_CALIFORNIA\x10\x01\x62\x06proto3')
 )
 
+_SCENETYPE = _descriptor.EnumDescriptor(
+  name='SceneType',
+  full_name='dgp.proto.SceneType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='SYNTHETIC_SCENE', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='URBAN', index=1, number=1,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='SUBURBAN', index=2, number=2,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='HIGHWAY', index=3, number=3,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=389,
+  serialized_end=459,
+)
+_sym_db.RegisterEnumDescriptor(_SCENETYPE)
+
+SceneType = enum_type_wrapper.EnumTypeWrapper(_SCENETYPE)
+_REGIONTYPE = _descriptor.EnumDescriptor(
+  name='RegionType',
+  full_name='dgp.proto.RegionType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='SYNTHETIC_REGION', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='NORTHERN_CALIFORNIA', index=1, number=1,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=461,
+  serialized_end=520,
+)
+_sym_db.RegisterEnumDescriptor(_REGIONTYPE)
+
+RegionType = enum_type_wrapper.EnumTypeWrapper(_REGIONTYPE)
+SYNTHETIC_SCENE = 0
+URBAN = 1
+SUBURBAN = 2
+HIGHWAY = 3
+SYNTHETIC_REGION = 0
+NORTHERN_CALIFORNIA = 1
 
 
 
@@ -41,49 +102,84 @@ _PARALLELDOMAINSCENEMETADATA = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='time_of_day', full_name='dgp.proto.ParallelDomainSceneMetadata.time_of_day', index=1,
+      name='region_type', full_name='dgp.proto.ParallelDomainSceneMetadata.region_type', index=1,
+      number=9, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='scene_type', full_name='dgp.proto.ParallelDomainSceneMetadata.scene_type', index=2,
+      number=10, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='time_of_day', full_name='dgp.proto.ParallelDomainSceneMetadata.time_of_day', index=3,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fog_intensity', full_name='dgp.proto.ParallelDomainSceneMetadata.fog_intensity', index=2,
+      name='sun_elevation', full_name='dgp.proto.ParallelDomainSceneMetadata.sun_elevation', index=4,
+      number=11, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='sun_azimuth', full_name='dgp.proto.ParallelDomainSceneMetadata.sun_azimuth', index=5,
+      number=12, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='cloud_cover', full_name='dgp.proto.ParallelDomainSceneMetadata.cloud_cover', index=6,
+      number=13, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='fog_intensity', full_name='dgp.proto.ParallelDomainSceneMetadata.fog_intensity', index=7,
       number=3, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='rain_intensity', full_name='dgp.proto.ParallelDomainSceneMetadata.rain_intensity', index=3,
+      name='rain_intensity', full_name='dgp.proto.ParallelDomainSceneMetadata.rain_intensity', index=8,
       number=4, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='wetness', full_name='dgp.proto.ParallelDomainSceneMetadata.wetness', index=4,
+      name='wetness', full_name='dgp.proto.ParallelDomainSceneMetadata.wetness', index=9,
       number=5, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='street_lights', full_name='dgp.proto.ParallelDomainSceneMetadata.street_lights', index=5,
+      name='street_lights', full_name='dgp.proto.ParallelDomainSceneMetadata.street_lights', index=10,
       number=6, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='batch_id', full_name='dgp.proto.ParallelDomainSceneMetadata.batch_id', index=6,
+      name='batch_id', full_name='dgp.proto.ParallelDomainSceneMetadata.batch_id', index=11,
       number=7, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='version', full_name='dgp.proto.ParallelDomainSceneMetadata.version', index=7,
+      name='version', full_name='dgp.proto.ParallelDomainSceneMetadata.version', index=12,
       number=8, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -102,10 +198,14 @@ _PARALLELDOMAINSCENEMETADATA = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=46,
-  serialized_end=236,
+  serialized_end=387,
 )
 
+_PARALLELDOMAINSCENEMETADATA.fields_by_name['region_type'].enum_type = _REGIONTYPE
+_PARALLELDOMAINSCENEMETADATA.fields_by_name['scene_type'].enum_type = _SCENETYPE
 DESCRIPTOR.message_types_by_name['ParallelDomainSceneMetadata'] = _PARALLELDOMAINSCENEMETADATA
+DESCRIPTOR.enum_types_by_name['SceneType'] = _SCENETYPE
+DESCRIPTOR.enum_types_by_name['RegionType'] = _REGIONTYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ParallelDomainSceneMetadata = _reflection.GeneratedProtocolMessageType('ParallelDomainSceneMetadata', (_message.Message,), dict(
