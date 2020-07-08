@@ -9,17 +9,17 @@ package dgp.proto;
 // Used to specify a rough land usage classification for the corresponding Scene
 enum SceneType
 {
-  SYNTHETIC = 0;
-  URBAN     = 1;
-  SUBURBAN  = 2;
-  HIGHWAY   = 3;
+  SYNTHETIC_SCENE = 0;
+  URBAN           = 1;
+  SUBURBAN        = 2;
+  HIGHWAY         = 3;
 }
 
 // Region type enumeration
 // Used to specify rough geographic region for corresponding Scene
 enum RegionType
 {
-  SYNTHETIC = 0;
+  SYNTHETIC_REGION = 0;
   NORTHERN_CALIFORNIA = 1;
 }
 
