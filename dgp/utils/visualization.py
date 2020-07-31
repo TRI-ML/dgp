@@ -13,6 +13,112 @@ COLOR_GRAY = (100, 100, 100)
 COLOR_DARKGRAY = (50, 50, 50)
 COLOR_WHITE = (255, 255, 255)
 
+class InstanceColorGenerator:
+    """A Class that generates unique color based on instance category.
+
+    Parameters
+    ----------
+    base_colormap: dict
+            A dictionary of colors, mapping class_id to color
+    """
+
+    def __init__(self, base_colormap, max_dist = 30):
+        """Initialization."""
+        # record colors used for instance and stuff identification.
+        # if the random color generation happen to generate a used
+        # color, it will be rejected.
+        self.taken_colors = set([0, 0, 0])
+        self.base_colormap = base_colormap
+        self.max_dist = max_dist
+        for base_color in self.base_colormap.values():
+            self.taken_colors.add(tuple(base_color))
+
+    def get_color(self, class_id):
+        """Generate a random color for instance based on base category color.
+
+        Parameters
+        ----------
+        class_id: int
+            class_id
+
+        Returns
+        -------
+        color: A unique color to identify a segment.
+        """
+        def random_color(base, max_dist=self.max_dist):
+            new_color = base + np.random.randint(low=-max_dist, high=max_dist + 1, size=3)
+            return tuple(np.maximum(0, np.minimum(255, new_color)))
+        base_color = self.base_colormap[class_id]
+        while True:
+            color = random_color(base_color)
+            if color not in self.taken_colors:
+                self.taken_colors.add(color)
+                return color
+
+def visualize_instance_segmentation_2d(
+    instance_masks, instance_class_ids, ontology, image_size, void_class_id=255, class_names=None, image=None, alpha=0.3, debug=False, white_edge=False
+):
+    """Constructs a visualization of a instance segmentation frame (either ground truth or predictions), provided an ontology
+
+    Parameters
+    ----------
+    instance_masks: List[np.bool]
+            (H, W) bool array for each instance in instance annotation
+
+    instance_ids: List[int]
+            Instance lass CIDs for each instance in instance annotation
+
+    image: np.uint8 array, default: None
+        If specified then will blend image into visualization with weight `alpha` 
+
+    image_size: List[int]
+        [H, W] of target image
+
+    alpha: float, default: 0.3
+        If `image` is specified, then will visualize an image/semseg blend with `alpha` weight given to image
+
+    debug: bool, default: True
+        If True then visualize frame to display
+
+    Returns
+    -------
+    colored_instance_seg: np.uint8
+        Visualization of `instance_segmentation_2d` frame, *in BGR*
+        shape: (H, W, 3)
+    """
+    H, W = image_size
+
+    colormap = ontology_to_viz_colormap(ontology, void_class_id=void_class_id)
+
+    # create dictionary of colormap keyed by class_id.
+    colormap_dict = {class_id: color for class_id, color in enumerate(colormap)}
+    color_generator = InstanceColorGenerator(colormap_dict)
+
+    # Color per-pixel predictions using the generated color map
+    colored_instance_seg = np.zeros([H, W, 3], dtype='uint8')
+    for mask, class_id in zip(instance_masks, instance_class_ids):
+        colored_instance_seg[mask] = color_generator.get_color(class_id)
+        if white_edge:
+            thresh = (mask*255).astype('uint8')
+            contours, _ = cv2.findContours(thresh,  cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            contour_mask = cv2.drawContours(colored_instance_seg, contours, -1, (255, 255, 255), 3)
+
+
+
+    if image is not None:
+        colored_instance_seg = (alpha * image + (1 - alpha) * colored_instance_seg).astype(np.uint8)
+
+    if class_names is not None:
+        for mask, class_name in zip(instance_masks, class_names):
+            mask_loc = np.nonzero(mask)
+            x, y = mask_loc[0][0], mask_loc[1][0]
+            cv2.putText(colored_instance_seg, class_name, (y, x), cv2.FONT_HERSHEY_SIMPLEX, .5, (255, 255, 255), 1)
+
+    if debug:
+        cv2.imshow('image', colored_instance_seg)
+        cv2.waitKey(DEBUG_WAIT_TIME)
+
+    return colored_instance_seg
 
 def print_status(image, text):
     """Adds a status bar at the bottom of image, with provided text.
