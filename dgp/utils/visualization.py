@@ -402,7 +402,7 @@ def ontology_to_viz_colormap(ontology, void_class_id=255):
 
     Parameters
     ----------
-    ontology: ouroboros.dgp.proto.ontology_pb2.Ontology
+    ontology: dgp.proto.ontology_pb2.Ontology
         DGP ontology object for which we want to create a viz-friendly colormap look-up
 
     void_class_id: int, default: 255
@@ -434,7 +434,7 @@ def visualize_semantic_segmentation_2d(
         Per-pixel class ID's for a single input image, with `void_class_id` being the IGNORE class
         shape: (H, W)
 
-    ontology: ouroboros.dgp.proto.ontology_pb2.Ontology
+    ontology: dgp.proto.ontology_pb2.Ontology
         Ontology under which we want to visualize the semseg frame
 
     void_class_id: int, default: 255
