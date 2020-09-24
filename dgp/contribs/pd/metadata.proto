@@ -21,6 +21,7 @@ enum RegionType
 {
   SYNTHETIC_REGION = 0;
   NORTHERN_CALIFORNIA = 1;
+  MICHIGAN = 2;
 }
 
 message ParallelDomainSceneMetadata {
