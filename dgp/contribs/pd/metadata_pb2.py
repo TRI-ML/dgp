@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='dgp.proto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x1e\x64gp/contribs/pd/metadata.proto\x12\tdgp.proto\"\xd5\x02\n\x1bParallelDomainSceneMetadata\x12\x10\n\x08location\x18\x01 \x01(\t\x12*\n\x0bregion_type\x18\t \x01(\x0e\x32\x15.dgp.proto.RegionType\x12(\n\nscene_type\x18\n \x01(\x0e\x32\x14.dgp.proto.SceneType\x12\x13\n\x0btime_of_day\x18\x02 \x01(\t\x12\x15\n\rsun_elevation\x18\x0b \x01(\x02\x12\x13\n\x0bsun_azimuth\x18\x0c \x01(\x02\x12\x13\n\x0b\x63loud_cover\x18\r \x01(\x02\x12\x15\n\rfog_intensity\x18\x03 \x01(\x02\x12\x16\n\x0erain_intensity\x18\x04 \x01(\x02\x12\x0f\n\x07wetness\x18\x05 \x01(\x02\x12\x15\n\rstreet_lights\x18\x06 \x01(\x02\x12\x10\n\x08\x62\x61tch_id\x18\x07 \x01(\r\x12\x0f\n\x07version\x18\x08 \x01(\r*F\n\tSceneType\x12\x13\n\x0fSYNTHETIC_SCENE\x10\x00\x12\t\n\x05URBAN\x10\x01\x12\x0c\n\x08SUBURBAN\x10\x02\x12\x0b\n\x07HIGHWAY\x10\x03*;\n\nRegionType\x12\x14\n\x10SYNTHETIC_REGION\x10\x00\x12\x17\n\x13NORTHERN_CALIFORNIA\x10\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x1e\x64gp/contribs/pd/metadata.proto\x12\tdgp.proto\"\xd5\x02\n\x1bParallelDomainSceneMetadata\x12\x10\n\x08location\x18\x01 \x01(\t\x12*\n\x0bregion_type\x18\t \x01(\x0e\x32\x15.dgp.proto.RegionType\x12(\n\nscene_type\x18\n \x01(\x0e\x32\x14.dgp.proto.SceneType\x12\x13\n\x0btime_of_day\x18\x02 \x01(\t\x12\x15\n\rsun_elevation\x18\x0b \x01(\x02\x12\x13\n\x0bsun_azimuth\x18\x0c \x01(\x02\x12\x13\n\x0b\x63loud_cover\x18\r \x01(\x02\x12\x15\n\rfog_intensity\x18\x03 \x01(\x02\x12\x16\n\x0erain_intensity\x18\x04 \x01(\x02\x12\x0f\n\x07wetness\x18\x05 \x01(\x02\x12\x15\n\rstreet_lights\x18\x06 \x01(\x02\x12\x10\n\x08\x62\x61tch_id\x18\x07 \x01(\r\x12\x0f\n\x07version\x18\x08 \x01(\r*F\n\tSceneType\x12\x13\n\x0fSYNTHETIC_SCENE\x10\x00\x12\t\n\x05URBAN\x10\x01\x12\x0c\n\x08SUBURBAN\x10\x02\x12\x0b\n\x07HIGHWAY\x10\x03*I\n\nRegionType\x12\x14\n\x10SYNTHETIC_REGION\x10\x00\x12\x17\n\x13NORTHERN_CALIFORNIA\x10\x01\x12\x0c\n\x08MICHIGAN\x10\x02\x62\x06proto3')
 )
 
 _SCENETYPE = _descriptor.EnumDescriptor(
@@ -69,11 +69,15 @@ _REGIONTYPE = _descriptor.EnumDescriptor(
       name='NORTHERN_CALIFORNIA', index=1, number=1,
       serialized_options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='MICHIGAN', index=2, number=2,
+      serialized_options=None,
+      type=None),
   ],
   containing_type=None,
   serialized_options=None,
   serialized_start=461,
-  serialized_end=520,
+  serialized_end=534,
 )
 _sym_db.RegisterEnumDescriptor(_REGIONTYPE)
 
@@ -84,6 +88,7 @@ SUBURBAN = 2
 HIGHWAY = 3
 SYNTHETIC_REGION = 0
 NORTHERN_CALIFORNIA = 1
+MICHIGAN = 2
 
 
 
