@@ -54,6 +54,12 @@ enum AnnotationType {
   // 3D Motion vectors on the point cloud
   // (i.e. 3D flow on the point cloud)
   MOTION_VECTORS_3D = 9;           // motion_vectors_2d
+
+  // 2D Key Point in image.
+  KEY_POINT_2D = 11;               // key_point_2d
+
+  // 2D Key Line in image.
+  KEY_LINE_2D = 12;                // key_line_2d
 }
 
 // 2D bounding box
