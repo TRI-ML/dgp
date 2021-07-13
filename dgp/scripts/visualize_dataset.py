@@ -18,8 +18,10 @@ import logging
 import cv2
 import numpy as np
 
-from dgp.datasets.synchronized_dataset import (SynchronizedScene,
+from dgp.datasets.synchronized_dataset import (SynchronizedDataset,
+                                               SynchronizedScene,
                                                SynchronizedSceneDataset)
+
 from dgp.utils import tqdm
 from dgp.utils.aws import fetch_remote_scene
 from dgp.utils.camera import Camera
@@ -210,7 +212,7 @@ if __name__ == '__main__':
         # Fetch scene from S3 to cache if remote scene JSON provided
         if args.scene_json.startswith('s3://'):
             args.scene_json = fetch_remote_scene(args.scene_json)
-        dataset = SynchronizedDataset(args.dataset_json, split=args.split, **dataset_args)
+        dataset = SynchronizedScene(args.scene_json, **dataset_args)
     else:
         raise ValueError('Provide either --dataset-json or --scene-json')
 
