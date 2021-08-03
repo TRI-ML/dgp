@@ -33,4 +33,14 @@ message CameraIntrinsics {
   double cx = 3;
   double cy = 4;
   double skew = 5;
+  double fov = 6;
+  int32  fisheye = 7;
+  double k1 = 8;
+  double k2 = 9;
+  double k3 = 10;
+  double k4 = 11;
+  double k5 = 12;
+  double k6 = 13;
+  double p1 = 14;
+  double p2 = 15;
 }
