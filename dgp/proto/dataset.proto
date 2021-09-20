@@ -1,10 +1,12 @@
-// Copyright 2019-2020 Toyota Research Institute.  All rights reserved.
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 // Definitions for metadata related to whole datasets and its instances and
 // splits.
 
 syntax = "proto3";
 
 package dgp.proto;
+
+import "google/protobuf/any.proto";
 
 import "dgp/proto/remote.proto";
 import "dgp/proto/scene.proto";
@@ -37,19 +39,23 @@ enum DatasetSplit {
   TRAIN = 0;
   VAL = 1;
   TEST = 2;
+
+  // TODO (allan.raventos): deprecate this once we have a stable version of the DGP tagged
   TRAIN_OVERFIT = 3;
 }
 
 
-// Dataset metadata specific to a particular scene dataset.
+// Dataset metadata specific to a particular SceneDataset.
 message DatasetMetadata {
   // Dataset name
   string name = 1;
 
   // Dataset semantic version
+  // TODO: Establish semantic versioning.
   string version = 2;
 
   // Date of dataset creation: yyyy-mm-dd
+  // TODO: Change this to datetime
   string creation_date = 3;
 
   // Dataset creator
@@ -59,7 +65,7 @@ message DatasetMetadata {
   // Remote path to DGP-compliant dataset (s3://<bucket>/)
   RemotePath bucket_path = 5;
 
-  // Remote path to the raw dataset (s3://<bucket>/imagenet/)
+  // Remote path to the raw dataset (s3://<bucket>/bdd100k/)
   RemotePath raw_path = 6;
 
   // Short description of the dataset (~200 characters)
@@ -80,6 +86,18 @@ message DatasetMetadata {
   // (Optional) Dataset-specific statistics
   // This is usually of the TRAIN set.
   DatasetStatistics statistics = 10;
+
+  // (Optional) Sampling rate of the dataset
+  // This is used to synchronize different fps from different datasets. 
+  float frame_per_second = 11;
+
+  // Container for generic metadata.
+  // Metadata of "Any" type is useful in cases where the metadata type is
+  // specific to a paricular dataset type. For example, this field can contain:
+  // - a bare string which contains structured data like json, yaml, etc.
+  // - dataset specific metadata with some proto definition (assuming the
+  //   compiled proto is available to both the writer and reader of the dataset.
+  google.protobuf.Any metadata = 12;
 }
 
 // Scene Dataset

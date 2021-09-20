@@ -2,9 +2,30 @@
 
 [dgp/cli.py](cli.py) is the main CLI entrypoint for handling DGP datasets.
 
-1. **Retrieve information about an ML dataset in the DGP.**
+1. **Visualize DGP-compliant Scene and SceneDataset**
+DGP CLI subcommand `visualize-scenes` and `visualize-scene` can be used to visualize DGP-compliant data.
 
-The DGP CLI also provides information about a dataset, including
+One can run `python dgp/cli.py visualize-scenes` to visualize a DGP SceneDataset.
+
+Example command to visualize the images from `CAMERA_01, CAMERA_05, CAMERA_06` and point cloud from `LIDAR` along with ground_truth annotations `bounding_box_2d, bounding_box_3d` from `train` split of the toy dataset `tests/data/dgp/test_scene/scene_dataset_v1.0.json`, and store the resulting videos in `--dst-dir vis`.
+One can find the resulting 3D visualization videos in `vis/3d` and 2D visualization videos in `vis/2d`.
+
+```sh
+python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d
+```
+
+One can run `python dgp/cli.py visualize-scene` to visualize a single DGP Scene.
+
+Example command to visualize the images from `CAMERA_01, CAMERA_05, CAMERA_06` and point cloud from `LIDAR` along with ground_truth annotations `bounding_box_2d, bounding_box_3d` from the toy Scene `tests/data/dgp/test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json`, and store the resulting videos in `--dst-dir vis`.
+One can find the resulting 3D visualization video in `vis/3d` and 2D visualization video in `vis/2d`.
+
+```sh
+python dgp/cli.py visualize-scene --scene-json tests/data/dgp/test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d
+```
+
+2. **Coming soon: Retrieve information about an ML dataset in the DGP.**
+
+DGP CLI provides information about a dataset, including
 the remote location (S3 url) of the dataset, its raw dataset url, the
 set of available annotation types contained in the dataset, etc. For
 more information, see relevant metadata stored with a dataset artifact
@@ -13,9 +34,9 @@ in [DatasetMetadata](proto/dataset.proto) and [DatasetArtifacts](proto/artifacts
 python dgp/cli.py info --scene-dataset-json <scene-dataset-json>
 ```
 
-2. **SOON: Validate a dataset.**
+3. **Coming soon: Validate a dataset.**
 
-The DGP CLI provides a simplified mechanism for validating newly
+DGP CLI provides a simplified mechanism for validating newly
 created datasets, ensuring that the dataset schema is maintained and
 valid. This is done via:
 ```sh

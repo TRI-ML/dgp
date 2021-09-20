@@ -2,7 +2,7 @@
 
 Usage:
 $ python examples/load_dataset.py \
-     --scene-dataset-json /data/scene_dataset_v1.0.json \
+     --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json \
      --split test
 """
 import argparse
@@ -16,7 +16,6 @@ import dgp.contribs.pd.metadata_pb2  # pylint: disable=unused-import
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
 
 
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--scene-dataset-json', type=str, required=True, help='Path to local SceneDataset JSON.')
@@ -28,6 +27,13 @@ def main():
         help='Split [train, val, test].',
         choices=['train', 'val', 'test']
     )
+    parser.add_argument(  # pylint: disable=W0106
+        '--datum-names',
+        required=False,
+        default=['LIDAR', 'CAMERA_01'],
+        nargs='+',
+        help='Requested datum names (case-sensitive).'
+    ),
     parser.add_argument('--verbose', action='store_true')
     args = parser.parse_args()
 
@@ -41,7 +47,7 @@ def main():
     dataset = SynchronizedSceneDataset(
         scene_dataset_json=args.scene_dataset_json,
         split=args.split,
-        datum_names=('lidar_02', ),
+        datum_names=args.datum_names,
         requested_annotations=('bounding_box_3d', ),
         only_annotated_datums=True
     )

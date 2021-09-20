@@ -1,20 +1,85 @@
 #!/usr/bin/env python
-# Copyright 2019-2020 Toyota Research Institute.  All rights reserved.
+# Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 """DGP command line interface
 """
-import glob
-import itertools
+import logging
 import os
-import sys
-from multiprocessing import Pool, cpu_count
+from functools import partial
 
 import click
 
+from dgp import ALL_ANNOTATION_TYPES, DATASET_SPLIT_NAME_TO_KEY
+from dgp.annotations import ANNOTATION_TYPE_TO_ANNOTATION_GROUP
+from dgp.datasets.pd_dataset import ParallelDomainScene
+from dgp.datasets.synchronized_dataset import SynchronizedScene
 from dgp.proto.dataset_pb2 import SceneDataset
-from dgp.utils.aws import (convert_uri_to_bucket_path,
-                           parallel_upload_s3_objects)
-from dgp.utils.dataset_conversion import MergeSceneDatasetGen
+from dgp.utils.cli_utils import add_options
 from dgp.utils.protobuf import open_pbobject
+from dgp.utils.visualization_engine import (visualize_dataset_2d, visualize_dataset_3d)
+from dgp.utils.visualization_utils import make_caption
+
+VISUALIZE_OPTIONS = [
+    click.option(
+        "--annotations",
+        "-a",
+        type=click.Choice(ALL_ANNOTATION_TYPES),
+        help="If specified, visualize subset corresponding to annotations. \
+        Specify each desired annotation type separately, i.e. `-a bounding_box_3d -a semantic_segmentation_2d`",
+        multiple=True
+    ),
+    click.option(
+        "--camera-datum-names",
+        "-c",
+        required=True,
+        help=
+        "Camera datum names (case-sensitive). If specified, visualize corresponding camera datum. If not, visualize all. \
+        Specify each camera datum names separately, i.e. `-c camera_05 -c camera_01`",
+        multiple=True
+    ),
+    click.option(
+        "--dataset-class",
+        required=False,
+        default='SynchronizedScene',
+        type=click.Choice(['ParallelDomainScene', 'SynchronizedScene']),
+        help="If specified, use corresponding dataset class. If not, use SynchronizedScene(Dataset)"
+    ),
+    click.option("--show-instance-id", is_flag=True, required=False, help="Show instance ID"),
+    click.option("--max-num-items", required=False, help="Max num of samples to visualize"),
+    click.option("--video-fps", default=30, help="Frame rate of generated videos"),
+    click.option(
+        "--dst-dir",
+        required=False,
+        help="Destination directory. \
+        If given, then generate one video per scene and save in this directory. \
+        If not, then show on X window"
+    ),
+    click.option("--verbose", "-v", is_flag=True, help="Verbose logging"),
+    # 3D visualization options
+    click.option(
+        "--lidar_datum_names",
+        "-l",
+        required=False,
+        default=['LIDAR'],
+        help=
+        "Lidar datum names (case-sensitive). If specified, visualize corresponding lidar datum. If not, visualize LIDAR. \
+        Specify each lidar datum names separately, i.e. `-l lidar`",
+        multiple=True
+    ),
+    click.option("--render-pointcloud", is_flag=True, required=False, help="Render projected pointcloud on images"),
+    click.option(
+        "--radar_datum_names",
+        "-r",
+        required=False,
+        default=[],
+        help=
+        "Radar datum names (case-sensitive). If specified, visualize corresponding radar datum. If not, visualize RADAR. \
+        Specify each radar datum names separately, i.e. `-r radar`",
+        multiple=True
+    ),
+    click.option(
+        "--render-radar-pointcloud", is_flag=True, required=False, help="Render projected radar pointcloud on images"
+    ),
+]
 
 
 @click.group()
@@ -23,50 +88,139 @@ def cli():
     pass
 
 
-@cli.command(name="upload-scenes")
-@click.option(
-    "--scene-dataset-json",
-    required=True,
-    help="Path to a local scene dataset .json file i.e. /mnt/scene_dataset_v1.2.json"
-)
-@click.option(
-    "--s3-dst-dir", required=True, help="Prefix for uploaded scenes"
-)
-def upload_scenes(scene_dataset_json, s3_dst_dir):
-    """Parallelized upload for scenes from a scene dataset JSON.
-    NOTE: This tool only verifies the presence of a scene, not the validity any of its contents.
+@cli.command(name='visualize-scene')
+@add_options(options=VISUALIZE_OPTIONS)
+@click.option("--scene-json", required=True, help="Path to Scene JSON")
+def visualize_scene(
+    scene_json, annotations, camera_datum_names, dataset_class, show_instance_id, max_num_items, video_fps, dst_dir,
+    verbose, lidar_datum_names, render_pointcloud, radar_datum_names, render_radar_pointcloud
+):
+    """Parallelized visualizing of a scene.
+
+    Example
+    -------
+    $ cli.py visualize-scene \
+        --scene-json tests/data/dgp/test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json \
+        --dst-dir /mnt/fsx -a bounding_box_3d \
+        -c camera_01
     """
-    bucket_name, s3_base_path = convert_uri_to_bucket_path(s3_dst_dir)
-    dataset = open_pbobject(scene_dataset_json, SceneDataset)
-    local_dataset_root = os.path.dirname(os.path.abspath(scene_dataset_json))
-    if not dataset:
-        print('Failed to parse dataset artifacts {}'.format(scene_dataset_json))
-        sys.exit(0)
+    if verbose:
+        logging.basicConfig(level=logging.INFO)
 
-    scene_dirs = []
-    for split in dataset.scene_splits.keys():
-        scene_dirs.extend([
-            os.path.join(local_dataset_root, os.path.dirname(filename))
-            for filename in dataset.scene_splits[split].filenames
-        ])
+    # Scene lands in directory based on scene directory name
+    base_path = os.path.dirname(scene_json)
+    if dst_dir is not None:
+        video_path = os.path.basename(base_path) + '.avi'
+        logging.info('Visualizing scene {} into {}'.format(os.path.basename(base_path), dst_dir))
+    else:
+        video_file = None
 
-    # Make sure the scenes exist
-    with Pool(cpu_count()) as proc:
-        file_list = list(itertools.chain.from_iterable(proc.map(_get_scene_files, scene_dirs)))
+    scene_dataset_class = ParallelDomainScene if dataset_class == 'ParallelDomainScene' else SynchronizedScene
 
-    # Upload the scene JSON, too.
-    file_list += [scene_dataset_json]
-    print("Creating file manifest for S3 for {} files".format(len(file_list)))
-    s3_file_list = [os.path.join(s3_base_path, os.path.relpath(_f, local_dataset_root)) for _f in file_list]
-    print("Done. Uploading to S3.")
+    # 2D visualization
+    annotations_2d = tuple([a for a in annotations if ANNOTATION_TYPE_TO_ANNOTATION_GROUP[a] == '2d'])
+    if annotations_2d:
+        if dst_dir is not None:
+            os.makedirs(os.path.join(dst_dir, '2d'), exist_ok=True)
+            video_file = os.path.join(dst_dir, '2d', video_path)
+        dataset = scene_dataset_class(
+            scene_json,
+            datum_names=camera_datum_names,
+            requested_annotations=annotations_2d,
+            only_annotated_datums=True
+        )
+        visualize_dataset_2d(
+            dataset,
+            camera_datum_names=camera_datum_names,
+            caption_fn=partial(make_caption, prefix=base_path),
+            output_video_file=video_file,
+            output_video_fps=video_fps,
+            max_num_items=max_num_items,
+            show_instance_id=show_instance_id
+        )
+        logging.info('Visualizing 2D annotation visualizations to {}'.format(video_file))
+    # 3D visualization
+    annotations_3d = tuple([a for a in annotations if ANNOTATION_TYPE_TO_ANNOTATION_GROUP[a] == '3d'])
+    if annotations_3d or render_pointcloud or render_radar_pointcloud:
+        if dst_dir is not None:
+            os.makedirs(os.path.join(dst_dir, '3d'), exist_ok=True)
+            video_file = os.path.join(dst_dir, '3d', video_path)
+        dataset = SynchronizedScene(
+            scene_json,
+            datum_names=list(camera_datum_names) + list(lidar_datum_names) + list(radar_datum_names),
+            requested_annotations=annotations_3d,
+            only_annotated_datums=True
+        )
+        visualize_dataset_3d(
+            dataset,
+            camera_datum_names=camera_datum_names,
+            lidar_datum_names=lidar_datum_names,
+            caption_fn=partial(make_caption, prefix=base_path),
+            output_video_file=video_file,
+            output_video_fps=video_fps,
+            render_pointcloud_on_images=render_pointcloud,
+            max_num_items=max_num_items,
+            show_instance_id_on_bev=show_instance_id,
+            radar_datum_names=radar_datum_names,
+            render_radar_pointcloud_on_images=render_radar_pointcloud
+        )
+        logging.info('Visualizing 3D annotation visualizations to {}'.format(video_file))
 
-    parallel_upload_s3_objects(file_list, s3_file_list, bucket_name)
 
+@cli.command(name='visualize-scenes')
+@click.option("--scene-dataset-json", required=True, help="Path to SceneDataset JSON")
+@click.option(
+    "--split",
+    type=click.Choice(['train', 'val', 'test', 'train_overfit']),
+    required=True,
+    help="Dataset split to be fetched."
+)
+@add_options(options=VISUALIZE_OPTIONS)
+def visualize_scenes(
+    scene_dataset_json, split, annotations, camera_datum_names, dataset_class, show_instance_id, max_num_items,
+    video_fps, dst_dir, verbose, lidar_datum_names, render_pointcloud, radar_datum_names, render_radar_pointcloud
+):
+    """Parallelized visualizing of scene dataset.
 
-def _get_scene_files(scene):
-    assert os.path.exists(scene), "Scene {} doesn't exist".format(scene)
-    scene_files = glob.glob(os.path.join(scene, "**"), recursive=True)
-    return [_f for _f in scene_files if os.path.isfile(_f)]
+    Example
+    -------
+    $ cli.py visualize-scenes \
+        --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json \
+        --dst-dir /mnt/fsx -a bounding_box_3d \
+        --split train \
+        -c camera_01
+    """
+    if verbose:
+        logging.basicConfig(level=logging.INFO)
+
+    # Load dataset
+    dataset = open_pbobject(scene_dataset_json, pb_class=SceneDataset)
+
+    # Dataset lands in directory based on scene dataset name
+    if dst_dir is not None:
+        dataset_directory = os.path.join(dst_dir, os.path.basename(scene_dataset_json).split('.')[0])
+        os.makedirs(dataset_directory, exist_ok=True)
+        logging.info('Visualizing dataset into {}'.format(dataset_directory))
+    else:
+        dataset_directory = None
+    scene_jsons = dataset.scene_splits[DATASET_SPLIT_NAME_TO_KEY[split]].filenames
+    for scene_json in scene_jsons:
+        scene_json = os.path.join(os.path.dirname(scene_dataset_json), scene_json)
+        visualize_scene.callback(
+            scene_json,
+            annotations=annotations,
+            camera_datum_names=camera_datum_names,
+            dataset_class=dataset_class,
+            show_instance_id=show_instance_id,
+            max_num_items=max_num_items,
+            video_fps=video_fps,
+            dst_dir=dataset_directory,
+            verbose=verbose,
+            lidar_datum_names=lidar_datum_names,
+            render_pointcloud=render_pointcloud,
+            radar_datum_names=radar_datum_names,
+            render_radar_pointcloud=render_radar_pointcloud
+        )
 
 
 if __name__ == '__main__':

@@ -35,7 +35,7 @@ build-proto:
 	PYTHONPATH=$(PWD):$(PYTHONPATH) \
 	$(PYTHON) setup.py build_py
 
-test: clean build-proto
+test:
 	PYTHONPATH=$(PWD):$(PYTHONPATH) \
 	$(UNITTEST) $(UNITTEST_OPTS) $(PWD)/tests/
 
