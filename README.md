@@ -12,8 +12,7 @@ maintenance of all TRI's Autonomous Vehicle (AV) datasets.
 - [Schema](dgp/proto/README.md): [Protobuf](https://developers.google.com/protocol-buffers)-based schemas for raw data, annotations
   and dataset management.
 - [DataLoaders](dgp/datasets): Universal PyTorch DatasetClass to load all DGP-compliant datasets.
-- [Visualizer](dgp/scripts/visualizer.py): Simple web-based visualizer for viewing annotations.
-- [CLI](dgp/README.md): Main CLI for handling DGP datasets.
+- [CLI](dgp/README.md): Main CLI for handling DGP datasets and the entrypoint of visulization tools.
 
 ## Getting Started
 Getting started is as simple as initializing a dataset-class with the
