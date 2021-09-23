@@ -21,6 +21,10 @@ UNITTEST_OPTS ?= --nologcapture -v -s
 
 all: clean test
 
+build-proto:
+	PYTHONPATH=$(PWD):$(PYTHONPATH) \
+	$(PYTHON) setup.py build_py
+
 clean:
 	$(PYTHON) setup.py clean && \
 	rm -rf build dist && \
@@ -31,43 +35,38 @@ clean:
 	find dgp/proto -name "*_pb2.py" | xargs rm -rf
 	find dgp/contribs/pd -name "*_pb2.py" | xargs rm -rf
 
-build-proto:
-	PYTHONPATH=$(PWD):$(PYTHONPATH) \
-	$(PYTHON) setup.py build_py
-
-test:
-	PYTHONPATH=$(PWD):$(PYTHONPATH) \
-	$(UNITTEST) $(UNITTEST_OPTS) $(PWD)/tests/
+develop:
+	pip install cython==0.29.10 numpy==1.19.4 protobuf==3.6.1
+	pip install --editable .
 
 docker-build:
 	docker build \
 	--build-arg WORKSPACE=$(WORKSPACE) \
 	-t $(DOCKER_IMAGE) .
 
-docker-start-interactive:
-	nvidia-docker run \
-	$(DOCKER_OPTS) \
-	$(DOCKER_IMAGE) bash
-
-docker-start:
-	nvidia-docker run \
-	-d --name $(DOCKER_IMAGE_NAME) \
-	$(DOCKER_OPTS) $(DOCKER_IMAGE)
-
 docker-exec:
-	nvidia-docker exec -it $(DOCKER_IMAGE_NAME) $(COMMAND)
-
-docker-stop:
-	docker stop $(DOCKER_IMAGE_NAME)
+	docker exec -it $(DOCKER_IMAGE_NAME) $(COMMAND)
 
 docker-run-tests: build-proto
-	nvidia-docker run \
+	docker run \
 	--name $(DOCKER_IMAGE_NAME)-tests \
 	$(DOCKER_OPTS) $(DOCKER_IMAGE) \
 	$(UNITTEST) $(UNITTTEST_OPTS) $(WORKSPACE)/tests
 
-docker-start-visualizer:
-	nvidia-docker run \
-	--name $(DOCKER_IMAGE_NAME) \
-	$(DOCKER_OPTS) $(DOCKER_IMAGE) \
-	streamlit run $(WORKSPACE)/dgp/scripts/visualizer.py
+docker-start-interactive:
+	docker run \
+	$(DOCKER_OPTS) \
+	$(DOCKER_IMAGE) bash
+
+docker-stop:
+	docker stop $(DOCKER_IMAGE_NAME)
+
+link-githooks:
+	bash .githooks/link_githooks.sh
+
+test:
+	PYTHONPATH=$(PWD):$(PYTHONPATH) \
+	$(UNITTEST) $(UNITTEST_OPTS) $(PWD)/tests/
+
+unlink-githooks:
+	unlink .git/hooks/pre-push && unlink .git/hooks/pre-commit
