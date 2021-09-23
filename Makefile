@@ -49,11 +49,6 @@ docker-start-interactive:
 	$(DOCKER_OPTS) \
 	$(DOCKER_IMAGE) bash
 
-docker-start:
-	nvidia-docker run \
-	-d --name $(DOCKER_IMAGE_NAME) \
-	$(DOCKER_OPTS) $(DOCKER_IMAGE)
-
 docker-exec:
 	nvidia-docker exec -it $(DOCKER_IMAGE_NAME) $(COMMAND)
 
@@ -65,9 +60,3 @@ docker-run-tests: build-proto
 	--name $(DOCKER_IMAGE_NAME)-tests \
 	$(DOCKER_OPTS) $(DOCKER_IMAGE) \
 	$(UNITTEST) $(UNITTTEST_OPTS) $(WORKSPACE)/tests
-
-docker-start-visualizer:
-	nvidia-docker run \
-	--name $(DOCKER_IMAGE_NAME) \
-	$(DOCKER_OPTS) $(DOCKER_IMAGE) \
-	streamlit run $(WORKSPACE)/dgp/scripts/visualizer.py

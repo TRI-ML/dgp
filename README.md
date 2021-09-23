@@ -45,10 +45,3 @@ via:
 make docker-build
 make docker-run-tests
 ```
-
-## Run Visualizer
-Run streamlit-based interactive visualizer
-via:
-```sh
-make docker-start-visualizer
-```
