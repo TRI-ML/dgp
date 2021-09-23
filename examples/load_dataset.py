@@ -3,7 +3,7 @@
 Usage:
 $ python examples/load_dataset.py \
      --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json \
-     --split test
+     --split train
 """
 import argparse
 import logging
