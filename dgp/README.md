@@ -15,6 +15,13 @@ One can find the resulting 3D visualization videos in `vis/3d` and 2D visualizat
   ```sh
   python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d
   ```
+![](../docs/example-3d-viz.gif)
+
+Add flag `render-pointcloud` to render projected pointcloud onto images:
+  ```sh
+  python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d --render-pointcloud
+  ```
+![](../docs/example-3d-viz-proj.gif)
 
 * One can run `python dgp/cli.py visualize-scene` to visualize a single **[DGP Scene](proto/scene.proto#L14)**:
 

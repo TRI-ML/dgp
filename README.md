@@ -11,6 +11,7 @@ all ML datasets and models generated and consumed within Toyota Research Institu
 Dataset-Governance-Policy (DGP) that codifies the schema and
 maintenance of all TRI's Autonomous Vehicle (AV) datasets.
 
+![](docs/example-3d-viz-proj.gif)
 
 ## Components
 - [Schema](dgp/proto/README.md): [Protobuf](https://developers.google.com/protocol-buffers)-based schemas for raw data, annotations

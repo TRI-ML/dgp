@@ -591,7 +591,7 @@ class BEVImage:
         # Draw cuboids
         for bidx, (bbox, color) in enumerate(zip(bboxes3d, colors)):
             # Create 3 versions of colors for face coding.
-            front_face_color = color
+            front_face_color = RED
             side_line_color = [int(side_color_fraction * c) for c in color]
             rear_face_color = [int(rear_color_fraction * c) for c in color]
 
@@ -612,7 +612,7 @@ class BEVImage:
                 self.data, tuple(center), (
                     (corners2d[0][0] + corners2d[1][0]) // 2,
                     (corners2d[0][1] + corners2d[1][1]) // 2,
-                ), WHITE, 2
+                ), GREEN, 2
             )
 
             # Draw front face, side faces and back face
