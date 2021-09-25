@@ -1,16 +1,20 @@
-[<img src="/docs/tri-logo.jpeg" width="25%">](https://www.tri.global/)
+[<img src="docs/tri-logo.jpeg" width="35%">](https://www.tri.global/)
 
+
+Dataset Governance Policy (DGP)
+=============================
 [![Build Status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/builds/238369651)
 [![license](https://img.shields.io/github/license/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/blob/master/LICENSE)
 [![open issues](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/issues)
 
-TRI Dataset Governance Policy
-=============================
 To ensure the traceability, reproducibility and standardization for
 all ML datasets and models generated and consumed within Toyota Research Institute (TRI), we developed the
 Dataset-Governance-Policy (DGP) that codifies the schema and
 maintenance of all TRI's Autonomous Vehicle (AV) datasets.
 
+<p align="center">
+  <img src="docs/3d-viz-proj.gif" alt="3d-viz-proj"/>
+</p>
 
 ## Components
 - [Schema](dgp/proto/README.md): [Protobuf](https://developers.google.com/protocol-buffers)-based schemas for raw data, annotations

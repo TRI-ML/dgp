@@ -45,7 +45,7 @@ VISUALIZE_OPTIONS = [
     ),
     click.option("--show-instance-id", is_flag=True, required=False, help="Show instance ID"),
     click.option("--max-num-items", required=False, help="Max num of samples to visualize"),
-    click.option("--video-fps", default=30, help="Frame rate of generated videos"),
+    click.option("--video-fps", default=10, help="Frame rate of generated videos"),
     click.option(
         "--dst-dir",
         required=False,
@@ -65,7 +65,7 @@ VISUALIZE_OPTIONS = [
         Specify each lidar datum names separately, i.e. `-l lidar`",
         multiple=True
     ),
-    click.option("--render-pointcloud", is_flag=True, required=False, help="Render projected pointcloud on images"),
+    click.option("--render-pointcloud", is_flag=True, required=False, help="Render projected pointcloud on images."),
     click.option(
         "--radar_datum_names",
         "-r",
@@ -77,7 +77,10 @@ VISUALIZE_OPTIONS = [
         multiple=True
     ),
     click.option(
-        "--render-radar-pointcloud", is_flag=True, required=False, help="Render projected radar pointcloud on images"
+        "--render-radar-pointcloud", is_flag=True, required=False, help="Render projected radar pointcloud on images."
+    ),
+    click.option(
+        "--render-raw", is_flag=True, required=False, help="Wether or not to render raw data without annotations."
     ),
 ]
 
@@ -85,7 +88,7 @@ VISUALIZE_OPTIONS = [
 @click.group()
 @click.version_option()
 def cli():
-    pass
+    logging.getLogger().setLevel(level=logging.INFO)
 
 
 @cli.command(name='visualize-scene')
@@ -93,7 +96,7 @@ def cli():
 @click.option("--scene-json", required=True, help="Path to Scene JSON")
 def visualize_scene(
     scene_json, annotations, camera_datum_names, dataset_class, show_instance_id, max_num_items, video_fps, dst_dir,
-    verbose, lidar_datum_names, render_pointcloud, radar_datum_names, render_radar_pointcloud
+    verbose, lidar_datum_names, render_pointcloud, radar_datum_names, render_radar_pointcloud, render_raw
 ):
     """Parallelized visualizing of a scene.
 
@@ -120,51 +123,88 @@ def visualize_scene(
     # 2D visualization
     annotations_2d = tuple([a for a in annotations if ANNOTATION_TYPE_TO_ANNOTATION_GROUP[a] == '2d'])
     if annotations_2d:
-        if dst_dir is not None:
-            os.makedirs(os.path.join(dst_dir, '2d'), exist_ok=True)
-            video_file = os.path.join(dst_dir, '2d', video_path)
         dataset = scene_dataset_class(
             scene_json,
             datum_names=camera_datum_names,
             requested_annotations=annotations_2d,
             only_annotated_datums=True
         )
-        visualize_dataset_2d(
-            dataset,
-            camera_datum_names=camera_datum_names,
-            caption_fn=partial(make_caption, prefix=base_path),
-            output_video_file=video_file,
-            output_video_fps=video_fps,
-            max_num_items=max_num_items,
-            show_instance_id=show_instance_id
-        )
-        logging.info('Visualizing 2D annotation visualizations to {}'.format(video_file))
+        if len(dataset):
+            if dst_dir is not None:
+                os.makedirs(os.path.join(dst_dir, '2d'), exist_ok=True)
+                video_file = os.path.join(dst_dir, '2d', video_path)
+            visualize_dataset_2d(
+                dataset,
+                camera_datum_names=camera_datum_names,
+                caption_fn=partial(make_caption, prefix=base_path),
+                output_video_file=video_file,
+                output_video_fps=video_fps,
+                max_num_items=max_num_items,
+                show_instance_id=show_instance_id
+            )
+            logging.info('Visualizing 2D annotation visualizations to {}'.format(video_file))
+        else:
+            logging.info(
+                'Scene {} does not contain any of the requested datums {} annotated with {}. Skip 2d visualization.'.
+                format(scene_json, camera_datum_names, annotations_2d)
+            )
     # 3D visualization
     annotations_3d = tuple([a for a in annotations if ANNOTATION_TYPE_TO_ANNOTATION_GROUP[a] == '3d'])
     if annotations_3d or render_pointcloud or render_radar_pointcloud:
-        if dst_dir is not None:
-            os.makedirs(os.path.join(dst_dir, '3d'), exist_ok=True)
-            video_file = os.path.join(dst_dir, '3d', video_path)
+        datum_names = list(camera_datum_names) + list(lidar_datum_names) + list(radar_datum_names)
         dataset = SynchronizedScene(
-            scene_json,
-            datum_names=list(camera_datum_names) + list(lidar_datum_names) + list(radar_datum_names),
-            requested_annotations=annotations_3d,
-            only_annotated_datums=True
+            scene_json, datum_names=datum_names, requested_annotations=annotations_3d, only_annotated_datums=True
         )
-        visualize_dataset_3d(
-            dataset,
-            camera_datum_names=camera_datum_names,
-            lidar_datum_names=lidar_datum_names,
-            caption_fn=partial(make_caption, prefix=base_path),
-            output_video_file=video_file,
-            output_video_fps=video_fps,
-            render_pointcloud_on_images=render_pointcloud,
-            max_num_items=max_num_items,
-            show_instance_id_on_bev=show_instance_id,
-            radar_datum_names=radar_datum_names,
-            render_radar_pointcloud_on_images=render_radar_pointcloud
-        )
-        logging.info('Visualizing 3D annotation visualizations to {}'.format(video_file))
+        if len(dataset):
+            if dst_dir is not None:
+                os.makedirs(os.path.join(dst_dir, '3d'), exist_ok=True)
+                video_file = os.path.join(dst_dir, '3d', video_path)
+            visualize_dataset_3d(
+                dataset,
+                camera_datum_names=camera_datum_names,
+                lidar_datum_names=lidar_datum_names,
+                caption_fn=partial(make_caption, prefix=base_path),
+                output_video_file=video_file,
+                output_video_fps=video_fps,
+                render_pointcloud_on_images=render_pointcloud,
+                max_num_items=max_num_items,
+                show_instance_id_on_bev=show_instance_id,
+                radar_datum_names=radar_datum_names,
+                render_radar_pointcloud_on_images=render_radar_pointcloud
+            )
+            logging.info('Visualizing 3D annotation visualizations to {}'.format(video_file))
+        else:
+            logging.info(
+                'Scene {} does not contain any of the requested samples {} annotated with {}. Skip 3d visualization.'.
+                format(scene_json, datum_names, annotations_3d)
+            )
+    if render_raw:
+        datum_names = list(camera_datum_names) + list(lidar_datum_names) + list(radar_datum_names)
+        dataset = SynchronizedScene(scene_json, datum_names=datum_names, only_annotated_datums=False)
+        if len(dataset):
+            if dst_dir is not None:
+                os.makedirs(os.path.join(dst_dir, 'raw'), exist_ok=True)
+                video_file = os.path.join(dst_dir, 'raw', video_path)
+            visualize_dataset_3d(
+                dataset,
+                camera_datum_names=camera_datum_names,
+                lidar_datum_names=lidar_datum_names,
+                caption_fn=partial(make_caption, prefix=base_path),
+                output_video_file=video_file,
+                output_video_fps=video_fps,
+                render_pointcloud_on_images=render_pointcloud,
+                max_num_items=max_num_items,
+                show_instance_id_on_bev=False,
+                radar_datum_names=radar_datum_names,
+                render_radar_pointcloud_on_images=render_radar_pointcloud
+            )
+            logging.info('Visualizing raw sensory data visualizations to {}'.format(video_file))
+        else:
+            logging.info(
+                'Scene {} does not contain any of the requested samples {}. Skip visualization.'.format(
+                    scene_json, datum_names
+                )
+            )
 
 
 @cli.command(name='visualize-scenes')
@@ -178,7 +218,8 @@ def visualize_scene(
 @add_options(options=VISUALIZE_OPTIONS)
 def visualize_scenes(
     scene_dataset_json, split, annotations, camera_datum_names, dataset_class, show_instance_id, max_num_items,
-    video_fps, dst_dir, verbose, lidar_datum_names, render_pointcloud, radar_datum_names, render_radar_pointcloud
+    video_fps, dst_dir, verbose, lidar_datum_names, render_pointcloud, radar_datum_names, render_radar_pointcloud,
+    render_raw
 ):
     """Parallelized visualizing of scene dataset.
 
@@ -219,7 +260,8 @@ def visualize_scenes(
             lidar_datum_names=lidar_datum_names,
             render_pointcloud=render_pointcloud,
             radar_datum_names=radar_datum_names,
-            render_radar_pointcloud=render_radar_pointcloud
+            render_radar_pointcloud=render_radar_pointcloud,
+            render_raw=render_raw
         )
 
 
