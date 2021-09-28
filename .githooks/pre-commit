@@ -38,13 +38,14 @@ if [ "$CHANGED_FILES" ]; then
   exit 1
 fi
 
+
+echo 'Fixing import order in Python files . . .'
+isort ${PYTHON_FILES[@]}
+
 # Format all staged files, then exit with an error code if any have uncommitted
 # changes.
 echo 'Formatting staged Python files . . .'
 yapf --style .style.yapf -i -r ${PYTHON_FILES[@]}
-
-echo 'Fixing import order in Python files . . .'
-isort ${PYTHON_FILES[@]}
 
 
 CHANGED_FILES=(`git diff --name-only ${PYTHON_FILES[@]}`)

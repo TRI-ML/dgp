@@ -1,4 +1,4 @@
-# Copyright 2019 Toyota Research Institute.  All rights reserved.
+# Copyright 2021 Toyota Research Institute.  All rights reserved.
 """General-purpose class for cameras."""
 from functools import lru_cache
 
@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 
 from dgp.proto import geometry_pb2
-from dgp.utils.geometry import Pose
+from dgp.utils.pose import Pose
 
 
 def generate_depth_map(camera, Xw, shape):
@@ -92,7 +92,7 @@ def camera_matrix_from_pbobject(intrinsics):
 
 class Distortion:
     """Distortion via distortion parameters or full distortion map"""
-    def __init__(self, D=np.zeros(5, np.float64)):
+    def __init__(self, D=np.zeros(5, np.float32)):
         assert isinstance(D, np.ndarray)
         self.D = D
 
@@ -117,7 +117,7 @@ class Camera:
         D: np.ndarray (5,) or (H x W)
             Distortion parameters or distortion map.
 
-        p_cw: dgp.utils.geometry.Pose
+        p_cw: dgp.utils.pose.Pose
             Pose from world to camera frame.
         """
         self.K = K
@@ -165,7 +165,7 @@ class Camera:
         Camera
             Camera object with relevant intrinsics.
         """
-        K = np.float64([
+        K = np.float32([
             [fx, 0, cx],
             [0, fy, cy],
             [0, 0, 1],
@@ -301,6 +301,9 @@ class Camera:
         inside_frustum: np.ndarray
             Bool array for X which are inside frustum
         """
+        if not len(X):
+            return np.array([], dtype=np.bool)
+
         corners = np.asarray([(0, 0), (width - 1, 0), (width - 1, height - 1), (0, height - 1)], dtype=np.float32)
         rays = self.unproject(corners)
         rays /= np.linalg.norm(rays, axis=1)[:, None]

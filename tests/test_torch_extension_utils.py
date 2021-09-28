@@ -6,12 +6,12 @@ import numpy as np
 import torch
 from pyquaternion import Quaternion
 
-from dgp.utils.geometry import Pose as NumpyPose
+from dgp.utils.pose import Pose as NumpyPose
 from dgp.utils.testing import assert_raises, assert_true
 from dgp.utils.torch_extension.camera import Camera, image_grid
-from dgp.utils.torch_extension.pose import (Pose, QuaternionPose,
-                                            quaternion_to_rotation_matrix,
-                                            rotation_matrix_to_quaternion)
+from dgp.utils.torch_extension.pose import (
+    Pose, QuaternionPose, quaternion_to_rotation_matrix, rotation_matrix_to_quaternion
+)
 
 
 def make_random_quaternion():
