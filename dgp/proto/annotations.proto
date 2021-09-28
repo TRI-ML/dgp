@@ -1,4 +1,4 @@
-// Copyright 2019 Toyota Research Institute.  All rights reserved.
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 // Definitions for annotation types for images and point clouds
 
 syntax = "proto3";
@@ -42,7 +42,7 @@ enum AnnotationType {
   DEPTH = 6;                       // depth
 
   // 3D Surface normals on the image
-  SURFACE_NORMALS_2D = 10;          // surface_normals_2d
+  SURFACE_NORMALS_2D = 13;          // surface_normals_2d
 
   // 3D Surface normals on the point cloud
   SURFACE_NORMALS_3D = 7;          // surface_normals_3d
@@ -54,6 +54,18 @@ enum AnnotationType {
   // 3D Motion vectors on the point cloud
   // (i.e. 3D flow on the point cloud)
   MOTION_VECTORS_3D = 9;           // motion_vectors_2d
+
+  // 2D Key Point on the image
+  KEY_POINT_2D = 10;               // key_point_2d
+
+  // 2D Key Line on the image
+  KEY_LINE_2D = 11;                // key_line_2d
+
+  // 2D Polygon on the image
+  POLYGON_2D = 12;                 // polygon_2d
+
+  // Agent behavior
+  AGENT_BEHAVIOR = 14;             // agent_behavior
 }
 
 // 2D bounding box
@@ -89,6 +101,7 @@ message BoundingBox2DAnnotation {
 
   // An associative map stores arbitrary attributes, where the key is attribute name
   // and the value is attribute value. Both key_type and value_type are string.
+  // This can be used to stored `agent_behavior` states (i.e., parked car, pedestrian intent).
   map<string, string> attributes = 6;
 }
 
@@ -138,6 +151,68 @@ message BoundingBox3DAnnotation {
 
 }
 
+// 2D point.
+message KeyPoint2D {
+  // (x, y) point (in absolute pixel coordinates).
+  uint32 x = 1;
+  uint32 y = 2;
+}
+
+// 2D point annotation.
+message KeyPoint2DAnnotation {
+  // Class identifier (should be in [0, num_classes - 1])
+  uint32 class_id = 1;
+
+  // 2D point.
+  KeyPoint2D point = 2;
+
+  // An associative map stores arbitrary attributes, where the key is attribute name
+  // and the value is attribute value. Both key_type and value_type are string.
+  map<string, string> attributes = 3;
+
+  // An identifier key. Used to link with other annotations.
+  string key = 4;
+}
+
+// 2D line annotation.
+message KeyLine2DAnnotation{
+  // Class identifier (should be in [0, num_classes - 1])
+  uint32 class_id = 1;
+
+  // 2D line.
+  repeated KeyPoint2D vertices = 2;
+
+  // An associative map stores arbitrary attributes, where the key is attribute name
+  // and the value is attribute value. Both key_type and value_type are string.
+  map<string, string> attributes = 3;
+
+  // An identifier key. Used to link with other annotations.
+  string key = 4;
+}
+
+// 2D point for polygon annotation which allows negative coordinate for
+// truncated rotated bounding box at the edge of an image because this kind of
+// negative coordinate is meaningful.
+message PolygonPoint2D {
+  // (x, y) point (in absolute pixel coordinates).
+  int32 x = 1;
+  int32 y = 2;
+}
+
+// 2D polygon annotation.
+message Polygon2DAnnotation{
+  // Class identifier (should be in [0, num_classes - 1])
+  uint32 class_id = 1;
+
+  // 2D polygon.
+  // Points should be put into this field with counter-clockwise order.
+  repeated PolygonPoint2D vertices = 2;
+
+  // An associative map stores arbitrary attributes, where the key is attribute name
+  // and the value is attribute value. Both key_type and value_type are string.
+  map<string, string> attributes = 3;
+}
+
 // List of BoundingBox2DAnnotation
 message BoundingBox2DAnnotations {
   repeated BoundingBox2DAnnotation annotations = 1;
@@ -146,4 +221,19 @@ message BoundingBox2DAnnotations {
 // List of BoundingBox3DAnnotation
 message BoundingBox3DAnnotations {
   repeated BoundingBox3DAnnotation annotations = 1;
+}
+
+// List of KeyPoint2DAnnotation
+message KeyPoint2DAnnotations {
+  repeated KeyPoint2DAnnotation annotations = 1;
+}
+
+// List of KeyLine2DAnnotation
+message KeyLine2DAnnotations {
+  repeated KeyLine2DAnnotation annotations = 1;
+}
+
+// List of Polygon2DAnnotation
+message Polygon2DAnnotations {
+  repeated Polygon2DAnnotation annotations = 1;
 }
