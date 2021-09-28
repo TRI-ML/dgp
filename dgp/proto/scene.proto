@@ -1,4 +1,4 @@
-// Copyright 2019 Toyota Research Institute.  All rights reserved.
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 // Definitions for a scene within a dataset.
 syntax = "proto3";
 
@@ -34,13 +34,17 @@ message Scene {
   // Optional metadata (i.e. miscellaneous enriched scene-level annotations)
   map<string, google.protobuf.Any> metadata = 5;
 
-  // List of Datum's contained in this Scene.
+  // List of Datum's contained in this Scene. In the short term, we're using this to enable
+  // `tlog_to_scale_converter` in driving to output a single Scene (including all Datum's
+  // it includes) per extraction job. In the longer term, the objective is to phase out the use
+  // of "data" in Dataset and have the Scene be the main source of Datum's.
   repeated Datum data = 6;
 
   // Date and timestamp of scene creation
   google.protobuf.Timestamp creation_date = 7;
 
   // Task-specific ontologies
+  // Ontologies are stored under <scene_dir>/ontology/<ontology_sha1>.json
   // Maps dgp.proto.AnnotationType (segmentation, instances, etc) to the filename
   // containing the ontology for the specific AnnotationType/Task.
   map<int32, string> ontologies = 8;
@@ -62,7 +66,7 @@ message SceneFiles {
   // A Scene message is serialized and stored under the following naming convention:
   //    <scene_dir>/scene_<scene_hash>.json
   // where <scene_hash> is the deterministic deterministic SHA1 hash hexdigest of a scene and served
-  // as the version of the scene, see dgp.utils.dataset_conversion.generate_uid_from_pbobject
+  // as the version of the scene, see dgp.utils.protobuf.generate_uid_from_pbobject
   // for details.
   repeated string filenames = 1;
 }
