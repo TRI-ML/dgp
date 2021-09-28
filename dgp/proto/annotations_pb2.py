@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='dgp.proto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x1b\x64gp/proto/annotations.proto\x12\tdgp.proto\x1a\x18\x64gp/proto/geometry.proto\";\n\rBoundingBox2D\x12\t\n\x01x\x18\x01 \x01(\r\x12\t\n\x01y\x18\x02 \x01(\r\x12\t\n\x01w\x18\x03 \x01(\r\x12\t\n\x01h\x18\x04 \x01(\r\"\x81\x02\n\x17\x42oundingBox2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox2D\x12\x0c\n\x04\x61rea\x18\x03 \x01(\r\x12\x0f\n\x07iscrowd\x18\x04 \x01(\x08\x12\x13\n\x0binstance_id\x18\x05 \x01(\r\x12\x46\n\nattributes\x18\x06 \x03(\x0b\x32\x32.dgp.proto.BoundingBox2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x84\x01\n\rBoundingBox3D\x12\x1d\n\x04pose\x18\x01 \x01(\x0b\x32\x0f.dgp.proto.Pose\x12\r\n\x05width\x18\x02 \x01(\x01\x12\x0e\n\x06length\x18\x03 \x01(\x01\x12\x0e\n\x06height\x18\x04 \x01(\x01\x12\x11\n\tocclusion\x18\x05 \x01(\r\x12\x12\n\ntruncation\x18\x06 \x01(\x01\"\xf6\x01\n\x17\x42oundingBox3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox3D\x12\x13\n\x0binstance_id\x18\x03 \x01(\r\x12\x46\n\nattributes\x18\x04 \x03(\x0b\x32\x32.dgp.proto.BoundingBox3DAnnotation.AttributesEntry\x12\x12\n\nnum_points\x18\x05 \x01(\r\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"S\n\x18\x42oundingBox2DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox2DAnnotation\"S\n\x18\x42oundingBox3DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox3DAnnotation*\x9b\x02\n\x0e\x41nnotationType\x12\x13\n\x0f\x42OUNDING_BOX_2D\x10\x00\x12\x13\n\x0f\x42OUNDING_BOX_3D\x10\x01\x12\x1c\n\x18SEMANTIC_SEGMENTATION_2D\x10\x02\x12\x1c\n\x18SEMANTIC_SEGMENTATION_3D\x10\x03\x12\x1c\n\x18INSTANCE_SEGMENTATION_2D\x10\x04\x12\x1c\n\x18INSTANCE_SEGMENTATION_3D\x10\x05\x12\t\n\x05\x44\x45PTH\x10\x06\x12\x16\n\x12SURFACE_NORMALS_2D\x10\n\x12\x16\n\x12SURFACE_NORMALS_3D\x10\x07\x12\x15\n\x11MOTION_VECTORS_2D\x10\x08\x12\x15\n\x11MOTION_VECTORS_3D\x10\tb\x06proto3')
+  serialized_pb=_b('\n\x1b\x64gp/proto/annotations.proto\x12\tdgp.proto\x1a\x18\x64gp/proto/geometry.proto\";\n\rBoundingBox2D\x12\t\n\x01x\x18\x01 \x01(\r\x12\t\n\x01y\x18\x02 \x01(\r\x12\t\n\x01w\x18\x03 \x01(\r\x12\t\n\x01h\x18\x04 \x01(\r\"\x81\x02\n\x17\x42oundingBox2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox2D\x12\x0c\n\x04\x61rea\x18\x03 \x01(\r\x12\x0f\n\x07iscrowd\x18\x04 \x01(\x08\x12\x13\n\x0binstance_id\x18\x05 \x01(\r\x12\x46\n\nattributes\x18\x06 \x03(\x0b\x32\x32.dgp.proto.BoundingBox2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x84\x01\n\rBoundingBox3D\x12\x1d\n\x04pose\x18\x01 \x01(\x0b\x32\x0f.dgp.proto.Pose\x12\r\n\x05width\x18\x02 \x01(\x01\x12\x0e\n\x06length\x18\x03 \x01(\x01\x12\x0e\n\x06height\x18\x04 \x01(\x01\x12\x11\n\tocclusion\x18\x05 \x01(\r\x12\x12\n\ntruncation\x18\x06 \x01(\x01\"\xf6\x01\n\x17\x42oundingBox3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox3D\x12\x13\n\x0binstance_id\x18\x03 \x01(\r\x12\x46\n\nattributes\x18\x04 \x03(\x0b\x32\x32.dgp.proto.BoundingBox3DAnnotation.AttributesEntry\x12\x12\n\nnum_points\x18\x05 \x01(\r\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\"\n\nKeyPoint2D\x12\t\n\x01x\x18\x01 \x01(\r\x12\t\n\x01y\x18\x02 \x01(\r\"\xd3\x01\n\x14KeyPoint2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12$\n\x05point\x18\x02 \x01(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x43\n\nattributes\x18\x03 \x03(\x0b\x32/.dgp.proto.KeyPoint2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd4\x01\n\x13KeyLine2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\'\n\x08vertices\x18\x02 \x03(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.KeyLine2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"&\n\x0ePolygonPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xcb\x01\n\x13Polygon2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12+\n\x08vertices\x18\x02 \x03(\x0b\x32\x19.dgp.proto.PolygonPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.Polygon2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"S\n\x18\x42oundingBox2DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox2DAnnotation\"S\n\x18\x42oundingBox3DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox3DAnnotation\"M\n\x15KeyPoint2DAnnotations\x12\x34\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1f.dgp.proto.KeyPoint2DAnnotation\"K\n\x14KeyLine2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.KeyLine2DAnnotation\"K\n\x14Polygon2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.Polygon2DAnnotation*\xe2\x02\n\x0e\x41nnotationType\x12\x13\n\x0f\x42OUNDING_BOX_2D\x10\x00\x12\x13\n\x0f\x42OUNDING_BOX_3D\x10\x01\x12\x1c\n\x18SEMANTIC_SEGMENTATION_2D\x10\x02\x12\x1c\n\x18SEMANTIC_SEGMENTATION_3D\x10\x03\x12\x1c\n\x18INSTANCE_SEGMENTATION_2D\x10\x04\x12\x1c\n\x18INSTANCE_SEGMENTATION_3D\x10\x05\x12\t\n\x05\x44\x45PTH\x10\x06\x12\x16\n\x12SURFACE_NORMALS_2D\x10\r\x12\x16\n\x12SURFACE_NORMALS_3D\x10\x07\x12\x15\n\x11MOTION_VECTORS_2D\x10\x08\x12\x15\n\x11MOTION_VECTORS_3D\x10\t\x12\x10\n\x0cKEY_POINT_2D\x10\n\x12\x0f\n\x0bKEY_LINE_2D\x10\x0b\x12\x0e\n\nPOLYGON_2D\x10\x0c\x12\x12\n\x0e\x41GENT_BEHAVIOR\x10\x0e\x62\x06proto3')
   ,
   dependencies=[dgp_dot_proto_dot_geometry__pb2.DESCRIPTOR,])
 
@@ -61,7 +61,7 @@ _ANNOTATIONTYPE = _descriptor.EnumDescriptor(
       serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='SURFACE_NORMALS_2D', index=7, number=10,
+      name='SURFACE_NORMALS_2D', index=7, number=13,
       serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
@@ -76,11 +76,27 @@ _ANNOTATIONTYPE = _descriptor.EnumDescriptor(
       name='MOTION_VECTORS_3D', index=10, number=9,
       serialized_options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='KEY_POINT_2D', index=11, number=10,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='KEY_LINE_2D', index=12, number=11,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='POLYGON_2D', index=13, number=12,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='AGENT_BEHAVIOR', index=14, number=14,
+      serialized_options=None,
+      type=None),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=944,
-  serialized_end=1227,
+  serialized_start=1888,
+  serialized_end=2242,
 )
 _sym_db.RegisterEnumDescriptor(_ANNOTATIONTYPE)
 
@@ -92,10 +108,14 @@ SEMANTIC_SEGMENTATION_3D = 3
 INSTANCE_SEGMENTATION_2D = 4
 INSTANCE_SEGMENTATION_3D = 5
 DEPTH = 6
-SURFACE_NORMALS_2D = 10
+SURFACE_NORMALS_2D = 13
 SURFACE_NORMALS_3D = 7
 MOTION_VECTORS_2D = 8
 MOTION_VECTORS_3D = 9
+KEY_POINT_2D = 10
+KEY_LINE_2D = 11
+POLYGON_2D = 12
+AGENT_BEHAVIOR = 14
 
 
 
@@ -416,6 +436,342 @@ _BOUNDINGBOX3DANNOTATION = _descriptor.Descriptor(
 )
 
 
+_KEYPOINT2D = _descriptor.Descriptor(
+  name='KeyPoint2D',
+  full_name='dgp.proto.KeyPoint2D',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='x', full_name='dgp.proto.KeyPoint2D.x', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='y', full_name='dgp.proto.KeyPoint2D.y', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=773,
+  serialized_end=807,
+)
+
+
+_KEYPOINT2DANNOTATION_ATTRIBUTESENTRY = _descriptor.Descriptor(
+  name='AttributesEntry',
+  full_name='dgp.proto.KeyPoint2DAnnotation.AttributesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.KeyPoint2DAnnotation.AttributesEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='dgp.proto.KeyPoint2DAnnotation.AttributesEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=338,
+  serialized_end=387,
+)
+
+_KEYPOINT2DANNOTATION = _descriptor.Descriptor(
+  name='KeyPoint2DAnnotation',
+  full_name='dgp.proto.KeyPoint2DAnnotation',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='class_id', full_name='dgp.proto.KeyPoint2DAnnotation.class_id', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='point', full_name='dgp.proto.KeyPoint2DAnnotation.point', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='attributes', full_name='dgp.proto.KeyPoint2DAnnotation.attributes', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.KeyPoint2DAnnotation.key', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_KEYPOINT2DANNOTATION_ATTRIBUTESENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=810,
+  serialized_end=1021,
+)
+
+
+_KEYLINE2DANNOTATION_ATTRIBUTESENTRY = _descriptor.Descriptor(
+  name='AttributesEntry',
+  full_name='dgp.proto.KeyLine2DAnnotation.AttributesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.KeyLine2DAnnotation.AttributesEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='dgp.proto.KeyLine2DAnnotation.AttributesEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=338,
+  serialized_end=387,
+)
+
+_KEYLINE2DANNOTATION = _descriptor.Descriptor(
+  name='KeyLine2DAnnotation',
+  full_name='dgp.proto.KeyLine2DAnnotation',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='class_id', full_name='dgp.proto.KeyLine2DAnnotation.class_id', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='vertices', full_name='dgp.proto.KeyLine2DAnnotation.vertices', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='attributes', full_name='dgp.proto.KeyLine2DAnnotation.attributes', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.KeyLine2DAnnotation.key', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_KEYLINE2DANNOTATION_ATTRIBUTESENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1024,
+  serialized_end=1236,
+)
+
+
+_POLYGONPOINT2D = _descriptor.Descriptor(
+  name='PolygonPoint2D',
+  full_name='dgp.proto.PolygonPoint2D',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='x', full_name='dgp.proto.PolygonPoint2D.x', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='y', full_name='dgp.proto.PolygonPoint2D.y', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1238,
+  serialized_end=1276,
+)
+
+
+_POLYGON2DANNOTATION_ATTRIBUTESENTRY = _descriptor.Descriptor(
+  name='AttributesEntry',
+  full_name='dgp.proto.Polygon2DAnnotation.AttributesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.Polygon2DAnnotation.AttributesEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='dgp.proto.Polygon2DAnnotation.AttributesEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=338,
+  serialized_end=387,
+)
+
+_POLYGON2DANNOTATION = _descriptor.Descriptor(
+  name='Polygon2DAnnotation',
+  full_name='dgp.proto.Polygon2DAnnotation',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='class_id', full_name='dgp.proto.Polygon2DAnnotation.class_id', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='vertices', full_name='dgp.proto.Polygon2DAnnotation.vertices', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='attributes', full_name='dgp.proto.Polygon2DAnnotation.attributes', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_POLYGON2DANNOTATION_ATTRIBUTESENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1279,
+  serialized_end=1482,
+)
+
+
 _BOUNDINGBOX2DANNOTATIONS = _descriptor.Descriptor(
   name='BoundingBox2DAnnotations',
   full_name='dgp.proto.BoundingBox2DAnnotations',
@@ -442,8 +798,8 @@ _BOUNDINGBOX2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=773,
-  serialized_end=856,
+  serialized_start=1484,
+  serialized_end=1567,
 )
 
 
@@ -473,8 +829,101 @@ _BOUNDINGBOX3DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=858,
-  serialized_end=941,
+  serialized_start=1569,
+  serialized_end=1652,
+)
+
+
+_KEYPOINT2DANNOTATIONS = _descriptor.Descriptor(
+  name='KeyPoint2DAnnotations',
+  full_name='dgp.proto.KeyPoint2DAnnotations',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='annotations', full_name='dgp.proto.KeyPoint2DAnnotations.annotations', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1654,
+  serialized_end=1731,
+)
+
+
+_KEYLINE2DANNOTATIONS = _descriptor.Descriptor(
+  name='KeyLine2DAnnotations',
+  full_name='dgp.proto.KeyLine2DAnnotations',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='annotations', full_name='dgp.proto.KeyLine2DAnnotations.annotations', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1733,
+  serialized_end=1808,
+)
+
+
+_POLYGON2DANNOTATIONS = _descriptor.Descriptor(
+  name='Polygon2DAnnotations',
+  full_name='dgp.proto.Polygon2DAnnotations',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='annotations', full_name='dgp.proto.Polygon2DAnnotations.annotations', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1810,
+  serialized_end=1885,
 )
 
 _BOUNDINGBOX2DANNOTATION_ATTRIBUTESENTRY.containing_type = _BOUNDINGBOX2DANNOTATION
@@ -484,14 +933,34 @@ _BOUNDINGBOX3D.fields_by_name['pose'].message_type = dgp_dot_proto_dot_geometry_
 _BOUNDINGBOX3DANNOTATION_ATTRIBUTESENTRY.containing_type = _BOUNDINGBOX3DANNOTATION
 _BOUNDINGBOX3DANNOTATION.fields_by_name['box'].message_type = _BOUNDINGBOX3D
 _BOUNDINGBOX3DANNOTATION.fields_by_name['attributes'].message_type = _BOUNDINGBOX3DANNOTATION_ATTRIBUTESENTRY
+_KEYPOINT2DANNOTATION_ATTRIBUTESENTRY.containing_type = _KEYPOINT2DANNOTATION
+_KEYPOINT2DANNOTATION.fields_by_name['point'].message_type = _KEYPOINT2D
+_KEYPOINT2DANNOTATION.fields_by_name['attributes'].message_type = _KEYPOINT2DANNOTATION_ATTRIBUTESENTRY
+_KEYLINE2DANNOTATION_ATTRIBUTESENTRY.containing_type = _KEYLINE2DANNOTATION
+_KEYLINE2DANNOTATION.fields_by_name['vertices'].message_type = _KEYPOINT2D
+_KEYLINE2DANNOTATION.fields_by_name['attributes'].message_type = _KEYLINE2DANNOTATION_ATTRIBUTESENTRY
+_POLYGON2DANNOTATION_ATTRIBUTESENTRY.containing_type = _POLYGON2DANNOTATION
+_POLYGON2DANNOTATION.fields_by_name['vertices'].message_type = _POLYGONPOINT2D
+_POLYGON2DANNOTATION.fields_by_name['attributes'].message_type = _POLYGON2DANNOTATION_ATTRIBUTESENTRY
 _BOUNDINGBOX2DANNOTATIONS.fields_by_name['annotations'].message_type = _BOUNDINGBOX2DANNOTATION
 _BOUNDINGBOX3DANNOTATIONS.fields_by_name['annotations'].message_type = _BOUNDINGBOX3DANNOTATION
+_KEYPOINT2DANNOTATIONS.fields_by_name['annotations'].message_type = _KEYPOINT2DANNOTATION
+_KEYLINE2DANNOTATIONS.fields_by_name['annotations'].message_type = _KEYLINE2DANNOTATION
+_POLYGON2DANNOTATIONS.fields_by_name['annotations'].message_type = _POLYGON2DANNOTATION
 DESCRIPTOR.message_types_by_name['BoundingBox2D'] = _BOUNDINGBOX2D
 DESCRIPTOR.message_types_by_name['BoundingBox2DAnnotation'] = _BOUNDINGBOX2DANNOTATION
 DESCRIPTOR.message_types_by_name['BoundingBox3D'] = _BOUNDINGBOX3D
 DESCRIPTOR.message_types_by_name['BoundingBox3DAnnotation'] = _BOUNDINGBOX3DANNOTATION
+DESCRIPTOR.message_types_by_name['KeyPoint2D'] = _KEYPOINT2D
+DESCRIPTOR.message_types_by_name['KeyPoint2DAnnotation'] = _KEYPOINT2DANNOTATION
+DESCRIPTOR.message_types_by_name['KeyLine2DAnnotation'] = _KEYLINE2DANNOTATION
+DESCRIPTOR.message_types_by_name['PolygonPoint2D'] = _POLYGONPOINT2D
+DESCRIPTOR.message_types_by_name['Polygon2DAnnotation'] = _POLYGON2DANNOTATION
 DESCRIPTOR.message_types_by_name['BoundingBox2DAnnotations'] = _BOUNDINGBOX2DANNOTATIONS
 DESCRIPTOR.message_types_by_name['BoundingBox3DAnnotations'] = _BOUNDINGBOX3DANNOTATIONS
+DESCRIPTOR.message_types_by_name['KeyPoint2DAnnotations'] = _KEYPOINT2DANNOTATIONS
+DESCRIPTOR.message_types_by_name['KeyLine2DAnnotations'] = _KEYLINE2DANNOTATIONS
+DESCRIPTOR.message_types_by_name['Polygon2DAnnotations'] = _POLYGON2DANNOTATIONS
 DESCRIPTOR.enum_types_by_name['AnnotationType'] = _ANNOTATIONTYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -539,6 +1008,65 @@ BoundingBox3DAnnotation = _reflection.GeneratedProtocolMessageType('BoundingBox3
 _sym_db.RegisterMessage(BoundingBox3DAnnotation)
 _sym_db.RegisterMessage(BoundingBox3DAnnotation.AttributesEntry)
 
+KeyPoint2D = _reflection.GeneratedProtocolMessageType('KeyPoint2D', (_message.Message,), dict(
+  DESCRIPTOR = _KEYPOINT2D,
+  __module__ = 'dgp.proto.annotations_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.KeyPoint2D)
+  ))
+_sym_db.RegisterMessage(KeyPoint2D)
+
+KeyPoint2DAnnotation = _reflection.GeneratedProtocolMessageType('KeyPoint2DAnnotation', (_message.Message,), dict(
+
+  AttributesEntry = _reflection.GeneratedProtocolMessageType('AttributesEntry', (_message.Message,), dict(
+    DESCRIPTOR = _KEYPOINT2DANNOTATION_ATTRIBUTESENTRY,
+    __module__ = 'dgp.proto.annotations_pb2'
+    # @@protoc_insertion_point(class_scope:dgp.proto.KeyPoint2DAnnotation.AttributesEntry)
+    ))
+  ,
+  DESCRIPTOR = _KEYPOINT2DANNOTATION,
+  __module__ = 'dgp.proto.annotations_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.KeyPoint2DAnnotation)
+  ))
+_sym_db.RegisterMessage(KeyPoint2DAnnotation)
+_sym_db.RegisterMessage(KeyPoint2DAnnotation.AttributesEntry)
+
+KeyLine2DAnnotation = _reflection.GeneratedProtocolMessageType('KeyLine2DAnnotation', (_message.Message,), dict(
+
+  AttributesEntry = _reflection.GeneratedProtocolMessageType('AttributesEntry', (_message.Message,), dict(
+    DESCRIPTOR = _KEYLINE2DANNOTATION_ATTRIBUTESENTRY,
+    __module__ = 'dgp.proto.annotations_pb2'
+    # @@protoc_insertion_point(class_scope:dgp.proto.KeyLine2DAnnotation.AttributesEntry)
+    ))
+  ,
+  DESCRIPTOR = _KEYLINE2DANNOTATION,
+  __module__ = 'dgp.proto.annotations_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.KeyLine2DAnnotation)
+  ))
+_sym_db.RegisterMessage(KeyLine2DAnnotation)
+_sym_db.RegisterMessage(KeyLine2DAnnotation.AttributesEntry)
+
+PolygonPoint2D = _reflection.GeneratedProtocolMessageType('PolygonPoint2D', (_message.Message,), dict(
+  DESCRIPTOR = _POLYGONPOINT2D,
+  __module__ = 'dgp.proto.annotations_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.PolygonPoint2D)
+  ))
+_sym_db.RegisterMessage(PolygonPoint2D)
+
+Polygon2DAnnotation = _reflection.GeneratedProtocolMessageType('Polygon2DAnnotation', (_message.Message,), dict(
+
+  AttributesEntry = _reflection.GeneratedProtocolMessageType('AttributesEntry', (_message.Message,), dict(
+    DESCRIPTOR = _POLYGON2DANNOTATION_ATTRIBUTESENTRY,
+    __module__ = 'dgp.proto.annotations_pb2'
+    # @@protoc_insertion_point(class_scope:dgp.proto.Polygon2DAnnotation.AttributesEntry)
+    ))
+  ,
+  DESCRIPTOR = _POLYGON2DANNOTATION,
+  __module__ = 'dgp.proto.annotations_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.Polygon2DAnnotation)
+  ))
+_sym_db.RegisterMessage(Polygon2DAnnotation)
+_sym_db.RegisterMessage(Polygon2DAnnotation.AttributesEntry)
+
 BoundingBox2DAnnotations = _reflection.GeneratedProtocolMessageType('BoundingBox2DAnnotations', (_message.Message,), dict(
   DESCRIPTOR = _BOUNDINGBOX2DANNOTATIONS,
   __module__ = 'dgp.proto.annotations_pb2'
@@ -553,7 +1081,31 @@ BoundingBox3DAnnotations = _reflection.GeneratedProtocolMessageType('BoundingBox
   ))
 _sym_db.RegisterMessage(BoundingBox3DAnnotations)
 
+KeyPoint2DAnnotations = _reflection.GeneratedProtocolMessageType('KeyPoint2DAnnotations', (_message.Message,), dict(
+  DESCRIPTOR = _KEYPOINT2DANNOTATIONS,
+  __module__ = 'dgp.proto.annotations_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.KeyPoint2DAnnotations)
+  ))
+_sym_db.RegisterMessage(KeyPoint2DAnnotations)
+
+KeyLine2DAnnotations = _reflection.GeneratedProtocolMessageType('KeyLine2DAnnotations', (_message.Message,), dict(
+  DESCRIPTOR = _KEYLINE2DANNOTATIONS,
+  __module__ = 'dgp.proto.annotations_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.KeyLine2DAnnotations)
+  ))
+_sym_db.RegisterMessage(KeyLine2DAnnotations)
+
+Polygon2DAnnotations = _reflection.GeneratedProtocolMessageType('Polygon2DAnnotations', (_message.Message,), dict(
+  DESCRIPTOR = _POLYGON2DANNOTATIONS,
+  __module__ = 'dgp.proto.annotations_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.Polygon2DAnnotations)
+  ))
+_sym_db.RegisterMessage(Polygon2DAnnotations)
+
 
 _BOUNDINGBOX2DANNOTATION_ATTRIBUTESENTRY._options = None
 _BOUNDINGBOX3DANNOTATION_ATTRIBUTESENTRY._options = None
+_KEYPOINT2DANNOTATION_ATTRIBUTESENTRY._options = None
+_KEYLINE2DANNOTATION_ATTRIBUTESENTRY._options = None
+_POLYGON2DANNOTATION_ATTRIBUTESENTRY._options = None
 # @@protoc_insertion_point(module_scope)

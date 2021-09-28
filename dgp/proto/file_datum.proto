@@ -1,0 +1,37 @@
+// Copyright 2020-2021 Toyota Research Institute.  All rights reserved.
+// Definition for an arbitrary annotated datum contained in a file.
+
+syntax = "proto3";
+
+package dgp.proto;
+
+import "google/protobuf/any.proto";
+
+// Generic (datum, annotation) pair where the underlying
+// content is stored externally in files.
+message FileDatum {
+  // The file containing data (e.g. extracted features)
+  SelfDescribingFile datum = 1;
+
+  // The file containing annotations for the above datum.
+  // Typically this field should not contain manual annotation data,
+  // since any data requiring large numbers of manual labels should
+  // have those labels described with an explicit (required) schema.
+  // The key integer is defined in annotations.proto's AnnotationType
+  map<int32, SelfDescribingFile> annotations = 2;
+}
+
+// Describes a file external to the serialized protobuf with an optional
+// schema field that can be used to describe the file.
+message SelfDescribingFile {
+  // Relative file path (relative to the location where this scene description
+  // is stored. This datum is expected to obey the datum schema below, if supplied.
+  string filename = 1;
+
+  // An optional schema which describes the file at `filename`.
+  //
+  // Both the reader and the writer of this SelfDescribingFile need to have
+  // access to the datatype stored under `schema`, though for simple cases
+  // this may be a simple / integral type.
+  google.protobuf.Any schema = 2;
+}

@@ -8,8 +8,8 @@ assigned to different `split` for training, evaluation and inference.
 * Scene: A Scene consists of consecutive `Sample` extracted at a fixed frequency in
 a robot session. Normally we extract 10~20 seconds Scenes at 10Hz from raw driving logs.
 * Sample: A sample is a container that encapsulates time-synchronized sensory `Datum`
-(images, point clouds, GPS/IMU etc) and calibrations.
-* Datum: A Datum encapsulates sensory data (image, point cloud, GPS/IMU etc),
+(images, point clouds, radar point clouds, etc) and calibrations.
+* Datum: A Datum encapsulates sensory data (image, point cloud, radar point cloud, etc),
 along with their associated annotations.
 
 ## Protobuf Directory Structure
@@ -23,6 +23,7 @@ corresponding `proto` files.
 * Dataset: [`dataset.proto`](./dataset.proto)
 * Image container: [`image.proto`](./image.proto)
 * PointCloud container: [`point_cloud.proto`](./point_cloud.proto)
+* Radar PointCloud container: [`radar_point_cloud.proto`](./radar_point_cloud.proto)
 * Remote Storage: [`remote.proto`](./remote.proto)
 
 ### SceneDataset schema graph
