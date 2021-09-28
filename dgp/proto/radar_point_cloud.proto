@@ -1,0 +1,97 @@
+// Copyright 2021 Toyota Research Institute.  All rights reserved.
+// Definitions for radar point cloud and radar point cloud metadata.
+
+syntax = "proto3";
+
+package dgp.proto;
+
+import "dgp/proto/geometry.proto";
+import "google/protobuf/any.proto";
+
+// Basic point cloud container for DGP
+message RadarPointCloud {
+  // Relative file path for the radar point cloud
+  // Supported point cloud formats: compressed numpy (npz) format.
+  string filename = 1;
+
+  // RadarPointCloud annotations
+  // Maps dgp.proto.AnnotationType (segmentation, instances) to the filename
+  // containing the point cloud annotation.
+  //
+  // Radar Point cloud annotations are written in to compressed numpy arrays (npz)
+  // under the 'data' key.
+  map<int32, string> annotations = 2;
+
+  // Optional metadata (i.e. miscellaneous enriched annotations)
+  // TODO: Support only specific metadata types
+  map<string, google.protobuf.Any> metadata = 3;
+
+  // Used to describe the values in the radar pointcloud.
+  // The ChannelType refers to the dtypes of the radar point cloud
+  // stored under the 'data' key.
+  enum ChannelType {
+    // X, Y, and Z coordinates of point.
+    X = 0;
+    Y = 1;
+    Z = 2;
+
+    // Radar specific channels
+    // Point Velocity
+    V_X = 3;
+    V_Y = 4;
+    V_Z = 5;
+
+    // Radar cross section
+    RCS_DBSM = 6;
+
+    EXISTENCE_PROBABILITY = 7;
+    SENSOR_ID = 8;
+
+    // Support full covariance matrix for points converted to rectangular
+    // this will be symmetric so not all channels are needed
+    COV_XX = 9; COV_XY = 10; COV_XZ = 11;
+    COV_YX = 12; COV_YY = 13; COV_YZ = 14;
+    COV_ZX = 15; COV_ZY = 16; COV_ZZ = 17;
+
+    // Support for raw radar points in spherical coordinates of sensor frame
+    RADIAL_DISTANCE = 18;
+    AZIMUTH_ANGLE = 19;
+    ELEVATION_ANGLE = 20;
+    VELOCITY_XS = 21;
+    RADIAL_DISTANCE_VARIANCE = 22;
+    AZIMUTH_ANGLE_VARIANCE = 23;
+    ELEVATION_ANGLE_VARIANCE = 24;
+    VELOCITY_VARIANCE = 25;
+
+    // Extra channels to support radar target message
+    ACCEL_XS = 26;
+    COUNT_ALIVE = 27;
+    REFLECTED_POWER_DB = 28;
+
+    // RGB for color.
+    R = 29;
+    G = 30;
+    B = 31;
+
+    // Class/Instance ID for point cloud semantic segmentation
+    CLASS_ID = 32;
+    INSTANCE_ID = 33;
+
+    // Timestamp of this point sample, stored as UTC in microseconds
+    TIMESTAMP = 34;
+  }
+
+  // Structure of values in the pointcloud file. Each entry in this array specifies
+  // the field meaning. A simple pointcloud may simply contain X, Y, and Z channels.
+  // This would mean that the numpy data representation of this would be an
+  // [N, 3] shape structured array.
+  repeated ChannelType point_format = 4;
+
+  // Alternatively, use point fields instead of strongly-typed ChannelType
+  // For example, radar data can be represented as D-dimensional tensors/matrices with
+  // point_fields describing the columns for the point cloud data
+  repeated string point_fields = 5;
+
+  // Ego-pose of this datum with respect to the first sample in the scene.
+  Pose pose = 6;
+}

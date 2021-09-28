@@ -1,21 +1,31 @@
-[<img src="/docs/tri-logo.jpeg" width="25%">](https://www.tri.global/)
+[<img src="docs/tri-logo.png" width="40%">](https://www.tri.global/)
 
-TRI Dataset Governance Policy
-==========
+
+Dataset Governance Policy (DGP)
+=============================
+[![Build Status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/builds/238369651)
+[![license](https://img.shields.io/github/license/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/blob/master/LICENSE)
+[![open issues](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/issues)
+
 To ensure the traceability, reproducibility and standardization for
-all ML datasets and models generated and consumed within TRI, we developed the
+all ML datasets and models generated and consumed within Toyota Research Institute (TRI), we developed the
 Dataset-Governance-Policy (DGP) that codifies the schema and
 maintenance of all TRI's Autonomous Vehicle (AV) datasets.
 
+<p align="center">
+  <img src="docs/3d-viz-proj.gif" alt="3d-viz-proj"/>
+</p>
 
 ## Components
 - [Schema](dgp/proto/README.md): [Protobuf](https://developers.google.com/protocol-buffers)-based schemas for raw data, annotations
   and dataset management.
 - [DataLoaders](dgp/datasets): Universal PyTorch DatasetClass to load all DGP-compliant datasets.
-- [Visualizer](dgp/scripts/visualizer.py): Simple web-based visualizer for viewing annotations.
-- [CLI](dgp/README.md): Main CLI for handling DGP datasets.
+- [CLI](dgp/README.md): Main CLI for handling DGP datasets and the entrypoint of visulization tools.
+
 
 ## Getting Started
+Please see [getting started](docs/GETTING_STARTED.md) for environment setup.
+
 Getting started is as simple as initializing a dataset-class with the
 relevant dataset JSON, raw data sensor names, annotation types, and
 split information. Below, we show a few examples of initializing a
@@ -40,16 +50,29 @@ directory.
   Started** section above.
 
 ## Build and run tests
-You can build the base docker image and run the tests within docker
+You can build the base docker image and run the tests within [docker container](docs/GETTING_STARTED.md#markdown-header-develop-within-docker)
 via:
 ```sh
 make docker-build
 make docker-run-tests
 ```
 
-## Run Visualizer
-Run streamlit-based interactive visualizer
-via:
-```sh
-make docker-start-visualizer
-```
+## Contributing
+We appreciate all contributions to DGP! To learn more about making a contribution to DGP, please see [contribution page](docs/CONTRIBUTING.md).
+
+## CI Ecosystem
+| Branch | CI | Notes |
+| ---- | ------- | --- |
+| master       | [![Build Status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/branches) | master branch build |
+
+
+## 💬 Where to file bug reports
+
+| Type                     | Platforms                                              |
+| - | - |
+| 🚨 **Bug Reports**       | [GitHub Issue Tracker](https://github.com/TRI-ML/dgp/issues) |
+| 🎁 **Feature Requests**  | [GitHub Issue Tracker](https://github.com/TRI-ML/dgp/issues) |
+
+## 👩‍💻  The Team 👨‍💻
+
+DGP is developed and maintained by *Quincy Chen, Arjun Bhargava, Chao Fang, Chris Ochoa and Kuan-Hui Lee* from ML-Engineering team at [Toyota Research Institute (TRI)](https://www.tri.global/), with contributions coming from ML-Research team at TRI, [Woven Planet](https://www.woven-planet.global/en) and [Parallel Domain](https://paralleldomain.com/).

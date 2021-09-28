@@ -3,39 +3,32 @@
 self-supervised and supervised tasks.
 This dataset is compliant with the TRI-ML Dataset Governance Policy (DGP).
 
-Please refer to `dgp/proto/dataset.proto` for the exact specifications of our DGP.
+Please refer to `dgp/proto/dataset.proto` for the exact specifications of our dgp.
 """
+import itertools
 import logging
 import time
-from collections import OrderedDict
+from functools import partial
+from multiprocessing import Pool, cpu_count
 
-from dgp.datasets import ANNOTATION_KEY_TO_TYPE_ID
-from dgp.datasets.annotations import (get_depth_from_point_cloud, 
-                                      load_aligned_bounding_box_annotations,
-                                      load_bounding_box_2d_annotations,
-                                      load_bounding_box_3d_annotations,
-                                      load_panoptic_segmentation_2d_annotations,
-                                      load_semantic_segmentation_2d_annotations)
-from dgp.datasets.base_dataset import (BaseSceneDataset, DatasetMetadata,
-                                       _BaseDataset)
-from dgp.utils.geometry import Pose
-from dgp.utils.ontology import (build_detection_lookup_tables,
-                                build_instance_lookup_tables,
-                                build_semseg_lookup_tables)
+import numpy as np
+
+from dgp.datasets import BaseDataset, DatasetMetadata
+from dgp.utils.accumulate import accumulate_points
+from dgp.utils.annotation import get_depth_from_point_cloud
 
 
-class _SynchronizedDataset(_BaseDataset):
+class _SynchronizedDataset(BaseDataset):
     """Multi-modal dataset with sample-level synchronization.
     See BaseDataset for input parameters for the parent class.
 
     Parameters
     ----------
-    dataset_json: str
-        Full path to the dataset json holding dataset metadata, ontology, and image and
-        annotation paths.
+    dataset_metadata: DatasetMetadata
+        Dataset metadata, populated from scene dataset JSON
 
-    split: str, default: "train"
-        Split of dataset to read ("train" | "val" | "test" | "train_overfit")
+    scenes: list[SceneContainer], default: None
+        List of SceneContainers parsed from scene dataset JSON
 
     datum_names: list, default: None
         Select list of datum names for synchronization (see self.select_datums(datum_names)).
@@ -54,8 +47,13 @@ class _SynchronizedDataset(_BaseDataset):
     forward_context: int, default: 0
         Forward context in frames [T+1, ..., T+forward]
 
-    is_scene_dataset: bool, default: False
-        Whether or not the dataset is constructed from a scene_dataset.json
+    accumulation_context: dict, default None
+        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, 'accumulation_context={'lidar':(3,1)}
+        accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.
+
+    generate_depth_from_datum: str, default: None
+        Datum name of the point cloud. If is not None, then the depth map will be generated for the camera using
+        the desired point cloud.
 
     only_annotated_datums: bool, default: False
         If True, only datums with annotations matching the requested annotation types are returned.
@@ -64,62 +62,29 @@ class _SynchronizedDataset(_BaseDataset):
         self,
         dataset_metadata,
         scenes=None,
-        calibration_table=None,
         datum_names=None,
         requested_annotations=None,
         requested_autolabels=None,
         forward_context=0,
         backward_context=0,
+        accumulation_context=None,
         generate_depth_from_datum=None,
-        is_scene_dataset=False,
         only_annotated_datums=False
     ):
-        self.set_context(backward=backward_context, forward=forward_context)
+        self.set_context(backward=backward_context, forward=forward_context, accumulation_context=accumulation_context)
         self.generate_depth_from_datum = generate_depth_from_datum
         self.only_annotated_datums = only_annotated_datums if requested_annotations else False
 
         super().__init__(
             dataset_metadata,
             scenes=scenes,
-            calibration_table=calibration_table,
             datum_names=datum_names,
             requested_annotations=requested_annotations,
-            is_scene_dataset=is_scene_dataset
+            requested_autolabels=requested_autolabels
         )
 
-        # Populate detection lookup tables
-        if self.requested_annotations:
-            if self.dataset_metadata.ontology_table:
-                # TODO: Refactor ontology and _build_detection_lookup_tables to create a map from annotation type to is
-                #       lookup table
-                # For now we assume .BOUNDING_BOX_3D and BOUNDING_BOX_2D has identical ontology
-                if "bounding_box_3d" in self.dataset_metadata.ontology_table: 
-                    ontology_key = "bounding_box_3d"
-                    ontology = self.dataset_metadata.ontology_table[ontology_key]
-                    build_detection_lookup_tables(self, ontology)
-                elif "bounding_box_2d" in self.dataset_metadata.ontology_table:
-                    ontology_key = "bounding_box_2d"
-                    ontology = self.dataset_metadata.ontology_table[ontology_key]
-                    build_detection_lookup_tables(self, ontology)
-
-                if "semantic_segmentation_2d" in self.dataset_metadata.ontology_table:
-                    ontology_key = "semantic_segmentation_2d"
-                    ontology = self.dataset_metadata.ontology_table[ontology_key]
-                    build_semseg_lookup_tables(self, ontology)
-
-                if "instance_segmentation_2d" in self.dataset_metadata.ontology_table:
-                    ontology_key = "instance_segmentation_2d"
-                    ontology = self.dataset_metadata.ontology_table[ontology_key]
-                    build_instance_lookup_tables(self, ontology)
-            else:
-                ontology = self.dataset_metadata.metadata.ontology
-                build_detection_lookup_tables(self, ontology)
-
     def _build_item_index(self):
-        """Builds an index of dataset items that refer to the scene index,
-        sample index and datum_within_scene index. This refers to a particular dataset
-        split. __getitem__ indexes into this look up table.
-
+        """
         Synchronizes at the sample-level and only adds sample indices if context frames are available.
         This is enforced by adding sample indices that fall in (bacwkard_context, N-forward_context) range.
 
@@ -127,87 +92,63 @@ class _SynchronizedDataset(_BaseDataset):
         -------
         item_index: list
             List of dataset items that contain index into
-            (scene_idx, sample_within_scene_idx, [datum_within_scene_idx, ...]).
+            [(scene_idx, sample_within_scene_idx, [datum_names]), ...].
         """
-        logging.info('Building index for {}, num_scenes={}'.format(self.__class__.__name__, len(self.scenes)))
+        logging.info(
+            f'{self.__class__.__name__} :: Building item index for {len(self.scenes)} scenes, this will take a while.'
+        )
         st = time.time()
 
-        item_index = []
-        for scene_idx, scene in enumerate(self.scenes):
-            # Get the available datum names and their datum key index for the
-            # specified datum_type (i.e. image, point_cloud). This assumes that
-            # all samples within a scene have the same datum index for the
-            # associated datum name.
-            datum_name_to_datum_index = self.get_lookup_from_datum_name_to_datum_index_in_sample(
-                scene_idx, sample_idx_in_scene=0, datum_type=None
+        # Calculate the maximum context to be asked for when using accumulation
+        acc_back, acc_forward = 0, 0
+        if self.accumulation_context:
+            acc_context = [(v[0], v[1]) for v in self.accumulation_context.values()]
+            acc_back, acc_forward = np.max(acc_context, 0)
+
+        # Fetch the item index per-scene based on the selected datums.
+        with Pool(cpu_count()) as proc:
+            item_index = proc.starmap(
+                partial(
+                    _SynchronizedDataset._item_index_for_scene,
+                    backward_context=self.backward_context + acc_back,
+                    forward_context=self.forward_context + acc_forward,
+                    only_annotated_datums=self.only_annotated_datums
+                ), [(scene_idx, scene) for scene_idx, scene in enumerate(self.scenes)]
             )
+        logging.info(f'Index built in {time.time() - st:.2f}s.')
+        assert len(item_index) > 0, 'Failed to index items in the dataset.'
 
-            # Remove datum names that are not selected, if desired
-            if self.selected_datums is not None:
-                # If the selected datums are available, identify the subset and
-                # their datum index within the scene.
-                datum_name_to_datum_index = {
-                    datum_name: datum_name_to_datum_index[datum_name]
-                    for datum_name in datum_name_to_datum_index
-                    if datum_name in self.selected_datums
-                }
-
-            # Only add to index if datum-name exists
-            if not len(datum_name_to_datum_index):
-                return
-
-            item_index.extend(
-                self._build_item_index_per_scene(
-                    scene_idx,
-                    scene,
-                    datum_name_to_datum_index=datum_name_to_datum_index,
-                    backward_context=self.backward_context,
-                    forward_context=self.forward_context
-                )
-            )
-
-        if self.only_annotated_datums:
-            item_index = list(filter(self._has_annotations, item_index))
-
+        # Chain the index across all scenes.
+        item_index = list(itertools.chain.from_iterable(item_index))
+        # Filter out indices that failed to load.
+        item_index = [item for item in item_index if item is not None]
         item_lengths = [len(item_tup) for item_tup in item_index]
         assert all([l == item_lengths[0] for l in item_lengths]
                    ), ('All sample items are not of the same length, datum names might be missing.')
-        logging.info('Index built in {:.2}s.'.format(time.time() - st))
         return item_index
 
-    def _build_item_index_per_scene(
-        self, scene_idx, scene, datum_name_to_datum_index, backward_context, forward_context
-    ):
-        """Build the index of selected datums for an individual scene"""
-        item_index = [(scene_idx, sample_idx, list(datum_name_to_datum_index.values()))
-                      for sample_idx in range(backward_context,
-                                              len(scene.samples) - forward_context)]
-        return item_index
+    @staticmethod
+    def _item_index_for_scene(scene_idx, scene, backward_context, forward_context, only_annotated_datums):
+        st = time.time()
+        logging.debug(f'Indexing scene items for {scene.scene_path}')
 
-    def _has_annotations(self, dataset_item):
-        """Identifies if the specified dataset item has ALL requested annotations, 
-        OR if the dataset item has ANY requested autolabels."""
-        scene_idx, sample_idx, datum_indices = dataset_item
+        # Define a safe sample range given desired context
+        sample_range = np.arange(backward_context, len(scene.datum_index) - forward_context)
+        if not only_annotated_datums:
+            # Build the item-index of selected samples for an individual scene.
+            scene_item_index = [(scene_idx, sample_idx, scene.selected_datums) for sample_idx in sample_range]
+            logging.debug(f'No annotation filter--- Scene item index built in {time.time() - st:.2f}s.')
+        else:
+            # Filter out samples that do not have annotations.
+            # A sample is considered annotated if ANY selected datum in the sample contains ANY requested annotation.
+            annotated_samples = scene.annotation_index[scene.datum_index[sample_range]].any(axis=(1, 2))
+            scene_item_index = [(scene_idx, sample_idx, scene.selected_datums)
+                                for sample_idx, annotated_sample in zip(sample_range, annotated_samples)
+                                if annotated_sample]
+            logging.debug(f'Annotation filter -- Scene item index built in {time.time() - st:.2f}s.')
+        return scene_item_index
 
-        # Verify presence of annotations
-        requested_annotation_ids = set([
-            ANNOTATION_KEY_TO_TYPE_ID[annotation] for annotation in self.requested_annotations
-        ])
-        valid_datums = all([
-            requested_annotation_ids.issubset(
-                set(self.get_annotations(self.get_datum(scene_idx, sample_idx, datum_idx)).keys())
-            ) for datum_idx in datum_indices
-        ])
-
-        # Check for autolabels
-        if self.requested_autolabels:
-            valid_autolabels = all([
-                self.get_autolabels_for_datum(scene_idx, sample_idx, datum_idx) for datum_idx in datum_indices
-            ])
-            return (valid_datums or valid_autolabels)
-        return valid_datums
-
-    def set_context(self, backward=1, forward=1):
+    def set_context(self, backward=1, forward=1, accumulation_context=None):
         """Set the context size and strides.
 
         Parameters
@@ -217,10 +158,29 @@ class _SynchronizedDataset(_BaseDataset):
 
         forward: int, default: 1
             Forward context in frames [T+1, ..., T+forward]
+
+        accumulation_context: dict, default None
+            dictionary of accumulation context
         """
         assert backward >= 0 and forward >= 0, 'Provide valid context'
+
+        if accumulation_context:
+            for k, v in accumulation_context.items():
+                assert v[0] >= 0, f'Provide valid accumulation backward context for {k}'
+                assert v[1] >= 0, f'Provide valid accumulation forward context for {k}'
+                # Forward accumulation should almost never be used for inference
+                if v[1] > 0:
+                    logging.warning(
+                        f'Forward accumulation context is enabled for {k}. Doing so at inference time is not suggested, is this intentional?'
+                    )
+
         self.backward_context = backward
         self.forward_context = forward
+        self.accumulation_context = accumulation_context
+
+        # Use lower case datum names for accumulation context
+        if self.accumulation_context:
+            self.accumulation_context = {k.lower(): v for k, v in self.accumulation_context.items()}
 
     def get_context_indices(self, sample_idx):
         """Utility to get the context sample indices given the sample_idx.
@@ -242,212 +202,8 @@ class _SynchronizedDataset(_BaseDataset):
         """Return the length of the dataset."""
         return len(self.dataset_item_index)
 
-    def get_image_from_datum(self, scene_idx, sample_idx_in_scene, datum_idx_in_sample):
-        """Get the sample image data from image datum.
-
-        Parameters
-        ----------
-        scene_idx: int
-            Index of the scene.
-
-        sample_idx_in_scene: int
-            Index of the sample within the scene at scene_idx.
-
-        datum_idx_in_sample: int
-            Index of datum within sample datum keys
-
-        Returns
-        -------
-        data: OrderedDict
-
-            "timestamp": int
-                Timestamp of the image in microseconds.
-
-            "datum_name": str
-                Sensor name from which the data was collected
-
-            "rgb": PIL.Image (mode=RGB)
-                Image in RGB format.
-
-            "intrinsics": np.ndarray
-                Camera intrinsics.
-
-            "extrinsics": Pose
-                Camera extrinsics with respect to the vehicle frame.
-
-            "pose": Pose
-                Pose of sensor with respect to the world/global/local frame
-                (reference frame that is initialized at start-time). (i.e. this
-                provides the ego-pose in `pose_WC`).
-
-            "bounding_box_2d": np.ndarray dtype=np.float32
-                Tensor containing bounding boxes for this sample
-                (x, y, w, h) in absolute pixel coordinates
-
-            "bounding_box_3d": list of BoundingBox3D
-                3D Bounding boxes for this sample specified in this camera's
-                reference frame. (i.e. this provides the bounding box (B) in
-                the camera's (C) reference frame `box_CB`).
-
-            "class_ids": np.ndarray dtype=np.int64
-                Tensor containing class ids (aligned with ``bounding_box_2d`` and ``bounding_box_3d``)
-
-            "instance_ids": np.ndarray dtype=np.int64
-                Tensor containing instance ids (aligned with ``bounding_box_2d`` and ``bounding_box_3d``)
-
-        """
-        datum = self.get_datum(scene_idx, sample_idx_in_scene, datum_idx_in_sample)
-        assert datum.datum.WhichOneof('datum_oneof') == 'image'
-
-        # Get camera calibration and extrinsics for the datum name
-        sample = self.get_sample(scene_idx, sample_idx_in_scene)
-        camera = self.get_camera_calibration(sample.calibration_key, datum.id.name)
-        pose_VC = self.get_sensor_extrinsics(sample.calibration_key, datum.id.name)
-
-        # Get ego-pose for the image (at the corresponding image timestamp t=Tc)
-        pose_WC_Tc = Pose.from_pose_proto(datum.datum.image.pose) \
-                     if hasattr(datum.datum.image, 'pose') else Pose()
-
-        # Populate data for image data
-        image, annotations = self.load_datum_and_annotations(scene_idx, sample_idx_in_scene, datum_idx_in_sample)
-        data = OrderedDict({
-            "timestamp": datum.id.timestamp.ToMicroseconds(),
-            "datum_name": datum.id.name,
-            "rgb": image,
-            "intrinsics": camera.K,
-            "extrinsics": pose_VC,
-            "pose": pose_WC_Tc
-        })
-
-        # Extract 2D/3D bounding box labels if requested
-        # Also checks if BOUNDING_BOX_2D and BOUNDING_BOX_3D annotation exists because some datasets
-        # have sparse annotations.
-        if self.requested_annotations:
-            ann_root_dir = self.get_scene_directory(scene_idx)
-
-        # TODO: Load the datum based on the type, no need to hardcode these conditions. In particular,
-        # figure out how to handle joint conditions like this:
-        if "bounding_box_2d" in self.requested_annotations and "bounding_box_3d" in self.requested_annotations and "bounding_box_2d" in annotations and "bounding_box_3d" in annotations:
-            annotation_data = load_aligned_bounding_box_annotations(
-                annotations, ann_root_dir, self.json_category_id_to_contiguous_id
-            )
-            data.update(annotation_data)
-
-        elif "bounding_box_2d" in self.requested_annotations and "bounding_box_2d" in annotations:
-            annotation_data = load_bounding_box_2d_annotations(
-                annotations, ann_root_dir, self.json_category_id_to_contiguous_id
-            )
-            data.update(annotation_data)
-
-        elif "bounding_box_3d" in self.requested_annotations and "bounding_box_3d" in annotations:
-            annotation_data = load_bounding_box_3d_annotations(
-                annotations, ann_root_dir, self.json_category_id_to_contiguous_id
-            )
-            data.update(annotation_data)
-
-        if "semantic_segmentation_2d" in self.requested_annotations and "semantic_segmentation_2d" in annotations:
-            annotation_data = load_semantic_segmentation_2d_annotations(
-                annotations, ann_root_dir, self.semseg_label_lookup, self.VOID_ID
-            )
-            data.update(annotation_data)
-
-        if "instance_segmentation_2d" in self.requested_annotations and "instance_segmentation_2d" in annotations:
-            annotation_data = load_panoptic_segmentation_2d_annotations(
-                annotations, ann_root_dir, self.instance_name_to_contiguous_id
-            )
-            data.update(annotation_data)
-
-        return data
-
-    def get_point_cloud_from_datum(self, scene_idx, sample_idx_in_scene, datum_idx_in_sample):
-        """Get the sample image data from point cloud datum.
-
-        Parameters
-        ----------
-        scene_idx: int
-            Index of the scene.
-
-        sample_idx_in_scene: int
-            Index of the sample within the scene at scene_idx.
-
-        datum_idx_in_sample: int
-            Index of datum within sample datum keys
-
-        Returns
-        -------
-        data: OrderedDict
-
-            "timestamp": int
-                Timestamp of the image in microseconds.
-
-            "datum_name": str
-                Sensor name from which the data was collected
-
-            "extrinsics": Pose
-                Sensor extrinsics with respect to the vehicle frame.
-
-            "point_cloud": np.ndarray (N x 3)
-                Point cloud in the local/world (L) frame returning X, Y and Z
-                coordinates. The local frame is consistent across multiple
-                timesteps in a scene.
-
-            "extra_channels": np.ndarray (N x M)
-                Remaining channels from point_cloud (i.e. lidar intensity I or pixel colors RGB)
-
-            "pose": Pose
-                Pose of sensor with respect to the world/global/local frame
-                (reference frame that is initialized at start-time). (i.e. this
-                provides the ego-pose in `pose_WS` where S refers to the point
-                cloud sensor (S)).
-
-            "bounding_box_3d": list of BoundingBox3D
-                3D Bounding boxes for this sample specified in this point cloud
-                sensor's reference frame. (i.e. this provides the bounding box
-                (B) in the sensor's (S) reference frame `box_SB`).
-
-            "class_ids": np.ndarray dtype=np.int64
-                Tensor containing class ids (aligned with ``bounding_box_3d``)
-
-            "instance_ids": np.ndarray dtype=np.int64
-                Tensor containing instance ids (aligned with ``bounding_box_3d``)
-
-        """
-        datum = self.get_datum(scene_idx, sample_idx_in_scene, datum_idx_in_sample)
-        assert datum.datum.WhichOneof('datum_oneof') == 'point_cloud'
-
-        # Determine the ego-pose of the lidar sensor (S) with respect to the world
-        # (W) @ t=Ts
-        pose_WS_Ts = Pose.from_pose_proto(datum.datum.point_cloud.pose) \
-                     if hasattr(datum.datum.point_cloud, 'pose') else Pose()
-        # Get sensor extrinsics for the datum name
-        pose_VS = self.get_sensor_extrinsics(
-            self.get_sample(scene_idx, sample_idx_in_scene).calibration_key, datum.id.name
-        )
-
-        # Points are described in the Lidar sensor (S) frame captured at the
-        # corresponding lidar timestamp (Ts).
-        # Points are in the lidar sensor's (S) frame.
-        X_S, annotations = self.load_datum_and_annotations(scene_idx, sample_idx_in_scene, datum_idx_in_sample)
-        data = OrderedDict({
-            "timestamp": datum.id.timestamp.ToMicroseconds(),
-            "datum_name": datum.id.name,
-            "extrinsics": pose_VS,
-            "pose": pose_WS_Ts,
-            "point_cloud": X_S[:, :3],
-            "extra_channels": X_S[:, 3:],
-        })
-
-        # Extract 3D bounding box labels, if requested.
-        # Also checks if BOUNDING_BOX_3D annotation exists because some datasets have sparse annotations.
-        if "bounding_box_3d" in self.requested_annotations and "bounding_box_3d" in annotations:
-            annotation_data = load_bounding_box_3d_annotations(
-                annotations, self.get_scene_directory(scene_idx), self.json_category_id_to_contiguous_id
-            )
-            data.update(annotation_data)
-        return data
-
-    def get_datum_data(self, scene_idx, sample_idx_in_scene, datum_idx_in_sample):
-        """Get the datum at (scene_idx, sample_idx_in_scene, datum_idx_in_sample) with labels (optionally)
+    def get_datum_data(self, scene_idx, sample_idx_in_scene, datum_name):
+        """Get the datum at (scene_idx, sample_idx_in_scene, datum_name) with labels (optionally)
 
         Parameters
         ----------
@@ -457,28 +213,33 @@ class _SynchronizedDataset(_BaseDataset):
         sample_idx_in_scene: int
             Sample index within the scene.
 
-        datum_idx_in_sample: int
-            Datum index within the sample.
+        datum_name: str
+            Datum within the sample.
         """
         # Get corresponding datum and load it
-        datum = self.get_datum(scene_idx, sample_idx_in_scene, datum_idx_in_sample)
+        datum = self.get_datum(scene_idx, sample_idx_in_scene, datum_name)
         datum_type = datum.datum.WhichOneof('datum_oneof')
+
         if datum_type == 'image':
-            datum_data = self.get_image_from_datum(scene_idx, sample_idx_in_scene, datum_idx_in_sample)
+            datum_data, annotations = self.get_image_from_datum(scene_idx, sample_idx_in_scene, datum_name)
             if self.generate_depth_from_datum:
-                # Get the datum index for the desired point cloud sensor
-                pc_datum_idx_in_sample = self.get_datum_index_for_datum_name(
-                    scene_idx, sample_idx_in_scene, self.generate_depth_from_datum
-                )
                 # Generate the depth map for the camera using the point cloud and cache it
                 datum_data['depth'] = get_depth_from_point_cloud(
-                    self, scene_idx, sample_idx_in_scene, datum_idx_in_sample, pc_datum_idx_in_sample
+                    self, scene_idx, sample_idx_in_scene, datum_name, self.generate_depth_from_datum.lower()
                 )
-            return datum_data
         elif datum_type == 'point_cloud':
-            return self.get_point_cloud_from_datum(scene_idx, sample_idx_in_scene, datum_idx_in_sample)
+            datum_data, annotations = self.get_point_cloud_from_datum(scene_idx, sample_idx_in_scene, datum_name)
+        elif datum_type == 'file_datum':
+            datum_data, annotations = self.get_file_meta_from_datum(scene_idx, sample_idx_in_scene, datum_name)
+        elif datum_type == 'radar_point_cloud':
+            datum_data, annotations = self.get_radar_point_cloud_from_datum(scene_idx, sample_idx_in_scene, datum_name)
         else:
             raise ValueError('Unknown datum type: {}'.format(datum_type))
+
+        # TODO: Implement data/annotation load-time transforms, `torchvision` style.
+        if annotations:
+            datum_data.update(annotations)
+        return datum_data
 
     def __getitem__(self, index):
         """Get the dataset item at index.
@@ -490,10 +251,7 @@ class _SynchronizedDataset(_BaseDataset):
 
         Returns
         -------
-        data: list of OrderedDict, or list of list of OrderedDict
-
-            "index": int
-                Index of item to get
+        data: list of list of OrderedDict
 
             "timestamp": int
                 Timestamp of the image in microseconds.
@@ -513,19 +271,19 @@ class _SynchronizedDataset(_BaseDataset):
             "pose": Pose
                 Pose of sensor with respect to the world/global frame
 
-        For datasets with a single sensor selected, `__getitem__` returns an
-        `OrderedDict` with the aforementioned keys.
+        Returns a list of list of OrderedDict(s).
+        Outer list corresponds to temporal ordering of samples. Each element is
+        a list of OrderedDict(s) corresponding to synchronized datums.
 
-        For datasets with multiple sensor(s) selected, `__getitem__` returns a
-        list of OrderedDict(s), one item for each datum.
-
-        For datasets with multiple datum(s) selected and temporal contexts > 1,
-        `__getitem__` returns with the first list corresponding to the the temporal
-        context and the inner list corresponding to the sensor.
+        In other words, __getitem__ returns a nested list with the ordering as
+        follows: (C, D, I), where
+            C = forward_context + backward_context + 1,
+            D = len(datum_names)
+            I = OrderedDict item
         """
         assert self.dataset_item_index is not None, ('Index is not built, select datums before getting elements.')
         # Get dataset item index
-        scene_idx, sample_idx_in_scene, datum_indices = self.dataset_item_index[index]
+        scene_idx, sample_idx_in_scene, datum_names = self.dataset_item_index[index]
 
         # All sensor data (including pose, point clouds and 3D annotations are
         # defined with respect to the sensor's reference frame captured at that
@@ -533,24 +291,45 @@ class _SynchronizedDataset(_BaseDataset):
         # reference frame, you will need to use the "pose" that specifies the
         # ego-pose of the sensor with respect to the local (L) frame (pose_LS).
 
-        # If context is not required
-        if self.backward_context == 0 and self.forward_context == 0:
-            return [
-                self.get_datum_data(scene_idx, sample_idx_in_scene, datum_idx_in_sample)
-                for datum_idx_in_sample in datum_indices
+        datums_with_context = dict()
+        for datum_name in datum_names:
+
+            acc_back, acc_forward = 0, 0
+            if self.accumulation_context:
+                accumulation_context = self.accumulation_context.get(datum_name.lower(), (0, 0))
+                acc_back, acc_forward = accumulation_context
+
+            # We need to fetch our datum's data for all time steps we care about. If our datum's index is i,
+            # then to support the requested backward/forward context, we need indexes i- backward ... i + forward.
+            # However if we also have accumulation, our first sample index = (i - backward) also needs data starting from
+            # index = i - backward - acc_back (it accumulates over a window of size (acc_back, acc_forward).
+            # The final sample will need i + forward + acc_forward. Combined, we need samples from
+            # [i-backward_context - acc_back, i+forward_context + acc_forward].
+            datum_list = [
+                self.get_datum_data(scene_idx, sample_idx_in_scene + offset, datum_name)
+                for offset in range(-1 * (self.backward_context + acc_back), self.forward_context + acc_forward + 1)
             ]
-        else:
-            sample = []
-            # Iterate through context samples
-            for qsample_idx_in_scene in range(
-                sample_idx_in_scene - self.backward_context, sample_idx_in_scene + self.forward_context + 1
-            ):
-                sample_data = [
-                    self.get_datum_data(scene_idx, qsample_idx_in_scene, datum_idx_in_sample)
-                    for datum_idx_in_sample in datum_indices
+
+            if acc_back != 0 or acc_forward != 0:
+                # Make sure we have the right datum type
+                assert 'point_cloud' in datum_list[0], "Accumulation is only defined for radar and lidar currently."
+                # Our datum list now has samples ranging from [i-backward_context-acc_back to i+forward_context+acc_forward]
+                # We instead need a list that ranges from [i-backward_context to i+forward_context] AFTER accumulation
+                # This means the central sample in our datum list starts at index = acc_back.
+                datum_list = [
+                    accumulate_points(datum_list[k - acc_back:k + acc_forward + 1], datum_list[k])
+                    for k in range(acc_back,
+                                   len(datum_list) - acc_forward)
                 ]
-                sample.append(sample_data)
-            return sample
+
+            datums_with_context[datum_name] = datum_list
+
+        # We now have a dictionary of lists, swap the order to build context windows
+        context_window = []
+        for t in range(self.backward_context + self.forward_context + 1):
+            context_window.append([datums_with_context[datum_name][t] for datum_name in datum_names])
+
+        return context_window
 
 
 class SynchronizedSceneDataset(_SynchronizedDataset):
@@ -586,12 +365,22 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
     forward_context: int, default: 0
         Forward context in frames [T+1, ..., T+forward]
 
+    accumulation_context: dict, default None
+        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, 'accumulation_context={'lidar':(3,1)}
+        accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.
+
     generate_depth_from_datum: str, default: None
         Datum name of the point cloud. If is not None, then the depth map will be generated for the camera using
         the desired point cloud.
 
     only_annotated_datums: bool, default: False
         If True, only datums with annotations matching the requested annotation types are returned.
+
+    skip_missing_data: bool, default: False
+        If True, check for missing files and skip during datum index building.
+
+    dataset_root: str
+        Optional path to dataset root folder. Useful if dataset scene json is not in the same directory as the rest of the data.
 
     Refer to _SynchronizedDataset for remaining parameters.
     """
@@ -604,27 +393,34 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
         requested_autolabels=None,
         backward_context=0,
         forward_context=0,
+        accumulation_context=None,
         generate_depth_from_datum=None,
-        only_annotated_datums=False
+        only_annotated_datums=False,
+        skip_missing_data=False,
+        dataset_root=None,
     ):
         # Extract all scenes from the scene dataset JSON for the appropriate split
-        scenes, calibration_table = BaseSceneDataset._extract_scenes_from_scene_dataset_json(
-            scene_dataset_json, split=split, requested_autolabels=requested_autolabels
+        scenes = BaseDataset._extract_scenes_from_scene_dataset_json(
+            scene_dataset_json,
+            split,
+            requested_autolabels,
+            is_datums_synchronized=True,
+            skip_missing_data=skip_missing_data,
+            dataset_root=dataset_root
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
-        dataset_metadata = DatasetMetadata.from_scene_containers(scenes)
+        dataset_metadata = DatasetMetadata.from_scene_containers(scenes, requested_annotations, requested_autolabels)
         super().__init__(
             dataset_metadata,
             scenes=scenes,
-            calibration_table=calibration_table,
             datum_names=datum_names,
             requested_annotations=requested_annotations,
             requested_autolabels=requested_autolabels,
             backward_context=backward_context,
             forward_context=forward_context,
+            accumulation_context=accumulation_context,
             generate_depth_from_datum=generate_depth_from_datum,
-            is_scene_dataset=True,
             only_annotated_datums=only_annotated_datums
         )
 
@@ -658,6 +454,10 @@ class SynchronizedScene(_SynchronizedDataset):
     forward_context: int, default: 0
         Forward context in frames [T+1, ..., T+forward]
 
+    accumulation_context: dict, default None
+        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, 'accumulation_context={'lidar':(3,1)}
+        accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.
+
     generate_depth_from_datum: str, default: None
         Datum name of the point cloud. If is not None, then the depth map will be generated for the camera using
         the desired point cloud.
@@ -675,27 +475,27 @@ class SynchronizedScene(_SynchronizedDataset):
         requested_autolabels=None,
         backward_context=0,
         forward_context=0,
+        accumulation_context=None,
         generate_depth_from_datum=None,
         only_annotated_datums=False
     ):
 
         # Extract a single scene from the scene JSON
-        scene, calibration_table = BaseSceneDataset._extract_scene_from_scene_json(
-            scene_json, requested_autolabels=requested_autolabels
+        scene = BaseDataset._extract_scene_from_scene_json(
+            scene_json, requested_autolabels, is_datums_synchronized=True
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
-        dataset_metadata = DatasetMetadata.from_scene_containers([scene])
+        dataset_metadata = DatasetMetadata.from_scene_containers([scene], requested_annotations, requested_autolabels)
         super().__init__(
             dataset_metadata,
             scenes=[scene],
-            calibration_table=calibration_table,
             datum_names=datum_names,
             requested_annotations=requested_annotations,
             requested_autolabels=requested_autolabels,
             backward_context=backward_context,
             forward_context=forward_context,
+            accumulation_context=accumulation_context,
             generate_depth_from_datum=generate_depth_from_datum,
-            is_scene_dataset=True,
             only_annotated_datums=only_annotated_datums
         )

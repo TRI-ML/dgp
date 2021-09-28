@@ -1,14 +1,17 @@
-// Copyright 2019 Toyota Research Institute.  All rights reserved.
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 // Definitions for a sample within a dataset.
 syntax = "proto3";
 
 package dgp.proto;
 
+import "google/protobuf/any.proto";
+
+import "dgp/proto/file_datum.proto";
+import "dgp/proto/geometry.proto";
 import "dgp/proto/identifiers.proto";
 import "dgp/proto/image.proto";
 import "dgp/proto/point_cloud.proto";
-import "dgp/proto/geometry.proto";
-import "google/protobuf/any.proto";
+import "dgp/proto/radar_point_cloud.proto";
 
 // Calibration for a sample
 message SampleCalibration {
@@ -23,15 +26,18 @@ message SampleCalibration {
   repeated Pose extrinsics = 3;
 }
 
-// DatumValue that takes one of many sensor data type values
+// DatumValue that takes one of many data type values
 message DatumValue {
   oneof datum_oneof {
     Image image = 1;
     PointCloud point_cloud = 2;
+    FileDatum file_datum = 3;
+    RadarPointCloud radar_point_cloud = 4;
   }
 }
 
-// Single datum to encapsulate sensor data (image, point cloud etc)
+// Datum encapsulates a single data element and associated metadata to
+// uniquely identify it in a series of logged data.
 message Datum {
   // Datum identifier
   // Unique identifier to a datum in a specific log
@@ -42,7 +48,7 @@ message Datum {
   // key = sha1(datum_id) = sha1(SerializeToString(DatumId(...))
   string key = 2;
 
-  // Datum envelope capturing multi-modal information
+  // Datum envelope
   DatumValue datum = 3;
 
   // Next datum hash key.
@@ -59,7 +65,7 @@ message Datum {
 }
 
 
-// Dataset sample that refers to sensor data associated to a particular timestamp.
+// Dataset sample that refers to data associated to a particular timestamp.
 //
 // A dataset sample is a container that encapsulates
 // time-synchronized sensor data (images, point clouds, GPS/IMU etc),

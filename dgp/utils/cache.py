@@ -1,3 +1,4 @@
+# Copyright 2021 Toyota Research Institute.  All rights reserved.
 import hashlib
 import logging
 import os
@@ -10,23 +11,23 @@ import numpy as np
 from dgp import DGP_CACHE_DIR
 
 
-# The cache dir is cleaned up on every run to avoid hashing the
+# The DGP cache dir can be cleaned up on every run to avoid hashing the
 # function / class instance method that may be tricky to implement, especially
 # in the case of varying arg/kwargs in the function / class-method to be
 # decorated.
-def clear_cache():
-    """Clear object cache to avoid growing disk-usage."""
-    if os.path.isdir(DGP_CACHE_DIR):
-        logging.info('Clearing disk-cache')
+def clear_cache(directory=DGP_CACHE_DIR):
+    """Clear DGP cache to avoid growing disk-usage."""
+    if os.path.isdir(directory):
+        logging.info('Clearing dgp disk-cache.')
         try:
-            shutil.rmtree(DGP_CACHE_DIR)
+            shutil.rmtree(directory)
         except OSError as e:
             logging.warning('Failed to clear cache {}'.format(e))
 
 
-def diskcache(protocol='npz'):
+def diskcache(protocol='npz', cache_dir=None):
     """Disk-caching method/function decorator that caches results into
-    cache for arbitrary pickle-able / numpy objects.
+    dgp cache for arbitrary pickle-able / numpy objects.
 
     Parameters
     ----------
@@ -35,10 +36,15 @@ def diskcache(protocol='npz'):
 
     protocol: str, (default: npz)
         Use numpy for serialization protocol, otherwise use pkl for pickle.
+
+    cache_dir: str, (default: None)
+        Directory to cache instead of the default DGP cache.
     """
     assert protocol in ('npz', 'pkl'), 'Unknown protocol {}'.format(protocol)
-    logging.info('Using disk-cache.')
-    os.makedirs(DGP_CACHE_DIR, exist_ok=True)  # pylint: disable=unexpected-keyword-arg
+    logging.info('Using dgp disk-cache.')
+    if cache_dir is None:
+        cache_dir = DGP_CACHE_DIR
+    os.makedirs(cache_dir, exist_ok=True)  # pylint: disable=unexpected-keyword-arg
 
     def wrapped_diskcache(func):
         def serialize(_result, _filename, _protocol):
@@ -65,13 +71,14 @@ def diskcache(protocol='npz'):
         def wrapped_func(*args, **kwargs):
             # Hash args/kwargs with `pickle.dumps(...)
             # to ensure that the disk-cached objects are re-loaded across runs.
+            # Include function name in case different subclasses are instantiated with the same signature.
             try:
-                # Cross-process deterministic hash via `pickle.dumps()`
-                data = pickle.dumps((args, kwargs))
+                # Cross-process deterministic hash via `pickle.dumps()`.
+                data = pickle.dumps((args, kwargs, func.__name__))
                 h = hashlib.md5(data)
             except Exception as e:  # pylint: disable=bare-except
-                raise Exception('Failed to hash: (args={}, kwargs={}): {}'.format(args, kwargs, str(e)))
-            filename = os.path.join(DGP_CACHE_DIR, '{}.{}'.format(h.hexdigest(), protocol))
+                raise Exception('Failed to hash: (args={}, kwargs={}): {}'.format(args, kwargs, str(e))) from e
+            filename = os.path.join(cache_dir, '{}.{}'.format(h.hexdigest(), protocol))
             # Try loading the cached object, otherwise re-compute.
             try:
                 if os.path.exists(filename):

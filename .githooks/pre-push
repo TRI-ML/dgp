@@ -3,7 +3,7 @@
 # Copyright 2019 Toyota Research Institute.  All rights reserved.
 
 # Git pre-push hook to check commited Python files for pylint issues with
-# driving pylintrc. If there are any pylint errors, it will exit with an error.
+# pylintrc. If there are any pylint errors, it will exit with an error.
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
@@ -21,7 +21,7 @@ COMMITED_PYTHON_FILES=$(git diff --name-only --diff-filter=ACM --name-only \
 if [[ "$COMMITED_PYTHON_FILES" = "" ]]; then
   echo 'No python files to lint.'
 else
-  pylint $COMMITED_PYTHON_FILES
+  pylint --rcfile=.pylintrc $COMMITED_PYTHON_FILES
   if [ $? -ne 0 ]
   then
     echo "Aborting push due to files with lint."
