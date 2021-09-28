@@ -1,4 +1,4 @@
-# DGP CLI
+# DGP Command Line Interface
 
 [dgp/cli.py](cli.py) is the main CLI entrypoint for handling DGP datasets.
 

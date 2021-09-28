@@ -1,4 +1,4 @@
-[<img src="docs/tri-logo.jpeg" width="35%">](https://www.tri.global/)
+[<img src="docs/tri-logo.png" width="40%">](https://www.tri.global/)
 
 
 Dataset Governance Policy (DGP)
