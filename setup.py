@@ -41,7 +41,7 @@ packages = find_packages(exclude=['tests'])
 setup(
     name="dgp",
     version=__version__,
-    description="TRI Dataset Governance Policy",
+    description="Dataset Governance Policy (DGP) for Autonomous Vehicle ML datasets.",
     long_description=open('README.md', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
     author="Toyota Research Institute",
@@ -49,7 +49,7 @@ setup(
     url="https://github.com/TRI-ML/dgp",
     packages=packages,
     entry_points={'console_scripts': [
-        'dgp_cli=dgp.cli:main',
+        'dgp_cli=dgp.cli:cli',
     ]},
     include_package_data=True,
     setup_requires=['cython==0.29.10', 'grpcio==1.21.1', 'grpcio-tools==1.21.1'],

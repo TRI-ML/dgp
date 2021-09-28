@@ -1,17 +1,35 @@
-# Copyright 2019-2020 Toyota Research Institute.  All rights reserved.
+# Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 """Useful utilities for pre-processing datasets"""
 import datetime
 import hashlib
-import json
 import logging
 import os
-from io import StringIO
+from functools import lru_cache
 from multiprocessing import Pool, cpu_count
 
 import numpy as np
-from google.protobuf.json_format import MessageToDict
 from google.protobuf.timestamp_pb2 import Timestamp
 from PIL import ImageStat
+
+from dgp.utils.protobuf import save_pbobject_as_json
+
+
+@lru_cache(maxsize=None)
+def _mkdir(dirname):
+    """Smarter mkdir by caching on dirname to avoid redundant disk I/O."""
+    os.makedirs(dirname, exist_ok=True)
+
+
+def _write_point_cloud(filename, X):
+    """Utility function for writing point clouds."""
+    _mkdir(os.path.dirname(filename))
+    np.savez_compressed(filename, data=X)
+
+
+def _write_annotation(filename, annotation):
+    """Utility function for writing 3d annotations."""
+    _mkdir(os.path.dirname(filename))
+    save_pbobject_as_json(annotation, filename)
 
 
 def compute_image_statistics(image_list, image_open_fn):
@@ -108,8 +126,8 @@ def bgr2id(color):
 
 
 def _get_image_stats(image_sub_list, process_index, num_processes, image_open_fn):
-    """Given a list of images, computes the mean, variance, and image size"""
-    mean, var, image_sizes = np.array([0., 0., 0.]), np.array([0., 0., 0.]), {}
+    """Given a list of images, computes the mean, stddev, and image size"""
+    mean, stddev, image_sizes = np.array([0., 0., 0.]), np.array([0., 0., 0.]), {}
 
     for i, image_file in enumerate(image_sub_list):
         image = image_open_fn(image_file)
@@ -118,7 +136,7 @@ def _get_image_stats(image_sub_list, process_index, num_processes, image_open_fn
 
         if channels == 3:
             mean += np.array(image_stats.mean)
-            var += np.array(image_stats.var)
+            stddev += np.array(image_stats.stddev)
 
         width, height = image.size
         image_sizes.update({image_file: {"channels": channels, "height": height, "width": width}})
@@ -126,7 +144,7 @@ def _get_image_stats(image_sub_list, process_index, num_processes, image_open_fn
         if i % 100 == 0 and process_index == 0:
             logging.info("Completed {:d} images per process, with {:d} processes running".format(i, num_processes))
 
-    return mean, var, image_sizes
+    return mean, stddev, image_sizes
 
 
 def generate_uid_from_image(image):
@@ -135,7 +153,7 @@ def generate_uid_from_image(image):
 
     Parameters
     ----------
-    image: PIl.Image
+    image: PIL.Image
         Image to be hashed
 
     Returns
@@ -146,27 +164,42 @@ def generate_uid_from_image(image):
     return hashlib.sha1(image).hexdigest()
 
 
-def generate_uid_from_pbobject(pb_object):
-    """Given a pb object, return the deterministic SHA1 hash hexdigest.
-    Used for creating unique IDs.
+def generate_uid_from_semantic_segmentation_2d_annotation(annotation):
+    """Given a unique identifier, return the SHA1 hash hexdigest.
 
     Parameters
     ----------
-    pb_object: pb2 object
-        pb_object to be hashed.
+    image: np.array
+        semantic_segmentation_2d annotation to be hashed
 
     Returns
     -------
     Hexdigest of annotation content
     """
-    json_string = json.dumps(
-        MessageToDict(pb_object, including_default_value_fields=True, preserving_proto_field_name=True),
-        indent=2,
-        sort_keys=True
-    )
-    out = StringIO()
-    out.write(json_string)
-    return hashlib.sha1(out.getvalue().encode('utf-8')).hexdigest()
+    if annotation.dtype != np.uint8:
+        raise TypeError('`annotation` should be of type np.uint8')
+    if len(annotation.shape) != 2:
+        raise ValueError('`annotation` should be two-dimensional (one class ID per pixel)')
+    return hashlib.sha1(annotation).hexdigest()
+
+
+def generate_uid_from_instance_segmentation_2d_annotation(annotation):
+    """Given a unique identifier, return the SHA1 hash hexdigest.
+
+    Parameters
+    ----------
+    image: np.array
+        instance_segmentation_2d annotation to be hashed
+
+    Returns
+    -------
+    Hexdigest of annotation content
+    """
+    if annotation.dtype not in (np.uint16, np.uint32):
+        raise TypeError('`annotation` should be of type np.uint16 or np.uint32')
+    if len(annotation.shape) != 2:
+        raise ValueError('`annotation` should be two-dimensional (one instance ID per pixel)')
+    return hashlib.sha1(annotation).hexdigest()
 
 
 def generate_uid_from_point_cloud(point_cloud):

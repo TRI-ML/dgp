@@ -1,7 +1,10 @@
-# Copyright 2019 Toyota Research Institute. All rights reserved.
+# Copyright 2019-2021 Toyota Research Institute. All rights reserved.
 import os
+from collections import OrderedDict
 
-__version__ = '0.1'
+from dgp.proto import annotations_pb2, dataset_pb2
+
+__version__ = '1.0'
 
 DGP_PATH = os.getenv('DGP_PATH', default=os.getenv('HOME'))
 DGP_DATA_DIR = os.path.join(DGP_PATH, '.dgp')
@@ -33,3 +36,13 @@ SCENE_JSON_FILENAME = 'scene.json'
 TRI_DGP_SCENE_DATASET_JSON_NAME = "scene_dataset_v{version}.json"
 TRI_DGP_SCENE_JSON_NAME = "scene_{scene_hash}.json"
 ANNOTATION_FILE_NAME = '{image_content_hash}_{annotation_content_hash}.json'
+
+# String identifiers for dataset splits
+DATASET_SPLIT_NAME_TO_KEY = OrderedDict({k.lower(): v for k, v in dataset_pb2.DatasetSplit.items()})
+DATASET_SPLIT_KEY_TO_NAME = OrderedDict({v: k for k, v in DATASET_SPLIT_NAME_TO_KEY.items()})
+
+# Provide mapping from annotation types to proto IDs, (i.e. 'bounding_box_2d': annotations_pb2.BOUNDING_BOX_2D, 'depth': annotations_pb2.DEPTH).
+ANNOTATION_KEY_TO_TYPE_ID = OrderedDict({k.lower(): v for k, v in annotations_pb2.AnnotationType.items()})
+ANNOTATION_TYPE_ID_TO_KEY = OrderedDict({v: k for k, v in ANNOTATION_KEY_TO_TYPE_ID.items()})
+# String identifiers for annotation types
+ALL_ANNOTATION_TYPES = tuple(ANNOTATION_KEY_TO_TYPE_ID.keys())

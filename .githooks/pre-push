@@ -21,7 +21,7 @@ COMMITED_PYTHON_FILES=$(git diff --name-only --diff-filter=ACM --name-only \
 if [[ "$COMMITED_PYTHON_FILES" = "" ]]; then
   echo 'No python files to lint.'
 else
-  pylint $COMMITED_PYTHON_FILES
+  pylint --rcfile=.pylintrc $COMMITED_PYTHON_FILES
   if [ $? -ne 0 ]
   then
     echo "Aborting push due to files with lint."
