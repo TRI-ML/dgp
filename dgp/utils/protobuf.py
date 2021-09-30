@@ -1,14 +1,18 @@
-# Copyright 2019 Toyota Research Institute.  All rights reserved.
+# Copyright 2021 Toyota Research Institute.  All rights reserved.
+import hashlib
 import json
 import logging
+import os
+from io import StringIO
 
 from google.protobuf.json_format import MessageToDict, Parse
 
 from dgp.proto.dataset_pb2 import Ontology as OntologyV1Pb2
 from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
+from dgp.utils.cloud.s3 import (convert_uri_to_bucket_path, get_string_from_s3_file)
 
 
-def open_pbobject(path, pb_class, verbose=True):
+def open_pbobject(path, pb_class):
     """Load JSON as a protobuf (pb2) object.
 
     Any calls to load protobuf objects from JSON in this repository should be through this function.
@@ -17,13 +21,10 @@ def open_pbobject(path, pb_class, verbose=True):
     Parameters
     ----------
     path: str
-        JSON file path to load
+        Local JSON file path.
 
     pb_class: pb2 object class
         Protobuf object we want to load into.
-
-    verbose: bool, default: True
-        Verbose prints on failure
 
     Returns
     ----------
@@ -31,13 +32,38 @@ def open_pbobject(path, pb_class, verbose=True):
         Desired pb2 object to be opened.
     """
     assert path.endswith(".json"), 'File extension for {} needs to be json.'.format(path)
+    if path.startswith('s3://'):
+        return open_remote_pb_object(path, pb_class)
+    assert os.path.exists(path), f'Path not found: {path}'
     with open(path, 'r') as json_file:
-        try:
-            pb_object = Parse(json_file.read(), pb_class())
-        except Exception as e:
-            if verbose:
-                print('open_pbobject: Failed to load pbobject {}'.format(e))
-            return None
+        pb_object = Parse(json_file.read(), pb_class())
+    return pb_object
+
+
+def open_remote_pb_object(s3_object_uri, pb_class):
+    """Load JSON as a protobuf (pb2) object from S3 remote
+
+    Parameters
+    ----------
+    s3_object_uri: str
+        Remote scene dataset JSON URI.
+
+    pb_class: pb2 object class
+        Protobuf object we want to load into.
+
+    Returns
+    ----------
+    pb_object: pb2 object
+        Desired pb2 object to be opened.
+
+    """
+    if s3_object_uri.startswith('s3://'):
+        bucket_name, s3_base_path = convert_uri_to_bucket_path(s3_object_uri)
+    else:
+        raise ValueError("Expected path to S3 bucket but got {}".format(s3_object_uri))
+
+    pb_object = Parse(get_string_from_s3_file(bucket_name, s3_base_path), pb_class())
+
     return pb_object
 
 
@@ -54,8 +80,17 @@ def save_pbobject_as_json(pb_object, save_path):
         Protobuf object we want to save to file
 
     save_path: str
-        JSON file path to save to
+        If save path is a JSON, serialized object is saved to that path. If save path is directory,
+        the `pb_object` is saved in <save_path>/<pb_object_sha>.json.
+
+    Returns
+    -------
+    save_path: str
+        Returns path to saved pb_object JSON
     """
+    if os.path.isdir(save_path):
+        save_path = os.path.join(save_path, generate_uid_from_pbobject(pb_object) + ".json")
+
     assert save_path.endswith(".json"), 'File extension for {} needs to be json.'.format(save_path)
     with open(save_path, "w") as _f:
         json.dump(
@@ -64,9 +99,10 @@ def save_pbobject_as_json(pb_object, save_path):
             indent=2,
             sort_keys=True
         )
+    return save_path
 
 
-def open_ontology_pbobject(ontology_file, verbose=True):
+def open_ontology_pbobject(ontology_file):
     """Open ontology objects, first attempt to open V2 before trying V1.
 
     Parameters
@@ -74,22 +110,48 @@ def open_ontology_pbobject(ontology_file, verbose=True):
     ontology_file: str
         JSON ontology file path to load.
 
-    verbose: bool, default: True
-        Verbose prints on failure.
-
     Returns
-    ----------
+    -------
     ontology: Ontology object
         Desired Ontology pb2 object to be opened (either V2 or V1). Returns
         None if neither fails to load.
     """
-    ontology = open_pbobject(ontology_file, OntologyV2Pb2, verbose=verbose)
-    if ontology is not None:
-        logging.info('Successfully loaded Ontology V2 spec.')
-        return ontology
-    logging.info('Failed to load ontology file with V2 spec, trying V1 spec.')
-    ontology = open_pbobject(ontology_file, OntologyV1Pb2, verbose=verbose)
-    if ontology is not None:
-        logging.info('Successfully loaded Ontology V1 spec.')
-        return ontology
-    logging.info('Failed to load ontology file with V1 spec also, returning None.')
+    try:
+        ontology = open_pbobject(ontology_file, OntologyV2Pb2)
+        if ontology is not None:
+            logging.info('Successfully loaded Ontology V2 spec.')
+            return ontology
+    except Exception:
+        logging.info('Failed to load ontology file with V2 spec, trying V1 spec.')
+    try:
+        ontology = open_pbobject(ontology_file, OntologyV1Pb2)
+        if ontology is not None:
+            logging.info('Successfully loaded Ontology V1 spec.')
+            return ontology
+    except Exception:
+        logging.info('Failed to load ontology file with V1 spec also, returning None.')
+
+
+def generate_uid_from_pbobject(pb_object):
+    """Given a pb object, return the deterministic SHA1 hash hexdigest.
+    Used for creating unique IDs.
+
+    Parameters
+    ----------
+    pb_object: pb2 object
+        pb_object to be hashed.
+
+    Returns
+    -------
+    Hexdigest of annotation content
+    """
+    json_string = json.dumps(
+        MessageToDict(pb_object, including_default_value_fields=True, preserving_proto_field_name=True),
+        indent=2,
+        sort_keys=True
+    )
+    out = StringIO()
+    out.write(json_string)
+    uid = hashlib.sha1(out.getvalue().encode('utf-8')).hexdigest()
+    out.close()
+    return uid

@@ -3,6 +3,8 @@
 accept-no-param-doc=no
 accept-no-return-doc=yes
 accept-no-yields-doc=yes
+# Ignore protos
+ignore=file_datum_pb2_grpc.py,radar_point_cloud_pb2_grpc.py
 
 [REPORTS]
 reports=no
@@ -55,4 +57,6 @@ disable=
    # allow explicit return in __init__
    E0101,
    # allow catching general exceptions
-   W0703
+   W0703,
+   # allow lazy % or .format() or % formatting in logging functions
+   W1203

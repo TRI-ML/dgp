@@ -14,6 +14,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from dgp.proto import remote_pb2 as dgp_dot_proto_dot_remote__pb2
 from dgp.proto import scene_pb2 as dgp_dot_proto_dot_scene__pb2
 from dgp.proto import statistics_pb2 as dgp_dot_proto_dot_statistics__pb2
@@ -24,9 +25,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='dgp.proto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x17\x64gp/proto/dataset.proto\x12\tdgp.proto\x1a\x16\x64gp/proto/remote.proto\x1a\x15\x64gp/proto/scene.proto\x1a\x1a\x64gp/proto/statistics.proto\"\xec\x05\n\x08Ontology\x12\x35\n\nname_to_id\x18\x01 \x03(\x0b\x32!.dgp.proto.Ontology.NameToIdEntry\x12\x35\n\nid_to_name\x18\x02 \x03(\x0b\x32!.dgp.proto.Ontology.IdToNameEntry\x12\x33\n\x08\x63olormap\x18\x03 \x03(\x0b\x32!.dgp.proto.Ontology.ColormapEntry\x12\x31\n\x07isthing\x18\x04 \x03(\x0b\x32 .dgp.proto.Ontology.IsthingEntry\x12=\n\rsupercategory\x18\x05 \x03(\x0b\x32&.dgp.proto.Ontology.SupercategoryEntry\x12\x42\n\x10segmentation_ids\x18\x06 \x03(\x0b\x32(.dgp.proto.Ontology.SegmentationIdsEntry\x12\x11\n\tignore_id\x18\x07 \x01(\x03\x1a/\n\rNameToIdEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x1a/\n\rIdToNameEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a(\n\x05\x43olor\x12\t\n\x01r\x18\x01 \x01(\x05\x12\t\n\x01g\x18\x02 \x01(\x05\x12\t\n\x01\x62\x18\x03 \x01(\x05\x1aJ\n\rColormapEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.dgp.proto.Ontology.Color:\x02\x38\x01\x1a.\n\x0cIsthingEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\x1a\x34\n\x12SupercategoryEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x36\n\x14SegmentationIdsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\"\xfd\x02\n\x0f\x44\x61tasetMetadata\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x15\n\rcreation_date\x18\x03 \x01(\t\x12\x0f\n\x07\x63reator\x18\x04 \x01(\t\x12*\n\x0b\x62ucket_path\x18\x05 \x01(\x0b\x32\x15.dgp.proto.RemotePath\x12\'\n\x08raw_path\x18\x06 \x01(\x0b\x32\x15.dgp.proto.RemotePath\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\x12\x38\n\x06origin\x18\x08 \x01(\x0e\x32(.dgp.proto.DatasetMetadata.DatasetOrigin\x12\"\n\x1a\x61vailable_annotation_types\x18\t \x03(\x05\x12\x30\n\nstatistics\x18\n \x01(\x0b\x32\x1c.dgp.proto.DatasetStatistics\")\n\rDatasetOrigin\x12\n\n\x06PUBLIC\x10\x00\x12\x0c\n\x08INTERNAL\x10\x01\"\xc7\x01\n\x0cSceneDataset\x12,\n\x08metadata\x18\x01 \x01(\x0b\x32\x1a.dgp.proto.DatasetMetadata\x12>\n\x0cscene_splits\x18\x02 \x03(\x0b\x32(.dgp.proto.SceneDataset.SceneSplitsEntry\x1aI\n\x10SceneSplitsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.dgp.proto.SceneFiles:\x02\x38\x01*?\n\x0c\x44\x61tasetSplit\x12\t\n\x05TRAIN\x10\x00\x12\x07\n\x03VAL\x10\x01\x12\x08\n\x04TEST\x10\x02\x12\x11\n\rTRAIN_OVERFIT\x10\x03\x62\x06proto3')
+  serialized_pb=_b('\n\x17\x64gp/proto/dataset.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x16\x64gp/proto/remote.proto\x1a\x15\x64gp/proto/scene.proto\x1a\x1a\x64gp/proto/statistics.proto\"\xec\x05\n\x08Ontology\x12\x35\n\nname_to_id\x18\x01 \x03(\x0b\x32!.dgp.proto.Ontology.NameToIdEntry\x12\x35\n\nid_to_name\x18\x02 \x03(\x0b\x32!.dgp.proto.Ontology.IdToNameEntry\x12\x33\n\x08\x63olormap\x18\x03 \x03(\x0b\x32!.dgp.proto.Ontology.ColormapEntry\x12\x31\n\x07isthing\x18\x04 \x03(\x0b\x32 .dgp.proto.Ontology.IsthingEntry\x12=\n\rsupercategory\x18\x05 \x03(\x0b\x32&.dgp.proto.Ontology.SupercategoryEntry\x12\x42\n\x10segmentation_ids\x18\x06 \x03(\x0b\x32(.dgp.proto.Ontology.SegmentationIdsEntry\x12\x11\n\tignore_id\x18\x07 \x01(\x03\x1a/\n\rNameToIdEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x1a/\n\rIdToNameEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a(\n\x05\x43olor\x12\t\n\x01r\x18\x01 \x01(\x05\x12\t\n\x01g\x18\x02 \x01(\x05\x12\t\n\x01\x62\x18\x03 \x01(\x05\x1aJ\n\rColormapEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.dgp.proto.Ontology.Color:\x02\x38\x01\x1a.\n\x0cIsthingEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\x1a\x34\n\x12SupercategoryEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x36\n\x14SegmentationIdsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\"\xbf\x03\n\x0f\x44\x61tasetMetadata\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x15\n\rcreation_date\x18\x03 \x01(\t\x12\x0f\n\x07\x63reator\x18\x04 \x01(\t\x12*\n\x0b\x62ucket_path\x18\x05 \x01(\x0b\x32\x15.dgp.proto.RemotePath\x12\'\n\x08raw_path\x18\x06 \x01(\x0b\x32\x15.dgp.proto.RemotePath\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\x12\x38\n\x06origin\x18\x08 \x01(\x0e\x32(.dgp.proto.DatasetMetadata.DatasetOrigin\x12\"\n\x1a\x61vailable_annotation_types\x18\t \x03(\x05\x12\x30\n\nstatistics\x18\n \x01(\x0b\x32\x1c.dgp.proto.DatasetStatistics\x12\x18\n\x10\x66rame_per_second\x18\x0b \x01(\x02\x12&\n\x08metadata\x18\x0c \x01(\x0b\x32\x14.google.protobuf.Any\")\n\rDatasetOrigin\x12\n\n\x06PUBLIC\x10\x00\x12\x0c\n\x08INTERNAL\x10\x01\"\xc7\x01\n\x0cSceneDataset\x12,\n\x08metadata\x18\x01 \x01(\x0b\x32\x1a.dgp.proto.DatasetMetadata\x12>\n\x0cscene_splits\x18\x02 \x03(\x0b\x32(.dgp.proto.SceneDataset.SceneSplitsEntry\x1aI\n\x10SceneSplitsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.dgp.proto.SceneFiles:\x02\x38\x01*?\n\x0c\x44\x61tasetSplit\x12\t\n\x05TRAIN\x10\x00\x12\x07\n\x03VAL\x10\x01\x12\x08\n\x04TEST\x10\x02\x12\x11\n\rTRAIN_OVERFIT\x10\x03\x62\x06proto3')
   ,
-  dependencies=[dgp_dot_proto_dot_remote__pb2.DESCRIPTOR,dgp_dot_proto_dot_scene__pb2.DESCRIPTOR,dgp_dot_proto_dot_statistics__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,dgp_dot_proto_dot_remote__pb2.DESCRIPTOR,dgp_dot_proto_dot_scene__pb2.DESCRIPTOR,dgp_dot_proto_dot_statistics__pb2.DESCRIPTOR,])
 
 _DATASETSPLIT = _descriptor.EnumDescriptor(
   name='DatasetSplit',
@@ -53,8 +54,8 @@ _DATASETSPLIT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1450,
-  serialized_end=1513,
+  serialized_start=1543,
+  serialized_end=1606,
 )
 _sym_db.RegisterEnumDescriptor(_DATASETSPLIT)
 
@@ -82,8 +83,8 @@ _DATASETMETADATA_DATASETORIGIN = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1205,
-  serialized_end=1246,
+  serialized_start=1298,
+  serialized_end=1339,
 )
 _sym_db.RegisterEnumDescriptor(_DATASETMETADATA_DATASETORIGIN)
 
@@ -121,8 +122,8 @@ _ONTOLOGY_NAMETOIDENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=490,
-  serialized_end=537,
+  serialized_start=517,
+  serialized_end=564,
 )
 
 _ONTOLOGY_IDTONAMEENTRY = _descriptor.Descriptor(
@@ -158,8 +159,8 @@ _ONTOLOGY_IDTONAMEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=539,
-  serialized_end=586,
+  serialized_start=566,
+  serialized_end=613,
 )
 
 _ONTOLOGY_COLOR = _descriptor.Descriptor(
@@ -202,8 +203,8 @@ _ONTOLOGY_COLOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=588,
-  serialized_end=628,
+  serialized_start=615,
+  serialized_end=655,
 )
 
 _ONTOLOGY_COLORMAPENTRY = _descriptor.Descriptor(
@@ -239,8 +240,8 @@ _ONTOLOGY_COLORMAPENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=630,
-  serialized_end=704,
+  serialized_start=657,
+  serialized_end=731,
 )
 
 _ONTOLOGY_ISTHINGENTRY = _descriptor.Descriptor(
@@ -276,8 +277,8 @@ _ONTOLOGY_ISTHINGENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=706,
-  serialized_end=752,
+  serialized_start=733,
+  serialized_end=779,
 )
 
 _ONTOLOGY_SUPERCATEGORYENTRY = _descriptor.Descriptor(
@@ -313,8 +314,8 @@ _ONTOLOGY_SUPERCATEGORYENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=754,
-  serialized_end=806,
+  serialized_start=781,
+  serialized_end=833,
 )
 
 _ONTOLOGY_SEGMENTATIONIDSENTRY = _descriptor.Descriptor(
@@ -350,8 +351,8 @@ _ONTOLOGY_SEGMENTATIONIDSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=808,
-  serialized_end=862,
+  serialized_start=835,
+  serialized_end=889,
 )
 
 _ONTOLOGY = _descriptor.Descriptor(
@@ -422,8 +423,8 @@ _ONTOLOGY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=114,
-  serialized_end=862,
+  serialized_start=141,
+  serialized_end=889,
 )
 
 
@@ -504,6 +505,20 @@ _DATASETMETADATA = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='frame_per_second', full_name='dgp.proto.DatasetMetadata.frame_per_second', index=10,
+      number=11, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='dgp.proto.DatasetMetadata.metadata', index=11,
+      number=12, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -517,8 +532,8 @@ _DATASETMETADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=865,
-  serialized_end=1246,
+  serialized_start=892,
+  serialized_end=1339,
 )
 
 
@@ -555,8 +570,8 @@ _SCENEDATASET_SCENESPLITSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1375,
-  serialized_end=1448,
+  serialized_start=1468,
+  serialized_end=1541,
 )
 
 _SCENEDATASET = _descriptor.Descriptor(
@@ -592,8 +607,8 @@ _SCENEDATASET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1249,
-  serialized_end=1448,
+  serialized_start=1342,
+  serialized_end=1541,
 )
 
 _ONTOLOGY_NAMETOIDENTRY.containing_type = _ONTOLOGY
@@ -614,6 +629,7 @@ _DATASETMETADATA.fields_by_name['bucket_path'].message_type = dgp_dot_proto_dot_
 _DATASETMETADATA.fields_by_name['raw_path'].message_type = dgp_dot_proto_dot_remote__pb2._REMOTEPATH
 _DATASETMETADATA.fields_by_name['origin'].enum_type = _DATASETMETADATA_DATASETORIGIN
 _DATASETMETADATA.fields_by_name['statistics'].message_type = dgp_dot_proto_dot_statistics__pb2._DATASETSTATISTICS
+_DATASETMETADATA.fields_by_name['metadata'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 _DATASETMETADATA_DATASETORIGIN.containing_type = _DATASETMETADATA
 _SCENEDATASET_SCENESPLITSENTRY.fields_by_name['value'].message_type = dgp_dot_proto_dot_scene__pb2._SCENEFILES
 _SCENEDATASET_SCENESPLITSENTRY.containing_type = _SCENEDATASET
