@@ -15,8 +15,6 @@ DOCKER_OPTS ?= \
 	-v $(PWD):$(WORKSPACE) \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-v ~/.ssh:/root/.ssh \
-	-v /data:/data \
-	-v /mnt/fsx:/mnt/fsx \
 	-v ~/.aws:/root/.aws \
 	-v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0 \
 	--net=host --ipc=host

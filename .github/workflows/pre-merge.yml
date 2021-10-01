@@ -1,0 +1,49 @@
+name: Run pre-merge tests
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  pre-merge-tests:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Lint commit message with commitlint
+        # Documentation: https://github.com/wagoid/commitlint-github-action
+        uses: wagoid/commitlint-github-action@v4
+      - name: Install Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install cython==0.29.10 numpy==1.19.4
+          pip install -r requirements.txt
+      - name: Run tests with nosetests
+        run: make test
+      - name: Check python code formatting with YAPF
+        # Documentation: https://github.com/AlexanderMelde/yapf-action
+        uses: AlexanderMelde/yapf-action@master
+        with:
+          args: --style .style.yapf --verbose --exclude '*pb2.py' --exclude '*pb2_grpc.py' --exclude '*eggs*.py' --exclude '*env*' --exclude 'build/*'
+      - name: Lint code base with SuperLinter
+        # Documentation: https://github.com/github/super-linter#how-to-use
+        uses: github/super-linter@v4
+        env:
+          DEFAULT_BRANCH: master
+          FILTER_REGEX_EXCLUDE: .*pb2*py
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: .
+          PYTHON_PYLINT_CONFIG_FILE: .pylintrc
+          VALIDATE_ALL_CODEBASE: false # Only new or edited files will be parsed for validation.
+          VALIDATE_PYTHON_BLACK: false
+          VALIDATE_PYTHON_FLAKE8: false # Formatted by YAPF.
+          VALIDATE_PYTHON_ISORT: false # Formatted by YAPF.
+          VALIDATE_PYTHON_MYPY: false

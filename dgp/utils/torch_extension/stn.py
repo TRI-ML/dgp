@@ -1,7 +1,7 @@
 # Copyright 2019 Toyota Research Institute.  All rights reserved.
 from functools import lru_cache
+
 import torch
-import torch.nn.functional as F
 
 
 @lru_cache(maxsize=None)
@@ -34,8 +34,8 @@ def meshgrid(B, H, W, dtype, device, normalized=False):
         xs = torch.linspace(-1, 1, W, device=device, dtype=dtype)
         ys = torch.linspace(-1, 1, H, device=device, dtype=dtype)
     else:
-        xs = torch.linspace(0, W-1, W, device=device, dtype=dtype)
-        ys = torch.linspace(0, H-1, H, device=device, dtype=dtype)
+        xs = torch.linspace(0, W - 1, W, device=device, dtype=dtype)
+        ys = torch.linspace(0, H - 1, H, device=device, dtype=dtype)
     ys, xs = torch.meshgrid([ys, xs])
     return xs.repeat([B, 1, 1]), ys.repeat([B, 1, 1])
 
@@ -65,6 +65,6 @@ def image_grid(B, H, W, dtype, device, normalized=False):
         Mesh-grid for the corresponding image shape (B3HW)
     """
     xs, ys = meshgrid(B, H, W, dtype, device, normalized=normalized)
-    ones = torch.ones_like(xs) # BHW
-    grid = torch.stack([xs, ys, ones], dim=1) # B3HW
+    ones = torch.ones_like(xs)  # BHW
+    grid = torch.stack([xs, ys, ones], dim=1)  # B3HW
     return grid

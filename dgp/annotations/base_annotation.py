@@ -1,6 +1,6 @@
 # Copyright 2021 Toyota Research Institute.  All rights reserved.
 import os
-from abc import ABC, abstractclassmethod, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 
 from dgp.annotations.ontology import Ontology
 
@@ -23,7 +23,8 @@ class Annotation(ABC):
     def ontology(self):
         return self._ontology
 
-    @abstractclassmethod
+    @classmethod
+    @abstractmethod
     def load(cls, annotation_file, ontology):
         """Loads annotation from file into a canonical format for consumption in __getitem__ function in BaseDataset.
         Format/data structure for annotations will vary based on task.
@@ -36,6 +37,7 @@ class Annotation(ABC):
         ontology: Ontology
             Ontology for given annotation
         """
+
     @abstractmethod
     def save(self, save_dir):
         """Serialize annotation object if possible, and saved to specified directory.
@@ -46,12 +48,16 @@ class Annotation(ABC):
         save_dir: str
             Path to directory to saved annotation
         """
+
     @abstractmethod
     def render(self):
         """Return a rendering of the annotation. Expected format is a PIL.Image or np.array"""
-    @abstractproperty
+
+    @property
+    @abstractmethod
     def hexdigest(self):
         """Reproducible hash of annotation."""
+
     def __eq__(self, other):
         return self.hexdigest == other.hexdigest
 

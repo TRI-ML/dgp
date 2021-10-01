@@ -2,9 +2,10 @@
 import unittest
 
 from nose.tools import nottest
-from numpy.testing import (assert_allclose, assert_almost_equal,
-                           assert_approx_equal, assert_array_almost_equal,
-                           assert_array_equal, assert_array_less)
+from numpy.testing import (
+    assert_allclose, assert_almost_equal, assert_approx_equal, assert_array_almost_equal, assert_array_equal,
+    assert_array_less
+)
 
 __all__ = [
     "assert_between", "assert_equal", "assert_not_equal", "assert_raises", "assert_true", "assert_false",

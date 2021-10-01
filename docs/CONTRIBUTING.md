@@ -1,5 +1,5 @@
-Contribution Guidelines
-=======================
+# Contribution Guidelines
+
 
 Welcome to `TRI-ML/dgp`! This page details contribution guidelines and GitWorkflow.
 
@@ -11,7 +11,7 @@ Welcome to `TRI-ML/dgp`! This page details contribution guidelines and GitWorkfl
    * `cd dgp`
    * `git remote add upstream git@github.com:TRI-ML/dgp.git`
    * `git remote set-url --push upstream no_push`
-4. Enable githooks (linting, auto-formatting) via: 
+4. Enable githooks (linting, auto-formatting) via:
 
 ```sh
 dgp$ make link-githooks
@@ -30,7 +30,42 @@ This section assumes you have followed the initial setup instructions and enable
 2. `git checkout -b my_pr_branch upstream/master`
 
 ### Making a commit
-In most of cases, when making a pull request, there should only be a single commit with all the changes. When naming the commit, the first line should be a short summary.
+There should only be a single commit with all the changes when making a pull request. Please squash the commits before opening a PR.
+This reposiotry follows [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for the commit message convention. All commit messages will be verified by [commitlint](https://github.com/conventional-changelog/commitlint).
+
+The commit message should be structured as follows:
+```sh
+<type>: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+When naming the commit, the first line should be a short summary starts with a `type`. [Common types](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum) can be:
+
+- `feat`: introduce new features
+- `fix`: bug fix
+- `test`: changes to unit tests
+- `refactor`: code refactor
+- `doc`: document updates
+- `schema`: changes to protobuf schema
+
+For example, adding a new PyTorch DatasetClass:
+```sh
+feat: add synchronized datasetclass
+
+- add synchronized datasetclass to load time-synchronized samples
+- speed up build_item_index
+```
+
+Add new protobuf schema:
+```sh
+schema: add map schema
+
+- add protobuf schema for map
+- modify dgp.proto.dataset to hold map message
+```
 
 **NOTE:** Any [proto schema](../dgp/proto) changes must be seperated from code changes into an independent commit and PR.
 
@@ -66,4 +101,4 @@ Note: Any [proto schema](../dgp/proto) changes require _**at least 2 reviewers.*
 Once all reviews are complete, and all Jenkins runs have completed with passing scores, the author can click the button `Squash & Merge` to merge the PR.
 
 ### Code Style
-Docstrings should follow the [Numpy Docstring Standard](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard) 
+Docstrings should follow the [Numpy Docstring Standard](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard)
