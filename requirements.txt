@@ -9,7 +9,7 @@ isort==4.3.21
 matplotlib==3.0.3
 nose==1.3.7
 opencv-python==4.1.0.25
-Pillow==6.0.0
+Pillow==8.3.2
 protobuf==3.6.1
 pycocotools==2.0.0
 pyquaternion==0.9.5
