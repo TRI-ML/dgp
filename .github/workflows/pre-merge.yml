@@ -1,4 +1,4 @@
-name: Run pre-merge tests
+name: pre-merge
 on:
   push:
     branches:

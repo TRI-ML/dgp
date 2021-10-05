@@ -3,9 +3,10 @@
 
 
 # Dataset Governance Policy (DGP)
-[![Build Status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/builds/238369651)
+[![build-status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/branches)
+[![build-docker](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml/badge.svg)](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml)
 [![license](https://img.shields.io/github/license/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/blob/master/LICENSE)
-[![open issues](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/issues)
+[![open-issues](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/issues)
 
 To ensure the traceability, reproducibility and standardization for
 all ML datasets and models generated and consumed within Toyota Research Institute (TRI), we developed the
@@ -61,10 +62,11 @@ make docker-run-tests
 We appreciate all contributions to DGP! To learn more about making a contribution to DGP, please see [Contribution Guidelines](docs/CONTRIBUTING.md).
 
 ## CI Ecosystem
-| Branch | CI | Notes |
-| ---- | ------- | --- |
-| master       | [![Build Status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/branches) | master branch build |
-
+| Job | CI | Notes |
+| --- | --- | --- |
+| master-build | [![Build Status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/branches) | Master branch build|
+| docker-build | [![Build Status](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml/badge.svg)](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml) | Docker build and push to [container registry](https://github.com/TRI-ML/dgp/pkgs/container/dgp)|
+| pre-merge    | [![Build Status](https://github.com/TRI-ML/dgp/actions/workflows/pre-merge.yml/badge.svg)](https://github.com/TRI-ML/dgp/actions/workflows/pre-merge.yml) | Pre-merge testing|
 
 ## 💬 Where to file bug reports
 
