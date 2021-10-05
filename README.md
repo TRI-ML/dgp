@@ -1,8 +1,8 @@
+<!-- markdownlint-disable-next-line -->
 [<img src="docs/tri-logo.png" width="40%">](https://www.tri.global/)
 
 
-Dataset Governance Policy (DGP)
-=============================
+# Dataset Governance Policy (DGP)
 [![Build Status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/builds/238369651)
 [![license](https://img.shields.io/github/license/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/blob/master/LICENSE)
 [![open issues](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/issues)
@@ -24,7 +24,7 @@ maintenance of all TRI's Autonomous Vehicle (AV) datasets.
 
 
 ## Getting Started
-Please see [getting started](docs/GETTING_STARTED.md) for environment setup.
+Please see [Getting Started](docs/GETTING_STARTED.md) for environment setup.
 
 Getting started is as simple as initializing a dataset-class with the
 relevant dataset JSON, raw data sensor names, annotation types, and
@@ -58,7 +58,7 @@ make docker-run-tests
 ```
 
 ## Contributing
-We appreciate all contributions to DGP! To learn more about making a contribution to DGP, please see [contribution page](docs/CONTRIBUTING.md).
+We appreciate all contributions to DGP! To learn more about making a contribution to DGP, please see [Contribution Guidelines](docs/CONTRIBUTING.md).
 
 ## CI Ecosystem
 | Branch | CI | Notes |

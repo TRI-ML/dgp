@@ -1,4 +1,4 @@
-name: Build and publish a Docker image
+name: Build and publish docker image
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
 
 jobs:
   build-and-push-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     permissions:
       contents: read
       packages: write
@@ -23,7 +23,7 @@ jobs:
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
@@ -37,5 +37,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}-latest,${{ github.sha }}-latest
           labels: ${{ steps.meta.outputs.labels }}

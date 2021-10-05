@@ -109,13 +109,10 @@ def quaternion_to_rotation_matrix(quaternion):
         Batched rotation matrix.
     """
     if not isinstance(quaternion, torch.Tensor):
-        raise TypeError("Input type is not a torch.Tensor. Got {}".format(
-            type(quaternion)))
+        raise TypeError("Input type is not a torch.Tensor. Got {}".format(type(quaternion)))
 
     if not quaternion.shape[-1] == 4:
-        raise ValueError(
-            "Input must be a tensor of shape (*, 4). Got {}".format(
-                quaternion.shape))
+        raise ValueError("Input must be a tensor of shape (*, 4). Got {}".format(quaternion.shape))
     # normalize the input quaternion
     quaternion_norm = normalize_quaternion(quaternion)
 
@@ -138,10 +135,10 @@ def quaternion_to_rotation_matrix(quaternion):
     one = torch.tensor(1.)
 
     matrix = torch.stack([
-        one - (tyy + tzz), txy - twz, txz + twy,
-        txy + twz, one - (txx + tzz), tyz - twx,
-        txz - twy, tyz + twx, one - (txx + tyy)
-    ], dim=-1).view(-1, 3, 3)
+        one - (tyy + tzz), txy - twz, txz + twy, txy + twz, one - (txx + tzz), tyz - twx, txz - twy, tyz + twx, one -
+        (txx + tyy)
+    ],
+                         dim=-1).view(-1, 3, 3)
 
     if len(quaternion.shape) == 1:
         matrix = torch.squeeze(matrix, dim=0)
@@ -166,24 +163,18 @@ def rotation_matrix_to_quaternion(rotation_matrix, eps=1e-8):
         Batched rotation in quaternion.
     """
     if not isinstance(rotation_matrix, torch.Tensor):
-        raise TypeError("Input type is not a torch.Tensor. Got {}".format(
-            type(rotation_matrix)))
+        raise TypeError("Input type is not a torch.Tensor. Got {}".format(type(rotation_matrix)))
 
     if not rotation_matrix.shape[-2:] == (3, 3):
-        raise ValueError(
-            "Input size must be a (*, 3, 3) tensor. Got {}".format(
-                rotation_matrix.shape))
+        raise ValueError("Input size must be a (*, 3, 3) tensor. Got {}".format(rotation_matrix.shape))
 
-    def safe_zero_division(numerator: torch.Tensor,
-                           denominator: torch.Tensor) -> torch.Tensor:
+    def safe_zero_division(numerator: torch.Tensor, denominator: torch.Tensor) -> torch.Tensor:
         eps = torch.finfo(numerator.dtype).tiny  # type: ignore
         return numerator / torch.clamp(denominator, min=eps)
 
-    rotation_matrix_vec = rotation_matrix.view(
-        *rotation_matrix.shape[:-2], 9)
+    rotation_matrix_vec = rotation_matrix.view(*rotation_matrix.shape[:-2], 9)
 
-    m00, m01, m02, m10, m11, m12, m20, m21, m22 = torch.chunk(
-        rotation_matrix_vec, chunks=9, dim=-1)
+    m00, m01, m02, m10, m11, m12, m20, m21, m22 = torch.chunk(rotation_matrix_vec, chunks=9, dim=-1)
 
     trace = m00 + m11 + m22
 
@@ -220,11 +211,9 @@ def rotation_matrix_to_quaternion(rotation_matrix, eps=1e-8):
         return torch.cat([qw, qx, qy, qz], dim=-1)
 
     where_2 = torch.where(m11 > m22, cond_2(), cond_3())
-    where_1 = torch.where(
-        (m00 > m11) & (m00 > m22), cond_1(), where_2)
+    where_1 = torch.where((m00 > m11) & (m00 > m22), cond_1(), where_2)
 
-    quaternion = torch.where(
-        trace > 0., trace_positive_cond(), where_1)
+    quaternion = torch.where(trace > 0., trace_positive_cond(), where_1)
     return quaternion
 
 
@@ -246,13 +235,10 @@ def normalize_quaternion(quaternion, eps=1e-12):
         Normalized quaternion.
     """
     if not isinstance(quaternion, torch.Tensor):
-        raise TypeError("Input type is not a torch.Tensor. Got {}".format(
-            type(quaternion)))
+        raise TypeError("Input type is not a torch.Tensor. Got {}".format(type(quaternion)))
 
     if not quaternion.shape[-1] == 4:
-        raise ValueError(
-            "Input must be a tensor of shape (*, 4). Got {}".format(
-                quaternion.shape))
+        raise ValueError("Input must be a tensor of shape (*, 4). Got {}".format(quaternion.shape))
     return F.normalize(quaternion, p=2, dim=-1, eps=eps)
 
 
@@ -322,7 +308,7 @@ class Pose:
         Pose
             Batch of identity transformation poses.
         """
-        return cls(torch.eye(4, device=device, dtype=dtype).repeat([B,1,1]))
+        return cls(torch.eye(4, device=device, dtype=dtype).repeat([B, 1, 1]))
 
     @property
     def matrix(self):
@@ -384,16 +370,16 @@ class Pose:
         """
         if isinstance(other, Pose):
             return self.transform_pose(other)
+        # jscpd:ignore-start
         elif isinstance(other, torch.Tensor):
             if other.shape[1] == 3 and other.dim() > 2:
                 assert other.dim() == 3 or other.dim() == 4
                 return self.transform_points(other)
             else:
                 raise ValueError('Unknown tensor dimensions {}'.format(other.shape))
-        elif isinstance(other, BoundingBox3D):
-            raise NotImplementedError()
         else:
             raise NotImplementedError()
+        # jscpd:ignore-end
 
     def __rmul__(self, other):
         raise NotImplementedError('Right multiply not implemented yet!')
@@ -430,7 +416,7 @@ class Pose:
         assert X0.shape[1] == 3
         B = len(X0)
         shape = X0.shape[2:]
-        X1 = self.value[:,:3,:3].bmm(X0.view(B, 3, -1)) + self.value[:,:3,-1].unsqueeze(-1)
+        X1 = self.value[:, :3, :3].bmm(X0.view(B, 3, -1)) + self.value[:, :3, -1].unsqueeze(-1)
         return X1.view(B, 3, *shape)
 
     def inverse(self):
@@ -455,10 +441,8 @@ class QuaternionPose:
         Input translation tensors either batched (B3) or as a single value (3,).
     """
     def __init__(self, wxyz, tvec):
-        assert wxyz.dim() == tvec.dim(), (
-            'Quaternion and translation dimensions are different')
-        assert len(wxyz) == len(tvec), (
-            'Quaternion and translation batch sizes are different')
+        assert wxyz.dim() == tvec.dim(), ('Quaternion and translation dimensions are different')
+        assert len(wxyz) == len(tvec), ('Quaternion and translation batch sizes are different')
         # If (d) tensor is passed, convert to (B,d)
         if wxyz.dim() == 1:
             wxyz = wxyz.unsqueeze(0)
@@ -473,7 +457,8 @@ class QuaternionPose:
 
     def __repr__(self):
         return 'QuaternionPose: B={}, [qw, qx, qy, qz, x, y, z]'.format(
-            len(self), torch.cat([self.quat, self.tvec], dim=-1))
+            len(self), torch.cat([self.quat, self.tvec], dim=-1)
+        )
 
     @classmethod
     def identity(cls, B=1, device=None, dtype=torch.float):
@@ -489,7 +474,10 @@ class QuaternionPose:
         Pose
             Batch of identity transformation poses.
         """
-        return cls(torch.tensor([1., 0., 0., 0., 0., 0., 0.], device=device, dtype=dtype).repeat([B, 1]))
+        return cls(
+            torch.tensor([1., 0., 0., 0., 0., 0., 0.], device=device, dtype=dtype).repeat([B, 1]),
+            torch.tensor([0., 0., 0.], device=device, dtype=dtype).repeat([B, 1])
+        )
 
     @classmethod
     def from_matrix(cls, value):
@@ -550,11 +538,13 @@ class QuaternionPose:
 
     def repeat(self, B):
         """Repeat the QuaternionPose tensor"""
-        self.quat = self.quat.repeat([B,1])
-        self.tvec = self.tvec.repeat([B,1])
+        self.quat = self.quat.repeat([B, 1])
+        self.tvec = self.tvec.repeat([B, 1])
         assert self.quat.dim() == self.tvec.dim() == 2, (
-            'Attempting to repeat along the batch dimension failed, quat/tvec dims: {}/{}'
-            .format(self.quat.dim(), self.tvec.dim()))
+            'Attempting to repeat along the batch dimension failed, quat/tvec dims: {}/{}'.format(
+                self.quat.dim(), self.tvec.dim()
+            )
+        )
         return self
 
     def to(self, *args, **kwargs):
@@ -580,16 +570,16 @@ class QuaternionPose:
         """
         if isinstance(other, QuaternionPose):
             return self.transform_pose(other)
+        # jscpd:ignore-start
         elif isinstance(other, torch.Tensor):
             if other.shape[1] == 3 and other.dim() > 2:
                 assert other.dim() == 3 or other.dim() == 4
                 return self.transform_points(other)
             else:
                 raise ValueError('Unknown tensor dimensions {}'.format(other.shape))
-        elif isinstance(other, BoundingBox3D):
-            raise NotImplementedError()
         else:
             raise NotImplementedError()
+        # jscpd:ignore-end
 
     def transform_pose(self, other):
         """Left-multiply (oplus) rigid-body transformation.
@@ -605,8 +595,7 @@ class QuaternionPose:
         QuaternionPose
            Transformed Pose via rigid-transform on the manifold.
         """
-        assert isinstance(other, QuaternionPose), (
-            'Other pose is not QuaternionPose')
+        assert isinstance(other, QuaternionPose), ('Other pose is not QuaternionPose')
         tvec = qrot(self.quat, other.tvec) + self.tvec
         quat = qmul(self.quat, other.quat)
         return self.__class__(quat, tvec)
@@ -628,7 +617,8 @@ class QuaternionPose:
            Transformed 3-D points with the same shape as X0.
         """
         assert X0.shape[1] == 3 and len(X0) == len(self), (
-            'Batch sizes do not match pose={}, X={}, '.format(self.__repr__(), X0.shape))
+            'Batch sizes do not match pose={}, X={}, '.format(self.__repr__(), X0.shape)
+        )
         B, shape = len(X0), X0.shape[2:]
         R = quaternion_to_rotation_matrix(self.quat)
         X1 = R.bmm(X0.view(B, 3, -1)) + self.tvec.unsqueeze(-1)
@@ -639,7 +629,6 @@ class QuaternionPose:
         Returns:
            QuaternionPose: Pose batch inverted on the appropriate manifold.
         """
-        qinv = qinv(self.quat)
-        tinv = qrot(qinv, -self.tvec)
-        return QuaternionPose(qinv, tinv)
-
+        Qinv = qinv(self.quat)
+        Tinv = qrot(Qinv, -self.tvec)
+        return QuaternionPose(Qinv, Tinv)

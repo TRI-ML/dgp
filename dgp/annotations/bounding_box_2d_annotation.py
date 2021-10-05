@@ -45,6 +45,7 @@ class BoundingBox2DAnnotationList(Annotation):
         BoundingBox2DAnnotationList
             Annotation object instantiated from file.
         """
+
         _annotation_pb2 = open_pbobject(annotation_file, BoundingBox2DAnnotations)
         boxlist = [
             BoundingBox2D(
