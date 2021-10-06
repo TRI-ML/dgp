@@ -8,8 +8,8 @@ from functools import partial
 
 import click
 
-from dgp import ALL_ANNOTATION_TYPES, DATASET_SPLIT_NAME_TO_KEY
 from dgp.annotations import ANNOTATION_TYPE_TO_ANNOTATION_GROUP
+from dgp.constants import ALL_ANNOTATION_TYPES, DATASET_SPLIT_NAME_TO_KEY
 from dgp.datasets.pd_dataset import ParallelDomainScene
 from dgp.datasets.synchronized_dataset import SynchronizedScene
 from dgp.proto.dataset_pb2 import SceneDataset
