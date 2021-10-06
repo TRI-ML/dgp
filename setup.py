@@ -34,7 +34,7 @@ class CustomDevelopCommand(develop):
 
 __version__ = importlib.import_module('dgp').__version__
 
-with open('requirements.txt') as f:
+with open('requirements.txt', encoding='UTF-8') as f:
     requirements = f.read().splitlines()
 
 packages = find_packages(exclude=['tests'])
@@ -52,7 +52,7 @@ setup(
         'dgp_cli=dgp.cli:cli',
     ]},
     include_package_data=True,
-    setup_requires=['cython==0.29.10', 'grpcio==1.21.1', 'grpcio-tools==1.21.1'],
+    setup_requires=['cython==0.29.10', 'grpcio==1.41.0', 'grpcio-tools==1.41.0'],
     install_requires=requirements,
     zip_safe=False,
     python_requires='>=3.6',
