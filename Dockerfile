@@ -22,7 +22,8 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
   libjpeg-dev \
   libpng-dev \
   python${PYTHON_VERSION} \
-  python${PYTHON_VERSION}-dev
+  python${PYTHON_VERSION}-dev \
+  && rm -rf /var/lib/apt/lists/*
 RUN ln -sf /usr/bin/python${PYTHON_VERSION} /usr/bin/python
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
   python get-pip.py && \
@@ -38,7 +39,7 @@ RUN pip install --no-cache-dir \
 ARG WORKSPACE=/home/dgp
 WORKDIR ${WORKSPACE}
 COPY requirements.txt /tmp/
-RUN pip install --no-cache-dir cython==0.29.10 numpy==1.19.4
+RUN pip install --no-cache-dir cython==0.29.21 numpy==1.19.4
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Settings for S3

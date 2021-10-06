@@ -21,11 +21,9 @@ import xarray as xr
 from diskcache import Cache
 from PIL import Image
 
-from dgp import (
-    ANNOTATION_KEY_TO_TYPE_ID, ANNOTATION_TYPE_ID_TO_KEY, AUTOLABEL_FOLDER, CALIBRATION_FOLDER, DGP_CACHE_DIR,
-    ONTOLOGY_FOLDER, SCENE_JSON_FILENAME
-)
+from dgp import (AUTOLABEL_FOLDER, CALIBRATION_FOLDER, DGP_CACHE_DIR, ONTOLOGY_FOLDER, SCENE_JSON_FILENAME)
 from dgp.annotations import ANNOTATION_REGISTRY, ONTOLOGY_REGISTRY
+from dgp.constants import ANNOTATION_KEY_TO_TYPE_ID, ANNOTATION_TYPE_ID_TO_KEY
 from dgp.proto import dataset_pb2, radar_point_cloud_pb2
 from dgp.proto.dataset_pb2 import DatasetMetadata as DatasetMetadataPb2
 from dgp.proto.dataset_pb2 import SceneDataset as SceneDatasetPb2
