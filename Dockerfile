@@ -38,7 +38,7 @@ RUN pip install --no-cache-dir \
 ARG WORKSPACE=/home/dgp
 WORKDIR ${WORKSPACE}
 COPY requirements.txt /tmp/
-RUN pip install --no-cache-dir cython==0.29.10 numpy==1.19.4
+RUN pip install --no-cache-dir cython==0.29.21 numpy==1.19.4
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Settings for S3
