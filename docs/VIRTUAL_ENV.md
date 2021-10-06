@@ -16,14 +16,14 @@ While active, running python will run the virtual environment's python, and inst
 
 ```sh
 dgp$ pip install --upgrade pip
-dgp$ pip install cython==0.29.10 numpy==1.19.4 protobuf==3.6.1
+dgp$ pip install cython==0.29.21 numpy==1.19.4 grpcio==1.41.0 grpcio-tools==1.41.0
 ```
 
 Finally DGP can be installed. Installing in editable mode means that changes you make to DGP locally will be reflected in the version installed in pip which makes local development very convenient. From DGP repo root:
 ```sh
 dgp$ pip install --editable .
 ```
-Alternatively, you can install cython, numpy, protobuf and DGP by running:
+Alternatively, you can install cython, numpy, grpc and DGP by running:
 ```sh
 dgp$ make develop
 ```
