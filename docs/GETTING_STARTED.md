@@ -17,7 +17,7 @@ To setup DGP docker image:
 - You can pull the latest master docker via:
 
    ```sh
-   dgp$ docker pull ghcr.io/tri-ml/dgp:master-latest && docker image tag ghcr.io/tri-ml/dgp:master-latest dgp:latest
+   dgp$ docker pull ghcr.io/tri-ml/dgp:master && docker image tag ghcr.io/tri-ml/dgp:master dgp:latest
    ```
    ---or---
 
