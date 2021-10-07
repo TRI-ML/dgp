@@ -42,13 +42,15 @@ The commit message should be structured as follows:
 [optional footer(s)]
 ```
 
-When naming the commit, the first line should be a short summary starts with a `type`. [Common types](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum) can be:
+When naming the commit, the first line (commit title) should be a short summary **in ALL lowercase** and starts with a `type`. [Common types](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum) can be:
 
 - `feat`: introduce new features
 - `fix`: bug fix
 - `test`: changes to unit tests
 - `refactor`: code refactor
 - `doc`: document updates
+- `build`: requirement.txt and Dockerfile updates
+- `ci`: changes to CI/CD
 - `schema`: changes to protobuf schema
 
 For example, adding a new PyTorch DatasetClass:

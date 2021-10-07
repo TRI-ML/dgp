@@ -9,7 +9,7 @@ jobs:
       python: 3.6
 # command to install dependencies
 install:
-  - pip install cython==0.29.10 numpy==1.19.4
+  - pip install cython==0.29.21 numpy==1.19.4
   - pip install -r requirements.txt
 # command to run tests
 script:
