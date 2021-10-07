@@ -10,7 +10,7 @@
 
 ## Installation
 
-Dcoekrized environment is encouraged for all DGP contributors and users. Alternatively, you can use python virtual environments. Please see [virtual environment setup](VIRTUAL_ENV.md) for instructions.
+Dockerized environment is encouraged for all DGP contributors and users. Alternatively, you can use python virtual environments. Please see [virtual environment setup](VIRTUAL_ENV.md) for instructions.
 
 To setup DGP docker image:
 
