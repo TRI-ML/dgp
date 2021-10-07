@@ -31,7 +31,7 @@ This section assumes you have followed the initial setup instructions and enable
 
 ### Making a commit
 There should only be a single commit with all the changes when making a pull request. Please squash the commits before opening a PR.
-This reposiotry follows [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for the commit message convention. All commit messages will be verified by [commitlint](https://github.com/conventional-changelog/commitlint).
+This repository follows [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for the commit message convention. All commit messages will be verified by [commitlint](https://github.com/conventional-changelog/commitlint).
 
 The commit message should be structured as follows:
 ```sh
@@ -48,7 +48,7 @@ When naming the commit, the first line (commit title) should be a short summary 
 - `fix`: bug fix
 - `test`: changes to unit tests
 - `refactor`: code refactor
-- `doc`: document updates
+- `docs`: document updates
 - `build`: requirement.txt and Dockerfile updates
 - `ci`: changes to CI/CD
 - `schema`: changes to protobuf schema
@@ -84,14 +84,14 @@ Please follow this procedure to open a pull request. Also note, the git hooks re
 1. Rebase to master
    * `git fetch upstream`
    * `git rebase upstream/master`
-2. Push to your GHE fork
+2. Push to your Github fork
    * `git push origin`
 3. Create "Pull Request" (PR)
-   * Go to your fork in GHE and create a pull request per [these instructions](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
+   * Go to your fork in Github and create a pull request per [these instructions](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
 4. CI coverage
    * You can run unittests via `make docker-run-tests`.
    * You can make PRs with no reviewers to get CI coverage.
-   * All pull requests must pass certain Jenkins stages in order to be merged:
+   * All pull requests must pass certain stages in order to be merged:
      * Build
      * Unit tests
 
@@ -100,7 +100,10 @@ The pull request has a reviewable.io review associated with it. (You will need t
 Note: Any [proto schema](../dgp/proto) changes require _**at least 2 reviewers.**_
 
 ### Merging
-Once all reviews are complete, and all Jenkins runs have completed with passing scores, the author can click the button `Squash & Merge` to merge the PR.
+Once all reviews are complete, and all checks have completed with passing scores, the author can click the button `Squash & Merge` to merge the PR.
 
 ### Code Style
 Docstrings should follow the [Numpy Docstring Standard](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard)
+
+### Test Coverage Policy
+In General features (`feat`) commits should include at least one test case. Test cases should be based on unittest.
