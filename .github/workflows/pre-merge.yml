@@ -17,6 +17,8 @@ jobs:
       - name: Lint commit message with commitlint
         # Documentation: https://github.com/wagoid/commitlint-github-action
         uses: wagoid/commitlint-github-action@v4
+        with:
+          configFile: .commitlintrc.yml
       - name: Install Python 3.6
         uses: actions/setup-python@v1
         with:
