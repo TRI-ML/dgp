@@ -132,19 +132,21 @@ class _SynchronizedDataset(BaseDataset):
         st = time.time()
         logging.debug(f'Indexing scene items for {scene.scene_path}')
 
-        # Define a safe sample range given desired context
-        sample_range = np.arange(backward_context, len(scene.datum_index) - forward_context)
         if not only_annotated_datums:
+            # Define a safe sample range given desired context
+            sample_range = np.arange(backward_context, len(scene.datum_index) - forward_context)
             # Build the item-index of selected samples for an individual scene.
             scene_item_index = [(scene_idx, sample_idx, scene.selected_datums) for sample_idx in sample_range]
             logging.debug(f'No annotation filter--- Scene item index built in {time.time() - st:.2f}s.')
         else:
             # Filter out samples that do not have annotations.
             # A sample is considered annotated if ANY selected datum in the sample contains ANY requested annotation.
+            sample_range = np.arange(0, len(scene.datum_index))
             annotated_samples = scene.annotation_index[scene.datum_index[sample_range]].any(axis=(1, 2))
-            scene_item_index = [(scene_idx, sample_idx, scene.selected_datums)
-                                for sample_idx, annotated_sample in zip(sample_range, annotated_samples)
-                                if annotated_sample]
+            scene_item_index = [(scene_idx, sample_range[idx], scene.selected_datums)
+                                for idx in range(backward_context,
+                                                 len(scene.datum_index) - forward_context)
+                                if all(annotated_samples.data[idx - backward_context:idx + 1 + forward_context])]
             logging.debug(f'Annotation filter -- Scene item index built in {time.time() - st:.2f}s.')
         return scene_item_index
 
