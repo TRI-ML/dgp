@@ -71,8 +71,8 @@ enum AnnotationType {
 // 2D bounding box
 message BoundingBox2D {
   // (x, y) is top left corner (in absolute pixel coordinates)
-  uint32 x = 1;
-  uint32 y = 2;
+  int32 x = 1;
+  int32 y = 2;
 
   // (w, h) is width and height (in absolute pixel coordinates)
   uint32 w = 3;
@@ -154,8 +154,8 @@ message BoundingBox3DAnnotation {
 // 2D point.
 message KeyPoint2D {
   // (x, y) point (in absolute pixel coordinates).
-  uint32 x = 1;
-  uint32 y = 2;
+  int32 x = 1;
+  int32 y = 2;
 }
 
 // 2D point annotation.

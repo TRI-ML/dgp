@@ -47,6 +47,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: false # Only new or edited files will be parsed for validation.
           VALIDATE_DOCKERFILE_HADOLINT: false
           VALIDATE_JSCPD: false
+          VALIDATE_PROTOBUF: false
           VALIDATE_PYTHON_BLACK: false
           VALIDATE_PYTHON_FLAKE8: false # Formatted by YAPF.
           VALIDATE_PYTHON_ISORT: false # Formatted by YAPF.
