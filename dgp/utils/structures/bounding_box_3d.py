@@ -44,6 +44,9 @@ class BoundingBox3D:
 
     truncation: float, default: 0
         Fraction of truncation of object (KITTI3D style)
+
+    feature_ontology_type: dgp.proto.features.FeatureType
+        Type of feature of attributions.
     """
     def __init__(
         self,
@@ -55,7 +58,8 @@ class BoundingBox3D:
         attributes=None,
         num_points=0,
         occlusion=0,
-        truncation=0.0
+        truncation=0.0,
+        feature_ontology_type=None
     ):
         assert isinstance(pose, Pose)
         assert isinstance(sizes, np.ndarray)
@@ -73,6 +77,8 @@ class BoundingBox3D:
         self._num_points = num_points
         self._occlusion = occlusion
         self._truncation = truncation
+
+        self._feature_ontology_type = feature_ontology_type
 
     @property
     def pose(self):
@@ -111,6 +117,10 @@ class BoundingBox3D:
     @property
     def attributes(self):
         return self._attributes
+
+    @property
+    def feature_ontology_type(self):
+        return self._feature_ontology_type
 
     @property
     def vectorize(self):

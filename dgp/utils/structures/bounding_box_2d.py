@@ -33,9 +33,13 @@ class BoundingBox2D:
     mode: str, default: ltwh
         One of "ltwh" or "ltrb". Corresponds to "[left, top, width, height]" representation
         or "[left, top, right, bottom]"
+
+    feature_ontology_type: dgp.proto.features.FeatureType
+        Type of feature of attributions.
     """
     def __init__(
-        self, box, class_id=GENERIC_OBJECT_CLASS, instance_id=None, color=(0, 0, 0), attributes=None, mode="ltwh"
+        self, box, class_id=GENERIC_OBJECT_CLASS, instance_id=None, color=(0, 0, 0), attributes=None, mode="ltwh",
+        feature_ontology_type=None
     ):
         assert box.dtype in (np.float32, np.float64)
         assert box.shape[0] == 4
@@ -58,6 +62,8 @@ class BoundingBox2D:
         self._instance_id = instance_id
         self._color = color
         self._attributes = dict(attributes) if attributes is not None else {}
+
+        self._feature_ontology_type = feature_ontology_type
 
     def intersection_over_union(self, other):
         """Compute intersection over union of this box against other(s)."""
@@ -96,6 +102,10 @@ class BoundingBox2D:
     @property
     def attributes(self):
         return self._attributes
+
+    @property
+    def feature_ontology_type(self):
+        return self._feature_ontology_type
 
     @property
     def hexdigest(self):

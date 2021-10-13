@@ -3,9 +3,9 @@
 
 syntax = "proto3";
 
-import "ouroboros/dgp/proto/geometry.proto";
+import "dgp/proto/geometry.proto";
 
-package ouroboros.dgp.proto;
+package dgp.proto;
 
 // Generic Feature Type Enumeration.
 // Features will be available under the corresponding enum name.

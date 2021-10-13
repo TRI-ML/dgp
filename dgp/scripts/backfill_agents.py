@@ -7,20 +7,20 @@ import os
 from collections import defaultdict
 from pathlib import Path
 
-from ouroboros.dgp import (AGENT_FOLDER, FEATURE_ONTOLOGY_FOLDER,
+from dgp import (AGENT_FOLDER, FEATURE_ONTOLOGY_FOLDER,
                            TRI_DGP_AGENT_TRACKS_JSON_NAME,
                            TRI_DGP_AGENTS_JSON_NAME,
                            TRI_DGP_AGENTS_SLICES_JSON_NAME,
                            TRI_DGP_S3_BUCKET_URL, TRI_RAW_S3_BUCKET_URL)
-from ouroboros.dgp.datasets.prediction_dataset import PredictionAgentDataset
-from ouroboros.dgp.proto import dataset_pb2, features_pb2
-from ouroboros.dgp.proto.agent_pb2 import (AgentGroup, AgentsSlice,
+from dgp.datasets.prediction_dataset import PredictionAgentDataset
+from dgp.proto import dataset_pb2, features_pb2
+from dgp.proto.agent_pb2 import (AgentGroup, AgentsSlice,
                                            AgentsSlices, AgentTracks)
-from ouroboros.dgp.proto.ontology_pb2 import Ontology, OntologyItem
-from ouroboros.dgp.utils.dataset_conversion import get_date, get_datetime_proto
-from ouroboros.dgp.utils.protobuf import (generate_uid_from_pbobject,
+from dgp.proto.ontology_pb2 import Ontology, OntologyItem
+from dgp.utils.dataset_conversion import get_date, get_datetime_proto
+from dgp.utils.protobuf import (generate_uid_from_pbobject,
                                           save_pbobject_as_json)
-from ouroboros.utils.s3 import s3_copy
+from utils.s3 import s3_copy
 
 TRIPCCOntology = Ontology(
     items=[

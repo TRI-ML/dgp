@@ -2,11 +2,11 @@
 // Definitions for agents within a dataset.
 syntax = "proto3";
 
-package ouroboros.dgp.proto;
+package dgp.proto;
 
 import "google/protobuf/any.proto";
-import "ouroboros/dgp/proto/annotations.proto";
-import "ouroboros/dgp/proto/identifiers.proto";
+import "dgp/proto/annotations.proto";
+import "dgp/proto/identifiers.proto";
 import "google/protobuf/timestamp.proto";
 
 
