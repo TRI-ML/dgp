@@ -1,0 +1,155 @@
+// Copyright 2021 Toyota Research Institute.  All rights reserved.
+// Definitions for agents within a dataset.
+syntax = "proto3";
+
+package ouroboros.dgp.proto;
+
+import "google/protobuf/any.proto";
+import "ouroboros/dgp/proto/annotations.proto";
+import "ouroboros/dgp/proto/identifiers.proto";
+import "google/protobuf/timestamp.proto";
+
+
+// All agents in a robot session.
+message AgentGroup {
+  // Unique name for the group of agents in a scene
+  //
+  // Usually, group name is set as the hash of algorithm or label that generate
+  // the agents.
+  //
+  // For group without without unique names, generate a sha1 hash of
+  // all the AgentSnapshot keys combined.
+  string name = 1;
+
+  // Optional, short description of the group (~200 characters)
+  string description = 2;
+
+  // Log identifier
+  // Refer to dgp.identifiers.proto for more information.
+  string log = 3;
+
+  // List of agent slices corresponding to this scene, each slice contains
+  // agent snapshots from one sample in the scene.
+  string agents_slices_file = 4;
+
+  // List of agent tracks in this scene.
+  string agent_tracks_file = 5;
+
+  // Optional metadata
+  map<string, google.protobuf.Any> metadata = 6;
+
+  // Date and timestamp of agent group creation
+  google.protobuf.Timestamp creation_date = 7;
+
+  // Task-specific feature ontologies
+  // Ontologies are stored under <scene_dir>/ontology/<ontology_sha1>.json
+  // Maps dgp.proto.FeatureType (Agent_3D, EGO_INTENTION, etc) to the filename
+  // containing the ontology for the specific FeatureType/Task.
+  map<int32, string> feature_ontologies = 8;
+
+  // Task-specific agent ontologies
+  // Agent ontologies are stored under <scene_dir>/ontology/<ontology_sha1>.json
+  // Maps dgp.proto.AnnotationType (bounding_box_3d, etc) to the filename
+  // containing the ontology for the specific AgentType/Task.
+  map<int32, string> agent_ontologies = 9;
+}
+
+// AgentSnapshot that takes values from one of agent types.
+message AgentSnapshot {
+  oneof agent_snapshot_oneof {
+    AgentSnapshot2D agent_snapshot_2D = 1;
+    AgentSnapshot3D agent_snapshot_3D = 2;
+  }
+  // Unique slice identifier (See dgp.idenfiers.proto)
+  // Copy from sample ID to ensure one-one match between a agent slice and sample
+  // in a scene.
+  DatumId slice_id = 3;
+
+  // Unique slice identifier (See dgp.idenfiers.proto)
+  // Copy from datum ID if the agent snapshot is associate with certain datum.
+  DatumId raw_sensor_datum_id = 4;
+}
+
+message AgentsSlice {
+  // Unique slice identifier (See dgp.idenfiers.proto)
+  // Copy from sample ID to ensure one-one match between a agent slice and sample
+  // in a scene.
+  DatumId slice_id = 1;
+
+  // List of agent snapshots encapsulated in the agents slice
+  repeated AgentSnapshot agent_snapshots = 2;
+
+}
+
+message AgentsSlices {
+  repeated AgentsSlice agents_slices = 1;
+
+  // Sample-specific metadata
+  map<string, google.protobuf.Any> metadata = 2;
+}
+
+message AgentTrack {
+  // Class identifier (should be in [0, num_classes - 1])
+  uint32 class_id = 1;
+  // Agent identifier
+  uint32 instance_id = 2;
+  // List of agent snapshots encapsulated in the track
+  repeated AgentSnapshot agent_snapshots = 3;
+
+  // Compiled proto is available to both the writer and reader of the dataset.
+  google.protobuf.Any metadata = 4;
+}
+
+message AgentTracks {
+  repeated AgentTrack agent_tracks = 1;
+
+  // Sample-specific metadata
+  map<string, google.protobuf.Any> metadata = 2;
+}
+
+message AgentSnapshot2D {
+  // Class identifier (should be in [0, num_classes - 1])
+  // For datasets supporting semantic segmentation and detection,
+  // num_classes corresponds to the number of segmentation classes.
+  // For datasets only supporting detection, this is the number of
+  // thing classes.
+  uint32 class_id = 1;
+
+  // 2D box
+  BoundingBox2D box = 2;
+
+  // Other fields useful for downstream metric computation
+  uint32 area = 3;
+  bool iscrowd = 4;
+
+  // Agent identifier
+  uint32 instance_id = 5;
+
+  // list of feature values. This is used to stored `agent` states. The schema
+  // is defined in feature ontology (i.e.,parked car, pedestrian intent).
+  repeated string features = 6;
+
+  // The type of feature ontology defined in FeatureType in features.proto
+  int32 feature_ontology = 7;
+}
+
+message AgentSnapshot3D {
+  // Class identifier. Should be in range [0, num_classes - 1].
+  uint32 class_id = 1;
+
+  // 3D box, the pose of box is in sensor coordinate.
+  BoundingBox3D box = 2;
+
+  // Instance identifier for this agent.
+  // This needs to be unique to a scene.
+  uint32 instance_id = 3;
+
+  // list of feature values. This is used to stored `agent` states. The schema
+  // is defined in feature ontology (i.e.,parked car, pedestrian intent).
+  repeated string features = 4;
+
+  // The type of feature ontology defined in FeatureType in features.proto
+  int32 feature_ontology = 5;
+
+}
+
