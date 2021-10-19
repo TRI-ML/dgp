@@ -13,6 +13,12 @@ TRI_DGP_FOLDER_PREFIX = "dgp/"
 TRI_RAW_FOLDER_PREFIX = "raw/"
 TRI_DGP_JSON_PREFIX = "dataset_v"
 
+TRI_DGP_S3_BUCKET = "tri-ml-datasets"
+TRI_DGP_FOLDER_PREFIX = "dgp/"
+TRI_RAW_FOLDER_PREFIX = "raw/"
+TRI_DGP_S3_BUCKET_URL = "s3://{}/{}".format(TRI_DGP_S3_BUCKET, TRI_DGP_FOLDER_PREFIX)
+TRI_RAW_S3_BUCKET_URL = "s3://{}/{}".format(TRI_DGP_S3_BUCKET, TRI_RAW_FOLDER_PREFIX)
+
 # DGP Directory structure constants
 RGB_FOLDER = 'rgb'
 POINT_CLOUD_FOLDER = 'point_cloud'
@@ -25,6 +31,8 @@ INSTANCE_SEGMENTATION_2D_FOLDER = 'instance_segmentation_2d'
 INSTANCE_SEGMENTATION_3D_FOLDER = 'instance_segmentation_3d'
 DEPTH_FOLDER = 'depth'
 EXTRA_DATA_FOLDER = "extra_data"
+FEATURE_ONTOLOGY_FOLDER = "feature_ontology"
+AGENT_FOLDER = "agent"
 
 # Scene Directory structure constants
 AUTOLABEL_FOLDER = 'autolabels'
@@ -34,5 +42,8 @@ SCENE_JSON_FILENAME = 'scene.json'
 
 # DGP file naming conventions
 TRI_DGP_SCENE_DATASET_JSON_NAME = "scene_dataset_v{version}.json"
+TRI_DGP_AGENT_TRACKS_JSON_NAME = "agent_tracks_{track_hash}.json"
 TRI_DGP_SCENE_JSON_NAME = "scene_{scene_hash}.json"
 ANNOTATION_FILE_NAME = '{image_content_hash}_{annotation_content_hash}.json'
+TRI_DGP_AGENTS_JSON_NAME = "agents_{agent_hash}.json"
+TRI_DGP_AGENTS_SLICES_JSON_NAME = "agents_slices_{slice_hash}.json"
