@@ -728,6 +728,259 @@ class AgentDataset(BaseAgentDataset):
             context_window.append(synchronized_sample)
         return context_window
 
+class AgentDatasetLite(BaseAgentDataset):
+    """Dataset for agent-centric prediction or planning use cases. It provide two mode of accessing agent, by track
+    and by frame. If 'batch_per_agent' is set true, then the data iterate per track, note, the length of the track
+    could vary. Otherwise, the data iterate per frame and each sample contains all agents in the fram.
+
+    Parameters
+    ----------
+    scene_dataset_json: str
+        Full path to the scene dataset json holding collections of paths to scene json.
+
+    agents_dataset_json: str
+        Full path to the agent dataset json holding collections of paths to scene json.
+
+    split: str, default: 'train'
+        Split of dataset to read ("train" | "val" | "test" | "train_overfit").
+
+    datum_names: list, default: None
+        Select list of datum names for synchronization (see self.select_datums(datum_names)).
+
+    requested_agent_type: tuple, default: None
+        Tuple of agent type, i.e. ('agent_2d', 'agent_3d'). Only one type of agent can be requested.
+
+    requested_main_agent_classes: tuple, default: 'car'
+        Tuple of main agent types, i.e. ('car', 'pedestrian').
+        The string should be the same as dataset_metadata.ontology_table.
+
+    forward_context: int, default: 0
+        Forward context in frames [T+1, ..., T+forward]
+
+    backward_context: int, default: 0
+        Backward context in frames [T-backward, ..., T-1]
+
+    batch_per_agent: bool, default: False
+        Include whole trajectory of an agent in each batch fetch.
+        If True, backward_context = forward_context = 0 implicitly.
+
+    """
+
+    def __init__(self,
+                 scene_dataset_json,
+                 agents_dataset_json,
+                 split='train',
+                 datum_names=None,
+                 requested_agent_type='agent_3d',
+                 requested_main_agent_classes=('car',),
+                 requested_feature_types=None,
+                 requested_autolabels=None,
+                 forward_context=0,
+                 backward_context=0,
+                 batch_per_agent=False):
+
+        # Make sure requested agent type keys match protos
+        if requested_agent_type is not None:
+            assert requested_agent_type in AGENT_REGISTRY, "Invalid agent type requested!"
+            self.requested_agent_type = requested_agent_type
+        else:
+            self.requested_agent_type = ()
+
+        # Make sure requested feature type keys match protos
+        if requested_feature_types is not None:
+            assert all(requested_feature_type in ALL_FEATURE_TYPES for requested_feature_type in
+                       requested_feature_types), "Invalid feature type requested!"
+            self.requested_feature_types = requested_feature_types
+        else:
+            self.requested_feature_types = ()
+
+        self.batch_per_agent = batch_per_agent
+        datum_names = sorted(set(datum_names)) if datum_names else set([])
+        self.selected_datums = [_d.lower() for _d in datum_names]
+        if len(self.selected_datums) != 0:
+            self.synchronized_dataset = SynchronizedSceneDataset(
+                scene_dataset_json,
+                split=split,
+                backward_context=backward_context,
+                requested_autolabels=requested_autolabels,
+                forward_context=forward_context,
+                datum_names=self.selected_datums)
+
+        if batch_per_agent:  # fetch frame-by-frame for agent
+            backward_context = forward_context = 0
+
+        self.forward_context = forward_context
+        self.backward_context = backward_context
+
+        # Extract all agents from agent dataset JSON for the appropriate split
+        agent_groups = AgentDataset._extract_agent_groups_from_agent_dataset_json(agents_dataset_json,
+                                                                                  requested_agent_type,
+                                                                                  split=split)
+
+        agent_metadata = AgentMetadata.from_agent_containers(agent_groups, requested_agent_type,
+                                                             requested_feature_types)
+        name_to_id = agent_metadata.ontology_table[AGENT_TYPE_TO_ANNOTATION_TYPE[requested_agent_type]].name_to_id
+        self.requested_main_agent_classes = tuple([name_to_id[atype] + 1 for atype in requested_main_agent_classes])
+
+        # load agents data into agent container
+        with Pool(cpu_count()) as proc:
+            agent_groups = list(
+                proc.map(
+                    partial(
+                        self._load_agents_data,
+                        ontology_table=agent_metadata.ontology_table,
+                        feature_ontology_table=agent_metadata.feature_ontology_table
+                    ), agent_groups
+                )
+            )
+
+        super().__init__(agent_metadata, agent_groups=agent_groups)
+
+    def _build_item_index(self):
+        """Builds an index of dataset items that refer to the scene index, agent index,
+        sample index and datum_within_scene index. This refers to a particular dataset
+        split. __getitem__ indexes into this look up table.
+
+        Synchronizes at the sample-level and only adds sample indices if context frames are available.
+        This is enforced by adding sample indices that fall in (bacwkard_context, N-forward_context) range.
+
+        Returns
+        -------
+        item_index: list
+            List of dataset items that contain index into
+            (scene_idx, sample_idx_in_scene, (main_agent_idx, main_agent_id), [datum_name ...]).
+        """
+        logging.info(f'Building index for {self.__class__.__name__}, this will take a while.')
+        st = time.time()
+        # Fetch the item index per scene based on the selected datums.
+        if self.batch_per_agent:
+            with Pool(cpu_count()) as proc:
+                item_index = proc.starmap(
+                    partial(
+                        self._agent_index_for_scene,
+                        selected_datums=self.selected_datums
+                    ), [(scene_idx, agent_group) for scene_idx, agent_group in enumerate(self.agent_groups)])
+        else:
+            with Pool(cpu_count()) as proc:
+                item_index = proc.starmap(
+                    partial(
+                        self._item_index_for_scene,
+                        backward_context=self.backward_context,
+                        forward_context=self.forward_context,
+                        selected_datums=self.selected_datums
+                    ), [(scene_idx, agent_group) for scene_idx, agent_group in enumerate(self.agent_groups)])
+        logging.info(f'Index built in {time.time() - st:.2f}s.')
+        assert len(item_index) > 0, 'Failed to index items in the dataset.'
+        # Chain the index across all scenes.
+        item_index = list(itertools.chain.from_iterable(item_index))
+        # Filter out indices that failed to load.
+        item_index = [item for item in item_index if item is not None]
+        item_lengths = [len(item_tup) for item_tup in item_index]
+        assert all([l == item_lengths[0] for l in item_lengths
+                    ]), ('All sample items are not of the same length, datum names might be missing.')
+        return item_index
+
+    @staticmethod
+    def _item_index_for_scene(scene_idx, agent_group, backward_context, forward_context, selected_datums):
+        # Define a safe sample range given desired context
+        sample_range = np.arange(backward_context, len(agent_group.sample_id_to_agent_snapshots) - forward_context)
+        scene_item_index = [(scene_idx, sample_idx, selected_datums) for sample_idx in sample_range]
+
+        return scene_item_index
+
+    @staticmethod
+    def _agent_index_for_scene(scene_idx, agent_group, selected_datums):
+        scene_item_index = [(scene_idx, instance_id, selected_datums) for instance_id in
+                            agent_group.instance_id_to_agent_snapshots]
+
+        return scene_item_index
+
+    def __len__(self):
+        """Return the length of the dataset."""
+        return len(self.dataset_item_index)
+
+    def __getitem__(self, index):
+        """Get the dataset item at index.
+
+        Parameters
+        ----------
+        index: int
+            Index of item to get.
+
+        Returns
+        -------
+        datums: list of OrderedDict
+
+            "timestamp": int
+                Timestamp of the image in microseconds.
+
+            "datum_name": str
+                Sensor name from which the data was collected
+
+            "rgb": PIL.Image (mode=RGB)
+                Image in RGB format.
+
+            "intrinsics": np.ndarray
+                Camera intrinsics.
+
+            "extrinsics": Pose
+                Camera extrinsics with respect to the world frame.
+
+            "pose": Pose
+                Pose of sensor with respect to the world/global frame
+
+        Agents: AgentSnapshotList
+            A list of agent snapshots.
+
+        Returns a list of OrderedDict(s).
+        Outer list corresponds to temporal ordering of samples. Each element is
+        a OrderedDict(s) corresponding to synchronized datums and agents.
+        """
+        # return list()
+        assert self.dataset_item_index is not None, ('Index is not built, select datums before getting elements.')
+
+        context_window = []
+        if self.batch_per_agent:
+            # Get dataset agent index
+            scene_idx, instance_id, datum_names = self.dataset_item_index[index]
+            track = self.agent_groups[scene_idx].agent_track(instance_id)
+            ontology = track.ontology
+            type_of_track = type(track)
+            for agent_snapshot in track:
+                qsample_idx_in_scene = agent_snapshot.sample_idx
+                datums = []
+                if len(datum_names) > 0:
+                    for datum_name in datum_names:
+                        datum_data = self.synchronized_dataset.get_datum_data(scene_idx, qsample_idx_in_scene,
+                                                                              datum_name)
+                        datums.append(datum_data)
+                synchronized_sample = OrderedDict({
+                    'datums': datums,
+                    'agents': type_of_track(ontology, [agent_snapshot]),
+                })
+                context_window.append(synchronized_sample)
+        else:
+            # Get dataset item index
+            scene_idx, sample_idx_in_scene, datum_names = self.dataset_item_index[index]
+            sample_idx_in_scene_start = sample_idx_in_scene - self.backward_context
+            sample_idx_in_scene_end = sample_idx_in_scene + self.forward_context
+
+            # Iterate through context samples
+            for qsample_idx_in_scene in range(sample_idx_in_scene_start, sample_idx_in_scene_end + 1):
+                # Main agent index may be different along the samples.
+                datums = []
+                if len(datum_names) > 0:
+                    for datum_name in datum_names:
+                        datum_data = self.synchronized_dataset.get_datum_data(scene_idx, qsample_idx_in_scene,
+                                                                              datum_name)
+                        datums.append(datum_data)
+                agents_in_sample = self.agent_groups[scene_idx].agent_slice(qsample_idx_in_scene)
+                synchronized_sample = OrderedDict({
+                    'datums': datums,
+                    'agents': agents_in_sample,
+                })
+                context_window.append(synchronized_sample)
+        return context_window
 
 class AgentMetadata:
     """A Wrapper agents metadata class to support two entrypoints for agents dataset
