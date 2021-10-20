@@ -118,7 +118,7 @@ message AgentSnapshot2D {
   // 2D box
   BoundingBox2D box = 2;
 
-  // Other fields useful for downstream metric computation
+  // Other fields useful for downstream metric computation.
   uint32 area = 3;
   bool iscrowd = 4;
 
@@ -129,8 +129,8 @@ message AgentSnapshot2D {
   // is defined in feature ontology (i.e.,parked car, pedestrian intent).
   repeated string features = 6;
 
-  // The type of feature ontology defined in FeatureType in features.proto
-  int32 feature_ontology = 7;
+  // The type of feature ontology defined in FeatureType in features.proto.
+  int32 feature_type = 7;
 }
 
 message AgentSnapshot3D {
@@ -148,8 +148,7 @@ message AgentSnapshot3D {
   // is defined in feature ontology (i.e.,parked car, pedestrian intent).
   repeated string features = 4;
 
-  // The type of feature ontology defined in FeatureType in features.proto
-  int32 feature_ontology = 5;
-
+  // The type of feature ontology defined in FeatureType in features.proto.
+  int32 feature_type = 5;
 }
 

@@ -6,10 +6,12 @@ syntax = "proto3";
 
 package dgp.proto;
 
-import "dgp/proto/remote.proto"
-import "dgp/proto/scene.proto"
-import "dgp/proto/statistics.proto"
-import "google/protobuf/any.proto"
+import "google/protobuf/any.proto";
+
+import "dgp/proto/remote.proto";
+import "dgp/proto/scene.proto";
+import "dgp/proto/statistics.proto";
+
 
 // TODO: remove OntologyV1 once all ontology files upgraded to OntologyV2.
 // Dataset ontology

@@ -30,3 +30,11 @@ enum FeatureType {
   // Feature type of parked car ontology
   PARKED_CAR = 5;
 }
+
+// The feature value type specified in ouroboros.dgp.ontology.FeatureOntologyItem.
+enum FeatureValueType {
+ // Feature value type of numeric values
+ NUMERIC = 0;
+ // Feature value type of file
+ FILE = 1;
+}
