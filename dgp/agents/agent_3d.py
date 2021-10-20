@@ -63,19 +63,22 @@ class AgentSnapshot3DList(AgentSnapshotList):
         for agent_snapshot_3d in agent_snapshots_pb2:
             feature_type = agent_snapshot_3d.agent_snapshot_3D.feature_type
             feature_ontology = feature_ontology_table[FEATURE_TYPE_ID_TO_KEY[feature_type]]
-            boxlist.append(BoundingBox3D(
-                pose=Pose.load(agent_snapshot_3d.agent_snapshot_3D.box.pose),
-                sizes=np.float32(
-                    [agent_snapshot_3d.agent_snapshot_3D.box.width, agent_snapshot_3d.agent_snapshot_3D.box.length,
-                     agent_snapshot_3d.agent_snapshot_3D.box.height]),
-                class_id=ontology.class_id_to_contiguous_id[agent_snapshot_3d.agent_snapshot_3D.class_id],
-                instance_id=agent_snapshot_3d.agent_snapshot_3D.instance_id,
-                sample_idx=agent_snapshot_3d.slice_id.index,
-                color=ontology.colormap[agent_snapshot_3d.agent_snapshot_3D.class_id],
-                attributes=dict(
-                    [(feature_ontology.id_to_name[feature_id], feature) for feature_id, feature in
-                     enumerate(agent_snapshot_3d.agent_snapshot_3D.features)]),
-            ))
+            boxlist.append(
+                BoundingBox3D(
+                    pose=Pose.load(agent_snapshot_3d.agent_snapshot_3D.box.pose),
+                    sizes=np.float32([
+                        agent_snapshot_3d.agent_snapshot_3D.box.width, agent_snapshot_3d.agent_snapshot_3D.box.length,
+                        agent_snapshot_3d.agent_snapshot_3D.box.height
+                    ]),
+                    class_id=ontology.class_id_to_contiguous_id[agent_snapshot_3d.agent_snapshot_3D.class_id],
+                    instance_id=agent_snapshot_3d.agent_snapshot_3D.instance_id,
+                    sample_idx=agent_snapshot_3d.slice_id.index,
+                    color=ontology.colormap[agent_snapshot_3d.agent_snapshot_3D.class_id],
+                    attributes=dict([(feature_ontology.id_to_name[feature_id], feature)
+                                     for feature_id, feature in enumerate(agent_snapshot_3d.agent_snapshot_3D.features)]
+                                    ),
+                )
+            )
 
         return cls(ontology, boxlist)
 

@@ -5,9 +5,7 @@ from collections import OrderedDict
 
 from dgp.proto.ontology_pb2 import FeatureOntology as FeatureOntologyPb2
 from dgp.proto.ontology_pb2 import FeatureOntologyItem
-from dgp.utils.protobuf import (generate_uid_from_pbobject,
-                                          open_feature_ontology_pbobject,
-                                          save_pbobject_as_json)
+from dgp.utils.protobuf import (generate_uid_from_pbobject, open_feature_ontology_pbobject, save_pbobject_as_json)
 
 
 class FeatureOntology:
@@ -64,7 +62,7 @@ class FeatureOntology:
 
         if feature_ontology_pb2 is not None:
             return cls(feature_ontology_pb2)
-        raise 'Could not open ontology {}'.format(ontology_file)
+        raise TypeError("Could not open ontology {}".format(ontology_file))
 
     def to_proto(self):
         """Serialize ontology. Only supports exporting in OntologyV2.
@@ -77,9 +75,7 @@ class FeatureOntology:
         return FeatureOntologyPb2(
             items=[
                 FeatureOntologyItem(
-                    name=name,
-                    id=feature_id,
-                    feature_value_type=self.id_to_feature_value_type[feature_id]
+                    name=name, id=feature_id, feature_value_type=self.id_to_feature_value_type[feature_id]
                 ) for feature_id, name in self._id_to_name.items()
             ]
         )

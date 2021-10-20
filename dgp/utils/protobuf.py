@@ -7,11 +7,10 @@ from io import StringIO
 from google.protobuf.json_format import MessageToDict, Parse
 
 from dgp.proto.dataset_pb2 import Ontology as OntologyV1Pb2
-from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
 from dgp.proto.ontology_pb2 import FeatureOntology as FeatureOntologyPb2
+from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
 from dgp.proto.scene_pb2 import Scene
-from utils.s3 import (convert_uri_to_bucket_path,
-                                get_string_from_s3_file)
+from dgp.utils.cloud.s3 import (convert_uri_to_bucket_path, get_string_from_s3_file)
 
 
 def open_pbobject(path, pb_class):
@@ -37,7 +36,7 @@ def open_pbobject(path, pb_class):
     if path.startswith('s3://'):
         return open_remote_pb_object(path, pb_class)
     assert os.path.exists(path), f'Path not found: {path}'
-    with open(path, 'r') as json_file:
+    with open(path, 'r', encoding='UTF-8') as json_file:
         pb_object = Parse(json_file.read(), pb_class())
     return pb_object
 
@@ -94,7 +93,7 @@ def save_pbobject_as_json(pb_object, save_path):
         save_path = os.path.join(save_path, generate_uid_from_pbobject(pb_object) + ".json")
 
     assert save_path.endswith(".json"), 'File extension for {} needs to be json.'.format(save_path)
-    with open(save_path, "w") as _f:
+    with open(save_path, "w", encoding='UTF-8') as _f:
         json.dump(
             MessageToDict(pb_object, including_default_value_fields=True, preserving_proto_field_name=True),
             _f,

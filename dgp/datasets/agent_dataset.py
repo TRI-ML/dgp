@@ -11,6 +11,7 @@ from collections import OrderedDict, defaultdict
 from functools import lru_cache, partial
 from multiprocessing import Pool, cpu_count
 
+import numpy as np
 from diskcache import Cache
 
 #from ouroboros import OUROBOROS_CACHE_DIR
@@ -728,6 +729,7 @@ class AgentDataset(BaseAgentDataset):
             context_window.append(synchronized_sample)
         return context_window
 
+
 class AgentDatasetLite(BaseAgentDataset):
     """Dataset for agent-centric prediction or planning use cases. It provide two mode of accessing agent, by track
     and by frame. If 'batch_per_agent' is set true, then the data iterate per track, note, the length of the track
@@ -765,19 +767,20 @@ class AgentDatasetLite(BaseAgentDataset):
         If True, backward_context = forward_context = 0 implicitly.
 
     """
-
-    def __init__(self,
-                 scene_dataset_json,
-                 agents_dataset_json,
-                 split='train',
-                 datum_names=None,
-                 requested_agent_type='agent_3d',
-                 requested_main_agent_classes=('car',),
-                 requested_feature_types=None,
-                 requested_autolabels=None,
-                 forward_context=0,
-                 backward_context=0,
-                 batch_per_agent=False):
+    def __init__(
+        self,
+        scene_dataset_json,
+        agents_dataset_json,
+        split='train',
+        datum_names=None,
+        requested_agent_type='agent_3d',
+        requested_main_agent_classes=('car', ),
+        requested_feature_types=None,
+        requested_autolabels=None,
+        forward_context=0,
+        backward_context=0,
+        batch_per_agent=False
+    ):
 
         # Make sure requested agent type keys match protos
         if requested_agent_type is not None:
@@ -788,8 +791,9 @@ class AgentDatasetLite(BaseAgentDataset):
 
         # Make sure requested feature type keys match protos
         if requested_feature_types is not None:
-            assert all(requested_feature_type in ALL_FEATURE_TYPES for requested_feature_type in
-                       requested_feature_types), "Invalid feature type requested!"
+            assert all(
+                requested_feature_type in ALL_FEATURE_TYPES for requested_feature_type in requested_feature_types
+            ), "Invalid feature type requested!"
             self.requested_feature_types = requested_feature_types
         else:
             self.requested_feature_types = ()
@@ -804,7 +808,8 @@ class AgentDatasetLite(BaseAgentDataset):
                 backward_context=backward_context,
                 requested_autolabels=requested_autolabels,
                 forward_context=forward_context,
-                datum_names=self.selected_datums)
+                datum_names=self.selected_datums
+            )
 
         if batch_per_agent:  # fetch frame-by-frame for agent
             backward_context = forward_context = 0
@@ -813,12 +818,13 @@ class AgentDatasetLite(BaseAgentDataset):
         self.backward_context = backward_context
 
         # Extract all agents from agent dataset JSON for the appropriate split
-        agent_groups = AgentDataset._extract_agent_groups_from_agent_dataset_json(agents_dataset_json,
-                                                                                  requested_agent_type,
-                                                                                  split=split)
+        agent_groups = AgentDataset._extract_agent_groups_from_agent_dataset_json(
+            agents_dataset_json, requested_agent_type, split=split
+        )
 
-        agent_metadata = AgentMetadata.from_agent_containers(agent_groups, requested_agent_type,
-                                                             requested_feature_types)
+        agent_metadata = AgentMetadata.from_agent_containers(
+            agent_groups, requested_agent_type, requested_feature_types
+        )
         name_to_id = agent_metadata.ontology_table[AGENT_TYPE_TO_ANNOTATION_TYPE[requested_agent_type]].name_to_id
         self.requested_main_agent_classes = tuple([name_to_id[atype] + 1 for atype in requested_main_agent_classes])
 
@@ -856,10 +862,9 @@ class AgentDatasetLite(BaseAgentDataset):
         if self.batch_per_agent:
             with Pool(cpu_count()) as proc:
                 item_index = proc.starmap(
-                    partial(
-                        self._agent_index_for_scene,
-                        selected_datums=self.selected_datums
-                    ), [(scene_idx, agent_group) for scene_idx, agent_group in enumerate(self.agent_groups)])
+                    partial(self._agent_index_for_scene, selected_datums=self.selected_datums),
+                    [(scene_idx, agent_group) for scene_idx, agent_group in enumerate(self.agent_groups)]
+                )
         else:
             with Pool(cpu_count()) as proc:
                 item_index = proc.starmap(
@@ -868,7 +873,8 @@ class AgentDatasetLite(BaseAgentDataset):
                         backward_context=self.backward_context,
                         forward_context=self.forward_context,
                         selected_datums=self.selected_datums
-                    ), [(scene_idx, agent_group) for scene_idx, agent_group in enumerate(self.agent_groups)])
+                    ), [(scene_idx, agent_group) for scene_idx, agent_group in enumerate(self.agent_groups)]
+                )
         logging.info(f'Index built in {time.time() - st:.2f}s.')
         assert len(item_index) > 0, 'Failed to index items in the dataset.'
         # Chain the index across all scenes.
@@ -876,8 +882,8 @@ class AgentDatasetLite(BaseAgentDataset):
         # Filter out indices that failed to load.
         item_index = [item for item in item_index if item is not None]
         item_lengths = [len(item_tup) for item_tup in item_index]
-        assert all([l == item_lengths[0] for l in item_lengths
-                    ]), ('All sample items are not of the same length, datum names might be missing.')
+        assert all([l == item_lengths[0] for l in item_lengths]
+                   ), ('All sample items are not of the same length, datum names might be missing.')
         return item_index
 
     @staticmethod
@@ -890,8 +896,9 @@ class AgentDatasetLite(BaseAgentDataset):
 
     @staticmethod
     def _agent_index_for_scene(scene_idx, agent_group, selected_datums):
-        scene_item_index = [(scene_idx, instance_id, selected_datums) for instance_id in
-                            agent_group.instance_id_to_agent_snapshots]
+        scene_item_index = [
+            (scene_idx, instance_id, selected_datums) for instance_id in agent_group.instance_id_to_agent_snapshots
+        ]
 
         return scene_item_index
 
@@ -951,8 +958,9 @@ class AgentDatasetLite(BaseAgentDataset):
                 datums = []
                 if len(datum_names) > 0:
                     for datum_name in datum_names:
-                        datum_data = self.synchronized_dataset.get_datum_data(scene_idx, qsample_idx_in_scene,
-                                                                              datum_name)
+                        datum_data = self.synchronized_dataset.get_datum_data(
+                            scene_idx, qsample_idx_in_scene, datum_name
+                        )
                         datums.append(datum_data)
                 synchronized_sample = OrderedDict({
                     'datums': datums,
@@ -971,8 +979,9 @@ class AgentDatasetLite(BaseAgentDataset):
                 datums = []
                 if len(datum_names) > 0:
                     for datum_name in datum_names:
-                        datum_data = self.synchronized_dataset.get_datum_data(scene_idx, qsample_idx_in_scene,
-                                                                              datum_name)
+                        datum_data = self.synchronized_dataset.get_datum_data(
+                            scene_idx, qsample_idx_in_scene, datum_name
+                        )
                         datums.append(datum_data)
                 agents_in_sample = self.agent_groups[scene_idx].agent_slice(qsample_idx_in_scene)
                 synchronized_sample = OrderedDict({
@@ -981,6 +990,7 @@ class AgentDatasetLite(BaseAgentDataset):
                 })
                 context_window.append(synchronized_sample)
         return context_window
+
 
 class AgentMetadata:
     """A Wrapper agents metadata class to support two entrypoints for agents dataset
