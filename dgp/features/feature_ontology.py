@@ -3,9 +3,9 @@
 import os
 from collections import OrderedDict
 
-from dgp.proto.ontology_pb2 import Ontology as OntologyPb2
-from dgp.proto.ontology_pb2 import OntologyItem
-from dgp.utils.protobuf import (generate_uid_from_pbobject, open_ontology_pbobject, save_pbobject_as_json)
+from dgp.proto.ontology_pb2 import FeatureOntology as FeatureOntologyPb2
+from dgp.proto.ontology_pb2 import FeatureOntologyItem
+from dgp.utils.protobuf import (generate_uid_from_pbobject, open_feature_ontology_pbobject, save_pbobject_as_json)
 
 
 class FeatureOntology:
@@ -18,7 +18,7 @@ class FeatureOntology:
 
     Parameters
     ----------
-    ontology_pb2: OntologyPb2
+    feature_ontology_pb2: OntologyPb2
         Deserialized ontology object.
     """
 
@@ -26,26 +26,22 @@ class FeatureOntology:
     VOID_ID = 255
     VOID_CLASS = "Void"
 
-    def __init__(self, ontology_pb2):
-        self._ontology = ontology_pb2
+    def __init__(self, feature_ontology_pb2):
+        self._ontology = feature_ontology_pb2
 
-        if isinstance(self._ontology, OntologyPb2):
+        if isinstance(self._ontology, FeatureOntologyPb2):
             self._name_to_id = OrderedDict(
                 sorted([(ontology_item.name, ontology_item.id) for ontology_item in self._ontology.items])
             )
             self._id_to_name = OrderedDict(
                 sorted([(ontology_item.id, ontology_item.name) for ontology_item in self._ontology.items])
             )
-            self._colormap = OrderedDict(
-                sorted([(ontology_item.id, (ontology_item.color.r, ontology_item.color.g, ontology_item.color.b))
-                        for ontology_item in self._ontology.items])
-            )
-            self._isthing = OrderedDict(
-                sorted([(ontology_item.id, ontology_item.isthing) for ontology_item in self._ontology.items])
+            self._id_to_feature_value_type = OrderedDict(
+                sorted([(ontology_item.id, ontology_item.feature_value_type) for ontology_item in self._ontology.items])
             )
 
         else:
-            raise TypeError("Unexpected type {}, expected OntologyV2".format(type(self._ontology)))
+            raise TypeError("Unexpected type {}, expected FeatureOntologyV2".format(type(self._ontology)))
 
         self._feature_ids = sorted(self._id_to_name.keys())
         self._feature_names = [self._id_to_name[c_id] for c_id in self._feature_ids]
@@ -60,14 +56,13 @@ class FeatureOntology:
             Path to ontology JSON
         """
         if os.path.exists(ontology_file):
-            ontology_pb2 = open_ontology_pbobject(ontology_file)
+            feature_ontology_pb2 = open_feature_ontology_pbobject(ontology_file)
         else:
             raise FileNotFoundError("Could not find {}".format(ontology_file))
 
-        if ontology_pb2 is not None:
-            return cls(ontology_pb2)
-        else:
-            raise TypeError("Could not open ontology {}".format(ontology_file))
+        if feature_ontology_pb2 is not None:
+            return cls(feature_ontology_pb2)
+        raise TypeError("Could not open ontology {}".format(ontology_file))
 
     def to_proto(self):
         """Serialize ontology. Only supports exporting in OntologyV2.
@@ -77,17 +72,10 @@ class FeatureOntology:
         OntologyPb2
             Serialized ontology
         """
-        return OntologyPb2(
+        return FeatureOntologyPb2(
             items=[
-                OntologyItem(
-                    name=name,
-                    id=feature_id,
-                    color=OntologyItem.Color(
-                        r=self._colormap[feature_id][0],
-                        g=self._colormap[feature_id][1],
-                        b=self._colormap[feature_id][2]
-                    ),
-                    isthing=self._isthing[feature_id]
+                FeatureOntologyItem(
+                    name=name, id=feature_id, feature_value_type=self.id_to_feature_value_type[feature_id]
                 ) for feature_id, name in self._id_to_name.items()
             ]
         )
@@ -129,12 +117,8 @@ class FeatureOntology:
         return self._id_to_name
 
     @property
-    def colormap(self):
-        return self._colormap
-
-    @property
-    def isthing(self):
-        return self._isthing
+    def id_to_feature_value_type(self):
+        return self._id_to_feature_value_type
 
     @property
     def hexdigest(self):
@@ -148,8 +132,5 @@ class FeatureOntology:
         return "{}[{}]".format(self.__class__.__name__, os.path.basename(self.hexdigest))
 
 
-#class AgentFeatureOntology(FeatureOntology):
-#"""Agent feature ontologies derive directly from Ontology"""
-#def __init__(self, ontology_pb2):
-#TODO: Add feature value type handeling
-#    super().__init__(ontology_pb2)
+class AgentFeatureOntology(FeatureOntology):
+    """Agent feature ontologies derive directly from Ontology"""

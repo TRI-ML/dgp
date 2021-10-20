@@ -67,7 +67,7 @@ class AgentSnapshot2DList(AgentSnapshotList):
                         agent_snapshot_2d.agent_snapshot_2D.box.x, agent_snapshot_2d.agent_snapshot_2D.box.y,
                         agent_snapshot_2d.agent_snapshot_2D.box.w, agent_snapshot_2d.agent_snapshot_2D.box.h
                     ]),
-                    class_id=ontology.class_id_to_contiguous_id[agent_snapshots_pb2.agent_snapshots_pb2.class_id],
+                    class_id=ontology.class_id_to_contiguous_id[agent_snapshot_2d.agent_snapshots_2D.class_id],
                     instance_id=agent_snapshot_2d.agent_snapshot_2D.instance_id,
                     color=ontology.colormap[agent_snapshot_2d.agent_snapshot_2D.class_id],
                     attributes=dict([(feature_ontology.id_to_name[feature_id], feature)

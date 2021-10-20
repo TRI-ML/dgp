@@ -72,6 +72,7 @@ class AgentSnapshot3DList(AgentSnapshotList):
                     ]),
                     class_id=ontology.class_id_to_contiguous_id[agent_snapshot_3d.agent_snapshot_3D.class_id],
                     instance_id=agent_snapshot_3d.agent_snapshot_3D.instance_id,
+                    sample_idx=agent_snapshot_3d.slice_id.index,
                     color=ontology.colormap[agent_snapshot_3d.agent_snapshot_3D.class_id],
                     attributes=dict([(feature_ontology.id_to_name[feature_id], feature)
                                      for feature_id, feature in enumerate(agent_snapshot_3d.agent_snapshot_3D.features)]

@@ -1,4 +1,3 @@
-# Copyright 2021 Toyota Research Institute.  All rights reserved.
 import hashlib
 import json
 import logging
@@ -8,7 +7,9 @@ from io import StringIO
 from google.protobuf.json_format import MessageToDict, Parse
 
 from dgp.proto.dataset_pb2 import Ontology as OntologyV1Pb2
+from dgp.proto.ontology_pb2 import FeatureOntology as FeatureOntologyPb2
 from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
+from dgp.proto.scene_pb2 import Scene
 from dgp.utils.cloud.s3 import (convert_uri_to_bucket_path, get_string_from_s3_file)
 
 
@@ -21,7 +22,7 @@ def open_pbobject(path, pb_class):
     Parameters
     ----------
     path: str
-        Local JSON file path.
+        Local JSON file path or remote scene dataset JSON URI to load.
 
     pb_class: pb2 object class
         Protobuf object we want to load into.
@@ -35,7 +36,7 @@ def open_pbobject(path, pb_class):
     if path.startswith('s3://'):
         return open_remote_pb_object(path, pb_class)
     assert os.path.exists(path), f'Path not found: {path}'
-    with open(path, 'r') as json_file:
+    with open(path, 'r', encoding='UTF-8') as json_file:
         pb_object = Parse(json_file.read(), pb_class())
     return pb_object
 
@@ -92,7 +93,7 @@ def save_pbobject_as_json(pb_object, save_path):
         save_path = os.path.join(save_path, generate_uid_from_pbobject(pb_object) + ".json")
 
     assert save_path.endswith(".json"), 'File extension for {} needs to be json.'.format(save_path)
-    with open(save_path, "w") as _f:
+    with open(save_path, "w", encoding='UTF-8') as _f:
         json.dump(
             MessageToDict(pb_object, including_default_value_fields=True, preserving_proto_field_name=True),
             _f,
@@ -132,6 +133,29 @@ def open_ontology_pbobject(ontology_file):
         logging.info('Failed to load ontology file with V1 spec also, returning None.')
 
 
+def open_feature_ontology_pbobject(ontology_file):
+    """Open feature ontology objects.
+
+    Parameters
+    ----------
+    ontology_file: str
+        JSON ontology file path to load.
+
+    Returns
+    -------
+    ontology: FeatureOntology object
+        Desired Feature Ontology pb2 object to be opened. Returns
+        None if neither fails to load.
+    """
+    try:
+        ontology = open_pbobject(ontology_file, FeatureOntologyPb2)
+        if ontology is not None:
+            logging.info('Successfully loaded FeatureOntology spec.')
+            return ontology
+    except Exception:
+        logging.info('Failed to load ontology file.')
+
+
 def generate_uid_from_pbobject(pb_object):
     """Given a pb object, return the deterministic SHA1 hash hexdigest.
     Used for creating unique IDs.
@@ -155,3 +179,31 @@ def generate_uid_from_pbobject(pb_object):
     uid = hashlib.sha1(out.getvalue().encode('utf-8')).hexdigest()
     out.close()
     return uid
+
+
+def get_latest_scene(s3_scene_jsons):
+    '''From a list of 'scene.json' and/or 'scene_<sha1>.json' paths in s3,
+    return a Scene object for the one with the latest timestamp.
+    Parameters
+    ----------
+    s3_scene_jsons: List[str]
+        List of 'scene.json' or 'scene_<sha1>.json' paths in s3
+    Returns
+    -------
+    latest_scene: dgp.proto.scene_pb2.Scene
+        Scene pb object with the latest creation timestamp.
+    scene_json_path: str
+        S3 Path to the latest scene JSON.
+    Notes
+    -----
+    This function can be called on the output:
+        out, _ = s3_recursive_list(os.path.join(scene_s3_dir, 'scene')
+    which is grabbing all 'scene*' files from the Scene directory
+    '''
+    # Fetch all 'scene*.json' files and load Scenes
+    scenes = [open_remote_pb_object(scene_json, Scene) for scene_json in s3_scene_jsons]
+
+    # Find Scene with latest creation timestamp
+    creation_ts = [_s.creation_date.ToMicroseconds() for _s in scenes]
+    index = creation_ts.index(max(creation_ts))
+    return scenes[index], s3_scene_jsons[index]

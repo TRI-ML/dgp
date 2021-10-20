@@ -7,8 +7,6 @@ import os
 from collections import defaultdict
 from pathlib import Path
 
-from utils.s3 import s3_copy
-
 from dgp import (
     AGENT_FOLDER, FEATURE_ONTOLOGY_FOLDER, TRI_DGP_AGENT_TRACKS_JSON_NAME, TRI_DGP_AGENTS_JSON_NAME,
     TRI_DGP_AGENTS_SLICES_JSON_NAME, TRI_DGP_S3_BUCKET_URL, TRI_RAW_S3_BUCKET_URL
@@ -16,11 +14,12 @@ from dgp import (
 from dgp.datasets.prediction_dataset import PredictionAgentDataset
 from dgp.proto import dataset_pb2, features_pb2
 from dgp.proto.agent_pb2 import (AgentGroup, AgentsSlice, AgentsSlices, AgentTracks)
-from dgp.proto.ontology_pb2 import Ontology, OntologyItem
+from dgp.proto.ontology_pb2 import FeatureOntology, FeatureOntologyItem
+from dgp.utils.cloud.s3 import s3_copy
 from dgp.utils.dataset_conversion import get_date, get_datetime_proto
-from dgp.utils.protobuf import (generate_uid_from_pbobject, save_pbobject_as_json)
+from dgp.utils.protobuf import (generate_uid_from_pbobject, open_pbobject, save_pbobject_as_json)
 
-TRIPCCOntology = Ontology(items=[OntologyItem(name='ParkedVehicleState', id=0, isthing=True)])
+TRIPCCOntology = FeatureOntology(items=[FeatureOntologyItem(name='ParkedVehicleState', id=0, feature_value_type=0)])
 
 
 class AgentBackfillDemo:
@@ -35,6 +34,7 @@ class AgentBackfillDemo:
         self.EMAIL = 'chao.fang@tri.global'
         self.public = False
         self.scene_dataset_json = scene_dataset_json
+        self.scene_dataset = open_pbobject(scene_dataset_json, dataset_pb2.SceneDataset)
         self.agents_dataset_pb2 = dataset_pb2.Agents()
         self.local_output_path = Path(scene_dataset_json).parent.as_posix()
         self.ontologies = {features_pb2.PARKED_CAR: TRIPCCOntology}
@@ -59,15 +59,26 @@ class AgentBackfillDemo:
     def generate(self):
         for (split_type, split) in zip([dataset_pb2.TRAIN, dataset_pb2.TEST, dataset_pb2.VAL],
                                        ['train', 'test', 'val']):
-            if split_type not in self.agents_dataset_pb2.agent_splits:
+            if split_type not in self.scene_dataset.scene_splits:
                 continue
 
             logging.info('Processing {}'.format(split))
             original_dataset = PredictionAgentDataset(
                 self.scene_dataset_json,
                 split=split,
-                datum_names=('LIDAR_TOP', ),
-                requested_main_agent_types=('vehicle.car', ),
+                datum_names=('LIDAR', ),
+                requested_main_agent_types=(
+                    'Person',
+                    'Truck',
+                    'Car',
+                    'Bus/RV/Caravan',
+                    'Motorcycle',
+                    'Wheeled Slow',
+                    'Train',
+                    'Towed Object',
+                    'Bicycle',
+                    'Trailer',
+                ),
                 batch_per_agent=True
             )
             self.backfill(original_dataset, split_type)
@@ -87,16 +98,13 @@ class AgentBackfillDemo:
             Split of dataset to read ("train" | "val" | "test" | "train_overfit").
 
         """
+        # Map from scene idx to list agent
         scene_agent_map = defaultdict(list)
         for agent_idx, agent_track in enumerate(original_dataset.dataset_agent_index):
             scene_idx = agent_track[1]
             scene_agent_map[scene_idx].append(agent_idx)
         for scene_idx, scene in enumerate(original_dataset.scenes):
-            log_name = scene.scene.log
-            log_name = log_name.replace("/", "-")
-            output_scene_dirname = "{}.{}.{}".format(
-                log_name, scene.samples[0].id.timestamp.seconds, scene.samples[0].id.timestamp.nanos
-            )
+            output_scene_dirname = scene.directory
             agent_pb2 = AgentGroup()
             agent_pb2.feature_ontologies[features_pb2.PARKED_CAR] = \
                 generate_uid_from_pbobject(self.ontologies[features_pb2.PARKED_CAR])
@@ -115,15 +123,22 @@ class AgentBackfillDemo:
                     original_dataset.annotation_reference].contiguous_id_to_class_id[agent_track_original[0][0][
                         'bounding_box_3d'][agent_track_original[0][0]['main_agent_idx']].class_id]
                 sample_idx = sample_idx_in_scene_start
-                sample_agent_snapshots_dict[sample_idx].slice_id.CopyFrom(scene.samples[sample_idx].id)
-                sample_agent_snapshots_dict[sample_idx].slice_id.index = sample_idx
                 for agent_snapshot_original in agent_track_original:
+                    try:
+                        box = agent_snapshot_original[0]['bounding_box_3d'][int(
+                            agent_snapshot_original[0]['main_agent_idx']
+                        )]
+                    except TypeError:  # pylint: disable=bare-except
+                        sample_idx = sample_idx + 1
+                        continue
+                    if sample_idx not in sample_agent_snapshots_dict:
+                        sample_agent_snapshots_dict[sample_idx].slice_id.CopyFrom(scene.samples[sample_idx].id)
+                        sample_agent_snapshots_dict[sample_idx].slice_id.index = sample_idx
                     agent_snapshot = agent_track.agent_snapshots.add()
+                    agent_snapshot.agent_snapshot_3D.box.CopyFrom(box.to_proto())
                     agent_snapshot.slice_id.CopyFrom(scene.samples[sample_idx].id)
                     agent_snapshot.slice_id.index = sample_idx
                     agent_snapshot.agent_snapshot_3D.class_id = agent_track.class_id
-                    box = agent_snapshot_original[0]['bounding_box_3d'][agent_snapshot_original[0]['main_agent_idx']]
-                    agent_snapshot.agent_snapshot_3D.box.CopyFrom(box.to_proto())
 
                     agent_snapshot.agent_snapshot_3D.instance_id = main_agent_id
                     # The feature fields need to backfill from

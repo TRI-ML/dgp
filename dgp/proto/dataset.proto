@@ -1,4 +1,4 @@
-// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
+// Copyright 2019-2020 Toyota Research Institute.  All rights reserved.
 // Definitions for metadata related to whole datasets and its instances and
 // splits.
 
@@ -6,12 +6,10 @@ syntax = "proto3";
 
 package dgp.proto;
 
-import "google/protobuf/any.proto";
-
-import "dgp/proto/remote.proto";
-import "dgp/proto/scene.proto";
-import "dgp/proto/statistics.proto";
-
+import "dgp/proto/remote.proto"
+import "dgp/proto/scene.proto"
+import "dgp/proto/statistics.proto"
+import "google/protobuf/any.proto"
 
 // TODO: remove OntologyV1 once all ontology files upgraded to OntologyV2.
 // Dataset ontology
@@ -39,6 +37,8 @@ enum DatasetSplit {
   TRAIN = 0;
   VAL = 1;
   TEST = 2;
+
+  // TODO (allan.raventos): deprecate this once we have a stable version of the DGP tagged
   TRAIN_OVERFIT = 3;
 }
 
@@ -117,10 +117,20 @@ message DatasetMetadata {
 //  │   │   └── ...
 //  │   ├── rgb
 //  │   │   └── ...
+//  │   ├── agent_tracks
+//  │   │   └── agent_track_<hash>.json
+//  │   │   └── ...
+//  │   ├── agents_slices
+//  │   │   └── agent_slice<hash>.json
+//  │   │   └── ...
 //  |   └── ...
 //  │   └── scene_<scene_hash>.json
+//  │   └── agent_<agent_hash>.json
+//  │   └── map_<agent_hash>.json
 //  └── ...
 //  └── scene_dataset_v1.0.json
+//  └── agents_v1.0.json
+//  └── map_elements_v1.0.json
 //
 message SceneDataset {
   // Dataset-specific metadata
@@ -131,4 +141,27 @@ message SceneDataset {
   // Note: This corresponds to a particular task in the dataset.
   // Maps <DatasetSplit, Scenes>
   map<int32, SceneFiles> scene_splits = 2;
+}
+
+message Agents {
+  // Dataset-specific metadata
+  DatasetMetadata metadata = 1;
+
+  // Dataset scenes
+  // List of SceneAgents recorded for each dataset split (train/val/test) in this dataset.
+  // Note: This corresponds to a particular task in the dataset.
+  // Maps <DatasetSplit, SceneAgents>
+  map<int32, AgentFiles> agents_splits = 2;
+}
+
+// A collection of files
+message AgentFiles {
+  // Relative file paths for the json files serialized from AgentGroup message.
+  //
+  // A AgentGroup message is serialized and stored under the following naming convention:
+  //    <scene_dir>/agents_<scene_hash>.json
+  // where <agents_hash> is the deterministic deterministic SHA1 hash hexdigest of a agentgroup and served
+  // as the version of the scene, see dgp.utils.protobuf.generate_uid_from_pbobject
+  // for details.
+  repeated string filenames = 1;
 }
