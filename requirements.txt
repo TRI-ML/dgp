@@ -2,6 +2,7 @@ awscli
 boto3
 botocore
 Click>=7.1.2
+coverage==6.0.2
 diskcache>=4.1.0
 grpcio==1.41.0
 grpcio-tools==1.41.0
@@ -18,6 +19,7 @@ Sphinx==4.2.0
 torch>=1.8.1
 torchvision>=0.9.1
 tqdm>=4.29.1
+pytest==6.2.5
 tenacity>=6.0.0
 ujson==1.35
 xarray==0.16.2
