@@ -2,6 +2,7 @@ awscli
 boto3
 botocore
 Click>=7.1.2
+coverage==6.0.2
 diskcache>=4.1.0
 grpcio==1.41.0
 grpcio-tools==1.41.0
@@ -13,6 +14,7 @@ Pillow==8.3.2
 pycocotools==2.0.0
 pylint>=2.8.1
 pyquaternion==0.9.5
+pytest==6.2.5
 torch==1.8.1
 torchvision==0.9.1
 tqdm==4.29.1
