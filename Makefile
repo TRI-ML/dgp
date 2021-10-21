@@ -20,8 +20,8 @@ DOCKER_OPTS ?= \
 	--net=host --ipc=host
 
 # Unit tests
-UNITTEST ?= nosetests
-UNITTEST_OPTS ?= --nologcapture -v -s
+UNITTEST ?= pytest
+UNITTEST_OPTS ?= -v
 
 all: clean test
 
