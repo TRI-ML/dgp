@@ -57,6 +57,9 @@ class _SynchronizedDataset(BaseDataset):
 
     only_annotated_datums: bool, default: False
         If True, only datums with annotations matching the requested annotation types are returned.
+
+    transform_accumulated_box_points: bool, default: False
+        Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
     """
     def __init__(
         self,
@@ -69,11 +72,13 @@ class _SynchronizedDataset(BaseDataset):
         backward_context=0,
         accumulation_context=None,
         generate_depth_from_datum=None,
-        only_annotated_datums=False
+        only_annotated_datums=False,
+        transform_accumulated_box_points=False,
     ):
         self.set_context(backward=backward_context, forward=forward_context, accumulation_context=accumulation_context)
         self.generate_depth_from_datum = generate_depth_from_datum
         self.only_annotated_datums = only_annotated_datums if requested_annotations else False
+        self.transform_accumulated_box_points = transform_accumulated_box_points
 
         super().__init__(
             dataset_metadata,
@@ -319,7 +324,7 @@ class _SynchronizedDataset(BaseDataset):
                 # We instead need a list that ranges from [i-backward_context to i+forward_context] AFTER accumulation
                 # This means the central sample in our datum list starts at index = acc_back.
                 datum_list = [
-                    accumulate_points(datum_list[k - acc_back:k + acc_forward + 1], datum_list[k])
+                    accumulate_points(datum_list[k - acc_back:k + acc_forward + 1], datum_list[k], self.transform_accumulated_box_points)
                     for k in range(acc_back,
                                    len(datum_list) - acc_forward)
                 ]
@@ -384,6 +389,9 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
     dataset_root: str
         Optional path to dataset root folder. Useful if dataset scene json is not in the same directory as the rest of the data.
 
+    transform_accumulated_box_points: bool, default: False
+        Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
+
     Refer to _SynchronizedDataset for remaining parameters.
     """
     def __init__(
@@ -400,6 +408,7 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
         only_annotated_datums=False,
         skip_missing_data=False,
         dataset_root=None,
+        transform_accumulated_box_points=False,
     ):
         # Extract all scenes from the scene dataset JSON for the appropriate split
         scenes = BaseDataset._extract_scenes_from_scene_dataset_json(
@@ -423,7 +432,8 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
             forward_context=forward_context,
             accumulation_context=accumulation_context,
             generate_depth_from_datum=generate_depth_from_datum,
-            only_annotated_datums=only_annotated_datums
+            only_annotated_datums=only_annotated_datums,
+            transform_accumulated_box_points=transform_accumulated_box_points,
         )
 
 
@@ -467,6 +477,9 @@ class SynchronizedScene(_SynchronizedDataset):
     only_annotated_datums: bool, default: False
         If True, only datums with annotations matching the requested annotation types are returned.
 
+    transform_accumulated_box_points: bool, default: False
+        Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
+
     Refer to _SynchronizedDataset for remaining parameters.
     """
     def __init__(
@@ -479,7 +492,8 @@ class SynchronizedScene(_SynchronizedDataset):
         forward_context=0,
         accumulation_context=None,
         generate_depth_from_datum=None,
-        only_annotated_datums=False
+        only_annotated_datums=False,
+        transform_accumulated_box_points=False,
     ):
 
         # Extract a single scene from the scene JSON
@@ -499,5 +513,6 @@ class SynchronizedScene(_SynchronizedDataset):
             forward_context=forward_context,
             accumulation_context=accumulation_context,
             generate_depth_from_datum=generate_depth_from_datum,
-            only_annotated_datums=only_annotated_datums
+            only_annotated_datums=only_annotated_datums,
+            transform_accumulated_box_points=transform_accumulated_box_points,
         )
