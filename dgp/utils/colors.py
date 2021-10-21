@@ -2,7 +2,7 @@
 """This file contains definitions of predefined RGB colors, and color-related utility functions.
 """
 import cv2
-import matplotlib
+import matplotlib.cm
 import numpy as np
 
 RED = (255, 0, 0)
