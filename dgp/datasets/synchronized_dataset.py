@@ -246,6 +246,9 @@ class _SynchronizedDataset(BaseDataset):
         # TODO: Implement data/annotation load-time transforms, `torchvision` style.
         if annotations:
             datum_data.update(annotations)
+
+        datum_data['datum_type'] = datum_type
+
         return datum_data
 
     def __getitem__(self, index):
