@@ -2,14 +2,14 @@
     "agents_splits": {
         "0": {
             "filenames": [
-                "tests/data/dgp/test_scene/scene_01/agents_5feabc42f5d25b85ae812e086a2811332a904d86.json",
-                "tests/data/dgp/test_scene/scene_02/agents_b9dbdaca6d6785f1ead25d06aee6042dae500567.json"
+                "scene_01/agents_5feabc42f5d25b85ae812e086a2811332a904d86.json",
+                "scene_02/agents_b9dbdaca6d6785f1ead25d06aee6042dae500567.json"
             ]
         },
         "1": {
             "filenames": [
-                "tests/data/dgp/test_scene/scene_01/agents_f4087ed95eecd2f54d4dca1c7b9fb816fcf89756.json",
-                "tests/data/dgp/test_scene/scene_02/agents_197a8d328c89cb99f276847709425a8e86967350.json"
+                "scene_01/agents_f4087ed95eecd2f54d4dca1c7b9fb816fcf89756.json",
+                "scene_02/agents_197a8d328c89cb99f276847709425a8e86967350.json"
             ]
         }
     },
