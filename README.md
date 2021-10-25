@@ -7,6 +7,7 @@
 [![build-docker](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml/badge.svg)](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml)
 [![license](https://img.shields.io/github/license/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/blob/master/LICENSE)
 [![open-issues](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/issues)
+[![docs](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)]https://sshusaintri.github.io/dgp/)
 
 To ensure the traceability, reproducibility and standardization for
 all ML datasets and models generated and consumed within Toyota Research Institute (TRI), we developed the
