@@ -3,7 +3,6 @@
 import hashlib
 import itertools
 import logging
-#import math
 import os
 import random
 import time
@@ -14,7 +13,6 @@ from multiprocessing import Pool, cpu_count
 import numpy as np
 from diskcache import Cache
 
-#from ouroboros import OUROBOROS_CACHE_DIR
 from dgp import DGP_CACHE_DIR, FEATURE_ONTOLOGY_FOLDER, ONTOLOGY_FOLDER
 from dgp.agents import (AGENT_REGISTRY, AGENT_TYPE_TO_ANNOTATION_TYPE, ANNOTATION_TYPE_TO_AGENT_TYPE)
 from dgp.annotations import ONTOLOGY_REGISTRY

@@ -42,7 +42,7 @@ message AgentGroup {
   google.protobuf.Timestamp creation_date = 7;
 
   // Task-specific feature ontologies
-  // Ontologies are stored under <scene_dir>/ontology/<ontology_sha1>.json
+  // Ontologies are stored under <scene_dir>/feature_ontology/<ontology_sha1>.json
   // Maps dgp.proto.FeatureType (Agent_3D, EGO_INTENTION, etc) to the filename
   // containing the ontology for the specific FeatureType/Task.
   map<int32, string> feature_ontologies = 8;

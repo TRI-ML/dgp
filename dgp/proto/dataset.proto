@@ -1,4 +1,4 @@
-// Copyright 2019-2020 Toyota Research Institute.  All rights reserved.
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 // Definitions for metadata related to whole datasets and its instances and
 // splits.
 
@@ -13,7 +13,6 @@ import "dgp/proto/scene.proto";
 import "dgp/proto/statistics.proto";
 
 
-// TODO: remove OntologyV1 once all ontology files upgraded to OntologyV2.
 // Dataset ontology
 message Ontology {
   // Dictionary maintaining the class name to unique class id mapping
@@ -40,7 +39,6 @@ enum DatasetSplit {
   VAL = 1;
   TEST = 2;
 
-  // TODO (allan.raventos): deprecate this once we have a stable version of the DGP tagged
   TRAIN_OVERFIT = 3;
 }
 

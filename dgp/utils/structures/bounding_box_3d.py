@@ -1,3 +1,4 @@
+# Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 import hashlib
 
 import cv2
@@ -15,7 +16,7 @@ class BoundingBox3D:
 
     Parameters
     ----------
-    pose: ouroboros.dgp.utils.pose.Pose, (default: Pose())
+    pose: dgp.utils.pose.Pose, (default: Pose())
         Pose of the center of the 3D cuboid.
 
     sizes: np.float32, (default: np.float32([0,0,0]))
@@ -70,19 +71,14 @@ class BoundingBox3D:
 
         self._pose = pose
         self._sizes = sizes
-
         self._class_id = class_id
         self._instance_id = instance_id
         self._color = color
         self._attributes = dict(attributes) if attributes is not None else {}
-
-        # TODO: Define better defaults for occlusion/truncation
         self._num_points = num_points
         self._occlusion = occlusion
         self._truncation = truncation
-
         self._feature_ontology_type = feature_ontology_type
-
         self._sample_idx = sample_idx
 
     @property
@@ -249,7 +245,6 @@ class BoundingBox3D:
 
         class_name: str, default: None
             Class name of the bounding box.
-            TODO (allan.raventos): make this a property of `self`?
 
         font_scale: float, default: 0.5
             Font scale used in text labels.
@@ -271,7 +266,6 @@ class BoundingBox3D:
         if (self.corners[:, 2] <= 0).any():
             return image
 
-        # TODO (allan.raventos): find a nice way to use class colors from ontology colormap,
         # while preserving ability to debug object orientation easily
         COLORS = [RED, GREEN, BLUE]
 
