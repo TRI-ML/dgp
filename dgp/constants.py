@@ -17,7 +17,7 @@ ANNOTATION_TYPE_ID_TO_KEY = OrderedDict({v: k for k, v in ANNOTATION_KEY_TO_TYPE
 ALL_ANNOTATION_TYPES = tuple(ANNOTATION_KEY_TO_TYPE_ID.keys())
 
 # Provide supported annotations for each type of datum
-SUPPORTED_ANNOTATIONS_IN_DATUM = OrderedDict({
+DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE = OrderedDict({
     'image': [
         'bounding_box_2d', 'bounding_box_3d', 'semantic_segmentation_2d', 'instance_segmentation_2d', 'depth',
         'surface_normals_2d', 'motion_vectors_2d', 'key_point_2d', 'key_line_2d', 'agent_behavior'

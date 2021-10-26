@@ -1,3 +1,4 @@
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 // Definitions for OntologyItem and Ontology.
 // OntologyItem and Ontology are defined in an Object Oriented way for the ease of downstream
 // consumption. Ontology is simply a collection of multiple OntologyItems that contain all
@@ -5,7 +6,6 @@
 
 syntax = "proto3";
 
-// TODO: move package back to dgp.proto once dataset_pb2 is deprecated.
 package dgp.proto.v2;
 
 // An Ontology represents a set of unique concepts/categories that expresses their properties.
@@ -44,8 +44,8 @@ message Ontology {
   repeated OntologyItem items = 1;
 }
 
-// An Feature Ontology represents a set of unique feature fields that expresses their properties.
-// An FeatureOntologyItem defines a single, unique element within in an FeatureOntology.
+// A Feature Ontology represents a set of unique feature fields that expresses their properties.
+// A FeatureOntologyItem defines a single, unique element within in an FeatureOntology.
 message FeatureOntologyItem {
   // OntologyItem name. For e.g., 'Speed', 'Link_to_rasterized_image', 'parking_attribute', etc.
   string name = 1;

@@ -13,12 +13,6 @@ TRI_DGP_FOLDER_PREFIX = "dgp/"
 TRI_RAW_FOLDER_PREFIX = "raw/"
 TRI_DGP_JSON_PREFIX = "dataset_v"
 
-TRI_DGP_S3_BUCKET = "tri-ml-datasets"
-TRI_DGP_FOLDER_PREFIX = "dgp/"
-TRI_RAW_FOLDER_PREFIX = "raw/"
-TRI_DGP_S3_BUCKET_URL = "s3://{}/{}".format(TRI_DGP_S3_BUCKET, TRI_DGP_FOLDER_PREFIX)
-TRI_RAW_S3_BUCKET_URL = "s3://{}/{}".format(TRI_DGP_S3_BUCKET, TRI_RAW_FOLDER_PREFIX)
-
 # DGP Directory structure constants
 RGB_FOLDER = 'rgb'
 POINT_CLOUD_FOLDER = 'point_cloud'
