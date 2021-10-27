@@ -12,6 +12,7 @@ import "dgp/proto/identifiers.proto";
 import "dgp/proto/image.proto";
 import "dgp/proto/point_cloud.proto";
 import "dgp/proto/radar_point_cloud.proto";
+import "dgp/proto/map.proto";
 
 // Calibration for a sample
 message SampleCalibration {

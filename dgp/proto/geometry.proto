@@ -5,6 +5,13 @@ syntax = "proto3";
 
 package dgp.proto;
 
+// Coordinates on the map.
+message Point3D{
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
 // 3-DOF Vector represented via double
 message Vector3 {
   double x = 1;
