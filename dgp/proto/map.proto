@@ -1,0 +1,165 @@
+// Copyright 2021 Toyota Research Institute.  All rights reserved.
+// Definitions for Map and traffic control signals.
+
+syntax = "proto3";
+
+package dgp.proto;
+
+import "dgp/proto/geometry.proto";
+import "dgp/proto/identifiers.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+// Basic container for line divider on road, contains sequence of points to form a polyline.
+message LaneDivider{
+  // List of points to form a continuous line. The points are ordered along lane direction.
+  repeated Point3D way_points = 1;
+
+  // Enum of types of the line divider.
+  enum LaneDividerType {
+    UNKNOWN = 0;
+    NONE = 1;
+    SINGLE_SOLID = 2;
+    SINGLE_DASHED = 3;
+    SINGLE_WHITE_DASHED = 4;
+    DOUBLE_SOLID = 5;
+    DOUBLE_DASHED = 6;
+    DOUBLE_SOLID_FAR_DASHED_NEAR = 7;
+    DOUBLE_DASHED_FAR_SOLID_NEAR = 8;
+    CURB = 9;
+  }
+
+  // Enum of color of the lane divider.
+  enum LaneDividerColor {
+    UNDEFINED = 0;
+    YELLOW = 1;
+    WHITE = 2;
+    RED = 3;
+   }
+
+   // Enum of material of the lane divider.
+  enum LaneDividerMaterial {
+    UNCLEAR = 0;
+    PAINT = 1;
+  }
+
+  // Type of lane divider.
+  LaneDividerType divider_type = 2;
+
+  // Color of lane divider.
+  LaneDividerColor divider_color = 3;
+
+  // Material of lane divider.
+  LaneDividerMaterial divier_material = 4;
+}
+
+// Defines lane information - centerline, boundaries, etc. A lane is defined as https://en.wikipedia.org/wiki/Lane.
+message Lane {
+  // Identifier for the lane.
+  string id = 1;
+
+  // List of center line segments. It is geometrically the centers between left and right lane boundaries.
+  LaneDivider center_line = 2;
+
+  // Left lane boundary.
+  LaneDivider left_lane_boundary = 3;
+
+  // Right lane boundary.
+  LaneDivider right_lane_boundary = 4;
+}
+
+// The geometry of the edges of zone, represented as a chain of polylines to form a polygon.
+// Each edge in a boundary is associated in iteration order, where the last waypoint of
+// `explicit` edge n has an `implicit` connection to the first waypoint of `explicit` edge n+1,
+// including wrapping from the last `explicit` edge to the first edge in a boundary.
+// This means, when considering implicit edges, a boundary could be considered a closed polygon.
+// A zone has potentially multiple boundaries, because there may be multiple discrete areas
+// of interest in a single zone (e.g. an island in the middle of an intersection). Multiple boundaries
+// in the same zone are fully independent from a data structure point of view.
+message Boundary{
+  // List of edges of boundary polygon.
+  repeated LaneDivider edges = 1;
+}
+
+// Defines zone information. A Zone consists of a list of boundaries, each boundary having a list of edges, where
+// an edge is a 3D polyline, `explicit edges` are those actually in the list of polylines,
+// and `implicit edges` are those that connect implicit edges with straight lines. Examples of zones are cross-walk
+// intersection, etc.
+message Zone {
+  // Identifier for the zone.
+  string id = 1;
+
+  // Type of Zone, like cross-walk.
+  string type = 2;
+
+  // List of Zone boundaries.
+  repeated Boundary boundaries = 3;
+}
+
+// Represents a map -- either discrete segments or a pointer to an external data object (e.g. for rasterized maps).
+message SceneMap {
+  // List of Lanes in the map.
+  repeated Lane lanes = 1;
+
+  // List of zones, such as crosswalk regions, intersections.
+  repeated Zone zones = 2;
+
+  // An id to store reference to map files and position in them.
+  string external_map_id = 3;
+
+  // A general encoding of map information.
+  google.protobuf.Any map_data = 4;
+
+}
+
+// Transform from ECEF coordinates to Local coordinate.
+message LocalEarthTransform {
+  // Unique sample identifier (See dgp.idenfiers.proto).
+  // Copy from sample ID to ensure one-one match between a localmapview and sample in a scene.
+  DatumId sample_id = 1;
+
+  // Pose of this sample in ECEF.
+  Pose pose = 2;
+}
+
+// Map of a scene which consist list of lanes and zones.
+message DGPMap {
+  // List transformations from earth coord to vehicle coord.
+  repeated  LocalEarthTransform transforms = 1;
+
+  // Map in a scene.
+  SceneMap map = 2;
+}
+
+// Traffic light states and association with map elements.
+message TrafficLightState {
+  // The id of state.
+  string state_id = 1;
+
+  // The id of the map element for the state. Can refer to lanes or other map elements.
+  string map_element_id_from = 2;
+
+  // The id of the map element transition to. Can refer to lanes or other map elements.
+  string map_element_id_to = 3;
+
+  // The state of the traffic light.
+  string state = 4;
+
+  // The start and stop time of the state interval.
+  google.protobuf.Timestamp timestamp_start = 5;
+  google.protobuf.Timestamp timestamp_end = 6;
+
+  // The stop point(s) for this traffic light state.
+  // positions that the agent should stop / not cross according to the state.
+  repeated Point3D stop_point = 7;
+
+  // The source of the traffic light state inference (annotations, machine perception / platform, etc).
+  // Free-form text, can be a json.
+  string information_source = 8;
+
+  // Type of traffic light / control signal.
+  string traffic_light_type = 9;
+
+  // Additional information about the state. Usually as a json dictionary.
+  string additional_state_info = 10;
+}
