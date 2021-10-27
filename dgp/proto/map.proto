@@ -1,0 +1,122 @@
+// Copyright 2021 Toyota Research Institute.  All rights reserved.
+// Definitions for Map and traffic control signals.
+
+syntax = "proto3";
+
+package dgp.proto;
+
+import "dgp/proto/geometry.proto";
+import "dgp/proto/identifiers.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+// Basic container for line divider on road, contains sequence of points to form a polyline.
+message LaneDivider{
+  // List of points to form a continuous line. The points are ordered along lane direction.
+  repeated Point3D way_points = 1;
+
+  // Enum of types of the LaneDivider.
+  enum LaneDividerType {
+    TYPE_UNKNOWN = 0;
+    TYPE_SINGLE_SOLID = 1;
+    TYPE_SINGLE_DASHED = 2;
+    TYPE_SINGLE_WHITE_DASHED = 3;
+    TYPE_DOUBLE_SOLID = 4;
+    TYPE_DOUBLE_DASHED = 5;
+    TYPE_DOUBLE_SOLID_FAR_DASHED_NEAR = 6;
+    TYPE_DOUBLE_DASHED_FAR_SOLID_NEAR = 7;
+    TYPE_CURB = 8;
+  }
+
+  // Enum of color of the lane divider.
+  enum LaneDividerColor {
+    COLOR_UNKNOWN = 0;
+    COLOR_YELLOW = 1;
+    COLOR_WHITE = 2;
+    COLOR_RED = 3;
+   }
+
+   // Enum of material of the lane divider.
+  enum LaneDividerMaterial {
+    MATERIAL_UNKNOWN = 0;
+    MATERIAL_PAINT = 1;
+  }
+
+  // Type of LaneDivider.
+  LaneDividerType type = 2;
+
+  // Color of LaneDivider.
+  LaneDividerColor color = 3;
+
+  // Material of LaneDivider.
+  LaneDividerMaterial material = 4;
+}
+
+// Defines lane information - centerline, boundaries, etc. A lane is defined as https://en.wikipedia.org/wiki/Lane.
+message Lane {
+  // Identifier for the lane.
+  string id = 1;
+
+  // Center line of the lane. It is geometrically the centers between left and right lane boundaries.
+  LaneDivider center_line = 2;
+
+  // Left lane boundary.
+  LaneDivider left_lane_boundary = 3;
+
+  // Right lane boundary.
+  LaneDivider right_lane_boundary = 4;
+}
+
+// The geometry of the edges of zone, represented as a chain of polylines to form a polygon.
+// Each edge in a boundary is associated in iteration order, where the last waypoint of
+// `explicit` edge n has an `implicit` connection to the first waypoint of `explicit` edge n+1,
+// including wrapping from the last `explicit` edge to the first edge in a boundary.
+// This means, when considering implicit edges, a boundary could be considered a closed polygon.
+// A zone has potentially multiple boundaries, because there may be multiple discrete areas
+// of interest in a single zone (e.g. an island in the middle of an intersection). Multiple boundaries
+// in the same zone are fully independent from a data structure point of view.
+message Boundary{
+  // List of edges of boundary polygon.
+  repeated LaneDivider edges = 1;
+}
+
+// Defines zone information. A Zone consists of a list of boundaries, each boundary having a list of edges, where
+// an edge is a 3D polyline, `explicit edges` are those actually in the list of polylines,
+// and `implicit edges` are those that connect implicit edges with straight lines. Examples of zones are cross-walk
+// intersection, etc.
+message Zone {
+  // Identifier for the zone.
+  string id = 1;
+
+  // Type of Zone, like cross-walk.
+  string type = 2;
+
+  // List of Zone boundaries.
+  repeated Boundary boundaries = 3;
+}
+
+// Represents a map -- either discrete segments or a pointer to an external data object (e.g. for rasterized maps).
+message SceneMap {
+  // List of Lanes in the SceneMap.
+  repeated Lane lanes = 1;
+
+  // List of zones, such as crosswalk regions, intersections.
+  repeated Zone zones = 2;
+
+  // List transformations from earth coord to vehicle coord.
+  repeated  LocalEarthTransform transforms = 3;
+
+  // A general encoding of map information.
+  google.protobuf.Any map_data = 4;
+
+}
+
+// Transform from a Earth-centered Earth-fixed coordinate to Local coordinate.
+message LocalEarthTransform {
+  // Unique sample identifier (See dgp.idenfiers.proto).
+  // Copy from sample ID to ensure one-one match between a localmapview and sample in a scene.
+  DatumId sample_id = 1;
+
+  // Pose of this sample in Earth-centered Earth-fixed coordinate system.
+  Pose pose = 2;
+}
