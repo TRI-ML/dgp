@@ -1,0 +1,98 @@
+// Copyright 2021 Toyota Research Institute.  All rights reserved.
+// Definitions for annotation types for images and point clouds
+
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+package dgp.proto;
+
+
+// Coordinate on the map
+message Point3D{
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+// Defines lane information - centerline, boundaries, etc.
+message Lane {
+  // Identifier for the lane.
+  string id = 1;
+  // List of center line segments.
+  repeated Segment center_line = 2;
+  // List of left lane boundary segments.
+  repeated Segment left_lane_boundary = 3;
+  // List of right lane boundary segments.
+  repeated Segment right_lane_boundary = 4;
+  // List of lane boundary segments without a left/right semantic.
+  repeated Segment lane_boundary = 5;
+}
+
+// Represents a line segment for maps.
+message Segment{
+  Point3D start = 1;
+  Point3D end = 2;
+  enum DividerType {
+    UNKNOWN = 0;
+    NONE = 1;
+    SINGLE_YELLOW_SOLID = 2;
+    SINGLE_WHITE_SOLID = 3;
+    SINGLE_YELLOW_DASHED = 4;
+    SINGLE_WHITE_DASHED = 5;
+    DOUBLE_YELLOW_SOLID = 6;
+    DOUBLE_WHITE_SOLID = 7;
+    DOUBLE_YELLOW_SOLID_FAR_DASHED_NEAR = 8;
+    DOUBLE_YELLOW_DASHED_FAR_SOLID_NEAR = 9;
+    CURB_RED = 10;
+    CURB_YELLOW = 11;
+    CURB = 12;
+  }
+  DividerType divider_type = 4;
+}
+
+// Defines zone information - type and polygon.
+message Zone {
+  // Identifier for the zone.
+  string id = 1;
+  string type = 2;
+  // Note: the polygon can be a polyline
+  repeated Segment polygon = 3;
+}
+
+// Represents a map -- either discrete segments or a pointer to an external data object (e.g. for rasterized maps).
+message LocalMap {
+  // Lanes list.
+  repeated Lane lanes = 1;
+
+  // List of zones, such as crosswalk regions.
+  repeated Zone zones = 2;
+
+  // An id to store reference to map files and position in them. Format is a json, fields are not specified.
+  string external_map_id = 3;
+  // A general encoding of map information
+  google.protobuf.Any map_data = 4;
+  string map_metainfo = 5;
+}
+
+message TrafficLightState {
+  string state_id = 1;
+  // The id of the map element for the state. Can refer to lanes or other map elements.
+  string map_element_id = 2;
+  // The state of the traffic light.
+  string state = 3;
+  // The start and stop time of the state interval.
+  google.protobuf.Timestamp timestamp_start = 4;
+  google.protobuf.Timestamp timestamp_end = 5;
+  // The stop point(s) for this traffic light state --
+  // positions that the agent should stop / not cross according to the state.
+  repeated Point3D stop_point = 6;
+  // The source of the traffic light state inference (annotations, machine perception / platform, etc).
+  // Free-form text, can be a json.
+  string information_source = 7;
+  // Type of traffic light / control signal.
+  string traffic_light_type = 8;
+  // Additional information about the state. Usually as a json dictionary.
+  string additional_state_info = 9;
+}
