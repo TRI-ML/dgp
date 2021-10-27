@@ -18,6 +18,7 @@ from dgp.proto import identifiers_pb2 as dgp_dot_proto_dot_identifiers__pb2
 from dgp.proto import image_pb2 as dgp_dot_proto_dot_image__pb2
 from dgp.proto import point_cloud_pb2 as dgp_dot_proto_dot_point__cloud__pb2
 from dgp.proto import radar_point_cloud_pb2 as dgp_dot_proto_dot_radar__point__cloud__pb2
+from dgp.proto import map_pb2 as dgp_dot_proto_dot_map__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -26,9 +27,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x16\x64gp/proto/sample.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x1a\x64gp/proto/file_datum.proto\x1a\x18\x64gp/proto/geometry.proto\x1a\x1b\x64gp/proto/identifiers.proto\x1a\x15\x64gp/proto/image.proto\x1a\x1b\x64gp/proto/point_cloud.proto\x1a!dgp/proto/radar_point_cloud.proto\"x\n\x11SampleCalibration\x12\r\n\x05names\x18\x01 \x03(\t\x12/\n\nintrinsics\x18\x02 \x03(\x0b\x32\x1b.dgp.proto.CameraIntrinsics\x12#\n\nextrinsics\x18\x03 \x03(\x0b\x32\x0f.dgp.proto.Pose\"\xd1\x01\n\nDatumValue\x12!\n\x05image\x18\x01 \x01(\x0b\x32\x10.dgp.proto.ImageH\x00\x12,\n\x0bpoint_cloud\x18\x02 \x01(\x0b\x32\x15.dgp.proto.PointCloudH\x00\x12*\n\nfile_datum\x18\x03 \x01(\x0b\x32\x14.dgp.proto.FileDatumH\x00\x12\x37\n\x11radar_point_cloud\x18\x04 \x01(\x0b\x32\x1a.dgp.proto.RadarPointCloudH\x00\x42\r\n\x0b\x64\x61tum_oneof\"~\n\x05\x44\x61tum\x12\x1e\n\x02id\x18\x01 \x01(\x0b\x32\x12.dgp.proto.DatumId\x12\x0b\n\x03key\x18\x02 \x01(\t\x12$\n\x05\x64\x61tum\x18\x03 \x01(\x0b\x32\x15.dgp.proto.DatumValue\x12\x10\n\x08next_key\x18\x04 \x01(\t\x12\x10\n\x08prev_key\x18\x05 \x01(\t\"\xcf\x01\n\x06Sample\x12\x1e\n\x02id\x18\x01 \x01(\x0b\x32\x12.dgp.proto.DatumId\x12\x12\n\ndatum_keys\x18\x02 \x03(\t\x12\x17\n\x0f\x63\x61libration_key\x18\x03 \x01(\t\x12\x31\n\x08metadata\x18\x04 \x03(\x0b\x32\x1f.dgp.proto.Sample.MetadataEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x62\x06proto3'
+  serialized_pb=b'\n\x16\x64gp/proto/sample.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x1a\x64gp/proto/file_datum.proto\x1a\x18\x64gp/proto/geometry.proto\x1a\x1b\x64gp/proto/identifiers.proto\x1a\x15\x64gp/proto/image.proto\x1a\x1b\x64gp/proto/point_cloud.proto\x1a!dgp/proto/radar_point_cloud.proto\x1a\x13\x64gp/proto/map.proto\"x\n\x11SampleCalibration\x12\r\n\x05names\x18\x01 \x03(\t\x12/\n\nintrinsics\x18\x02 \x03(\x0b\x32\x1b.dgp.proto.CameraIntrinsics\x12#\n\nextrinsics\x18\x03 \x03(\x0b\x32\x0f.dgp.proto.Pose\"\x8e\x02\n\nDatumValue\x12!\n\x05image\x18\x01 \x01(\x0b\x32\x10.dgp.proto.ImageH\x00\x12,\n\x0bpoint_cloud\x18\x02 \x01(\x0b\x32\x15.dgp.proto.PointCloudH\x00\x12*\n\nfile_datum\x18\x03 \x01(\x0b\x32\x14.dgp.proto.FileDatumH\x00\x12\x37\n\x11radar_point_cloud\x18\x04 \x01(\x0b\x32\x1a.dgp.proto.RadarPointCloudH\x00\x12;\n\x13traffic_light_state\x18\x05 \x01(\x0b\x32\x1c.dgp.proto.TrafficLightStateH\x00\x42\r\n\x0b\x64\x61tum_oneof\"~\n\x05\x44\x61tum\x12\x1e\n\x02id\x18\x01 \x01(\x0b\x32\x12.dgp.proto.DatumId\x12\x0b\n\x03key\x18\x02 \x01(\t\x12$\n\x05\x64\x61tum\x18\x03 \x01(\x0b\x32\x15.dgp.proto.DatumValue\x12\x10\n\x08next_key\x18\x04 \x01(\t\x12\x10\n\x08prev_key\x18\x05 \x01(\t\"\xcf\x01\n\x06Sample\x12\x1e\n\x02id\x18\x01 \x01(\x0b\x32\x12.dgp.proto.DatumId\x12\x12\n\ndatum_keys\x18\x02 \x03(\t\x12\x17\n\x0f\x63\x61libration_key\x18\x03 \x01(\t\x12\x31\n\x08metadata\x18\x04 \x03(\x0b\x32\x1f.dgp.proto.Sample.MetadataEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x62\x06proto3'
   ,
-  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,dgp_dot_proto_dot_file__datum__pb2.DESCRIPTOR,dgp_dot_proto_dot_geometry__pb2.DESCRIPTOR,dgp_dot_proto_dot_identifiers__pb2.DESCRIPTOR,dgp_dot_proto_dot_image__pb2.DESCRIPTOR,dgp_dot_proto_dot_point__cloud__pb2.DESCRIPTOR,dgp_dot_proto_dot_radar__point__cloud__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,dgp_dot_proto_dot_file__datum__pb2.DESCRIPTOR,dgp_dot_proto_dot_geometry__pb2.DESCRIPTOR,dgp_dot_proto_dot_identifiers__pb2.DESCRIPTOR,dgp_dot_proto_dot_image__pb2.DESCRIPTOR,dgp_dot_proto_dot_point__cloud__pb2.DESCRIPTOR,dgp_dot_proto_dot_radar__point__cloud__pb2.DESCRIPTOR,dgp_dot_proto_dot_map__pb2.DESCRIPTOR,])
 
 
 
@@ -74,8 +75,8 @@ _SAMPLECALIBRATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=234,
-  serialized_end=354,
+  serialized_start=255,
+  serialized_end=375,
 )
 
 
@@ -115,6 +116,13 @@ _DATUMVALUE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='traffic_light_state', full_name='dgp.proto.DatumValue.traffic_light_state', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -132,8 +140,8 @@ _DATUMVALUE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=357,
-  serialized_end=566,
+  serialized_start=378,
+  serialized_end=648,
 )
 
 
@@ -192,8 +200,8 @@ _DATUM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=568,
-  serialized_end=694,
+  serialized_start=650,
+  serialized_end=776,
 )
 
 
@@ -231,8 +239,8 @@ _SAMPLE_METADATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=835,
-  serialized_end=904,
+  serialized_start=917,
+  serialized_end=986,
 )
 
 _SAMPLE = _descriptor.Descriptor(
@@ -283,8 +291,8 @@ _SAMPLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=697,
-  serialized_end=904,
+  serialized_start=779,
+  serialized_end=986,
 )
 
 _SAMPLECALIBRATION.fields_by_name['intrinsics'].message_type = dgp_dot_proto_dot_geometry__pb2._CAMERAINTRINSICS
@@ -293,6 +301,7 @@ _DATUMVALUE.fields_by_name['image'].message_type = dgp_dot_proto_dot_image__pb2.
 _DATUMVALUE.fields_by_name['point_cloud'].message_type = dgp_dot_proto_dot_point__cloud__pb2._POINTCLOUD
 _DATUMVALUE.fields_by_name['file_datum'].message_type = dgp_dot_proto_dot_file__datum__pb2._FILEDATUM
 _DATUMVALUE.fields_by_name['radar_point_cloud'].message_type = dgp_dot_proto_dot_radar__point__cloud__pb2._RADARPOINTCLOUD
+_DATUMVALUE.fields_by_name['traffic_light_state'].message_type = dgp_dot_proto_dot_map__pb2._TRAFFICLIGHTSTATE
 _DATUMVALUE.oneofs_by_name['datum_oneof'].fields.append(
   _DATUMVALUE.fields_by_name['image'])
 _DATUMVALUE.fields_by_name['image'].containing_oneof = _DATUMVALUE.oneofs_by_name['datum_oneof']
@@ -305,6 +314,9 @@ _DATUMVALUE.fields_by_name['file_datum'].containing_oneof = _DATUMVALUE.oneofs_b
 _DATUMVALUE.oneofs_by_name['datum_oneof'].fields.append(
   _DATUMVALUE.fields_by_name['radar_point_cloud'])
 _DATUMVALUE.fields_by_name['radar_point_cloud'].containing_oneof = _DATUMVALUE.oneofs_by_name['datum_oneof']
+_DATUMVALUE.oneofs_by_name['datum_oneof'].fields.append(
+  _DATUMVALUE.fields_by_name['traffic_light_state'])
+_DATUMVALUE.fields_by_name['traffic_light_state'].containing_oneof = _DATUMVALUE.oneofs_by_name['datum_oneof']
 _DATUM.fields_by_name['id'].message_type = dgp_dot_proto_dot_identifiers__pb2._DATUMID
 _DATUM.fields_by_name['datum'].message_type = _DATUMVALUE
 _SAMPLE_METADATAENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY

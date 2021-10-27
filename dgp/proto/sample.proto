@@ -12,6 +12,7 @@ import "dgp/proto/identifiers.proto";
 import "dgp/proto/image.proto";
 import "dgp/proto/point_cloud.proto";
 import "dgp/proto/radar_point_cloud.proto";
+import "dgp/proto/map.proto";
 
 // Calibration for a sample
 message SampleCalibration {
@@ -33,6 +34,7 @@ message DatumValue {
     PointCloud point_cloud = 2;
     FileDatum file_datum = 3;
     RadarPointCloud radar_point_cloud = 4;
+    TrafficLightState traffic_light_state=5;
   }
 }
 
