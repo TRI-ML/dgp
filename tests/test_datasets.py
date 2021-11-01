@@ -31,10 +31,18 @@ class TestDataset(unittest.TestCase):
             'extrinsics',
             'bounding_box_2d',
             'bounding_box_3d',
+            'datum_type',
         ])
         expected_lidar_fields = set([
-            'point_cloud', 'timestamp', 'datum_name', 'pose', 'extrinsics', 'bounding_box_2d', 'bounding_box_3d',
-            'extra_channels'
+            'point_cloud',
+            'timestamp',
+            'datum_name',
+            'pose',
+            'extrinsics',
+            'bounding_box_2d',
+            'bounding_box_3d',
+            'extra_channels',
+            'datum_type',
         ])
 
         # Iterate through labeled dataset and check expected fields
@@ -67,12 +75,27 @@ class TestDataset(unittest.TestCase):
     def test_labeled_synchronized_scene_dataset(self):
         """Test synchronized scene dataset"""
         expected_camera_fields = set([
-            'rgb', 'timestamp', 'datum_name', 'pose', 'intrinsics', 'extrinsics', 'bounding_box_2d', 'bounding_box_3d',
-            'depth'
+            'rgb',
+            'timestamp',
+            'datum_name',
+            'pose',
+            'intrinsics',
+            'extrinsics',
+            'bounding_box_2d',
+            'bounding_box_3d',
+            'depth',
+            'datum_type',
         ])
         expected_lidar_fields = set([
-            'point_cloud', 'timestamp', 'datum_name', 'pose', 'extrinsics', 'bounding_box_2d', 'bounding_box_3d',
-            'extra_channels'
+            'point_cloud',
+            'timestamp',
+            'datum_name',
+            'pose',
+            'extrinsics',
+            'bounding_box_2d',
+            'bounding_box_3d',
+            'extra_channels',
+            'datum_type',
         ])
         expected_metadata_fields = set([
             'scene_index', 'sample_index_in_scene', 'log_id', 'timestamp', 'scene_name', 'scene_description'
