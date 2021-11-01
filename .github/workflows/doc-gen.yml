@@ -1,6 +1,4 @@
-on: [push]
-
-name: CodeCov
+name: Sphinx
 on: [push, pull_request]
 jobs:
   run:
