@@ -2,7 +2,7 @@ name: doc-gen
 on:
   push:
     branches:
-      - main
+      - 'master'
 jobs:
   run:
     runs-on: ubuntu-18.04
