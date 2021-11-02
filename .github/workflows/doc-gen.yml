@@ -1,0 +1,32 @@
+name: doc-gen
+on:
+  push:
+    branches:
+      - master
+      - doc-gen
+  pull_request:
+    branches:
+      - master
+      - doc-gen
+jobs:
+  run:
+    runs-on: ubuntu-18.04
+    env:
+      OS: ubuntu-18.04
+      PYTHON: '3.6'
+    steps:
+    - name: Setup Python
+      uses: actions/setup-python@master
+      with:
+        python-version: 3.6
+    - name: Setup reqs
+      run: |
+        python -m pip install --upgrade pip
+        pip install cython==0.29.21 numpy==1.19.4
+    - name: Push Sphinx Pages
+      uses: seanzhengw/sphinx-pages@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        create_readme: true
+        source_dir: ./docs/source
+        install_extensions: true
