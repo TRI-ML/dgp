@@ -1,0 +1,42 @@
+dgp package
+===========
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dgp.annotations
+   dgp.contribs
+   dgp.datasets
+   dgp.proto
+   dgp.scripts
+   dgp.utils
+
+Submodules
+----------
+
+dgp.cli module
+--------------
+
+.. automodule:: dgp.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dgp.constants module
+--------------------
+
+.. automodule:: dgp.constants
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: dgp
+   :members:
+   :undoc-members:
+   :show-inheritance:
