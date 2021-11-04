@@ -7,7 +7,7 @@
 [![build-docker](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml/badge.svg)](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml)
 [![license](https://img.shields.io/github/license/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/blob/master/LICENSE)
 [![open-issues](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/issues)
-[![codecov](https://codecov.io/gh/sshusainTRI/dgp/branch/master/graph/badge.svg?token=4JSRV8HG4R)](https://codecov.io/gh/sshusainTRI/dgp)
+![coverage badge](./coverage.svg)
 [![docs](https://img.shields.io/badge/documentation-beta-red)](https://tri-ml.github.io/dgp/)
 
 To ensure the traceability, reproducibility and standardization for
