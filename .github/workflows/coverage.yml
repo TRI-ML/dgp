@@ -1,7 +1,10 @@
 name: coverage
 on:
   pull_request:
-    branches: 
+    branches:
+      - 'master'
+  push:
+    branches:
       - 'master'
 jobs:
   build:
@@ -9,6 +12,7 @@ jobs:
     env:
       OS: ubuntu-latest
       PYTHON: '3.6'
+      COVERAGE_TOTAL: 25
     steps:
     - uses: actions/checkout@master
       with:
@@ -22,22 +26,41 @@ jobs:
         python -m pip install --upgrade pip
         pip install cython==0.29.21 numpy==1.19.4
         pip install -r requirements.txt
-        pip install flake8 pytest pytest-cov
         pip install coverage-badge
-    - name: Run coverage test
+    - name: Coverage testing
+      if: ${{ github.event_name == 'pull_request' }}
+      id: pytester-cov
+      uses: alexanderdamiani/pytester-cov@v1.2.0
+      with:
+        pytest-root-dir: './dgp'
+        cov-omit-list: 'tests/*, docs/*, dgp/contribs/pd/*, dgp/proto/*'
+        cov-threshold-total: ${{ env.COVERAGE_TOTAL }}
+    - name: Coverage total fail - exit
+      if: ${{ github.event_name == 'pull_request' && steps.pytester-cov.outputs.cov-threshold-total-fail == 'false' }}
       run: |
-        coverage run -m pytest
-    - name: Build coverage file
-      run: |
-        pytest --cache-clear --cov=app test/ > pytest-coverage.txt
-      run: |
-        pytest --cache-clear --cov=app test/ > pytest-coverage.txt
-    - name: Comment coverage
-      uses: coroo/pytest-coverage-commentator@v1.0.2
+        echo "cov single fail ${{ steps.pytester-cov.outputs.cov-threshold-total-fail }}"
+        exit 1
     - name: Coverage Badge
+      if: ${{ github.event_name == 'push' }}
       uses: tj-actions/coverage-badge-py@v1.2
+      with:
+        output: 'docs/coverage.svg'
     - name: Verify Changed files
+      if: ${{ github.event_name == 'push' }}
       uses: tj-actions/verify-changed-files@v6
       id: changed_files
       with:
         files: coverage.svg
+    - name: Commit files
+      if: ${{ github.event_name == 'push' && steps.changed_files.outputs.files_changed == 'true'}}
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add coverage.svg
+        git commit -m "Updated coverage.svg"
+    - name: Push changes
+      if: ${{ github.event_name == 'push' && steps.changed_files.outputs.files_changed == 'true'}}
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.github_token }}
+        branch: ${{ github.ref }}
