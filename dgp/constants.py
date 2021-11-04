@@ -34,3 +34,18 @@ FEATURE_KEY_TO_TYPE_ID = OrderedDict({k.lower(): v for k, v in features_pb2.Feat
 FEATURE_TYPE_ID_TO_KEY = OrderedDict({v: k for k, v in FEATURE_KEY_TO_TYPE_ID.items()})
 # String identifiers for feature types
 ALL_FEATURE_TYPES = tuple(FEATURE_KEY_TO_TYPE_ID.keys())
+
+#EGO AGENT DIMENSIONS
+vehicle_name = 'lexus'
+vehicle_length = 5.234
+vehicle_width = 1.900
+vehicle_width_with_mirrors = 2.1852
+vehicle_height = 1.68
+vehicle_wheelbase = 3.12
+vehicle_trackwidth = 1.610
+vehicle_wheel_radius = 0.360
+vehicle_fa_to_bumper_dist = 0.950
+vehicle_applanix_origin_to_fa_dist = 3.12
+vehicle_applanix_origin_to_cg_dist = 1.53
+vehicle_applanix_origin_to_r_bumper = 1.164
+vehicle_applanix_origin_height = 0.000
