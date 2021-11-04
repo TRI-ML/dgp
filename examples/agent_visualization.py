@@ -1,22 +1,15 @@
 # Copyright 2021 Toyota Research Institute.  All rights reserved.
 import argparse
-import logging
-import time
-from collections import Counter
-from copy import deepcopy
-from pathlib import Path
 
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-from IPython.display import Image, Video
 from moviepy.editor import ImageSequenceClip
 from tqdm import tqdm
 
 from dgp.constants import (vehicle_applanix_origin_to_r_bumper, vehicle_height, vehicle_length, vehicle_width)
-from dgp.datasets.agent_dataset import AgentDataset, AgentDatasetLite
-from dgp.datasets.synchronized_dataset import (SynchronizedScene, SynchronizedSceneDataset)
+from dgp.datasets.agent_dataset import AgentDatasetLite
 from dgp.utils.pose import Pose
 from dgp.utils.structures.bounding_box_3d import BoundingBox3D
 from dgp.utils.visualization_utils import visualize_bev
@@ -44,8 +37,6 @@ def render_agent_bev(
     # Drawing code, create a pallet
     pallet = list(sns.color_palette("hls", 32))
     pallet = [[np.int(255 * a), np.int(255 * b), np.int(255 * c)] for a, b, c in pallet]
-    # draw unmatched in a dark gray color
-    unmatched = [50, 50, 50]
 
     def get_random_color():
         idx = np.random.choice(len(pallet))
@@ -56,9 +47,6 @@ def render_agent_bev(
     frames = []
     prior_pose = None
     max_path_len = 15
-
-    agent_frames = []
-    agent_idx = None
 
     for k in tqdm(range(0, len(agent_dataset))):
         context = agent_dataset[k]
@@ -162,9 +150,9 @@ if __name__ == '__main__':
         batch_per_agent=True
     )
 
-    ontology = agent_dataset_lite.Agent_dataset_metadata.ontology_table.get('bounding_box_3d', None)
+    ont = agent_dataset_lite.Agent_dataset_metadata.ontology_table.get('bounding_box_3d', None)
 
-    frames = render_agent_bev(agent_dataset_frame, ontology)
+    bev_frames = render_agent_bev(agent_dataset_frame, ont)
 
     a = [agent_dataset_frame.dataset_item_index[k][0] for k in range(len(agent_dataset_frame))]
 
@@ -174,7 +162,7 @@ if __name__ == '__main__':
 
         plt.figure(figsize=(20, 20))
 
-        clip = ImageSequenceClip(frames[frame_num:frame_num + a.count(i)], fps=10)
+        clip = ImageSequenceClip(bev_frames[frame_num:frame_num + a.count(i)], fps=10)
         clip.write_gif('test_scene' + str(i) + '.gif', fps=10)
         frame_num += a.count(i)
         print(frame_num)
