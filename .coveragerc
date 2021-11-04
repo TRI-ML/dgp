@@ -2,7 +2,10 @@
 [run]
 branch = True
 source = dgp
-
+omit =
+    # omit anything that is a auto-compiled protobuf
+    */*_pb2.py
+    */*_grpc.py
 [report]
 # Regexes for lines to exclude from consideration
 exclude_lines =
