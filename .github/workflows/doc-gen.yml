@@ -2,7 +2,12 @@ name: doc-gen
 on:
   push:
     branches:
-      - 'master'
+      - master
+      - doc-gen #TODO: Need to remove this before merging in, for testing only
+  pull_request:
+    branches:
+      - master
+      - doc-gen
 jobs:
   run:
     runs-on: ubuntu-18.04
@@ -24,4 +29,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         create_readme: true
         source_dir: ./docs/source
-        install_extensions: false
+        install_extensions: true
