@@ -3,9 +3,11 @@ on:
   push:
     branches:
       - master
+      - agent
   pull_request:
     branches:
       - master
+      - agent
 
 jobs:
   pre-merge-tests:
@@ -17,6 +19,8 @@ jobs:
       - name: Lint commit message with commitlint
         # Documentation: https://github.com/wagoid/commitlint-github-action
         uses: wagoid/commitlint-github-action@v4
+        with:
+          configFile: .commitlintrc.yml
       - name: Install Python 3.6
         uses: actions/setup-python@v1
         with:
@@ -45,6 +49,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: false # Only new or edited files will be parsed for validation.
           VALIDATE_DOCKERFILE_HADOLINT: false
           VALIDATE_JSCPD: false
+          VALIDATE_PROTOBUF: false
           VALIDATE_PYTHON_BLACK: false
           VALIDATE_PYTHON_FLAKE8: false # Formatted by YAPF.
           VALIDATE_PYTHON_ISORT: false # Formatted by YAPF.
