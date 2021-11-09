@@ -49,3 +49,4 @@ vehicle_applanix_origin_to_fa_dist = 3.12
 vehicle_applanix_origin_to_cg_dist = 1.53
 vehicle_applanix_origin_to_r_bumper = 1.164
 vehicle_applanix_origin_height = 0.000
+
