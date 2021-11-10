@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'docgen-trim'
 jobs:
   run:
     runs-on: ubuntu-18.04
@@ -10,18 +11,24 @@ jobs:
       OS: ubuntu-18.04
       PYTHON: '3.6'
     steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: ‘1’ 
+    steps:
     - name: Setup Python
       uses: actions/setup-python@master
       with:
         python-version: 3.6
-    - name: Setup reqs
+    - name: Setup reqs and run sphinx
       run: |
         python -m pip install --upgrade pip
         pip install cython==0.29.21 numpy==1.19.4
-    - name: Push Sphinx Pages
-      uses: seanzhengw/sphinx-pages@master
+        pip install -r requirements.txt
+        cd docs
+        make html
+    - name: Push Sphinx Pages to Webserver
+      uses: JamesIves/github-pages-deploy-action@4.1.5
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        create_readme: true
-        source_dir: ./docs/source
-        install_extensions: false
+        branch: gh-pages 
+        folder: ./docs/build/html
+        commit-message: Update build documentation
