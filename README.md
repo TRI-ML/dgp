@@ -3,7 +3,6 @@
 
 
 # Dataset Governance Policy (DGP)
-[![build-status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/branches)
 [![build-docker](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml/badge.svg)](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml)
 [![license](https://img.shields.io/github/license/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/blob/master/LICENSE)
 [![open-issues](https://isitmaintained.com/badge/open/TRI-ML/dgp.svg)](https://github.com/TRI-ML/dgp/issues)
@@ -65,7 +64,6 @@ We appreciate all contributions to DGP! To learn more about making a contributio
 ## CI Ecosystem
 | Job | CI | Notes |
 | --- | --- | --- |
-| master-build | [![Build Status](https://app.travis-ci.com/TRI-ML/dgp.svg?branch=master)](https://app.travis-ci.com/github/TRI-ML/dgp/branches) | Master branch build|
 | docker-build | [![Build Status](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml/badge.svg)](https://github.com/TRI-ML/dgp/actions/workflows/build-docker.yml) | Docker build and push to [container registry](https://github.com/TRI-ML/dgp/pkgs/container/dgp)|
 | pre-merge    | [![Build Status](https://github.com/TRI-ML/dgp/actions/workflows/pre-merge.yml/badge.svg)](https://github.com/TRI-ML/dgp/actions/workflows/pre-merge.yml) | Pre-merge testing|
 
