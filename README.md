@@ -1,3 +1,3 @@
 GitHub Pages of [TRI-ML/dgp](https://github.com/TRI-ML/dgp.git)
 ===
-Sphinx html documentation of [d7379bea](https://github.com/TRI-ML/dgp/tree/d7379beafea61ea8670fac1b1293ed79968a6d64)
+Sphinx html documentation of [dc3a88b4](https://github.com/TRI-ML/dgp/tree/dc3a88b49b1c14f4d345c3154c2168355e8dfddb)
