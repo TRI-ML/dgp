@@ -8,9 +8,7 @@ Subpackages
    :maxdepth: 4
 
    dgp.annotations
-   dgp.contribs
    dgp.datasets
-   dgp.proto
    dgp.scripts
    dgp.utils
 
