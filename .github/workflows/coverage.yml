@@ -45,8 +45,9 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add docs/coverage.svg
         git commit -m "test: update coverage.svg"
-        git reset --soft HEAD~2 &&
-        git commit
+        git reset --soft HEAD~2
+        # shellcheck disable=SC1083 # code is irrelevant because git needs this literal
+        git commit -m "$(git log --format=%B --reverse HEAD..HEAD@{1})"
     - name: Push code coverage badge
       if: ${{ steps.changed_files.outputs.files_changed == 'true' && github.event_name != 'pull_request'}}
       uses: ad-m/github-push-action@master
