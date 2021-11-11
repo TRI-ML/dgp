@@ -44,14 +44,17 @@ The commit message should be structured as follows:
 
 When naming the commit, the first line (commit title) should be a short summary **in ALL lowercase** and starts with a `type`. [Common types](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum) can be:
 
+- `schema`: changes to dgp [protobuf schema](https://github.com/TRI-ML/dgp/tree/master/dgp/proto)
 - `feat`: introduce new features
 - `fix`: bug fix
 - `test`: changes to unit tests
-- `refactor`: code refactor
-- `docs`: document updates
-- `build`: requirement.txt and Dockerfile updates
-- `ci`: changes to CI/CD
-- `schema`: changes to protobuf schema
+- `build`: changes that affect the package build or external dependencies (example: requirement.txt and Dockerfile updates)
+- `docs`: documentation only changes
+- `ci`: changes to CI/CD configuration files and settings
+- `style`: changes that do not affect the meaning of the code (formatting, linting, etc)
+- `refactor`: a code change that neither fixes a bug nor adds a feature
+- `perf`: changes that improve performance (example: speed up dataset index building)
+- `revert`: revert a commit
 
 For example, adding a new PyTorch DatasetClass:
 ```sh
