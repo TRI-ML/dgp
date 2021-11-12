@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dgp.annotations package &#8212; DGP 1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
@@ -15,7 +14,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="dgp.contribs package" href="dgp.contribs.html" />
+    <link rel="next" title="dgp.datasets package" href="dgp.datasets.html" />
     <link rel="prev" title="dgp package" href="dgp.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -33,48 +32,1240 @@
 
           <div class="body" role="main">
             
-  <section id="dgp-annotations-package">
+  <div class="section" id="dgp-annotations-package">
 <h1>dgp.annotations package<a class="headerlink" href="#dgp-annotations-package" title="Permalink to this headline">¶</a></h1>
-<section id="submodules">
+<div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-base-annotation-module">
-<h2>dgp.annotations.base_annotation module<a class="headerlink" href="#dgp-annotations-base-annotation-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-bounding-box-2d-annotation-module">
-<h2>dgp.annotations.bounding_box_2d_annotation module<a class="headerlink" href="#dgp-annotations-bounding-box-2d-annotation-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-bounding-box-3d-annotation-module">
-<h2>dgp.annotations.bounding_box_3d_annotation module<a class="headerlink" href="#dgp-annotations-bounding-box-3d-annotation-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-depth-annotation-module">
-<h2>dgp.annotations.depth_annotation module<a class="headerlink" href="#dgp-annotations-depth-annotation-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-key-point-2d-annotation-module">
-<h2>dgp.annotations.key_point_2d_annotation module<a class="headerlink" href="#dgp-annotations-key-point-2d-annotation-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-ontology-module">
-<h2>dgp.annotations.ontology module<a class="headerlink" href="#dgp-annotations-ontology-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-panoptic-segmentation-2d-annotation-module">
-<h2>dgp.annotations.panoptic_segmentation_2d_annotation module<a class="headerlink" href="#dgp-annotations-panoptic-segmentation-2d-annotation-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-semantic-segmentation-2d-annotation-module">
-<h2>dgp.annotations.semantic_segmentation_2d_annotation module<a class="headerlink" href="#dgp-annotations-semantic-segmentation-2d-annotation-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-transform-utils-module">
-<h2>dgp.annotations.transform_utils module<a class="headerlink" href="#dgp-annotations-transform-utils-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-transforms-module">
-<h2>dgp.annotations.transforms module<a class="headerlink" href="#dgp-annotations-transforms-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-annotations-visibility-filter-transform-module">
-<h2>dgp.annotations.visibility_filter_transform module<a class="headerlink" href="#dgp-annotations-visibility-filter-transform-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-</section>
-</section>
+</div>
+<div class="section" id="module-dgp.annotations.base_annotation">
+<span id="dgp-annotations-base-annotation-module"></span><h2>dgp.annotations.base_annotation module<a class="headerlink" href="#module-dgp.annotations.base_annotation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.base_annotation.Annotation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.base_annotation.</span></span><span class="sig-name descname"><span class="pre">Annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.base_annotation.Annotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Base annotation type. All other annotations should inherit from this type and implement
+member functions.</p>
+<dl class="simple">
+<dt>ontology: Ontology, default: None</dt><dd><p>Ontology object for the annotation key</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.base_annotation.Annotation.hexdigest">
+<em class="property"><span class="pre">abstract</span> <span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.annotations.base_annotation.Annotation.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reproducible hash of annotation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.base_annotation.Annotation.load">
+<em class="property"><span class="pre">abstract</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.base_annotation.Annotation.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads annotation from file into a canonical format for consumption in __getitem__ function in BaseDataset.
+Format/data structure for annotations will vary based on task.</p>
+<dl class="simple">
+<dt>annotation_file: str</dt><dd><p>Full path to annotation</p>
+</dd>
+<dt>ontology: Ontology</dt><dd><p>Ontology for given annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.base_annotation.Annotation.ontology">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ontology</span></span><a class="headerlink" href="#dgp.annotations.base_annotation.Annotation.ontology" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.base_annotation.Annotation.render">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.base_annotation.Annotation.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a rendering of the annotation. Expected format is a PIL.Image or np.array</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.base_annotation.Annotation.save">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.base_annotation.Annotation.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize annotation object if possible, and saved to specified directory.
+Annotations are saved in format &lt;save_dir&gt;/&lt;sha&gt;.&lt;ext&gt;</p>
+<dl class="simple">
+<dt>save_dir: str</dt><dd><p>Path to directory to saved annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.bounding_box_2d_annotation">
+<span id="dgp-annotations-bounding-box-2d-annotation-module"></span><h2>dgp.annotations.bounding_box_2d_annotation module<a class="headerlink" href="#module-dgp.annotations.bounding_box_2d_annotation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.bounding_box_2d_annotation.</span></span><span class="sig-name descname"><span class="pre">BoundingBox2DAnnotationList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boxlist</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.base_annotation.Annotation" title="dgp.annotations.base_annotation.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.base_annotation.Annotation</span></code></a></p>
+<p>Container for 2D bounding box annotations.</p>
+<dl class="simple">
+<dt>ontology: BoundingBoxOntology</dt><dd><p>Ontology for 2D bounding box tasks.</p>
+</dd>
+<dt>boxlist: list[BoundingBox2D]</dt><dd><p>List of BoundingBox2D objects. See <cite>dgp/utils/structures/bounding_box_2d</cite> for more details.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.attributes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of dictionaries of attribute name to value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.class_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_ids</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.class_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return class ID for each box, with ontology applied:
+0 is background, class IDs mapped to a contiguous set.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.hexdigest">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reproducible hash of annotation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.instance_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instance_ids</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.instance_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.load">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load annotation from annotation file and ontology.</p>
+<dl class="simple">
+<dt>annotation_file: str</dt><dd><p>Full path to annotation</p>
+</dd>
+<dt>ontology: BoundingBoxOntology</dt><dd><p>Ontology for 2D bounding box tasks.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>BoundingBox2DAnnotationList</dt><dd><p>Annotation object instantiated from file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.ltrb">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ltrb</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.ltrb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return boxes as (N, 4) np.ndarray in format ([left, top, right, bottom])</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.ltwh">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ltwh</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.ltwh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return boxes as (N, 4) np.ndarray in format ([left, top, width, height])</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Batch rendering function for bounding boxes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize Annotation object and saved to specified directory. Annotations are saved in format &lt;save_dir&gt;/&lt;sha&gt;.&lt;ext&gt;</p>
+<dl class="simple">
+<dt>save_dir: str</dt><dd><p>Directory in which annotation is saved.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>output_annotation_file: str</dt><dd><p>Full path to saved annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_2d_annotation.BoundingBox2DAnnotationList.to_proto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return annotation as pb object.</p>
+<dl class="simple">
+<dt>BoundingBox2DAnnotations</dt><dd><p>Annotation as defined in <cite>proto/annotations.proto</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.bounding_box_3d_annotation">
+<span id="dgp-annotations-bounding-box-3d-annotation-module"></span><h2>dgp.annotations.bounding_box_3d_annotation module<a class="headerlink" href="#module-dgp.annotations.bounding_box_3d_annotation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.bounding_box_3d_annotation.</span></span><span class="sig-name descname"><span class="pre">BoundingBox3DAnnotationList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boxlist</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.base_annotation.Annotation" title="dgp.annotations.base_annotation.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.base_annotation.Annotation</span></code></a></p>
+<p>Container for 3D bounding box annotations.</p>
+<dl class="simple">
+<dt>ontology: BoundingBoxOntology</dt><dd><p>Ontology for 3D bounding box tasks.</p>
+</dd>
+<dt>boxlist: list[BoundingBox3D]</dt><dd><p>List of BoundingBox3D objects. See <cite>utils/structures/bounding_box_3d</cite>
+for more details.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.attributes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of dictionaries of attribute name to value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.class_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_ids</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.class_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return class ID for each box, with ontology applied:
+0 is background, class IDs mapped to a contiguous set.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.hexdigest">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reproducible hash of annotation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.instance_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instance_ids</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.instance_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.load">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load annotation from annotation file and ontology.</p>
+<dl class="simple">
+<dt>annotation_file: str</dt><dd><p>Full path to annotation</p>
+</dd>
+<dt>ontology: BoundingBoxOntology</dt><dd><p>Ontology for 3D bounding box tasks.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>BoundingBox3DAnnotationList</dt><dd><p>Annotation object instantiated from file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.poses">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">poses</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.poses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get poses for bounding boxes in annotation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.project">
+<span class="sig-name descname"><span class="pre">project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Project bounding boxes into a camera and get back 2D bounding boxes in the frustum.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_thickness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the 3D boxes in this annotation on the image in place</p>
+<dl class="simple">
+<dt>image: np.uint8 array</dt><dd><p>Image (H, W, C) to render the bounding box onto. We assume the input image is in <em>RGB</em> format</p>
+</dd>
+<dt>camera: dgp.utils.camera.Camera</dt><dd><p>Camera used to render the bounding box.</p>
+</dd>
+<dt>line_thickness: int, default: 2</dt><dd><p>Thickness of bounding box lines.</p>
+</dd>
+<dt>font_scale: float, default: 0.5</dt><dd><p>Font scale used in text labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize Annotation object and saved to specified directory. Annotations are saved in format &lt;save_dir&gt;/&lt;sha&gt;.&lt;ext&gt;</p>
+<dl class="simple">
+<dt>output_annotation_file: str</dt><dd><p>Full path to saved annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.sizes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">sizes</span></span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.sizes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.to_proto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return annotation as pb object.</p>
+<dl class="simple">
+<dt>BoundingBox3DAnnotations</dt><dd><p>Annotation as defined <cite>proto/annotations.proto</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.depth_annotation">
+<span id="dgp-annotations-depth-annotation-module"></span><h2>dgp.annotations.depth_annotation module<a class="headerlink" href="#module-dgp.annotations.depth_annotation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.depth_annotation.DenseDepthAnnotation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.depth_annotation.</span></span><span class="sig-name descname"><span class="pre">DenseDepthAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.depth_annotation.DenseDepthAnnotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.base_annotation.Annotation" title="dgp.annotations.base_annotation.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.base_annotation.Annotation</span></code></a></p>
+<p>Container for per-pixel depth annotation.</p>
+<dl class="simple">
+<dt>depth: np.ndarray</dt><dd><p>2D numpy float array that stores per-pixel depth.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.depth_annotation.DenseDepthAnnotation.depth">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#dgp.annotations.depth_annotation.DenseDepthAnnotation.depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.depth_annotation.DenseDepthAnnotation.hexdigest">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.annotations.depth_annotation.DenseDepthAnnotation.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reproducible hash of annotation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.depth_annotation.DenseDepthAnnotation.load">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.depth_annotation.DenseDepthAnnotation.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads annotation from file into a canonical format for consumption in __getitem__ function in BaseDataset.</p>
+<dl class="simple">
+<dt>annotation_file: str</dt><dd><p>Full path to NPZ file that stores 2D depth array.</p>
+</dd>
+<dt>ontology: None</dt><dd><p>Dummy ontology argument to meet the usage in <cite>BaseDataset.load_annotation()</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.depth_annotation.DenseDepthAnnotation.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.depth_annotation.DenseDepthAnnotation.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Rendering function for per-pixel depth.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.depth_annotation.DenseDepthAnnotation.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.depth_annotation.DenseDepthAnnotation.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize annotation object if possible, and saved to specified directory.
+Annotations are saved in format &lt;save_dir&gt;/&lt;sha&gt;.&lt;ext&gt;</p>
+<dl class="simple">
+<dt>save_dir: str</dt><dd><p>Path to directory to saved annotation</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>pointcloud_path: str</dt><dd><p>Full path to the output NPZ file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.key_point_2d_annotation">
+<span id="dgp-annotations-key-point-2d-annotation-module"></span><h2>dgp.annotations.key_point_2d_annotation module<a class="headerlink" href="#module-dgp.annotations.key_point_2d_annotation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.key_point_2d_annotation.</span></span><span class="sig-name descname"><span class="pre">KeyPoint2DAnnotationList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointlist</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.base_annotation.Annotation" title="dgp.annotations.base_annotation.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.base_annotation.Annotation</span></code></a></p>
+<p>Container for 2D keypoint annotations.</p>
+<dl class="simple">
+<dt>ontology: KeyPointOntology</dt><dd><p>Ontology for 2D keypoint tasks.</p>
+</dd>
+<dt>pointlist: list[KeyPoint2D]</dt><dd><p>List of KeyPoint2D objects. See <cite>dgp/utils/structures/key_point_2d</cite> for more details.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.attributes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of dictionaries of attribut name to value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.class_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_ids</span></span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.class_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return class ID for each point, with ontology applied:
+0 is background, class IDs mapped to a contiguous set.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.hexdigest">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reproducible hash of annotation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.instance_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instance_ids</span></span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.instance_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.load">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load annotation from annotation file and ontology.</p>
+<dl class="simple">
+<dt>annotation_file: str</dt><dd><p>Full path to annotation</p>
+</dd>
+<dt>ontology: KeyPointOntology</dt><dd><p>Ontology for 2D keypoint tasks.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>KeyPoint2DAnnotationList</dt><dd><p>Annotation object instantiated from file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Batch rendering function for keypoints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize Annotation object and saved to specified directory. Annotations are saved in format &lt;save_dir&gt;/&lt;sha&gt;.&lt;ext&gt;</p>
+<dl class="simple">
+<dt>save_dir: str</dt><dd><p>Directory in which annotation is saved.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>output_annotation_file: str</dt><dd><p>Full path to saved annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.to_proto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return annotation as pb object.</p>
+<dl class="simple">
+<dt>KeyPoint2DAnnotations</dt><dd><p>Annotation as defined in <cite>proto/annotations.proto</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.xy">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xy</span></span><a class="headerlink" href="#dgp.annotations.key_point_2d_annotation.KeyPoint2DAnnotationList.xy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return points as (N, 2) np.ndarray in format ([x, y])</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.ontology">
+<span id="dgp-annotations-ontology-module"></span><h2>dgp.annotations.ontology module<a class="headerlink" href="#module-dgp.annotations.ontology" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.AgentBehaviorOntology">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.ontology.</span></span><span class="sig-name descname"><span class="pre">AgentBehaviorOntology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_pb2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.AgentBehaviorOntology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.ontology.BoundingBoxOntology" title="dgp.annotations.ontology.BoundingBoxOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.ontology.BoundingBoxOntology</span></code></a></p>
+<p>Agent behavior ontologies derive directly from bounding box ontologies</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.ontology.</span></span><span class="sig-name descname"><span class="pre">BoundingBoxOntology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_pb2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.ontology.Ontology" title="dgp.annotations.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.ontology.Ontology</span></code></a></p>
+<p>Implements lookup tables specific to 2D bounding box tasks.</p>
+<dl class="simple">
+<dt>ontology_pb2: [OntologyV1Pb2,OntologyV2Pb2]</dt><dd><p>Deserialized ontology object.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology.class_id_to_contiguous_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_id_to_contiguous_id</span></span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology.class_id_to_contiguous_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology.class_names">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_names</span></span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology.class_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology.contiguous_id_colormap">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">contiguous_id_colormap</span></span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology.contiguous_id_colormap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology.contiguous_id_to_class_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">contiguous_id_to_class_id</span></span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology.contiguous_id_to_class_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology.contiguous_id_to_name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">contiguous_id_to_name</span></span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology.contiguous_id_to_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology.name_to_contiguous_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name_to_contiguous_id</span></span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology.name_to_contiguous_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology.num_classes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">num_classes</span></span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology.num_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.BoundingBoxOntology.thing_class_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">thing_class_ids</span></span><a class="headerlink" href="#dgp.annotations.ontology.BoundingBoxOntology.thing_class_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.InstanceSegmentationOntology">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.ontology.</span></span><span class="sig-name descname"><span class="pre">InstanceSegmentationOntology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_pb2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.InstanceSegmentationOntology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.ontology.BoundingBoxOntology" title="dgp.annotations.ontology.BoundingBoxOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.ontology.BoundingBoxOntology</span></code></a></p>
+<p>Instance segmentation ontologies derive directly from bounding box ontologies</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.KeyPointOntology">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.ontology.</span></span><span class="sig-name descname"><span class="pre">KeyPointOntology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_pb2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.KeyPointOntology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.ontology.BoundingBoxOntology" title="dgp.annotations.ontology.BoundingBoxOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.ontology.BoundingBoxOntology</span></code></a></p>
+<p>Keypoint ontologies derive directly from bounding box ontologies</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.ontology.</span></span><span class="sig-name descname"><span class="pre">Ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_pb2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.Ontology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Ontology object. At bare minimum, we expect ontologies to provide:</dt><dd><p>ID: (int) identifier for class
+Name: (str) string identifier for class
+Color: (tuple) color RGB tuple</p>
+</dd>
+</dl>
+<p>Based on the task, additional fields may be populated. Refer to <cite>dataset.proto</cite> and <cite>ontology.proto</cite>
+specifications for more details. Can be constructed from file or from deserialized proto object.</p>
+<dl class="simple">
+<dt>ontology_pb2: [OntologyV1Pb2,OntologyV2Pb2]</dt><dd><p>Deserialized ontology object.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.VOID_CLASS">
+<span class="sig-name descname"><span class="pre">VOID_CLASS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Void'</span></em><a class="headerlink" href="#dgp.annotations.ontology.Ontology.VOID_CLASS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.VOID_ID">
+<span class="sig-name descname"><span class="pre">VOID_ID</span></span><em class="property"> <span class="pre">=</span> <span class="pre">255</span></em><a class="headerlink" href="#dgp.annotations.ontology.Ontology.VOID_ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.class_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_ids</span></span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.class_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.class_names">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_names</span></span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.class_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.colormap">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">colormap</span></span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.colormap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.hexdigest">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hash object</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.id_to_name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">id_to_name</span></span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.id_to_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.isthing">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">isthing</span></span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.isthing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.load">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an ontology from an ontology JSON.</p>
+<dl class="simple">
+<dt>ontology_file: str</dt><dd><p>Path to ontology JSON</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.name_to_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name_to_id</span></span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.name_to_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.num_classes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">num_classes</span></span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.num_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out ontology items to <cite>&lt;sha&gt;.json</cite>. SHA generated from Ontology proto object.</p>
+<dl class="simple">
+<dt>save_dir: str</dt><dd><p>Directory in which to save serialized ontology.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>output_ontology_file: str</dt><dd><p>Path to serialized ontology file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.Ontology.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.Ontology.to_proto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize ontology. Only supports exporting in OntologyV2.</p>
+<dl class="simple">
+<dt>OntologyV2Pb2</dt><dd><p>Serialized ontology</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.SemanticSegmentationOntology">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.ontology.</span></span><span class="sig-name descname"><span class="pre">SemanticSegmentationOntology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_pb2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.ontology.SemanticSegmentationOntology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.ontology.Ontology" title="dgp.annotations.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.ontology.Ontology</span></code></a></p>
+<p>Implements lookup tables for semantic segmentation</p>
+<dl class="simple">
+<dt>ontology_pb2: [OntologyV1Pb2,OntologyV2Pb2]</dt><dd><p>Deserialized ontology object.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.SemanticSegmentationOntology.class_id_to_contiguous_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_id_to_contiguous_id</span></span><a class="headerlink" href="#dgp.annotations.ontology.SemanticSegmentationOntology.class_id_to_contiguous_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.SemanticSegmentationOntology.contiguous_id_colormap">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">contiguous_id_colormap</span></span><a class="headerlink" href="#dgp.annotations.ontology.SemanticSegmentationOntology.contiguous_id_colormap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.SemanticSegmentationOntology.contiguous_id_to_class_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">contiguous_id_to_class_id</span></span><a class="headerlink" href="#dgp.annotations.ontology.SemanticSegmentationOntology.contiguous_id_to_class_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.SemanticSegmentationOntology.contiguous_id_to_name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">contiguous_id_to_name</span></span><a class="headerlink" href="#dgp.annotations.ontology.SemanticSegmentationOntology.contiguous_id_to_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.SemanticSegmentationOntology.label_lookup">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">label_lookup</span></span><a class="headerlink" href="#dgp.annotations.ontology.SemanticSegmentationOntology.label_lookup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.ontology.SemanticSegmentationOntology.name_to_contiguous_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name_to_contiguous_id</span></span><a class="headerlink" href="#dgp.annotations.ontology.SemanticSegmentationOntology.name_to_contiguous_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.panoptic_segmentation_2d_annotation">
+<span id="dgp-annotations-panoptic-segmentation-2d-annotation-module"></span><h2>dgp.annotations.panoptic_segmentation_2d_annotation module<a class="headerlink" href="#module-dgp.annotations.panoptic_segmentation_2d_annotation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.panoptic_segmentation_2d_annotation.</span></span><span class="sig-name descname"><span class="pre">PanopticSegmentation2DAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ontology</span></em>, <em class="sig-param"><span class="pre">panoptic_image</span></em>, <em class="sig-param"><span class="pre">index_to_label</span></em>, <em class="sig-param"><span class="pre">panoptic_image_dtype=&lt;class</span> <span class="pre">'numpy.uint16'&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.base_annotation.Annotation" title="dgp.annotations.base_annotation.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.base_annotation.Annotation</span></code></a></p>
+<p>Container for 2D panoptic segmentation annotations</p>
+<dl>
+<dt>ontology: dgp.annotations.BoundingBoxOntology</dt><dd><p>Bounding box ontology that will be used to load annotations</p>
+</dd>
+<dt>panoptic_image: np.uint16 array</dt><dd><p>Single-channel image with value at [i, j] corresponding to the instance ID of the object the pixel belongs to
+for thing pixels and the class ID for stuff pixels. Shape (H, W)</p>
+</dd>
+<dt>index_to_label: dict[str-&gt;Union(dict, List[dict])]</dt><dd><dl>
+<dt>Maps from each class name to either:</dt><dd><ol class="arabic">
+<li><dl>
+<dt>If class is stuff:</dt><dd><p>a single dict - there is only <em>one</em> (potentially empty) segment in an image for each stuff class,
+with fields:</p>
+<blockquote>
+<div><p>‘index’: int
+‘attributes’: dict</p>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>If class is thing:</dt><dd><p>a list of such dicts, one for each instance of the thing class</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+<dt>For example, an entry in annotation[‘index_to_label’][‘Car’], which is a <em>list</em>, can look like:</dt><dd><dl>
+<dt>{</dt><dd><p>‘index’: 21,
+‘attributes’: {</p>
+<blockquote>
+<div><p>‘EmergencyVehicle’: ‘No’,
+‘IsTowing’: ‘No’</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+<p>Then if we load the image at <cite>image_uri</cite>, we would expect all pixels with value 21 to belong to
+this one instance of the ‘Car’ class.</p>
+</dd>
+<dt>panoptic_image_dtype: type, default: np.uint16</dt><dd><p>Numpy data type (e.g. np.uint16, np.uint32, etc.) of panoptic image.</p>
+</dd>
+</dl>
+<p>For now only using this annotation object for instance segmentation, so a BoundingBoxOntology is sufficient</p>
+<p>In the future, we probably want to wrap a panoptic annotation into a
+PanopticSegmentation2DAnnotationPB(panoptic_image=&lt;image_path&gt;, index_to_label=&lt;json_path&gt;) proto message
+and then we can <cite>.load</cite> from this proto (and serialize to it in <cite>.save</cite>).</p>
+<p>For now we simply assume, by convention, that a JSON index_to_label file exists along with the panoptic_image file,
+and in this way stay a bit more flexible about what the PanopticSegmentation2DAnnotationPB object should
+look like (e.g. if index_to_label is defined as a proto message).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.DEFAULT_PANOPTIC_IMAGE_DTYPE">
+<span class="sig-name descname"><span class="pre">DEFAULT_PANOPTIC_IMAGE_DTYPE</span></span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.DEFAULT_PANOPTIC_IMAGE_DTYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.uint16</span></code></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.class_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_ids</span></span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.class_ids" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>List[int]</dt><dd><p>Contiguous class ID for each instance in panoptic annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.class_names">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_names</span></span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.class_names" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>List[str]</dt><dd><p>Class name for each instance in panoptic annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.from_masklist">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_masklist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">masklist</span></em>, <em class="sig-param"><span class="pre">ontology</span></em>, <em class="sig-param"><span class="pre">mask_shape=None</span></em>, <em class="sig-param"><span class="pre">panoptic_image_dtype=&lt;class</span> <span class="pre">'numpy.uint16'&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.from_masklist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate PanopticSegmentation2DAnnotation from a list of <cite>InstanceMask2D</cite>.</p>
+<p>CAVEAT: This constructs <em>instance segmentation</em> annotation, not panoptic annotation. In the following example,
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">annotation_1</span> <span class="pre">=</span> <span class="pre">PanopticSegmentation2DAnnotation.load(PANOPTIC_LABEL_IMAGE,</span> <span class="pre">ontology)</span>
+<span class="pre">annotation_2</span> <span class="pre">=</span> <span class="pre">PanopticSegmentation2DAnnotation.from_masklist(annotation_1.masklist,</span> <span class="pre">ontology)</span>
+<span class="pre">`</span></code>
+- all pixels of “stuff” classes in <cite>annotation_1.panoptic_image</cite> are replaced with <cite>ontology.VOID_ID</cite></p>
+<blockquote>
+<div><p>in annotation_2.panoptic_image, and</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>all “stuff” classes in <cite>annotation_1.index_to_label</cite> are removed in <cite>annotation_2.index_to_label</cite>.</p></li>
+</ul>
+<dl class="simple">
+<dt>masklist: list[InstanceMask2D]</dt><dd><p>Instance masks used to create an annotation object.</p>
+</dd>
+<dt>ontology: dgp.annotations.BoundingBoxOntology</dt><dd><p>Bounding box ontology used to load annotations.</p>
+</dd>
+<dt>mask_shape: list[int]</dt><dd><p>Height and width of the mask. Only used to create an empty panoptic image when masklist is empty.</p>
+</dd>
+<dt>panoptic_image_dtype: type, default: np.uint16</dt><dd><p>Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.hexdigest">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reproducible hash of annotation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.instance_ids">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instance_ids</span></span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.instance_ids" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>instance_ids: List[int]</dt><dd><p>Instance IDs for each instance in panoptic annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.instances">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instances</span></span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.instances" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>np.ndarray:</dt><dd><p>(N, H, W) bool array for each instance in panoptic annotation.
+N is the number of instances; H, W are the height and width of the image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.load">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">annotation_file</span></em>, <em class="sig-param"><span class="pre">ontology</span></em>, <em class="sig-param"><span class="pre">panoptic_image_dtype=&lt;class</span> <span class="pre">'numpy.uint16'&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads annotation from file into a canonical format for consumption in __getitem__ function in BaseDataset.
+Format/data structure for annotations will vary based on task.</p>
+<dl class="simple">
+<dt>annotation_file: str</dt><dd><p>Full path to panoptic image. <cite>index_to_label</cite> JSON is expected to live at the same path with ‘.json’ ending</p>
+</dd>
+<dt>ontology: Ontology</dt><dd><p>Ontology for given annotation</p>
+</dd>
+<dt>panoptic_image_dtype: type, default: np.uint16</dt><dd><p>Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.masklist">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">masklist</span></span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.masklist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.panoptic_image_dtype">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">panoptic_image_dtype</span></span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.panoptic_image_dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.parse_panoptic_image">
+<span class="sig-name descname"><span class="pre">parse_panoptic_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.parse_panoptic_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses <cite>self.panoptic_image</cite> to produce instance_masks, class_names, and instance_ids</p>
+<dl class="simple">
+<dt>instance_masks: list[InstanceMask2D]</dt><dd><p>Instance mask for each instance in panoptic annotation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Return a rendering of the annotation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.panoptic_segmentation_2d_annotation.PanopticSegmentation2DAnnotation.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize Annotation object and save into a  specified datum.</p>
+<dl class="simple">
+<dt>save_dir: str</dt><dd><p>If <cite>datum</cite> is given, then annotations will be saved to &lt;save_dir&gt;/&lt;datum.id.name&gt;/&lt;hexdigest&gt;.{png,json}.
+Otherwise, annotations will be saved to &lt;save_dir&gt;/&lt;hexdigest&gt;.{png,json}.</p>
+</dd>
+<dt>datum: dgp.proto.sample_pb2.Datum</dt><dd><p>Datum to which we will append annotation</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>panoptic_image_path: str</dt><dd><p>Full path to the output panoptic image file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.semantic_segmentation_2d_annotation">
+<span id="dgp-annotations-semantic-segmentation-2d-annotation-module"></span><h2>dgp.annotations.semantic_segmentation_2d_annotation module<a class="headerlink" href="#module-dgp.annotations.semantic_segmentation_2d_annotation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.semantic_segmentation_2d_annotation.</span></span><span class="sig-name descname"><span class="pre">SemanticSegmentation2DAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation_image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.base_annotation.Annotation" title="dgp.annotations.base_annotation.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.base_annotation.Annotation</span></code></a></p>
+<p>Container for semantic segmentation annotation.</p>
+<dl class="simple">
+<dt>ontology: SemanticSegmentationOntology</dt><dd><p>Ontology for semantic segmentation tasks.</p>
+</dd>
+<dt>segmentation_image: np.array</dt><dd><p>Numpy uint8 array encoding segmentation labels.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.hexdigest">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reproducible hash of annotation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.label">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.load">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load annotation from annotation file and ontology.</p>
+<dl class="simple">
+<dt>annotation_file: str</dt><dd><p>Full path to annotation</p>
+</dd>
+<dt>ontology: SemanticSegmentationOntology</dt><dd><p>Ontology for semantic segmentation tasks.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>SemanticSegmentation2DAnnotation</dt><dd><p>Annotation object instantiated from file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Rendering function for semantic segmentation images.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.semantic_segmentation_2d_annotation.SemanticSegmentation2DAnnotation.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize Annotation object and saved to specified directory. Annotations are saved in format &lt;save_dir&gt;/&lt;sha&gt;.&lt;ext&gt;</p>
+<dl class="simple">
+<dt>save_dir: str</dt><dd><p>Directory in which annotation is saved.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>output_annotation_file: str</dt><dd><p>Full path to saved annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.transform_utils">
+<span id="dgp-annotations-transform-utils-module"></span><h2>dgp.annotations.transform_utils module<a class="headerlink" href="#module-dgp.annotations.transform_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.annotations.transform_utils.construct_remapped_ontology">
+<span class="sig-prename descclassname"><span class="pre">dgp.annotations.transform_utils.</span></span><span class="sig-name descname"><span class="pre">construct_remapped_ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookup</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transform_utils.construct_remapped_ontology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an Ontology object and a lookup from old class names to new class names, construct
+an ontology proto for the new ontology that results</p>
+<dl>
+<dt>ontology: dgp.annotations.Ontology</dt><dd><p>Ontology we are trying to remap using <cite>lookup</cite>
+eg. ontology.id_to_name = {0: ‘Car’, 1: ‘Truck’, 2: ‘Motrocycle’}</p>
+</dd>
+<dt>lookup: dict</dt><dd><p>Lookup from old class names to new class names
+e.g.:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>‘Car’: ‘Car’,
+‘Truck’: ‘Car’,
+‘Motorcycle’: ‘Motorcycle’</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>NOTE: <cite>lookup</cite> needs to be exhaustive; any classes that the user wants to have in returned
+ontology need to be remapped explicitly</p>
+</dd>
+<dt>annotation_key: str</dt><dd><p>Annotation key of Ontology
+e.g. <cite>bounding_box_2d</cite></p>
+</dd>
+</dl>
+<dl>
+<dt>remapped_ontology_pb2: dgp.proto.ontology_pb2.Ontology</dt><dd><p>Ontology defined by applying <cite>lookup</cite> on original <cite>ontology</cite></p>
+<p>NOTE: This is constructed by iterating over class names in <cite>lookup.keys()</cite> in
+alphabetical order, so if both ‘Car’ and ‘Motorcycle’ get remapped to ‘DynamicObject’, the
+color for ‘DynamicObject’ will be the original color for ‘Car’</p>
+<p>Any class names not in <cite>lookup</cite> are dropped</p>
+</dd>
+</dl>
+<p>This could be a class function of <cite>Ontology</cite></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.annotations.transform_utils.remap_bounding_box_annotations">
+<span class="sig-prename descclassname"><span class="pre">dgp.annotations.transform_utils.</span></span><span class="sig-name descname"><span class="pre">remap_bounding_box_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_box_annotations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookup_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remapped_ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transform_utils.remap_bounding_box_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>bounding_box_annotations: BoundingBox2DAnnotationList or BoundingBox3DAnnotationList</dt><dd><p>Annotations to remap</p>
+</dd>
+<dt>lookup: dict</dt><dd><p>Lookup from old class names to new class names
+e.g.:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>‘Car’: ‘Car’,
+‘Truck’: ‘Car’,
+‘Motorcycle’: ‘Motorcycle’</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+</dd>
+<dt>original_ontology: BoundingBoxOntology</dt><dd><p>Ontology we are remapping annotations from</p>
+</dd>
+<dt>remapped_ontology: BoundingBoxOntology</dt><dd><p>Ontology we are mapping annotations to</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>remapped_bounding_box_annotations: BoundingBox2DAnnotationList or BoundingBox3DAnnotationList</dt><dd><p>Remapped annotations with the same type of bounding_box_annotations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.annotations.transform_utils.remap_instance_segmentation_2d_annotation">
+<span class="sig-prename descclassname"><span class="pre">dgp.annotations.transform_utils.</span></span><span class="sig-name descname"><span class="pre">remap_instance_segmentation_2d_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance_segmentation_annotation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookup_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remapped_ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transform_utils.remap_instance_segmentation_2d_annotation" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>instance_segmentation_2d_annotation: PanopticSegmentation2DAnnotation</dt><dd><p>Annotation to remap</p>
+</dd>
+<dt>lookup: dict</dt><dd><p>Lookup from old class names to new class names
+e.g.:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>‘Car’: ‘Car’,
+‘Truck’: ‘Car’,
+‘Motorcycle’: ‘Motorcycle’</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+</dd>
+<dt>original_ontology: InstanceSegmentationOntology</dt><dd><p>Ontology we are remapping annotation from</p>
+</dd>
+<dt>remapped_ontology: InstanceSegmentationOntology</dt><dd><p>Ontology we are mapping annotation to</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>PanopticSegmentation2DAnnotation:</dt><dd><p>Remapped annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.annotations.transform_utils.remap_semantic_segmentation_2d_annotation">
+<span class="sig-prename descclassname"><span class="pre">dgp.annotations.transform_utils.</span></span><span class="sig-name descname"><span class="pre">remap_semantic_segmentation_2d_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semantic_segmentation_annotation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookup_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remapped_ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transform_utils.remap_semantic_segmentation_2d_annotation" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>semantic_segmentation_2d_annotation: SemanticSegmentation2DAnnotation</dt><dd><p>Annotation to remap</p>
+</dd>
+<dt>lookup: dict</dt><dd><p>Lookup from old class names to new class names
+e.g.:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>‘Car’: ‘Car’,
+‘Truck’: ‘Car’,
+‘Motorcycle’: ‘Motorcycle’</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+</dd>
+<dt>original_ontology: SemanticSegmentationOntology</dt><dd><p>Ontology we are remapping annotation from</p>
+</dd>
+<dt>remapped_ontology: SemanticSegmentationOntology</dt><dd><p>Ontology we are mapping annotation to</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>remapped_semantic_segmentation_2d_annotation: SemanticSegmentation2DAnnotation</dt><dd><p>Remapped annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.transforms">
+<span id="dgp-annotations-transforms-module"></span><h2>dgp.annotations.transforms module<a class="headerlink" href="#module-dgp.annotations.transforms" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.BaseTransform">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.transforms.</span></span><span class="sig-name descname"><span class="pre">BaseTransform</span></span><a class="headerlink" href="#dgp.annotations.transforms.BaseTransform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base transform class that other transforms should inherit from. Simply ensures that
+input type to <cite>__call__</cite> is an OrderedDict (in general usage this dict will include
+keys such as ‘rgb’, ‘bounding_box_2d’, etc. i.e. raw data and annotations)</p>
+<p>cf. <cite>OntologyMapper</cite> for an example</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.BaseTransform.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.BaseTransform.transform" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>data: OrderedDict or list[list[OrderedDict]]</dt><dd><p>dataset item as returned by <cite>_SynchronizedDataset’ or `_FrameDataset</cite>.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>OrderedDict or list[list[OrderedDict]]:</dt><dd><p>Same type with input with transformations applied to dataset item.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.BaseTransform.transform_datum">
+<span class="sig-name descname"><span class="pre">transform_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.BaseTransform.transform_datum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.BaseTransform.transform_sample">
+<span class="sig-name descname"><span class="pre">transform_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.BaseTransform.transform_sample" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.Compose">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.transforms.</span></span><span class="sig-name descname"><span class="pre">Compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transforms</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.Compose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Composes several transforms together.</p>
+<dl>
+<dt>transforms</dt><dd><p>List of transforms to compose __call__ method that takes in an OrderedDict</p>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.OntologyMapper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.transforms.</span></span><span class="sig-name descname"><span class="pre">OntologyMapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_ontology_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookup_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remapped_ontology_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.OntologyMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.transforms.BaseTransform" title="dgp.annotations.transforms.BaseTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.transforms.BaseTransform</span></code></a></p>
+<p>Mapping ontology based on a lookup_table.
+The remapped ontology will base on the remapped_ontology_table if provided.
+Otherwise, the remapped ontology will be automatically constructed based on the order of lookup_table.</p>
+<dl>
+<dt>original_ontology_table: dict[str-&gt;dgp.annotations.Ontology]</dt><dd><p>Ontology object <em>per annotation type</em>
+The original ontology table.
+{</p>
+<blockquote>
+<div><p>“bounding_box_2d”: BoundingBoxOntology[&lt;ontology_sha&gt;],
+“autolabel_model_1/bounding_box_2d”: BoundingBoxOntology[&lt;ontology_sha&gt;],
+“semantic_segmentation_2d”: SemanticSegmentationOntology[&lt;ontology_sha&gt;]
+“bounding_box_3d”: BoundingBoxOntology[&lt;ontology_sha&gt;],</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+<dt>lookup_table: dict[str-&gt;dict]</dt><dd><p>Lookup table <em>per annotation type</em> for each of the classes the user wants to remap.
+Lookups are old class name to new class name</p>
+<p>e.g.:
+{</p>
+<blockquote>
+<div><dl class="simple">
+<dt>‘bounding_box_2d’: {</dt><dd><p>‘Car’: ‘Car’,
+‘Truck’: ‘Car’,
+‘Motorcycle’: ‘Motorcycle’</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+</dd>
+<dt>remapped_ontology_table: dict[str-&gt;dgp.annotations.Ontology]</dt><dd><p>Ontology object <em>per annotation type</em>
+If specified, the ontology will be remapped to the given remapped_ontology_table.
+{</p>
+<blockquote>
+<div><p>“bounding_box_2d”: BoundingBoxOntology[&lt;ontology_sha&gt;],
+“autolabel_model_1/bounding_box_2d”: BoundingBoxOntology[&lt;ontology_sha&gt;],
+“semantic_segmentation_2d”: SemanticSegmentationOntology[&lt;ontology_sha&gt;]
+“bounding_box_3d”: BoundingBoxOntology[&lt;ontology_sha&gt;],</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.OntologyMapper.SUPPORTED_ANNOTATION_TYPES">
+<span class="sig-name descname"><span class="pre">SUPPORTED_ANNOTATION_TYPES</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('bounding_box_2d',</span> <span class="pre">'semantic_segmentation_2d',</span> <span class="pre">'bounding_box_3d',</span> <span class="pre">'instance_segmentation_2d')</span></em><a class="headerlink" href="#dgp.annotations.transforms.OntologyMapper.SUPPORTED_ANNOTATION_TYPES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.OntologyMapper.transform_datum">
+<span class="sig-name descname"><span class="pre">transform_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.OntologyMapper.transform_datum" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>data: OrderedDict</dt><dd><p>Dictionary containing raw data and annotations, with keys such as:
+‘rgb’, ‘intrinsics’, ‘bounding_box_2d’.
+All annotation_keys in <cite>self.lookup_table</cite> (and <cite>self.remapped_ontology_table</cite>)
+are expected to be contained</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>data: OrderedDict</dt><dd><p>Same dictionary but with annotations in <cite>self.lookup_table</cite> remapped to desired ontologies</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations.visibility_filter_transform">
+<span id="dgp-annotations-visibility-filter-transform-module"></span><h2>dgp.annotations.visibility_filter_transform module<a class="headerlink" href="#module-dgp.annotations.visibility_filter_transform" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.visibility_filter_transform.BoundingBox3DCoalescer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.visibility_filter_transform.</span></span><span class="sig-name descname"><span class="pre">BoundingBox3DCoalescer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_datum_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_datum_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_src_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.visibility_filter_transform.BoundingBox3DCoalescer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.transforms.BaseTransform" title="dgp.annotations.transforms.BaseTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.transforms.BaseTransform</span></code></a></p>
+<p>Coalesce 3D bounding box annotation from multiple datums and use it as an annotation of target datum.
+The bounding boxes are brought into the target datum frame.</p>
+<dl class="simple">
+<dt>src_datum_names: list[str]</dt><dd><p>List of datum names used to create a list of coalesced bounding boxes.</p>
+</dd>
+<dt>dst_datum_name: str</dt><dd><p>Datum whose <cite>bounding_box_3d</cite> is replaced by the coelesced bounding boxes.</p>
+</dd>
+<dt>drop_src_datums: bool, default: True</dt><dd><p>If True, then remove the source datums in the transformed sample.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.visibility_filter_transform.BoundingBox3DCoalescer.transform_sample">
+<span class="sig-name descname"><span class="pre">transform_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.visibility_filter_transform.BoundingBox3DCoalescer.transform_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry point for coalescing 3D bounding boxes.</p>
+<dl class="simple">
+<dt>sample: list[OrderedDict]</dt><dd><p>Multimodal sample as returned by <cite>__getitem__()</cite> of <cite>_SynchronizedDataset</cite>.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>new_sample: list[OrderedDict]</dt><dd><p>Multimodal sample with updated 3D bounding box annotations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.visibility_filter_transform.InstanceMaskVisibilityFilter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.visibility_filter_transform.</span></span><span class="sig-name descname"><span class="pre">InstanceMaskVisibilityFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera_datum_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_mask_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_amodal_bbox2d_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.visibility_filter_transform.InstanceMaskVisibilityFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.transforms.BaseTransform" title="dgp.annotations.transforms.BaseTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.transforms.BaseTransform</span></code></a></p>
+<p>Given a multi-modal camera data, select instances whose instance masks appear big enough <em>at least in one camera</em>.</p>
+<p>For example, even when an object is mostly truncated in one camera, if it looks big enough in a neighboring
+camera in the multi-modal sample, it will be included in the annotations. In the transformed dataset item, all detection
+annotations (i.e. <cite>bounding_box_3d</cite>, <cite>bounding_box_2d</cite>, <a href="#id1"><span class="problematic" id="id2">`</span></a>instance_segmentation_2d’) contain a single set of instances.</p>
+<dl class="simple">
+<dt>camera_datum_names: list[str]</dt><dd><p>Names of camera datums to be used in visibility computation.
+The definition of “visible” is that an instance has large mask at least in one of these cameras.</p>
+</dd>
+<dt>min_mask_size: int, default: 300</dt><dd><p>Minimum number of foreground pixels in instance mask for an instance to be added to annotations.</p>
+</dd>
+<dt>use_amodal_bbox2d_annotations: bool, default: False</dt><dd><p>If True, then use “amodal” bounding box (i.e. the box includes occluded/truncated parts) for 2D bounding box annotation.
+If False, then use “modal” bounding box (i.e. tight bounding box of instance mask.)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.visibility_filter_transform.InstanceMaskVisibilityFilter.transform_datum">
+<span class="sig-name descname"><span class="pre">transform_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.visibility_filter_transform.InstanceMaskVisibilityFilter.transform_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry point for filtering a single-modal datum using instance masks.</p>
+<dl class="simple">
+<dt>datum: OrderedDict</dt><dd><p>Single-modal datum as returned by <cite>__getitem__()</cite> of <cite>_FrameDataset</cite>.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>new_datum: OrderedDict</dt><dd><p>Single-modal sample with all detection annotations are filtered.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.visibility_filter_transform.InstanceMaskVisibilityFilter.transform_sample">
+<span class="sig-name descname"><span class="pre">transform_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.visibility_filter_transform.InstanceMaskVisibilityFilter.transform_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry point for filtering a multimodal sample using instance masks.</p>
+<dl class="simple">
+<dt>sample: list[OrderedDict]</dt><dd><p>Multimodal sample as returned by <cite>__getitem__()</cite> of <cite>_SynchronizedDataset</cite>.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>new_sample: list[OrderedDict]</dt><dd><p>Multimodal sample with all detection annotations are filtered.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.annotations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.annotations" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
 
 
           </div>
@@ -108,7 +1299,7 @@
   <li><a href="modules.html">dgp</a><ul>
   <li><a href="dgp.html">dgp package</a><ul>
       <li>Previous: <a href="dgp.html" title="previous chapter">dgp package</a></li>
-      <li>Next: <a href="dgp.contribs.html" title="next chapter">dgp.contribs package</a></li>
+      <li>Next: <a href="dgp.datasets.html" title="next chapter">dgp.datasets package</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -140,7 +1331,7 @@
       &copy;2021, Toyota Research Institute.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dgp.datasets package &#8212; DGP 1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
@@ -15,8 +14,8 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="dgp.proto package" href="dgp.proto.html" />
-    <link rel="prev" title="dgp.contribs.pd package" href="dgp.contribs.pd.html" />
+    <link rel="next" title="dgp.scripts package" href="dgp.scripts.html" />
+    <link rel="prev" title="dgp.annotations package" href="dgp.annotations.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -33,27 +32,854 @@
 
           <div class="body" role="main">
             
-  <section id="dgp-datasets-package">
+  <div class="section" id="dgp-datasets-package">
 <h1>dgp.datasets package<a class="headerlink" href="#dgp-datasets-package" title="Permalink to this headline">¶</a></h1>
-<section id="submodules">
+<div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-datasets-base-dataset-module">
-<h2>dgp.datasets.base_dataset module<a class="headerlink" href="#dgp-datasets-base-dataset-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-datasets-frame-dataset-module">
-<h2>dgp.datasets.frame_dataset module<a class="headerlink" href="#dgp-datasets-frame-dataset-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-datasets-pd-dataset-module">
-<h2>dgp.datasets.pd_dataset module<a class="headerlink" href="#dgp-datasets-pd-dataset-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-datasets-synchronized-dataset-module">
-<h2>dgp.datasets.synchronized_dataset module<a class="headerlink" href="#dgp-datasets-synchronized-dataset-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-</section>
-</section>
+</div>
+<div class="section" id="module-dgp.datasets.base_dataset">
+<span id="dgp-datasets-base-dataset-module"></span><h2>dgp.datasets.base_dataset module<a class="headerlink" href="#module-dgp.datasets.base_dataset" title="Permalink to this headline">¶</a></h2>
+<p>Base dataset class compliant with the TRI-ML Data Governance Policy (DGP), which standardizes
+TRI’s data formats.</p>
+<p>Please refer to <cite>dgp/proto/dataset.proto</cite> for the exact specifications of our DGP
+and to <cite>dgp/proto/annotations.proto</cite> for the expected structure for annotations.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.base_dataset.</span></span><span class="sig-name descname"><span class="pre">BaseDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_metadata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A base class representing a Dataset. Provides utilities for parsing and slicing
+DGP format datasets.</p>
+<dl class="simple">
+<dt>dataset_metadata: DatasetMetadata</dt><dd><p>Dataset metadata object that encapsulates dataset-level metadata for
+both operating modes (scene or JSON).</p>
+</dd>
+<dt>scenes: list[SceneContainer]</dt><dd><p>List of SceneContainer objects to be included in the dataset.</p>
+</dd>
+<dt>datum_names: list, default: None</dt><dd><p>List of datum names (str) to be considered in the dataset.</p>
+</dd>
+<dt>requested_annotations: tuple[str], default: None</dt><dd><p>Tuple of desired annotation keys, i.e. (‘bounding_box_2d’, ‘bounding_box_3d’). Should match directory
+name containing annotations from dataset root.</p>
+</dd>
+<dt>requested_autolabels: tuple[str], default: None</dt><dd><p>Tuple of annotation keys similar to <cite>requested_annotations</cite>, but associated with a particular autolabeling model.
+Expected format is “&lt;autolabel_model&gt;/&lt;annotation_key&gt;”</p>
+</dd>
+<dt>split: str, default: None</dt><dd><p>Split of dataset to read (“train” | “val” | “test” | “train_overfit”).
+If the split is None, the split type is not known and the dataset can
+be used for unsupervised / self-supervised learning.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_annotations">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>datum: Datum</dt><dd><p>Datum of type image, point cloud, etc..</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>annotations: annotations_pb2</dt><dd><p>Annotation proto object corresponding to the datum.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_autolabels_for_datum">
+<span class="sig-name descname"><span class="pre">get_autolabels_for_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_autolabels_for_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get autolabels associated with a datum if available</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of the datum within sample</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>autolabels: dict</dt><dd><p>Map of &lt;autolabel_model&gt;/&lt;annotation_key&gt; : &lt;annotation_path&gt;. Returns empty dictionary
+if no autolabels exist for that datum.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_camera_calibration">
+<span class="sig-name descname"><span class="pre">get_camera_calibration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calibration_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_camera_calibration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get camera calibration given its calibration key and datum name.</p>
+<dl class="simple">
+<dt>calibration_key: str</dt><dd><p>Calibration key.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Datum name whose calibration is requested.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>camera: Camera</dt><dd><p>Calibrated camera with extrinsics/intrinsics set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_datum">
+<span class="sig-name descname"><span class="pre">get_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get datum given its scene index, sample_idx_in_scene, and datum_name</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of datum within simple</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>datum: Datum</dt><dd><p>Datum indexed at scene_idx, sample_idx_in_scene with the given datum_name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_datum_pose">
+<span class="sig-name descname"><span class="pre">get_datum_pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_datum_pose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ego-pose associated with datum</p>
+<dl class="simple">
+<dt>datum: Datum</dt><dd><p>Datum of type image, point cloud, etc..</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>datum_pose: Pose</dt><dd><p>Pose object of datum’s ego pose</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_file_meta_from_datum">
+<span class="sig-name descname"><span class="pre">get_file_meta_from_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_file_meta_from_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the sample file info from file datum.</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of the datum within sample</p>
+</dd>
+</dl>
+<p>data: OrderedDict</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“timestamp”: int</dt><dd><p>Timestamp of the image in microseconds.</p>
+</dd>
+<dt>“datum_name”: str</dt><dd><p>Sensor name from which the data was collected</p>
+</dd>
+<dt>“filename”: str</dt><dd><p>File name associate to the file datum.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>annotations: dict</dt><dd><p>Map from annotation key to annotation file for datum</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_image_from_datum">
+<span class="sig-name descname"><span class="pre">get_image_from_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_image_from_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the sample image data from image datum.</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of the datum within sample</p>
+</dd>
+</dl>
+<p>data: OrderedDict</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“timestamp”: int</dt><dd><p>Timestamp of the image in microseconds.</p>
+</dd>
+<dt>“datum_name”: str</dt><dd><p>Sensor name from which the data was collected</p>
+</dd>
+<dt>“rgb”: PIL.Image (mode=RGB)</dt><dd><p>Image in RGB format.</p>
+</dd>
+<dt>“intrinsics”: np.ndarray</dt><dd><p>Camera intrinsics if available.</p>
+</dd>
+<dt>“extrinsics”: Pose</dt><dd><p>Camera extrinsics with respect to the vehicle frame, if available.</p>
+</dd>
+<dt>“pose”: Pose</dt><dd><p>Pose of sensor with respect to the world/global/local frame
+(reference frame that is initialized at start-time). (i.e. this
+provides the ego-pose in <cite>pose_WC</cite>).</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>annotations: dict</dt><dd><p>Map from annotation key to annotation file for datum</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_point_cloud_from_datum">
+<span class="sig-name descname"><span class="pre">get_point_cloud_from_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_point_cloud_from_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the sample lidar data from point cloud datum.</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of the datum within sample</p>
+</dd>
+</dl>
+<p>data: OrderedDict</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“timestamp”: int</dt><dd><p>Timestamp of the lidar in microseconds.</p>
+</dd>
+<dt>“datum_name”: str</dt><dd><p>Sensor name from which the data was collected</p>
+</dd>
+<dt>“extrinsics”: Pose</dt><dd><p>Sensor extrinsics with respect to the vehicle frame.</p>
+</dd>
+<dt>“point_cloud”: np.ndarray (N x 3)</dt><dd><p>Point cloud in the local/world (L) frame returning X, Y and Z
+coordinates. The local frame is consistent across multiple
+timesteps in a scene.</p>
+</dd>
+<dt>“extra_channels”: np.ndarray (N x M)</dt><dd><p>Remaining channels from point_cloud (i.e. lidar intensity I or pixel colors RGB)</p>
+</dd>
+<dt>“pose”: Pose</dt><dd><p>Pose of sensor with respect to the world/global/local frame
+(reference frame that is initialized at start-time). (i.e. this
+provides the ego-pose in <cite>pose_WS</cite> where S refers to the point
+cloud sensor (S)).</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>annotations: dict</dt><dd><p>Map from annotation key to annotation file for datum</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_radar_point_cloud_from_datum">
+<span class="sig-name descname"><span class="pre">get_radar_point_cloud_from_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_radar_point_cloud_from_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the sample radar data from radar point cloud datum.</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of the datum within sample</p>
+</dd>
+</dl>
+<p>data: OrderedDict</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“timestamp”: int</dt><dd><p>Timestamp of the radar point cloud in microseconds.</p>
+</dd>
+<dt>“datum_name”: str</dt><dd><p>Sensor name from which the data was collected</p>
+</dd>
+<dt>“extrinsics”: Pose</dt><dd><p>Sensor extrinsics with respect to the vehicle frame.</p>
+</dd>
+<dt>“point_cloud”: np.ndarray (N x 3)</dt><dd><p>Point cloud in the local/world (L) frame returning X, Y and Z
+coordinates. The local frame is consistent across multiple
+timesteps in a scene.</p>
+</dd>
+<dt>“velocity”: np.ndarray(N x 3)</dt><dd><p>Velocity vectors in sensor frame.</p>
+</dd>
+<dt>“covariance”: np.ndarray(N x 3 x 3)</dt><dd><p>Covariance matrix of point positions in sensor frame.</p>
+</dd>
+<dt>“extra_channels”: np.ndarray (N x M)</dt><dd><p>Remaining channels from radar, rcs_dbm, probability, sensor_id etc</p>
+</dd>
+<dt>“pose”: Pose</dt><dd><p>Pose of sensor with respect to the world/global/local frame
+(reference frame that is initialized at start-time). (i.e. this
+provides the ego-pose in <cite>pose_WS</cite> where S refers to the point
+cloud sensor (S)).</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>annotations: dict</dt><dd><p>Map from annotation key to annotation file for datum</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_sample">
+<span class="sig-name descname"><span class="pre">get_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample given its scene index and sample_idx_in_scene.</p>
+<p>NOTE: Some samples may be removed during indexing. These samples will
+NOT be returned by this function. An unmodified list of samples
+can be accessed via the <cite>samples</cite> property on each SceneContainer.</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>sample: Sample</dt><dd><p>Sample indexed at scene_idx and sample_idx_in_scene.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_scene_metadata">
+<span class="sig-name descname"><span class="pre">get_scene_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_scene_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get scene-level metadata for the scene index.</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of scene.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>scene_metadata: OrderedDict</dt><dd><p>Additional scene-level metadata for the dataset item at index.
+Note: This is used for traceability and sampling purposes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.get_sensor_extrinsics">
+<span class="sig-name descname"><span class="pre">get_sensor_extrinsics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calibration_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.get_sensor_extrinsics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sensor extrinsics given its calibration key and datum name.</p>
+<dl class="simple">
+<dt>calibration_key: str</dt><dd><p>Calibration key.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Datum name whose calibration is requested.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>p_WS: Pose</dt><dd><p>Extrinsics of sensor (S) with respect to the world (W)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.image_mean">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">image_mean</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.image_mean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.image_stddev">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">image_stddev</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.image_stddev" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.list_datum_names_available_in_all_scenes">
+<span class="sig-name descname"><span class="pre">list_datum_names_available_in_all_scenes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.list_datum_names_available_in_all_scenes" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Gets the set union of available datums names across all scenes.
+We assume that all samples in a scene have the same datums
+available.</p>
+<dl class="simple">
+<dt>available_datum_names: list</dt><dd><p>DatumId.name which are available across all scenes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.load_annotations">
+<span class="sig-name descname"><span class="pre">load_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.load_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get annotations for a specified datum</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of the datum within sample</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>annotations: dict</dt><dd><p>Dictionary mapping annotation key to Annotation object for given annotation type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.load_datum">
+<span class="sig-name descname"><span class="pre">load_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.load_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a datum given a sample and a datum name</p>
+<dl class="simple">
+<dt>scene_idx: int</dt><dd><p>Index of the scene.</p>
+</dd>
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene at scene_idx.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of the datum within sample</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>datum: parsed datum type</dt><dd><p>For different datums, we return different types.
+For image types, we return a PIL.Image
+For point cloud types, we return a numpy float64 array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.BaseDataset.metadata_index">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">metadata_index</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.BaseDataset.metadata_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds an index of metadata items that refer to the scene index,
+sample index index.</p>
+<dl class="simple">
+<dt>metadata_index: dict</dt><dd><p>Dictionary of metadata for tuple key (scene_idx,
+sample_idx_in_scene) returning a dictionary of additional metadata
+information for the requested sample.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.DatasetMetadata">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.base_dataset.</span></span><span class="sig-name descname"><span class="pre">DatasetMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.DatasetMetadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A Wrapper Dataset metadata class to support two entrypoints for datasets
+(reading from dataset.json OR from a scene_dataset.json).
+Aggregates statistics and onotology_table when construct DatasetMetadata
+object for SceneDataset.</p>
+<dl>
+<dt>scenes: list[SceneContainer]</dt><dd><p>List of SceneContainer objects to be included in the dataset.</p>
+</dd>
+<dt>directory: str</dt><dd><p>Directory of dataset.</p>
+</dd>
+<dt>ontology_table: dict, default: None</dt><dd><p>A dictionary mapping annotation key(s) to Ontology(s), i.e.:
+{</p>
+<blockquote>
+<div><p>“bounding_box_2d”: BoundingBoxOntology[&lt;ontology_sha&gt;],
+“autolabel_model_1/bounding_box_2d”: BoundingBoxOntology[&lt;ontology_sha&gt;],
+“semantic_segmentation_2d”: SemanticSegmentationOntology[&lt;ontology_sha&gt;]</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.DatasetMetadata.from_scene_containers">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_scene_containers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_containers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.DatasetMetadata.from_scene_containers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load DatasetMetadata from Scene Dataset JSON.</p>
+<dl class="simple">
+<dt>scene_containers: list of SceneContainer</dt><dd><p>List of SceneContainer objects.</p>
+</dd>
+<dt>requested_annotations: List(str)</dt><dd><p>List of annotations, such as [‘bounding_box_3d’, ‘bounding_box_2d’]</p>
+</dd>
+<dt>requested_autolabels: List(str)</dt><dd><p>List of autolabels, such as[‘model_a/bounding_box_3d’, ‘model_a/bounding_box_2d’]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.DatasetMetadata.get_dataset_splits">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_dataset_splits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.DatasetMetadata.get_dataset_splits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of splits in the dataset.json.</p>
+<dl class="simple">
+<dt>dataset_json: str</dt><dd><p>Full path to the dataset json holding dataset metadata, ontology, and image and annotation paths.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>dataset_splits: list of str</dt><dd><p>List of dataset splits (train | val | test | train_overfit).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.DatasetMetadata.metadata">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.DatasetMetadata.metadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.base_dataset.</span></span><span class="sig-name descname"><span class="pre">SceneContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autolabeled_scenes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_datums_synchronized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_diskcache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_missing_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Object-oriented container for assembling datasets from collections of scenes.
+Each scene is fully described within a sub-directory with an associated scene.json file.</p>
+<p>This class also provides functionality for reinjecting autolabeled scenes into other scenes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.SCENE_CACHE">
+<span class="sig-name descname"><span class="pre">SCENE_CACHE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;diskcache.core.Cache</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.SCENE_CACHE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.annotation_index">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">annotation_index</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.annotation_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build 2D boolean DataArray for annotations. Rows correspond to the <cite>datum_idx_in_scene</cite>
+and columns correspond to requested annotation types.</p>
+<p>For example:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">+----+-------------------+-------------------+-----+</span>
+<span class="pre">|</span>&#160;&#160;&#160; <span class="pre">|</span> <span class="pre">&quot;bounding_box_2d&quot;</span> <span class="pre">|</span> <span class="pre">&quot;bounding_box_3d&quot;</span> <span class="pre">|</span> <span class="pre">...</span> <span class="pre">|</span>
+<span class="pre">+----+-------------------+-------------------+-----+</span>
+<span class="pre">|</span>&#160; <span class="pre">0</span> <span class="pre">|</span> <span class="pre">False</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span> <span class="pre">True</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span>&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">|</span>&#160; <span class="pre">1</span> <span class="pre">|</span> <span class="pre">True</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span> <span class="pre">True</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span>&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">|</span>&#160; <span class="pre">2</span> <span class="pre">|</span> <span class="pre">False</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span> <span class="pre">False</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span>&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">|</span> <span class="pre">..</span> <span class="pre">|</span> <span class="pre">..</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span> <span class="pre">..</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span>&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">+----+-------------------+-------------------+-----+</span>
+<span class="pre">`</span></code>
+Returns
+——-
+scene_annotation_index: xr.DataArray</p>
+<blockquote>
+<div><p>Boolean index of annotations for this scene</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.autolabels">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">autolabels</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.autolabels" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Associate autolabels to datums. Iterate through datums, and if that datum has a corresponding autolabel,
+add it to the <cite>autolabel</cite> object. Example resulting autolabel map is:
+{</p>
+<blockquote>
+<div><dl class="simple">
+<dt>&lt;datum_hash&gt;: {</dt><dd><p>&lt;autolabel_key&gt;: &lt;autolabeled_annotation&gt;
+…</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.cache_dir">
+<span class="sig-name descname"><span class="pre">cache_dir</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'/home/runner/.dgp/cache/dgp_diskcache_72197'</span></em><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.cache_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.calibration_files">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">calibration_files</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.calibration_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the calibration index for a scene.</p>
+<dl>
+<dt>calibration_table: dict</dt><dd><p>Maps (calibration_key, datum_key) -&gt; (p_WS, Camera)</p>
+<p>For example:
+(p_WS, Camera) = self.calibration_table[(calibration_key, datum_name)]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.check_datum_file">
+<span class="sig-name descname"><span class="pre">check_datum_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datum_idx_in_scene</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.check_datum_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if datum file exists
+Parameters
+———
+datum_idx_in_scene: int</p>
+<blockquote>
+<div><p>Index of datum in this scene</p>
+</div></blockquote>
+<p>bool: True if datum file exists</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.check_files">
+<span class="sig-name descname"><span class="pre">check_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.check_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if scene and calibration files exist
+Returns
+——-
+bool: True if scene and calibration files exist</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.data">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the scene data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.datum_index">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">datum_index</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.datum_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a multidimensional DataArray to represent a scene.
+Rows correspond to samples, and columns correspond to datums. The value at each location
+is the <cite>datum_idx_in_scene</cite>, which can be used to directly fetch the desired datum
+given a sample index and datum name.</p>
+<p>For example:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">+----+-------------+-------------+---------+-----+</span>
+<span class="pre">|</span>&#160;&#160;&#160; <span class="pre">|</span> <span class="pre">&quot;camera_01&quot;</span> <span class="pre">|</span> <span class="pre">&quot;camera_02&quot;</span> <span class="pre">|</span> <span class="pre">&quot;lidar&quot;</span> <span class="pre">|</span> <span class="pre">...</span> <span class="pre">|</span>
+<span class="pre">+----+-------------+-------------+---------+-----+</span>
+<span class="pre">|</span>&#160; <span class="pre">0</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">1</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">2</span> <span class="pre">|</span>&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">|</span>&#160; <span class="pre">1</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">9</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">10</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">11</span> <span class="pre">|</span>&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">|</span>&#160; <span class="pre">2</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">18</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">19</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">20</span> <span class="pre">|</span>&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">|</span> <span class="pre">..</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">..</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">..</span> <span class="pre">|</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">|</span>&#160;&#160;&#160;&#160; <span class="pre">|</span>
+<span class="pre">+----+-------------+-------------+---------+-----+</span>
+<span class="pre">`</span></code></p>
+<dl class="simple">
+<dt>scene_datum_index: xr.DataArray</dt><dd><p>2D index describing samples and datums</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.datum_names">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">datum_names</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.datum_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Gets the list of datums names available within a scene.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.get_datum">
+<span class="sig-name descname"><span class="pre">get_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.get_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get datum given its sample_idx_in_scene and the datum name.</p>
+<dl class="simple">
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene.</p>
+</dd>
+<dt>datum_name: str</dt><dd><p>Name of the datum within sample</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>datum: Datum</dt><dd><p>Datum at sample_idx_in_scene and datum_name for the scene.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.get_sample">
+<span class="sig-name descname"><span class="pre">get_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_idx_in_scene</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.get_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample given its sample_idx_in_scene.</p>
+<p>NOTE: Some samples may be removed during indexing. These samples will
+NOT be returned by this function. An unmodified list of samples
+can be accessed via the <cite>samples</cite> property on each SceneContainer.</p>
+<dl class="simple">
+<dt>sample_idx_in_scene: int</dt><dd><p>Index of the sample within the scene.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>sample: Sample</dt><dd><p>Sample indexed at sample_idx_in_scene for the scene.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.metadata_index">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">metadata_index</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.metadata_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper for building metadata index.</p>
+<p>TODO: Need to verify that the hashes are unique, and these lru-cached
+properties are consistent across disk-cached reads.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.ontology_files">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ontology_files</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.ontology_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the ontology files for a scene.</p>
+<dl>
+<dt>ontology_files: dict</dt><dd><p>Maps annotation_key -&gt; filename</p>
+<p>For example:
+filename = scene.ontology_files[‘bounding_box_2d’]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.random_str">
+<span class="sig-name descname"><span class="pre">random_str</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'72197'</span></em><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.random_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.samples">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">samples</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the scene samples.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.scene">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">scene</span></span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns scene.
+- If self.use_diskcache is True: returns the cached <cite>_scene</cite> if available, otherwise load the</p>
+<blockquote>
+<div><p>scene and cache it.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>If self.use_diskcache is False: returns <cite>_scene</cite> in memory if the instance has attribute
+<cite>_scene</cite>, otherwise load the scene and save it in memory.
+NOTE: Setting use_diskcache to False would exhaust the memory if have a large number of scenes.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.datasets.base_dataset.SceneContainer.select_datums">
+<span class="sig-name descname"><span class="pre">select_datums</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datum_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.base_dataset.SceneContainer.select_datums" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a set of datums by name to be used in the scene.</p>
+<dl class="simple">
+<dt>datum_names: list</dt><dd><p>List of datum names to be used for instance of dataset</p>
+</dd>
+<dt>requested_annotations: tuple, default: None</dt><dd><p>Tuple of annotation types, i.e. (‘bounding_box_2d’, ‘bounding_box_3d’). Should be equivalent
+to directory containing annotation from dataset root.</p>
+</dd>
+<dt>requested_autolabels: tuple[str], default: None</dt><dd><p>Tuple of annotation types similar to <cite>requested_annotations</cite>, but associated with a particular autolabeling model.
+Expected format is “&lt;model_id&gt;/&lt;annotation_type&gt;”</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.datasets.frame_dataset">
+<span id="dgp-datasets-frame-dataset-module"></span><h2>dgp.datasets.frame_dataset module<a class="headerlink" href="#module-dgp.datasets.frame_dataset" title="Permalink to this headline">¶</a></h2>
+<p>Dataset for handling frame-level (unordered) for unsupervised, self-supervised and supervised tasks.
+This dataset is compliant with the TRI-ML Dataset Governance Policy (DGP).</p>
+<p>Please refer to <cite>dgp/proto/dataset.proto</cite> for the exact specifications of our dgp.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.frame_dataset.FrameScene">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.frame_dataset.</span></span><span class="sig-name descname"><span class="pre">FrameScene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_annotated_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_diskcache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_missing_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.frame_dataset.FrameScene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.datasets.frame_dataset._FrameDataset</span></code></p>
+<p>Main entry-point for single-modality dataset using a single scene JSON as input.</p>
+<p>NOTE: This class can be used to introspect a single scene given a scene
+directory with its associated scene JSON.</p>
+<dl class="simple">
+<dt>scene_json: str</dt><dd><p>Full path to the scene json.</p>
+</dd>
+<dt>datum_names: list, default: None</dt><dd><p>Select datums for which to build index (see self.select_datums(datum_names)).
+NOTE: All selected datums must be of a the same datum type!</p>
+</dd>
+<dt>requested_annotations: tuple, default: None</dt><dd><p>Tuple of annotation types, i.e. (‘bounding_box_2d’, ‘bounding_box_3d’). Should be equivalent
+to directory containing annotation from dataset root.</p>
+</dd>
+<dt>requested_autolabels: tuple[str], default: None</dt><dd><p>Tuple of annotation types similar to <cite>requested_annotations</cite>, but associated with a particular autolabeling model.
+Expected format is “&lt;model_id&gt;/&lt;annotation_type&gt;”</p>
+</dd>
+<dt>only_annotated_datums: bool, default: False</dt><dd><p>If True, only datums with annotations matching the requested annotation types are returned.</p>
+</dd>
+<dt>use_diskcache: bool, default: True</dt><dd><p>If True, cache ScenePb2 object using diskcache. If False, save the object in memory.
+NOTE: Setting use_diskcache to False would exhaust the memory if have a large number of scenes.</p>
+</dd>
+<dt>skip_missing_data: bool, default: False</dt><dd><p>If True, check for missing files and skip during datum index building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.frame_dataset.FrameSceneDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.frame_dataset.</span></span><span class="sig-name descname"><span class="pre">FrameSceneDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_dataset_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_annotated_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_diskcache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_missing_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.frame_dataset.FrameSceneDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.datasets.frame_dataset._FrameDataset</span></code></p>
+<p>Main entry-point for single-modality dataset. Used for tasks with unordered data,
+i.e. 2D detection.</p>
+<dl class="simple">
+<dt>scene_dataset_json: str</dt><dd><p>Full path to the scene dataset json holding collections of paths to scene json.</p>
+</dd>
+<dt>split: str, default: ‘train’</dt><dd><p>Split of dataset to read (“train” | “val” | “test” | “train_overfit”).</p>
+</dd>
+<dt>datum_names: list, default: None</dt><dd><p>Select datums for which to build index (see self.select_datums(datum_names)).
+NOTE: All selected datums must be of a the same datum type!</p>
+</dd>
+<dt>requested_annotations: tuple, default: None</dt><dd><p>Tuple of annotation types, i.e. (‘bounding_box_2d’, ‘bounding_box_3d’). Should be equivalent
+to directory containing annotation from dataset root.</p>
+</dd>
+<dt>requested_autolabels: tuple[str], default: None</dt><dd><p>Tuple of annotation types similar to <cite>requested_annotations</cite>, but associated with a particular autolabeling model.
+Expected format is “&lt;model_id&gt;/&lt;annotation_type&gt;”</p>
+</dd>
+<dt>only_annotated_datums: bool, default: False</dt><dd><p>If True, only datums with annotations matching the requested annotation types are returned.</p>
+</dd>
+<dt>use_diskcache: bool, default: True</dt><dd><p>If True, cache ScenePb2 object using diskcache. If False, save the object in memory.
+NOTE: Setting use_diskcache to False would exhaust the memory if have a large number of scenes.</p>
+</dd>
+<dt>skip_missing_data: bool, default: False</dt><dd><p>If True, check for missing files and skip during datum index building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.datasets.pd_dataset">
+<span id="dgp-datasets-pd-dataset-module"></span><h2>dgp.datasets.pd_dataset module<a class="headerlink" href="#module-dgp.datasets.pd_dataset" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.pd_dataset.ParallelDomainScene">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.pd_dataset.</span></span><span class="sig-name descname"><span class="pre">ParallelDomainScene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backward_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_depth_from_datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_annotated_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_virtual_camera_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_missing_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.pd_dataset.ParallelDomainScene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.datasets.pd_dataset._ParallelDomainDataset</span></code></p>
+<p>Refer to SynchronizedScene for parameters.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.pd_dataset.ParallelDomainSceneDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.pd_dataset.</span></span><span class="sig-name descname"><span class="pre">ParallelDomainSceneDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_dataset_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backward_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_depth_from_datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_annotated_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_virtual_camera_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_missing_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.pd_dataset.ParallelDomainSceneDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.datasets.pd_dataset._ParallelDomainDataset</span></code></p>
+<p>Refer to SynchronizedSceneDataset for parameters.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.datasets.synchronized_dataset">
+<span id="dgp-datasets-synchronized-dataset-module"></span><h2>dgp.datasets.synchronized_dataset module<a class="headerlink" href="#module-dgp.datasets.synchronized_dataset" title="Permalink to this headline">¶</a></h2>
+<p>Dataset for handling synchronized multi-modal samples for unsupervised,
+self-supervised and supervised tasks.
+This dataset is compliant with the TRI-ML Dataset Governance Policy (DGP).</p>
+<p>Please refer to <cite>dgp/proto/dataset.proto</cite> for the exact specifications of our dgp.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.synchronized_dataset.SynchronizedScene">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.synchronized_dataset.</span></span><span class="sig-name descname"><span class="pre">SynchronizedScene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backward_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulation_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_depth_from_datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_annotated_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_accumulated_box_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.synchronized_dataset.SynchronizedScene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.datasets.synchronized_dataset._SynchronizedDataset</span></code></p>
+<p>Main entry-point for multi-modal dataset with sample-level
+synchronization using a single scene JSON as input.</p>
+<p>Note: This class can be used to introspect a single scene given a scene
+directory with its associated scene JSON.</p>
+<dl class="simple">
+<dt>scene_json: str</dt><dd><p>Full path to the scene json.</p>
+</dd>
+<dt>datum_names: list, default: None</dt><dd><p>Select list of datum names for synchronization (see self.select_datums(datum_names)).</p>
+</dd>
+<dt>requested_annotations: tuple, default: None</dt><dd><p>Tuple of annotation types, i.e. (‘bounding_box_2d’, ‘bounding_box_3d’). Should be equivalent
+to directory containing annotation from dataset root.</p>
+</dd>
+<dt>requested_autolabels: tuple[str], default: None</dt><dd><p>Tuple of annotation types similar to <cite>requested_annotations</cite>, but associated with a particular autolabeling model.
+Expected format is “&lt;model_id&gt;/&lt;annotation_type&gt;”</p>
+</dd>
+<dt>backward_context: int, default: 0</dt><dd><p>Backward context in frames [T-backward, …, T-1]</p>
+</dd>
+<dt>forward_context: int, default: 0</dt><dd><p>Forward context in frames [T+1, …, T+forward]</p>
+</dd>
+<dt>accumulation_context: dict, default None</dt><dd><p>Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, ‘accumulation_context={‘lidar’:(3,1)}
+accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.</p>
+</dd>
+<dt>generate_depth_from_datum: str, default: None</dt><dd><p>Datum name of the point cloud. If is not None, then the depth map will be generated for the camera using
+the desired point cloud.</p>
+</dd>
+<dt>only_annotated_datums: bool, default: False</dt><dd><p>If True, only datums with annotations matching the requested annotation types are returned.</p>
+</dd>
+<dt>transform_accumulated_box_points: bool, default: False</dt><dd><p>Flag to use cuboid pose and instance id to warp points when using lidar accumulation.</p>
+</dd>
+</dl>
+<p>Refer to _SynchronizedDataset for remaining parameters.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.datasets.synchronized_dataset.SynchronizedSceneDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.datasets.synchronized_dataset.</span></span><span class="sig-name descname"><span class="pre">SynchronizedSceneDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_dataset_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requested_autolabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backward_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulation_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_depth_from_datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_annotated_datums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_missing_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_accumulated_box_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.datasets.synchronized_dataset.SynchronizedSceneDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.datasets.synchronized_dataset._SynchronizedDataset</span></code></p>
+<p>Main entry-point for multi-modal dataset with sample-level
+synchronization using scene directories as input.</p>
+<p>Note: This class is primarily used for self-supervised learning tasks where
+the default mode of operation is learning from a collection of scene
+directories.</p>
+<dl class="simple">
+<dt>scene_dataset_json: str</dt><dd><p>Full path to the scene dataset json holding collections of paths to scene json.</p>
+</dd>
+<dt>split: str, default: ‘train’</dt><dd><p>Split of dataset to read (“train” | “val” | “test” | “train_overfit”).</p>
+</dd>
+<dt>datum_names: list, default: None</dt><dd><p>Select list of datum names for synchronization (see self.select_datums(datum_names)).</p>
+</dd>
+<dt>requested_annotations: tuple, default: None</dt><dd><p>Tuple of annotation types, i.e. (‘bounding_box_2d’, ‘bounding_box_3d’). Should be equivalent
+to directory containing annotation from dataset root.</p>
+</dd>
+<dt>requested_autolabels: tuple[str], default: None</dt><dd><p>Tuple of annotation types similar to <cite>requested_annotations</cite>, but associated with a particular autolabeling model.
+Expected format is “&lt;model_id&gt;/&lt;annotation_type&gt;”</p>
+</dd>
+<dt>backward_context: int, default: 0</dt><dd><p>Backward context in frames [T-backward, …, T-1]</p>
+</dd>
+<dt>forward_context: int, default: 0</dt><dd><p>Forward context in frames [T+1, …, T+forward]</p>
+</dd>
+<dt>accumulation_context: dict, default None</dt><dd><p>Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, ‘accumulation_context={‘lidar’:(3,1)}
+accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.</p>
+</dd>
+<dt>generate_depth_from_datum: str, default: None</dt><dd><p>Datum name of the point cloud. If is not None, then the depth map will be generated for the camera using
+the desired point cloud.</p>
+</dd>
+<dt>only_annotated_datums: bool, default: False</dt><dd><p>If True, only datums with annotations matching the requested annotation types are returned.</p>
+</dd>
+<dt>skip_missing_data: bool, default: False</dt><dd><p>If True, check for missing files and skip during datum index building.</p>
+</dd>
+<dt>dataset_root: str</dt><dd><p>Optional path to dataset root folder. Useful if dataset scene json is not in the same directory as the rest of the data.</p>
+</dd>
+<dt>transform_accumulated_box_points: bool, default: False</dt><dd><p>Flag to use cuboid pose and instance id to warp points when using lidar accumulation.</p>
+</dd>
+</dl>
+<p>Refer to _SynchronizedDataset for remaining parameters.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.datasets">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.datasets" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
 
 
           </div>
@@ -86,8 +912,8 @@
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="modules.html">dgp</a><ul>
   <li><a href="dgp.html">dgp package</a><ul>
-      <li>Previous: <a href="dgp.contribs.pd.html" title="previous chapter">dgp.contribs.pd package</a></li>
-      <li>Next: <a href="dgp.proto.html" title="next chapter">dgp.proto package</a></li>
+      <li>Previous: <a href="dgp.annotations.html" title="previous chapter">dgp.annotations package</a></li>
+      <li>Next: <a href="dgp.scripts.html" title="next chapter">dgp.scripts package</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -119,7 +945,7 @@
       &copy;2021, Toyota Research Institute.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

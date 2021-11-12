@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dgp.utils.cloud package &#8212; DGP 1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
@@ -33,18 +32,383 @@
 
           <div class="body" role="main">
             
-  <section id="dgp-utils-cloud-package">
+  <div class="section" id="dgp-utils-cloud-package">
 <h1>dgp.utils.cloud package<a class="headerlink" href="#dgp-utils-cloud-package" title="Permalink to this headline">¶</a></h1>
-<section id="submodules">
+<div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="dgp-utils-cloud-s3-module">
-<h2>dgp.utils.cloud.s3 module<a class="headerlink" href="#dgp-utils-cloud-s3-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-</section>
-</section>
+</div>
+<div class="section" id="module-dgp.utils.cloud.s3">
+<span id="dgp-utils-cloud-s3-module"></span><h2>dgp.utils.cloud.s3 module<a class="headerlink" href="#module-dgp.utils.cloud.s3" title="Permalink to this headline">¶</a></h2>
+<p>Various utility functions for AWS S3</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.RemoteArtifactFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">RemoteArtifactFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.RemoteArtifactFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.convert_uri_to_bucket_path">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">convert_uri_to_bucket_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_trailing_slash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.convert_uri_to_bucket_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a URI into a bucket and path.</p>
+<dl>
+<dt>uri: str</dt><dd><p>A full s3 path (e.g. ‘s3://&lt;s3-bucket&gt;/&lt;s3-prefix&gt;’)</p>
+</dd>
+<dt>strip_trailing_slash: bool, default: True</dt><dd><p>If True, we strip any trailing slash in <cite>s3_path</cite> before returning it
+(i.e. s3_path=’&lt;s3-prefix&gt;’ is returned for uri=’s3://&lt;s3-bucket&gt;/&lt;s3-prefix&gt;/’).
+Otherwise, we do not strip it
+(i.e. s3_path=’&lt;s3-prefix&gt;’ is returned for uri=’s3://&lt;s3-bucket&gt;/&lt;s3-prefix&gt;/’).</p>
+<p>If there is no trailing slash in <cite>uri</cite> then there will be no trailing slash in <cite>s3_path</cite> regardless
+of the value of this parameter.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>str:</dt><dd><p>The bucket of the S3 object (e.g. ‘&lt;s3-bucket&gt;’)</p>
+</dd>
+<dt>str:</dt><dd><p>The path within the bucket of the S3 object (e.g. ‘&lt;s3-prefix&gt;’)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.delete_s3_object">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">delete_s3_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.delete_s3_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an object in s3.</p>
+<dl class="simple">
+<dt>bucket_name: str</dt><dd><p>S3 bucket of the object to delete.</p>
+</dd>
+<dt>object_key: str</dt><dd><p>Key name of the object to delete.</p>
+</dd>
+<dt>verbose: bool, default: True</dt><dd><p>If True print messages</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.download_s3_object_to_path">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">download_s3_object_to_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s3_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.download_s3_object_to_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download an object from s3 to a path on the local filesystem.</p>
+<dl class="simple">
+<dt>bucket_name: str</dt><dd><p>S3 bucket from which to fetch.</p>
+</dd>
+<dt>s3_path: str</dt><dd><p>The path on the s3 bucket to the file to fetch.</p>
+</dd>
+<dt>local_path: str</dt><dd><p>Path on the local filesystem to place the object.</p>
+</dd>
+</dl>
+<blockquote>
+<div><dl class="simple">
+<dt>bool</dt><dd><p>True if successful, False if not.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.exists_s3_object">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">exists_s3_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.exists_s3_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses a valid S3 bucket to check the existence of a remote file as AWS URL.</p>
+<dl class="simple">
+<dt>bucket_name<span class="classifier">str</span></dt><dd><p>AWS S3 root bucket name</p>
+</dd>
+<dt>url<span class="classifier">str</span></dt><dd><p>The remote URL of the object to be fetched</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>bool:</dt><dd><p>Wether or not the object exists in S3.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.get_s3_object">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">get_s3_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.get_s3_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses a valid S3 bucket to retrieve a file from a remote AWS URL.
+Raises ValueError if non-existent.</p>
+<dl class="simple">
+<dt>bucket_name<span class="classifier">str</span></dt><dd><p>AWS S3 root bucket name</p>
+</dd>
+<dt>url<span class="classifier">str</span></dt><dd><p>The remote URL of the object to be fetched</p>
+</dd>
+</dl>
+<p>S3 object</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.get_string_from_s3_file">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">get_string_from_s3_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.get_string_from_s3_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses a valid S3 bucket to retrieve an UTF-8 decoded string from a remote AWS URL.
+Raises ValueError if non-existent.</p>
+<dl class="simple">
+<dt>bucket_name<span class="classifier">str</span></dt><dd><p>AWS S3 root bucket name</p>
+</dd>
+<dt>url<span class="classifier">str</span></dt><dd><p>The remote URL of the object to be fetched</p>
+</dd>
+</dl>
+<p>A string representation of the remote file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.init_s3_client">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">init_s3_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.init_s3_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate S3 AWS client.</p>
+<dl class="simple">
+<dt>use_ssl: boolean, default: False</dt><dd><p>Use secure sockets layer. Provieds better security to s3, but
+can fail intermittently in a multithreaded environment.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>service: boto3.client</dt><dd><p>S3 resource service client.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.is_false">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">is_false</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.is_false" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.list_prefixes_in_s3">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">list_prefixes_in_s3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s3_prefix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.list_prefixes_in_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>List prefixes in S3 path.
+<em>CAVEAT</em>: This function was only tested for S3 prefix for files. E.g., if the bucket looks like the following,</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>s3://aa/bb/cc_v01.json</p></li>
+<li><p>s3://aa/bb/cc_v02.json</p></li>
+<li><p>s3://aa/bb/cc_v03.json</p></li>
+</ul>
+<p>then list_prefixes_in_s3(“s3://aa/bb/cc_v”) returns [‘cc_v01.json’, ‘cc_v02.json’, ‘cc_v03.json’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt>s3_prefix: str</dt><dd><p>An S3 prefix.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>prefixes: List of str</dt><dd><p>List of basename prefixes that starts with <cite>s3_prefix</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.list_prefixes_in_s3_dir">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">list_prefixes_in_s3_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s3_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.list_prefixes_in_s3_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>List prefixes in S3 path.
+<em>CAVEAT</em>: This function was only tested for S3 path that contains purely one-level prefix, i.e. no regular objects.
+Parameters
+———-
+s3_path: str</p>
+<blockquote>
+<div><p>An S3 path.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>prefixes: List of str</dt><dd><p>List of prefixes under <cite>s3_path</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.list_s3_objects">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">list_s3_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.list_s3_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all files within a valid S3 bucket</p>
+<dl class="simple">
+<dt>bucket_name<span class="classifier">str</span></dt><dd><p>AWS S3 root bucket name</p>
+</dd>
+<dt>url<span class="classifier">str</span></dt><dd><p>The remote URL of the object to be fetched</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.open_remote_json">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">open_remote_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s3_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.open_remote_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a remote JSON file</p>
+<dl class="simple">
+<dt>s3_path: str</dt><dd><p>Full s3 path to JSON file</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>dict:</dt><dd><p>Loaded JSON</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.parallel_download_s3_objects">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">parallel_download_s3_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s3_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_filepaths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_pool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.parallel_download_s3_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download a list of s3 objects using a processpool.</p>
+<dl class="simple">
+<dt>s3_files: list</dt><dd><p>List of all files from s3 to download</p>
+</dd>
+<dt>destination_filepaths: list</dt><dd><p>List of where to download all files locally</p>
+</dd>
+<dt>bucket_name: str</dt><dd><p>S3 bucket to pull from</p>
+</dd>
+<dt>process_pool_size: int, default: None</dt><dd><p>Number of threads to use to fetch these files. If not specified, will default to
+number of cores on the machine.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.parallel_s3_copy">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">parallel_s3_copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threadpool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.parallel_s3_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy files from local to s3, s3 to local, or s3 to s3 using a threadpool.
+Retry the operation if any files fail to copy. Throw an AssertionError if it fails the 2nd time.</p>
+<dl class="simple">
+<dt>source_paths: List of str</dt><dd><p>Full paths of files to copy.</p>
+</dd>
+<dt>target_paths: List of str</dt><dd><p>Full paths to copy files to.</p>
+</dd>
+<dt>threadpool_size: int</dt><dd><p>Number of threads to use to fetch these files. If not specified, will default to
+number of cores on the machine.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.parallel_s3_sync">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">parallel_s3_sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threadpool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.parallel_s3_sync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy directories from local to s3, s3 to local, or s3 to s3 using a threadpool.
+Retry the operation if any files fail to sync. Throw an AssertionError if it fails the 2nd time.</p>
+<dl class="simple">
+<dt>source_paths: List of str</dt><dd><p>Directories from which we want to sync files.</p>
+</dd>
+<dt>target_paths: List of str</dt><dd><p>Directories to which all files will be synced.</p>
+</dd>
+<dt>threadpool_size: int</dt><dd><p>Number of threads to use to fetch these files. If not specified, will default to
+number of cores on the machine.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.parallel_upload_s3_objects">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">parallel_upload_s3_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_filepaths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s3_destinations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_pool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.parallel_upload_s3_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload a list of s3 objects using a processpool.</p>
+<dl class="simple">
+<dt>source_filepaths: list</dt><dd><p>List of all local files to upload</p>
+</dd>
+<dt>s3_destinations: list</dt><dd><p>Paths relative to bucket in S3 where files are uploaded</p>
+</dd>
+<dt>bucket_name: str</dt><dd><p>S3 bucket to upload to</p>
+</dd>
+<dt>process_pool_size: int, default: None</dt><dd><p>Number of threads to use to fetch these files. If not specified, will default to
+number of cores on the machine.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.return_last_value">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">return_last_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retry_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.return_last_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the result of the last call attempt</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.s3_bucket">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">s3_bucket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.s3_bucket" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate S3 bucket object from its bucket name</p>
+<dl class="simple">
+<dt>bucket<span class="classifier">str</span></dt><dd><p>Bucket name to instantiate.</p>
+</dd>
+</dl>
+<p>S3 bucket</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.s3_copy">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">s3_copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.s3_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy single file from local to s3, s3 to local, or s3 to s3.</p>
+<dl class="simple">
+<dt>source_path: str</dt><dd><p>Path of file to copy</p>
+</dd>
+<dt>target_path: str</dt><dd><p>Path to copy file to</p>
+</dd>
+<dt>verbose: bool, default: True</dt><dd><p>If True print some helpful messages</p>
+</dd>
+</dl>
+<p>bool: True if successful</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.s3_recursive_list">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">s3_recursive_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s3_prefix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.s3_recursive_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all files contained in an s3 location recursively and also return their md5_sums
+NOTE: this is different from ‘aws s3 ls’ in that it will not return directories, but instead
+the full paths to the files contained in any directories (which is what s3 is actually tracking)</p>
+<dl class="simple">
+<dt>s3_prefix: str</dt><dd><p>s3 prefix which we want the returned files to have</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>all_files: list[str]</dt><dd><p>List of files (with full path including ‘s3://…’)</p>
+</dd>
+<dt>md5_sums: list[str]</dt><dd><p>md5 sum for each of the files as returned by boto3 ‘ETag’ field</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.sync_dir">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">sync_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.sync_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sync a directory from source to target (either local to s3, s3 to s3, s3 to local)</p>
+<dl class="simple">
+<dt>source: str</dt><dd><p>Directory from which we want to sync files</p>
+</dd>
+<dt>target: str</dt><dd><p>Directory to which all files will be synced</p>
+</dd>
+<dt>file_ext: str, default: None</dt><dd><p>Only sync files ending with this extension. Eg: ‘csv’ or ‘json’. If None, sync all files.</p>
+</dd>
+<dt>verbose: bool, default: True</dt><dd><p>If True, log some helpful messages</p>
+</dd>
+</dl>
+<p>bool: True if operation was successful</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.sync_dir_safe">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">sync_dir_safe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.sync_dir_safe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sync a directory from local to s3 by first ensuring that NONE of the files in <cite>target</cite>
+have been edited in <cite>source</cite> (new files can exist in <cite>source</cite> that are not in <cite>target</cite>)
+(NOTE: only checks files from <cite>target</cite> that exist in <cite>source</cite>)</p>
+<dl class="simple">
+<dt>source: str</dt><dd><p>Directory from which we want to sync files</p>
+</dd>
+<dt>target: str</dt><dd><p>Directory to which all files will be synced</p>
+</dd>
+<dt>verbose: bool, default: True</dt><dd><p>If True, log some helpful messages</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>files_fail_to_sync: list</dt><dd><p>List of files fail to sync to S3 due to md5sum mismatch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.cloud.s3.upload_file_to_s3">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">upload_file_to_s3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bucket_rel_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.upload_file_to_s3" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>bucket_name<span class="classifier">str</span></dt><dd><p>AWS S3 root bucket name</p>
+</dd>
+<dt>local_file_path: str</dt><dd><p>Local path to file we want to upload</p>
+</dd>
+<dt>bucket_rel_path: str</dt><dd><p>Path where file is uploaded, relative to S3 bucket root</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>s3_url: str</dt><dd><p>s3_url to which file was uploaded
+e.g. “s3://&lt;s3-bucket&gt;/&lt;task-name&gt;/&lt;wandb-run&gt;/&lt;model-weights-file&gt;”</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dgp.utils.cloud">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.utils.cloud" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
 
 
           </div>
@@ -112,7 +476,7 @@
       &copy;2021, Toyota Research Institute.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
