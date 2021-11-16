@@ -53,7 +53,7 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         force: true
-        github_token: ${{ secrets.github_token }}
+        github_token: ${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}
         branch: ${{ github.event.pull_request.head.repo.full_name }}
     - name: Coverage total fail - exit
       if: ${{github.event_name == 'pull_request' && steps.coverage-installer.outputs.coverageScore < env.COVERAGE_TOTAL}}
