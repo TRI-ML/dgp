@@ -16,6 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
       with:
+        token: '${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}'
         fetch-depth: ‘2’ #Original commit + code cov badge commit
     - name: Setup Python
       uses: actions/setup-python@master
