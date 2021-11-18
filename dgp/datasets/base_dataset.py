@@ -1,4 +1,4 @@
-# Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
+# Copyright 2021-2022 Toyota Research Institute.  All rights reserved.
 """Base dataset class compliant with the TRI-ML Data Governance Policy (DGP), which standardizes
 TRI's data formats.
 
@@ -163,6 +163,14 @@ class SceneContainer:
         """
         assert sample_idx_in_scene >= 0 and sample_idx_in_scene < len(self.datum_index)
         return self.samples[self.datum_index.coords["samples"][sample_idx_in_scene].data]
+
+    @lru_cache(maxsize=None)
+    def get_datum_type(self, datum_name):
+        """Get datum type based on the datum name"""
+        for datum in self.data:
+            if datum.id.name.lower() == datum_name.lower():
+                return datum.datum.WhichOneof('datum_oneof')
+        return None
 
     @property
     @lru_cache(maxsize=None)
@@ -1037,7 +1045,7 @@ class BaseDataset:
                            ] = scene_metadata_index
 
         with Pool(cpu_count()) as proc:
-            for scene_idx, _ in enumerate(self.scenes):
+            for scene_idx, scene in enumerate(self.scenes):  #pylint: disable=unused-variable
                 proc.apply_async(
                     BaseDataset.get_scene_metadata, args=(scene_idx), callback=_add_metadata_index_callback
                 )
@@ -1050,7 +1058,7 @@ class BaseDataset:
             # Note: For now, we're only merging/joining on
             # log-level metadata. We pick the first item in the metadata dataframe
             # grouped by the log_id.
-            # assert 'scene_name' in metadata.columns, 'scene_name not in provided metadata'
+            assert 'scene_name' in dataset_df.columns, 'scene_name not in provided metadata'
 
             # Drop log_id before joining tables (since this column is redundant across tables)
             orig_length = len(dataset_df)
