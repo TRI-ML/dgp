@@ -24,7 +24,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x17\x64gp/proto/dataset.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x16\x64gp/proto/remote.proto\x1a\x15\x64gp/proto/scene.proto\x1a\x1a\x64gp/proto/statistics.proto\"\xec\x05\n\x08Ontology\x12\x35\n\nname_to_id\x18\x01 \x03(\x0b\x32!.dgp.proto.Ontology.NameToIdEntry\x12\x35\n\nid_to_name\x18\x02 \x03(\x0b\x32!.dgp.proto.Ontology.IdToNameEntry\x12\x33\n\x08\x63olormap\x18\x03 \x03(\x0b\x32!.dgp.proto.Ontology.ColormapEntry\x12\x31\n\x07isthing\x18\x04 \x03(\x0b\x32 .dgp.proto.Ontology.IsthingEntry\x12=\n\rsupercategory\x18\x05 \x03(\x0b\x32&.dgp.proto.Ontology.SupercategoryEntry\x12\x42\n\x10segmentation_ids\x18\x06 \x03(\x0b\x32(.dgp.proto.Ontology.SegmentationIdsEntry\x12\x11\n\tignore_id\x18\x07 \x01(\x03\x1a/\n\rNameToIdEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x1a/\n\rIdToNameEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a(\n\x05\x43olor\x12\t\n\x01r\x18\x01 \x01(\x05\x12\t\n\x01g\x18\x02 \x01(\x05\x12\t\n\x01\x62\x18\x03 \x01(\x05\x1aJ\n\rColormapEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.dgp.proto.Ontology.Color:\x02\x38\x01\x1a.\n\x0cIsthingEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\x1a\x34\n\x12SupercategoryEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x36\n\x14SegmentationIdsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\"\xbf\x03\n\x0f\x44\x61tasetMetadata\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x15\n\rcreation_date\x18\x03 \x01(\t\x12\x0f\n\x07\x63reator\x18\x04 \x01(\t\x12*\n\x0b\x62ucket_path\x18\x05 \x01(\x0b\x32\x15.dgp.proto.RemotePath\x12\'\n\x08raw_path\x18\x06 \x01(\x0b\x32\x15.dgp.proto.RemotePath\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\x12\x38\n\x06origin\x18\x08 \x01(\x0e\x32(.dgp.proto.DatasetMetadata.DatasetOrigin\x12\"\n\x1a\x61vailable_annotation_types\x18\t \x03(\x05\x12\x30\n\nstatistics\x18\n \x01(\x0b\x32\x1c.dgp.proto.DatasetStatistics\x12\x18\n\x10\x66rame_per_second\x18\x0b \x01(\x02\x12&\n\x08metadata\x18\x0c \x01(\x0b\x32\x14.google.protobuf.Any\")\n\rDatasetOrigin\x12\n\n\x06PUBLIC\x10\x00\x12\x0c\n\x08INTERNAL\x10\x01\"\xc7\x01\n\x0cSceneDataset\x12,\n\x08metadata\x18\x01 \x01(\x0b\x32\x1a.dgp.proto.DatasetMetadata\x12>\n\x0cscene_splits\x18\x02 \x03(\x0b\x32(.dgp.proto.SceneDataset.SceneSplitsEntry\x1aI\n\x10SceneSplitsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.dgp.proto.SceneFiles:\x02\x38\x01*?\n\x0c\x44\x61tasetSplit\x12\t\n\x05TRAIN\x10\x00\x12\x07\n\x03VAL\x10\x01\x12\x08\n\x04TEST\x10\x02\x12\x11\n\rTRAIN_OVERFIT\x10\x03\x62\x06proto3'
+  serialized_pb=b'\n\x17\x64gp/proto/dataset.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x16\x64gp/proto/remote.proto\x1a\x15\x64gp/proto/scene.proto\x1a\x1a\x64gp/proto/statistics.proto\"\xec\x05\n\x08Ontology\x12\x35\n\nname_to_id\x18\x01 \x03(\x0b\x32!.dgp.proto.Ontology.NameToIdEntry\x12\x35\n\nid_to_name\x18\x02 \x03(\x0b\x32!.dgp.proto.Ontology.IdToNameEntry\x12\x33\n\x08\x63olormap\x18\x03 \x03(\x0b\x32!.dgp.proto.Ontology.ColormapEntry\x12\x31\n\x07isthing\x18\x04 \x03(\x0b\x32 .dgp.proto.Ontology.IsthingEntry\x12=\n\rsupercategory\x18\x05 \x03(\x0b\x32&.dgp.proto.Ontology.SupercategoryEntry\x12\x42\n\x10segmentation_ids\x18\x06 \x03(\x0b\x32(.dgp.proto.Ontology.SegmentationIdsEntry\x12\x11\n\tignore_id\x18\x07 \x01(\x03\x1a/\n\rNameToIdEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x1a/\n\rIdToNameEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a(\n\x05\x43olor\x12\t\n\x01r\x18\x01 \x01(\x05\x12\t\n\x01g\x18\x02 \x01(\x05\x12\t\n\x01\x62\x18\x03 \x01(\x05\x1aJ\n\rColormapEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.dgp.proto.Ontology.Color:\x02\x38\x01\x1a.\n\x0cIsthingEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\x1a\x34\n\x12SupercategoryEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x36\n\x14SegmentationIdsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\"\xbf\x03\n\x0f\x44\x61tasetMetadata\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x15\n\rcreation_date\x18\x03 \x01(\t\x12\x0f\n\x07\x63reator\x18\x04 \x01(\t\x12*\n\x0b\x62ucket_path\x18\x05 \x01(\x0b\x32\x15.dgp.proto.RemotePath\x12\'\n\x08raw_path\x18\x06 \x01(\x0b\x32\x15.dgp.proto.RemotePath\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\x12\x38\n\x06origin\x18\x08 \x01(\x0e\x32(.dgp.proto.DatasetMetadata.DatasetOrigin\x12\"\n\x1a\x61vailable_annotation_types\x18\t \x03(\x05\x12\x30\n\nstatistics\x18\n \x01(\x0b\x32\x1c.dgp.proto.DatasetStatistics\x12\x18\n\x10\x66rame_per_second\x18\x0b \x01(\x02\x12&\n\x08metadata\x18\x0c \x01(\x0b\x32\x14.google.protobuf.Any\")\n\rDatasetOrigin\x12\n\n\x06PUBLIC\x10\x00\x12\x0c\n\x08INTERNAL\x10\x01\"\xc7\x01\n\x0cSceneDataset\x12,\n\x08metadata\x18\x01 \x01(\x0b\x32\x1a.dgp.proto.DatasetMetadata\x12>\n\x0cscene_splits\x18\x02 \x03(\x0b\x32(.dgp.proto.SceneDataset.SceneSplitsEntry\x1aI\n\x10SceneSplitsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.dgp.proto.SceneFiles:\x02\x38\x01\"\xbe\x01\n\x06\x41gents\x12,\n\x08metadata\x18\x01 \x01(\x0b\x32\x1a.dgp.proto.DatasetMetadata\x12:\n\ragents_splits\x18\x02 \x03(\x0b\x32#.dgp.proto.Agents.AgentsSplitsEntry\x1aJ\n\x11\x41gentsSplitsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.dgp.proto.AgentFiles:\x02\x38\x01\"\x1f\n\nAgentFiles\x12\x11\n\tfilenames\x18\x01 \x03(\t*?\n\x0c\x44\x61tasetSplit\x12\t\n\x05TRAIN\x10\x00\x12\x07\n\x03VAL\x10\x01\x12\x08\n\x04TEST\x10\x02\x12\x11\n\rTRAIN_OVERFIT\x10\x03\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,dgp_dot_proto_dot_remote__pb2.DESCRIPTOR,dgp_dot_proto_dot_scene__pb2.DESCRIPTOR,dgp_dot_proto_dot_statistics__pb2.DESCRIPTOR,])
 
@@ -58,8 +58,8 @@ _DATASETSPLIT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1543,
-  serialized_end=1606,
+  serialized_start=1769,
+  serialized_end=1832,
 )
 _sym_db.RegisterEnumDescriptor(_DATASETSPLIT)
 
@@ -629,6 +629,115 @@ _SCENEDATASET = _descriptor.Descriptor(
   serialized_end=1541,
 )
 
+
+_AGENTS_AGENTSSPLITSENTRY = _descriptor.Descriptor(
+  name='AgentsSplitsEntry',
+  full_name='dgp.proto.Agents.AgentsSplitsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.Agents.AgentsSplitsEntry.key', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='dgp.proto.Agents.AgentsSplitsEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1660,
+  serialized_end=1734,
+)
+
+_AGENTS = _descriptor.Descriptor(
+  name='Agents',
+  full_name='dgp.proto.Agents',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='dgp.proto.Agents.metadata', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='agents_splits', full_name='dgp.proto.Agents.agents_splits', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_AGENTS_AGENTSSPLITSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1544,
+  serialized_end=1734,
+)
+
+
+_AGENTFILES = _descriptor.Descriptor(
+  name='AgentFiles',
+  full_name='dgp.proto.AgentFiles',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='filenames', full_name='dgp.proto.AgentFiles.filenames', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1736,
+  serialized_end=1767,
+)
+
 _ONTOLOGY_NAMETOIDENTRY.containing_type = _ONTOLOGY
 _ONTOLOGY_IDTONAMEENTRY.containing_type = _ONTOLOGY
 _ONTOLOGY_COLOR.containing_type = _ONTOLOGY
@@ -653,9 +762,15 @@ _SCENEDATASET_SCENESPLITSENTRY.fields_by_name['value'].message_type = dgp_dot_pr
 _SCENEDATASET_SCENESPLITSENTRY.containing_type = _SCENEDATASET
 _SCENEDATASET.fields_by_name['metadata'].message_type = _DATASETMETADATA
 _SCENEDATASET.fields_by_name['scene_splits'].message_type = _SCENEDATASET_SCENESPLITSENTRY
+_AGENTS_AGENTSSPLITSENTRY.fields_by_name['value'].message_type = _AGENTFILES
+_AGENTS_AGENTSSPLITSENTRY.containing_type = _AGENTS
+_AGENTS.fields_by_name['metadata'].message_type = _DATASETMETADATA
+_AGENTS.fields_by_name['agents_splits'].message_type = _AGENTS_AGENTSSPLITSENTRY
 DESCRIPTOR.message_types_by_name['Ontology'] = _ONTOLOGY
 DESCRIPTOR.message_types_by_name['DatasetMetadata'] = _DATASETMETADATA
 DESCRIPTOR.message_types_by_name['SceneDataset'] = _SCENEDATASET
+DESCRIPTOR.message_types_by_name['Agents'] = _AGENTS
+DESCRIPTOR.message_types_by_name['AgentFiles'] = _AGENTFILES
 DESCRIPTOR.enum_types_by_name['DatasetSplit'] = _DATASETSPLIT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -744,6 +859,28 @@ SceneDataset = _reflection.GeneratedProtocolMessageType('SceneDataset', (_messag
 _sym_db.RegisterMessage(SceneDataset)
 _sym_db.RegisterMessage(SceneDataset.SceneSplitsEntry)
 
+Agents = _reflection.GeneratedProtocolMessageType('Agents', (_message.Message,), {
+
+  'AgentsSplitsEntry' : _reflection.GeneratedProtocolMessageType('AgentsSplitsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _AGENTS_AGENTSSPLITSENTRY,
+    '__module__' : 'dgp.proto.dataset_pb2'
+    # @@protoc_insertion_point(class_scope:dgp.proto.Agents.AgentsSplitsEntry)
+    })
+  ,
+  'DESCRIPTOR' : _AGENTS,
+  '__module__' : 'dgp.proto.dataset_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.Agents)
+  })
+_sym_db.RegisterMessage(Agents)
+_sym_db.RegisterMessage(Agents.AgentsSplitsEntry)
+
+AgentFiles = _reflection.GeneratedProtocolMessageType('AgentFiles', (_message.Message,), {
+  'DESCRIPTOR' : _AGENTFILES,
+  '__module__' : 'dgp.proto.dataset_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.AgentFiles)
+  })
+_sym_db.RegisterMessage(AgentFiles)
+
 
 _ONTOLOGY_NAMETOIDENTRY._options = None
 _ONTOLOGY_IDTONAMEENTRY._options = None
@@ -752,4 +889,5 @@ _ONTOLOGY_ISTHINGENTRY._options = None
 _ONTOLOGY_SUPERCATEGORYENTRY._options = None
 _ONTOLOGY_SEGMENTATIONIDSENTRY._options = None
 _SCENEDATASET_SCENESPLITSENTRY._options = None
+_AGENTS_AGENTSSPLITSENTRY._options = None
 # @@protoc_insertion_point(module_scope)

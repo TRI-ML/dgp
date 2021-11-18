@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18\x64gp/proto/ontology.proto\x12\x0c\x64gp.proto.v2\"\xab\x01\n\x0cOntologyItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\r\x12/\n\x05\x63olor\x18\x03 \x01(\x0b\x32 .dgp.proto.v2.OntologyItem.Color\x12\x0f\n\x07isthing\x18\x04 \x01(\x08\x12\x15\n\rsupercategory\x18\x05 \x01(\t\x1a(\n\x05\x43olor\x12\t\n\x01r\x18\x01 \x01(\r\x12\t\n\x01g\x18\x02 \x01(\r\x12\t\n\x01\x62\x18\x03 \x01(\r\"5\n\x08Ontology\x12)\n\x05items\x18\x01 \x03(\x0b\x32\x1a.dgp.proto.v2.OntologyItemb\x06proto3'
+  serialized_pb=b'\n\x18\x64gp/proto/ontology.proto\x12\x0c\x64gp.proto.v2\"\xab\x01\n\x0cOntologyItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\r\x12/\n\x05\x63olor\x18\x03 \x01(\x0b\x32 .dgp.proto.v2.OntologyItem.Color\x12\x0f\n\x07isthing\x18\x04 \x01(\x08\x12\x15\n\rsupercategory\x18\x05 \x01(\t\x1a(\n\x05\x43olor\x12\t\n\x01r\x18\x01 \x01(\r\x12\t\n\x01g\x18\x02 \x01(\r\x12\t\n\x01\x62\x18\x03 \x01(\r\"5\n\x08Ontology\x12)\n\x05items\x18\x01 \x03(\x0b\x32\x1a.dgp.proto.v2.OntologyItem\"K\n\x13\x46\x65\x61tureOntologyItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\r\x12\x1a\n\x12\x66\x65\x61ture_value_type\x18\x03 \x01(\x05\"C\n\x0f\x46\x65\x61tureOntology\x12\x30\n\x05items\x18\x01 \x03(\x0b\x32!.dgp.proto.v2.FeatureOntologyItemb\x06proto3'
 )
 
 
@@ -161,11 +161,92 @@ _ONTOLOGY = _descriptor.Descriptor(
   serialized_end=269,
 )
 
+
+_FEATUREONTOLOGYITEM = _descriptor.Descriptor(
+  name='FeatureOntologyItem',
+  full_name='dgp.proto.v2.FeatureOntologyItem',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='dgp.proto.v2.FeatureOntologyItem.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='dgp.proto.v2.FeatureOntologyItem.id', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='feature_value_type', full_name='dgp.proto.v2.FeatureOntologyItem.feature_value_type', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=271,
+  serialized_end=346,
+)
+
+
+_FEATUREONTOLOGY = _descriptor.Descriptor(
+  name='FeatureOntology',
+  full_name='dgp.proto.v2.FeatureOntology',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='items', full_name='dgp.proto.v2.FeatureOntology.items', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=348,
+  serialized_end=415,
+)
+
 _ONTOLOGYITEM_COLOR.containing_type = _ONTOLOGYITEM
 _ONTOLOGYITEM.fields_by_name['color'].message_type = _ONTOLOGYITEM_COLOR
 _ONTOLOGY.fields_by_name['items'].message_type = _ONTOLOGYITEM
+_FEATUREONTOLOGY.fields_by_name['items'].message_type = _FEATUREONTOLOGYITEM
 DESCRIPTOR.message_types_by_name['OntologyItem'] = _ONTOLOGYITEM
 DESCRIPTOR.message_types_by_name['Ontology'] = _ONTOLOGY
+DESCRIPTOR.message_types_by_name['FeatureOntologyItem'] = _FEATUREONTOLOGYITEM
+DESCRIPTOR.message_types_by_name['FeatureOntology'] = _FEATUREONTOLOGY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 OntologyItem = _reflection.GeneratedProtocolMessageType('OntologyItem', (_message.Message,), {
@@ -189,6 +270,20 @@ Ontology = _reflection.GeneratedProtocolMessageType('Ontology', (_message.Messag
   # @@protoc_insertion_point(class_scope:dgp.proto.v2.Ontology)
   })
 _sym_db.RegisterMessage(Ontology)
+
+FeatureOntologyItem = _reflection.GeneratedProtocolMessageType('FeatureOntologyItem', (_message.Message,), {
+  'DESCRIPTOR' : _FEATUREONTOLOGYITEM,
+  '__module__' : 'dgp.proto.ontology_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.v2.FeatureOntologyItem)
+  })
+_sym_db.RegisterMessage(FeatureOntologyItem)
+
+FeatureOntology = _reflection.GeneratedProtocolMessageType('FeatureOntology', (_message.Message,), {
+  'DESCRIPTOR' : _FEATUREONTOLOGY,
+  '__module__' : 'dgp.proto.ontology_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.v2.FeatureOntology)
+  })
+_sym_db.RegisterMessage(FeatureOntology)
 
 
 # @@protoc_insertion_point(module_scope)
