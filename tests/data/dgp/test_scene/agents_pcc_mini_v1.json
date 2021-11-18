@@ -1,0 +1,26 @@
+{
+  "agents_splits": {
+    "0": {
+      "filenames": [
+        "scene_01/agents_238ba18d1c9db1c73589e52dda56fcca6f60b2eb.json",
+        "scene_02/agents_66362c1248ba9eb1b94f650913f6f6782923706a.json"
+      ]
+    },
+    "1": {
+      "filenames": [
+        "scene_01/agents_238ba18d1c9db1c73589e52dda56fcca6f60b2eb.json",
+        "scene_02/agents_66362c1248ba9eb1b94f650913f6f6782923706a.json"
+      ]
+    }
+  },
+  "metadata": {
+    "available_annotation_types": [],
+    "creation_date": "2021-12-16",
+    "creator": "visak.kumar@tri.global",
+    "description": "agents of pcc mini dataset",
+    "frame_per_second": 0.0,
+    "name": "agents_pcc_mini",
+    "origin": "PUBLIC",
+    "version": "1"
+  }
+}
