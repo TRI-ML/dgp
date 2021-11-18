@@ -13,7 +13,6 @@ import "dgp/proto/scene.proto";
 import "dgp/proto/statistics.proto";
 
 
-// TODO: remove OntologyV1 once all ontology files upgraded to OntologyV2.
 // Dataset ontology
 message Ontology {
   // Dictionary maintaining the class name to unique class id mapping
@@ -39,6 +38,7 @@ enum DatasetSplit {
   TRAIN = 0;
   VAL = 1;
   TEST = 2;
+
   TRAIN_OVERFIT = 3;
 }
 
@@ -117,18 +117,50 @@ message DatasetMetadata {
 //  │   │   └── ...
 //  │   ├── rgb
 //  │   │   └── ...
+//  │   ├── agent_tracks
+//  │   │   └── agent_track_<hash>.json
+//  │   │   └── ...
+//  │   ├── agents_slices
+//  │   │   └── agent_slice<hash>.json
+//  │   │   └── ...
 //  |   └── ...
 //  │   └── scene_<scene_hash>.json
+//  │   └── agent_<agent_hash>.json
+//  │   └── map_<agent_hash>.json
 //  └── ...
 //  └── scene_dataset_v1.0.json
+//  └── agents_v1.0.json
+//  └── map_elements_v1.0.json
 //
 message SceneDataset {
   // Dataset-specific metadata
   DatasetMetadata metadata = 1;
 
-  // Dataset scenes
-  // List of scenes recorded for each dataset split (train/val/test) in this dataset.
+  // List of scenes recorded for each split (train/val/test) in this dataset.
   // Note: This corresponds to a particular task in the dataset.
   // Maps <DatasetSplit, Scenes>
   map<int32, SceneFiles> scene_splits = 2;
+}
+
+message Agents {
+  // Road actors in the scene (Pedestrians, vehicles, etc).
+  // Dataset-specific metadata
+  DatasetMetadata metadata = 1;
+
+  // List of SceneAgents recorded for each split (train/val/test) in this dataset.
+  // Note: This corresponds to a particular task in the dataset.
+  // Maps <DatasetSplit, SceneAgents>
+  map<int32, AgentFiles> agents_splits = 2;
+}
+
+// A collection of agent files.
+message AgentFiles {
+  // Relative file paths for the json files serialized from AgentGroup message.
+  //
+  // An AgentGroup message is serialized and stored under the following naming convention:
+  //    <scene_dir>/agents_<scene_hash>.json
+  // where <agents_hash> is the deterministic deterministic SHA1 hash hexdigest of a agentgroup and 
+  // served as the version of the scene, see dgp.utils.protobuf.generate_uid_from_pbobject
+  // for details.
+  repeated string filenames = 1;
 }
