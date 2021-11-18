@@ -1,4 +1,4 @@
-# Copyright 2021 Toyota Research Institute.  All rights reserved.
+# Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 import hashlib
 
 import cv2
@@ -30,7 +30,7 @@ class BoundingBox3D:
         location and class.
 
     color: tuple, default: (0, 0, 0)
-        RGB tuple for bounding box color
+        RGB tuple for bounding box color.
 
     attributes: dict, default: None
         Dictionary of attributes associated with bounding box. If None provided,
@@ -40,10 +40,16 @@ class BoundingBox3D:
         Number of LIDAR points associated with this bounding box.
 
     occlusion: int, default: 0
-        Occlusion state (KITTI3D style)
+        Occlusion state (KITTI3D style).
 
     truncation: float, default: 0
-        Fraction of truncation of object (KITTI3D style)
+        Fraction of truncation of object (KITTI3D style).
+
+    feature_ontology_type: dgp.proto.features.FeatureType
+        Type of feature of attributions.
+
+    sample_idx: int
+        index of sample in scene
     """
     def __init__(
         self,
@@ -55,7 +61,9 @@ class BoundingBox3D:
         attributes=None,
         num_points=0,
         occlusion=0,
-        truncation=0.0
+        truncation=0.0,
+        feature_ontology_type=None,
+        sample_idx=None
     ):
         assert isinstance(pose, Pose)
         assert isinstance(sizes, np.ndarray)
@@ -63,16 +71,15 @@ class BoundingBox3D:
 
         self._pose = pose
         self._sizes = sizes
-
         self._class_id = class_id
         self._instance_id = instance_id
         self._color = color
         self._attributes = dict(attributes) if attributes is not None else {}
-
-        # TODO: Define better defaults for occlusion/truncation
         self._num_points = num_points
         self._occlusion = occlusion
         self._truncation = truncation
+        self._feature_ontology_type = feature_ontology_type
+        self._sample_idx = sample_idx
 
     @property
     def pose(self):
@@ -113,6 +120,14 @@ class BoundingBox3D:
         return self._attributes
 
     @property
+    def feature_ontology_type(self):
+        return self._feature_ontology_type
+
+    @property
+    def sample_idx(self):
+        return self._sample_idx
+
+    @property
     def vectorize(self):
         """Get a np.ndarray of with 10 dimensions representing the 3D bounding box
 
@@ -120,7 +135,7 @@ class BoundingBox3D:
         -------
         box_3d: np.float32 array
             Box with coordinates (pose.quat.qw, pose.quat.qx, pose.quat.qy, pose.quat.qz,
-            pose.tvec.x, pose.tvec.y, pose.tvec.z, width, length, height)
+            pose.tvec.x, pose.tvec.y, pose.tvec.z, width, length, height).
         """
         return np.float32([
             self.pose.quat.elements[0],
@@ -186,12 +201,12 @@ class BoundingBox3D:
         Parameters
         ----------
         other: Pose
-            See `utils.pose.py`
+            See `utils.pose.py`.
 
         Returns
         ----------
         result: BoundingBox3D
-            Bounding box with transformed pose
+            Bounding box with transformed pose.
         """
         if isinstance(other, Pose):
             return BoundingBox3D(
@@ -230,7 +245,6 @@ class BoundingBox3D:
 
         class_name: str, default: None
             Class name of the bounding box.
-            TODO: make this a property of `self`?
 
         font_scale: float, default: 0.5
             Font scale used in text labels.
@@ -238,7 +252,7 @@ class BoundingBox3D:
         Returns
         ----------
         image: np.uint8 array
-            Rendered image (H, W, 3)
+            Rendered image (H, W, 3).
         """
         if (
             not isinstance(image, np.ndarray) or image.dtype != np.uint8 or len(image.shape) != 3 or image.shape[2] != 3
@@ -252,7 +266,6 @@ class BoundingBox3D:
         if (self.corners[:, 2] <= 0).any():
             return image
 
-        # TODO: find a nice way to use class colors from ontology colormap,
         # while preserving ability to debug object orientation easily
         COLORS = [RED, GREEN, BLUE]
 
@@ -294,7 +307,7 @@ class BoundingBox3D:
         Returns
         -------
         BoundingBox3D.pb2
-            As defined in `proto/annotations.proto`
+            As defined in `proto/annotations.proto`.
         """
         return annotations_pb2.BoundingBox3D(
             pose=self._pose.to_proto(),
@@ -302,5 +315,5 @@ class BoundingBox3D:
             length=self._sizes[1],
             height=self._sizes[2],
             occlusion=self._occlusion,
-            truncation=self._truncation
+            truncation=self._truncation,
         )

@@ -1,0 +1,16 @@
+{
+  "agent_ontologies": {
+    "0": "16322f7584a52ca979ed1c7049f17a7e420e86b1",
+    "1": "16322f7584a52ca979ed1c7049f17a7e420e86b1"
+  },
+  "agent_tracks_file": "agent/agent_tracks_95f7a4221d5de5b1de78bc1cea4022e6d000d807.json",
+  "agents_slices_file": "agent/agents_slices_d2b496390be1e50fa6774d10c5dc0c82eebb7a7f.json",
+  "creation_date": "2021-12-17T06:38:58.063056Z",
+  "description": "",
+  "feature_ontologies": {
+    "5": "5db09fd03b2d9f74b7871c86d7c40cbaac85cc66"
+  },
+  "log": "TRI_INTERNAL_LOG",
+  "metadata": {},
+  "name": ""
+}
