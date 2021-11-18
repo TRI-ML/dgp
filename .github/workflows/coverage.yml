@@ -12,19 +12,19 @@ jobs:
     env:
       OS: ubuntu-18.04
       PYTHON: '3.6'
-      COVERAGE_TOTAL: 38 #Coverage threshold percentage
+      COVERAGE_TOTAL: 38 # Coverage threshold percentage
     steps:
     - name: Checkout (admin token)
-      if: ${{github.event_name != 'pull_request'}} #We don't want to use the admin token for PR flows
+      if: ${{github.event_name != 'pull_request'}} # We don't want to use the admin token for PR flows
       uses: actions/checkout@master
       with:
         token: '${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}'
-        fetch-depth: ‘2’ #Original commit + code cov badge commit
+        fetch-depth: ‘2’ # Original commit + code cov badge commit
     - name: Checkout (normal flow)
       if: ${{github.event_name == 'pull_request'}}
       uses: actions/checkout@master
       with:
-        fetch-depth: ‘2’ #Original commit + code cov badge commit
+        fetch-depth: ‘2’ # Original commit + code cov badge commit
     - name: Setup Python
       uses: actions/setup-python@master
       with:
