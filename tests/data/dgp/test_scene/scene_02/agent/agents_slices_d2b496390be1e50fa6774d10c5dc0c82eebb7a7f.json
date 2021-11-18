@@ -1,0 +1,1439 @@
+{
+  "agents_slices": [
+    {
+      "agent_snapshots": [
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.5350000858306885,
+              "length": 6.580999851226807,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.9997594952583313,
+                  "qx": -0.011796706356108189,
+                  "qy": 0.006395071279257536,
+                  "qz": -0.017344560474157333
+                },
+                "translation": {
+                  "x": 81.65145111083984,
+                  "y": -0.10194900631904602,
+                  "z": 2.857138156890869
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.924999952316284
+            },
+            "class_id": 1,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 443946110
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.5260000228881836,
+              "length": 4.5879998207092285,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.017323970794677734,
+                  "qx": -0.0064506432972848415,
+                  "qy": -0.01500175055116415,
+                  "qz": -0.999716579914093
+                },
+                "translation": {
+                  "x": -140.21432495117188,
+                  "y": 4.272097110748291,
+                  "z": 4.621768951416016
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.0480000972747803
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 497050057
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.9822822213172913,
+                  "qx": 0.0006012872327119112,
+                  "qy": -0.011873938143253326,
+                  "qz": -0.18703001737594604
+                },
+                "translation": {
+                  "x": 28.02912139892578,
+                  "y": 59.38059997558594,
+                  "z": 2.722515344619751
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 715214751
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.0480000972747803,
+              "length": 4.541999816894531,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.9998685717582703,
+                  "qx": -0.007044895552098751,
+                  "qy": 0.014414877630770206,
+                  "qz": -0.0023325427900999784
+                },
+                "translation": {
+                  "x": -21.85791015625,
+                  "y": 0.11974173039197922,
+                  "z": 1.067447304725647
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.503999948501587
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1545514913
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.3429999351501465,
+              "length": 6.236000061035156,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.7280698418617249,
+                  "qx": -0.010058393701910973,
+                  "qy": 0.00041911526932381094,
+                  "qz": -0.685429036617279
+                },
+                "translation": {
+                  "x": 17.649988174438477,
+                  "y": -17.243568420410156,
+                  "z": 1.7026660442352295
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.746999979019165
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1740587446
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.940000057220459,
+              "length": 4.276000022888184,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.6445804238319397,
+                  "qx": -0.014832522720098495,
+                  "qy": -0.007172481622546911,
+                  "qz": -0.7643589377403259
+                },
+                "translation": {
+                  "x": -60.11799621582031,
+                  "y": 79.25965881347656,
+                  "z": 3.0702807903289795
+                }
+              },
+              "truncation": 0.0,
+              "width": 1.906000018119812
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1793247213
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.0,
+              "length": 5.089000225067139,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.002845065202564001,
+                  "qx": 0.003493674099445343,
+                  "qy": -0.015094914473593235,
+                  "qz": -0.9998759031295776
+                },
+                "translation": {
+                  "x": -103.35440063476562,
+                  "y": 3.8771679401397705,
+                  "z": 2.8237102031707764
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.493000030517578
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1868710109
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.9822822213172913,
+                  "qx": 0.0006012872327119112,
+                  "qy": -0.011873938143253326,
+                  "qz": -0.18703001737594604
+                },
+                "translation": {
+                  "x": 35.048004150390625,
+                  "y": 55.269874572753906,
+                  "z": 2.9020373821258545
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 2110970748
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.5765007138252258,
+                  "qx": -0.004395258147269487,
+                  "qy": -0.026908650994300842,
+                  "qz": -0.816641628742218
+                },
+                "translation": {
+                  "x": 44.97602462768555,
+                  "y": 76.19868469238281,
+                  "z": 1.8284701108932495
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 2556950328
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.5839999914169312,
+              "length": 4.5879998207092285,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.9902671575546265,
+                  "qx": -0.004616985563188791,
+                  "qy": 0.0029828620608896017,
+                  "qz": -0.1390710473060608
+                },
+                "translation": {
+                  "x": 94.02996826171875,
+                  "y": -2.3546626567840576,
+                  "z": 2.526512384414673
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.0480000972747803
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3215172593
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.496999979019165,
+              "length": 4.433000087738037,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.005534684285521507,
+                  "qx": -0.0005146409384906292,
+                  "qy": 0.009972890838980675,
+                  "qz": -0.9999347925186157
+                },
+                "translation": {
+                  "x": 70.5826644897461,
+                  "y": 4.1860504150390625,
+                  "z": 1.9342620372772217
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.117000102996826
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3357023490
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 3.4040000438690186,
+              "length": 8.859000205993652,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.981942892074585,
+                  "qx": 0.003150931093841791,
+                  "qy": -0.01142834685742855,
+                  "qz": -0.1888056844472885
+                },
+                "translation": {
+                  "x": 24.85007095336914,
+                  "y": 61.7719841003418,
+                  "z": 3.457655668258667
+                }
+              },
+              "truncation": 0.0,
+              "width": 3.2660000324249268
+            },
+            "class_id": 1,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3527146084
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.2622801661491394,
+                  "qx": -0.005982918199151754,
+                  "qy": -0.028969936072826385,
+                  "qz": -0.9645382761955261
+                },
+                "translation": {
+                  "x": 26.36121940612793,
+                  "y": 70.80889129638672,
+                  "z": 3.3914413452148438
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3668932913
+          },
+          "slice_id": {
+            "index": "0",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:10.027900Z"
+          }
+        }
+      ],
+      "slice_id": {
+        "index": "0",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "",
+        "timestamp": "2464-11-12T01:04:10.027900Z"
+      }
+    },
+    {
+      "agent_snapshots": [
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.5350000858306885,
+              "length": 6.580999851226807,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.9998056292533875,
+                  "qx": -0.007635264191776514,
+                  "qy": 0.005473369266837835,
+                  "qz": -0.01733178272843361
+                },
+                "translation": {
+                  "x": 80.69873809814453,
+                  "y": -0.1152145266532898,
+                  "z": 2.9926724433898926
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.924999952316284
+            },
+            "class_id": 1,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 443946110
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.5260000228881836,
+              "length": 4.5879998207092285,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.017290623858571053,
+                  "qx": -0.005602036137133837,
+                  "qy": -0.015066085383296013,
+                  "qz": -0.9997212886810303
+                },
+                "translation": {
+                  "x": -142.98526000976562,
+                  "y": 4.311714172363281,
+                  "z": 4.408964157104492
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.0480000972747803
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 497050057
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.9822831749916077,
+                  "qx": 0.000837550382129848,
+                  "qy": -0.011056852526962757,
+                  "qz": -0.18707425892353058
+                },
+                "translation": {
+                  "x": 26.761804580688477,
+                  "y": 59.383480072021484,
+                  "z": 2.7588562965393066
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 715214751
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.0480000972747803,
+              "length": 4.541999816894531,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.9999066591262817,
+                  "qx": -0.009334825910627842,
+                  "qy": 0.009737085551023483,
+                  "qz": -0.0021829111501574516
+                },
+                "translation": {
+                  "x": -21.707393646240234,
+                  "y": 0.09756964445114136,
+                  "z": 1.0177068710327148
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.503999948501587
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1545514913
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.3429999351501465,
+              "length": 6.236000061035156,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.7281010746955872,
+                  "qx": -0.009535321965813637,
+                  "qy": -0.00025183489196933806,
+                  "qz": -0.6854034066200256
+                },
+                "translation": {
+                  "x": 16.39154052734375,
+                  "y": -17.24181365966797,
+                  "z": 1.7335023880004883
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.746999979019165
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1740587446
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.940000057220459,
+              "length": 4.276000022888184,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.6446085572242737,
+                  "qx": -0.014235686510801315,
+                  "qy": -0.007779168430715799,
+                  "qz": -0.7643406391143799
+                },
+                "translation": {
+                  "x": -61.38762283325195,
+                  "y": 79.2543716430664,
+                  "z": 2.954207420349121
+                }
+              },
+              "truncation": 0.0,
+              "width": 1.906000018119812
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1793247213
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.0,
+              "length": 5.089000225067139,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.002811012091115117,
+                  "qx": 0.004341276828199625,
+                  "qy": -0.015171059407293797,
+                  "qz": -0.999871551990509
+                },
+                "translation": {
+                  "x": -106.2027816772461,
+                  "y": 3.89918851852417,
+                  "z": 2.6909754276275635
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.493000030517578
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1868710109
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.9822831749916077,
+                  "qx": 0.000837550382129848,
+                  "qy": -0.011056852526962757,
+                  "qz": -0.18707425892353058
+                },
+                "translation": {
+                  "x": 33.78075408935547,
+                  "y": 55.2734375,
+                  "z": 2.9509127140045166
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 2110970748
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.5764856338500977,
+                  "qx": -0.003657097229734063,
+                  "qy": -0.02648497000336647,
+                  "qz": -0.816669762134552
+                },
+                "translation": {
+                  "x": 43.70863342285156,
+                  "y": 76.2030029296875,
+                  "z": 1.8908634185791016
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 2556950328
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.5839999914169312,
+              "length": 4.5879998207092285,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.9874512553215027,
+                  "qx": -0.005030833184719086,
+                  "qy": 0.0016755644464865327,
+                  "qz": -0.157834991812706
+                },
+                "translation": {
+                  "x": 93.21247863769531,
+                  "y": -2.521613121032715,
+                  "z": 2.6894724369049072
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.0480000972747803
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3215172593
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.496999979019165,
+              "length": 4.433000087738037,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.005479747895151377,
+                  "qx": 0.00033152970718219876,
+                  "qy": 0.009802471846342087,
+                  "qz": -0.9999368786811829
+                },
+                "translation": {
+                  "x": 68.28878784179688,
+                  "y": 4.205092430114746,
+                  "z": 2.0040886402130127
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.117000102996826
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3357023490
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 3.4040000438690186,
+              "length": 8.859000205993652,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.9819431900978088,
+                  "qx": 0.0033886495511978865,
+                  "qy": -0.01061156950891018,
+                  "qz": -0.18884776532649994
+                },
+                "translation": {
+                  "x": 23.58129119873047,
+                  "y": 61.77468490600586,
+                  "z": 3.4882349967956543
+                }
+              },
+              "truncation": 0.0,
+              "width": 3.2660000324249268
+            },
+            "class_id": 1,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3527146084
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.2622601389884949,
+                  "qx": -0.005144163500517607,
+                  "qy": -0.02882404997944832,
+                  "qz": -0.9645529389381409
+                },
+                "translation": {
+                  "x": 25.09170913696289,
+                  "y": 70.81172180175781,
+                  "z": 3.423156261444092
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3668932913
+          },
+          "slice_id": {
+            "index": "1",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:11.018358Z"
+          }
+        }
+      ],
+      "slice_id": {
+        "index": "1",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "",
+        "timestamp": "2464-11-12T01:04:11.018358Z"
+      }
+    },
+    {
+      "agent_snapshots": [
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.5350000858306885,
+              "length": 6.580999851226807,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.999833345413208,
+                  "qx": -0.003184402361512184,
+                  "qy": 0.004888547118753195,
+                  "qz": -0.01729912869632244
+                },
+                "translation": {
+                  "x": 79.73384857177734,
+                  "y": -0.12787212431430817,
+                  "z": 3.0728812217712402
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.924999952316284
+            },
+            "class_id": 1,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 443946110
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.5260000228881836,
+              "length": 4.5879998207092285,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.01724052242934704,
+                  "qx": -0.005091377068310976,
+                  "qy": -0.014926566742360592,
+                  "qz": -0.9997270107269287
+                },
+                "translation": {
+                  "x": -145.80316162109375,
+                  "y": 4.347755432128906,
+                  "z": 4.2897796630859375
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.0480000972747803
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 497050057
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.9822781682014465,
+                  "qx": 0.0008053065394051373,
+                  "qy": -0.010529161430895329,
+                  "qz": -0.18713133037090302
+                },
+                "translation": {
+                  "x": 25.475019454956055,
+                  "y": 59.385799407958984,
+                  "z": 2.801143169403076
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 715214751
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.0480000972747803,
+              "length": 4.541999816894531,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.9999181032180786,
+                  "qx": -0.011460283771157265,
+                  "qy": 0.005315970163792372,
+                  "qz": -0.0020359810441732407
+                },
+                "translation": {
+                  "x": -21.547117233276367,
+                  "y": 0.07429345697164536,
+                  "z": 0.9850212931632996
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.503999948501587
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1545514913
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.3429999351501465,
+              "length": 6.236000061035156,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.728141188621521,
+                  "qx": -0.009088844992220402,
+                  "qy": -0.0005355176981538534,
+                  "qz": -0.685366690158844
+                },
+                "translation": {
+                  "x": 15.114571571350098,
+                  "y": -17.240406036376953,
+                  "z": 1.7450923919677734
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.746999979019165
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1740587446
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.940000057220459,
+              "length": 4.276000022888184,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.6446499824523926,
+                  "qx": -0.013759286142885685,
+                  "qy": -0.008010011166334152,
+                  "qz": -0.7643120288848877
+                },
+                "translation": {
+                  "x": -62.67683410644531,
+                  "y": 79.24658966064453,
+                  "z": 2.9113972187042236
+                }
+              },
+              "truncation": 0.0,
+              "width": 1.906000018119812
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1793247213
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 2.0,
+              "length": 5.089000225067139,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.0027622622437775135,
+                  "qx": 0.004853914491832256,
+                  "qy": -0.01503837015479803,
+                  "qz": -0.9998713135719299
+                },
+                "translation": {
+                  "x": -109.10038757324219,
+                  "y": 3.919095039367676,
+                  "z": 2.6268694400787354
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.493000030517578
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 1868710109
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.9822781682014465,
+                  "qx": 0.0008053065394051373,
+                  "qy": -0.010529161430895329,
+                  "qz": -0.18713133037090302
+                },
+                "translation": {
+                  "x": 32.494239807128906,
+                  "y": 55.27650833129883,
+                  "z": 2.9993131160736084
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 2110970748
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.5764520168304443,
+                  "qx": -0.003312810556963086,
+                  "qy": -0.026082899421453476,
+                  "qz": -0.8167079091072083
+                },
+                "translation": {
+                  "x": 42.420806884765625,
+                  "y": 76.20748138427734,
+                  "z": 1.9549179077148438
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 2556950328
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.5839999914169312,
+              "length": 4.5879998207092285,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": 0.9842128753662109,
+                  "qx": -0.005269888322800398,
+                  "qy": 0.0007407291559502482,
+                  "qz": -0.17690882086753845
+                },
+                "translation": {
+                  "x": 92.37904357910156,
+                  "y": -2.709527015686035,
+                  "z": 2.79077410697937
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.0480000972747803
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3215172593
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.496999979019165,
+              "length": 4.433000087738037,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.005417759995907545,
+                  "qx": 0.00084189313929528,
+                  "qy": 0.00983800645917654,
+                  "qz": -0.999936580657959
+                },
+                "translation": {
+                  "x": 65.95511627197266,
+                  "y": 4.225173473358154,
+                  "z": 2.0243351459503174
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.117000102996826
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3357023490
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 3.4040000438690186,
+              "length": 8.859000205993652,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.9819381237030029,
+                  "qx": 0.0033573326654732227,
+                  "qy": -0.01008367445319891,
+                  "qz": -0.18890346586704254
+                },
+                "translation": {
+                  "x": 22.293487548828125,
+                  "y": 61.776451110839844,
+                  "z": 3.5278897285461426
+                }
+              },
+              "truncation": 0.0,
+              "width": 3.2660000324249268
+            },
+            "class_id": 1,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3527146084
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        },
+        {
+          "agent_snapshot_3D": {
+            "box": {
+              "height": 1.878000020980835,
+              "length": 4.605000019073486,
+              "occlusion": 0,
+              "pose": {
+                "rotation": {
+                  "qw": -0.2622191309928894,
+                  "qx": -0.004682827740907669,
+                  "qy": -0.028563635423779488,
+                  "qz": -0.9645741581916809
+                },
+                "translation": {
+                  "x": 23.80293846130371,
+                  "y": 70.81367492675781,
+                  "z": 3.4667258262634277
+                }
+              },
+              "truncation": 0.0,
+              "width": 2.119999885559082
+            },
+            "class_id": 2,
+            "feature_type": 5,
+            "features": [
+              "dynamic"
+            ],
+            "instance_id": 3668932913
+          },
+          "slice_id": {
+            "index": "2",
+            "log": "TRI_INTERNAL_LOG",
+            "name": "",
+            "timestamp": "2464-11-12T01:04:12.028828Z"
+          }
+        }
+      ],
+      "slice_id": {
+        "index": "2",
+        "log": "TRI_INTERNAL_LOG",
+        "name": "",
+        "timestamp": "2464-11-12T01:04:12.028828Z"
+      }
+    }
+  ],
+  "metadata": {}
+}
