@@ -14,9 +14,16 @@ jobs:
       PYTHON: '3.6'
       COVERAGE_TOTAL: 24 #Coverage threshold percentage
     steps:
-    - uses: actions/checkout@master
+    - name: Checkout (admin token)
+      if: ${{github.event_name == 'pull_request' #We don't want to use the admin token for PR flows
+      uses: actions/checkout@master
       with:
         token: '${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}'
+        fetch-depth: ‘2’ #Original commit + code cov badge commit
+    - name: Checkout (normal flow)
+      if: ${{github.event_name != 'pull_request'
+      uses: actions/checkout@master
+      with:
         fetch-depth: ‘2’ #Original commit + code cov badge commit
     - name: Setup Python
       uses: actions/setup-python@master
@@ -42,8 +49,8 @@ jobs:
     - name: Commit code coverage badge
       if: ${{ steps.changed_files.outputs.files_changed == 'true' && github.event_name != 'pull_request'}}
       run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
+        git config --global --replace-all user.name $(git log -1 --pretty=format:'%an' | xargs)
+        git config --global --replace-all user.name $(git log -1 --pretty=format:'%ae' | xargs)
         git add docs/coverage.svg
         git commit -m "test: update coverage.svg"
         git reset --soft HEAD~2
