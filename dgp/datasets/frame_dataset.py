@@ -1,4 +1,4 @@
-# Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
+# Copyright 2021-2022 Toyota Research Institute.  All rights reserved.
 """Dataset for handling frame-level (unordered) for unsupervised, self-supervised and supervised tasks.
 This dataset is compliant with the TRI-ML Dataset Governance Policy (DGP).
 
@@ -10,7 +10,23 @@ import time
 from functools import partial
 from multiprocessing import Pool, cpu_count
 
+import numpy as np
+import xarray as xr
+
+from dgp.constants import (ALL_ANNOTATION_TYPES, DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE)
 from dgp.datasets import BaseDataset, DatasetMetadata
+
+SUPPORTED_ANNOTATIONS_TABLE = xr.DataArray(
+    np.zeros((len(DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE), len(ALL_ANNOTATION_TYPES)), dtype=np.bool),
+    dims=["datum_types", "annotations"],
+    coords={
+        "datum_types": list(DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE),
+        "annotations": list(ALL_ANNOTATION_TYPES)
+    }
+)
+for datum_type_, annotations_ in DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE.items():
+    for annotation_ in annotations_:
+        SUPPORTED_ANNOTATIONS_TABLE.loc[datum_type_, annotations_] = True
 
 
 class _FrameDataset(BaseDataset):
