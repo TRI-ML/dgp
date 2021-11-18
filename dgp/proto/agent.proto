@@ -1,4 +1,4 @@
-// Copyright 2021 Toyota Research Institute.  All rights reserved.
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 // Definitions for agents within a dataset.
 syntax = "proto3";
 
@@ -10,48 +10,51 @@ import "dgp/proto/identifiers.proto";
 import "google/protobuf/timestamp.proto";
 
 
-// All agents in a robot session.
-message AgentGroup {
-  // Unique name for the group of agents in a scene
-  //
-  // Usually, group name is set as the hash of algorithm or label that generate
-  // the agents.
-  //
-  // For group without without unique names, generate a sha1 hash of
-  // all the AgentSnapshot keys combined.
-  string name = 1;
+message AgentSnapshot2D {
+  // Class identifier (should be in [0, num_classes - 1])
+  // For datasets supporting semantic segmentation and detection,
+  // num_classes corresponds to the number of segmentation classes.
+  // For datasets only supporting detection, this is the number of
+  // thing classes.
+  uint32 class_id = 1;
 
-  // Optional, short description of the group (~200 characters)
-  string description = 2;
+  // 2D box
+  BoundingBox2D box = 2;
 
-  // Log identifier
-  // Refer to dgp.identifiers.proto for more information.
-  string log = 3;
+  // Other fields useful for downstream metric computation.
+  uint32 area = 3;
+  
+  // Refer to crowd box in coco dataset.
+  bool iscrowd = 4;
 
-  // List of agent slices corresponding to this scene, each slice contains
-  // agent snapshots from one sample in the scene.
-  string agents_slices_file = 4;
+  // Agent identifier
+  uint32 instance_id = 5;
 
-  // List of agent tracks in this scene.
-  string agent_tracks_file = 5;
+  // List of feature values. This is used to store `agent` states. The schema
+  // is defined in feature ontology (i.e., parked car, pedestrian intent).
+  repeated string features = 6;
 
-  // Optional metadata
-  map<string, google.protobuf.Any> metadata = 6;
+  // The type of feature ontology defined in FeatureType in features.proto.
+  uint32 feature_type = 7;
+}
 
-  // Date and timestamp of agent group creation
-  google.protobuf.Timestamp creation_date = 7;
+message AgentSnapshot3D {
+  // Class identifier. Should be in range [0, num_classes - 1].
+  uint32 class_id = 1;
 
-  // Task-specific feature ontologies
-  // Ontologies are stored under <scene_dir>/feature_ontology/<ontology_sha1>.json
-  // Maps dgp.proto.FeatureType (Agent_3D, EGO_INTENTION, etc) to the filename
-  // containing the ontology for the specific FeatureType/Task.
-  map<int32, string> feature_ontologies = 8;
+  // 3D box, the pose of box is in sensor coordinate.
+  BoundingBox3D box = 2;
 
-  // Task-specific agent ontologies
-  // Agent ontologies are stored under <scene_dir>/ontology/<ontology_sha1>.json
-  // Maps dgp.proto.AnnotationType (bounding_box_3d, etc) to the filename
-  // containing the ontology for the specific AgentType/Task.
-  map<int32, string> agent_ontologies = 9;
+  // Instance identifier for this agent.
+  // This needs to be unique to a scene.
+  uint32 instance_id = 3;
+
+  // List of feature values. This is used to stored `agent` states. The schema
+  // is defined in feature ontology (i.e., parked car, pedestrian intent).
+  repeated string features = 4;
+
+  // The type of feature ontology defined in FeatureType in features.proto.
+  uint32 feature_type = 5;
 }
 
 // AgentSnapshot that takes values from one of agent types.
@@ -72,7 +75,8 @@ message AgentSnapshot {
 
 message AgentsSlice {
   // Unique slice identifier (See dgp.idenfiers.proto)
-  // Copy from sample ID to ensure one-one match between a agent slice and sample
+  // Copy from unique sample identifier (See dgp.sample.proto) to ensure one-one match 
+  // between a agent slice and sample
   // in a scene.
   DatumId slice_id = 1;
 
@@ -89,10 +93,13 @@ message AgentsSlices {
 }
 
 message AgentTrack {
+  // AgentTrack is a track of a single agent in the scene.
   // Class identifier (should be in [0, num_classes - 1])
   uint32 class_id = 1;
+
   // Agent identifier
   uint32 instance_id = 2;
+  
   // List of agent snapshots encapsulated in the track
   repeated AgentSnapshot agent_snapshots = 3;
 
@@ -107,48 +114,46 @@ message AgentTracks {
   map<string, google.protobuf.Any> metadata = 2;
 }
 
-message AgentSnapshot2D {
-  // Class identifier (should be in [0, num_classes - 1])
-  // For datasets supporting semantic segmentation and detection,
-  // num_classes corresponds to the number of segmentation classes.
-  // For datasets only supporting detection, this is the number of
-  // thing classes.
-  uint32 class_id = 1;
+// All agents in a scene.
+message AgentGroup {
+  // Unique name for the group of agents in a scene.
+  //
+  // Usually, group name is set as the hash of algorithm or label that generate
+  // the agents.
+  //
+  // For group without unique names, generate a sha1 hash of
+  // all the AgentSnapshot keys combined.
+  string name = 1;
 
-  // 2D box
-  BoundingBox2D box = 2;
+  // Optional, short description of the group (~200 characters).
+  string description = 2;
 
-  // Other fields useful for downstream metric computation.
-  uint32 area = 3;
-  bool iscrowd = 4;
+  // Log identifier
+  // Refer to dgp.identifiers.proto for more information.
+  string log = 3;
 
-  // Agent identifier
-  uint32 instance_id = 5;
+  // List of agent slices corresponding to this scene, each slice contains
+  // agent snapshots from one sample in the scene.
+  string agents_slices_file = 4;
 
-  // list of feature values. This is used to stored `agent` states. The schema
-  // is defined in feature ontology (i.e.,parked car, pedestrian intent).
-  repeated string features = 6;
+  // List of agent tracks in this scene.
+  string agent_tracks_file = 5;
 
-  // The type of feature ontology defined in FeatureType in features.proto.
-  int32 feature_type = 7;
+  // Optional metadata
+  map<string, google.protobuf.Any> metadata = 6;
+
+  // Date and timestamp of agent group creation.
+  google.protobuf.Timestamp creation_date = 7;
+
+  // Task-specific feature ontologies.
+  // Ontologies are stored under <scene_dir>/feature_ontology/<ontology_sha1>.json
+  // Maps dgp.proto.FeatureType (Agent_3D, EGO_INTENTION, etc) to the filename
+  // containing the ontology for the specific FeatureType/Task.
+  map<int32, string> feature_ontologies = 8;
+
+  // Task-specific agent ontologies.
+  // Agent ontologies are stored under <scene_dir>/ontology/<ontology_sha1>.json
+  // Maps dgp.proto.AnnotationType (bounding_box_3d, etc) to the filename
+  // containing the ontology for the specific AgentType/Task.
+  map<int32, string> agent_ontologies = 9;
 }
-
-message AgentSnapshot3D {
-  // Class identifier. Should be in range [0, num_classes - 1].
-  uint32 class_id = 1;
-
-  // 3D box, the pose of box is in sensor coordinate.
-  BoundingBox3D box = 2;
-
-  // Instance identifier for this agent.
-  // This needs to be unique to a scene.
-  uint32 instance_id = 3;
-
-  // list of feature values. This is used to stored `agent` states. The schema
-  // is defined in feature ontology (i.e.,parked car, pedestrian intent).
-  repeated string features = 4;
-
-  // The type of feature ontology defined in FeatureType in features.proto.
-  int32 feature_type = 5;
-}
-

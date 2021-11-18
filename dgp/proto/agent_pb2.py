@@ -23,11 +23,449 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15\x64gp/proto/agent.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x1b\x64gp/proto/annotations.proto\x1a\x1b\x64gp/proto/identifiers.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa6\x04\n\nAgentGroup\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0b\n\x03log\x18\x03 \x01(\t\x12\x1a\n\x12\x61gents_slices_file\x18\x04 \x01(\t\x12\x19\n\x11\x61gent_tracks_file\x18\x05 \x01(\t\x12\x35\n\x08metadata\x18\x06 \x03(\x0b\x32#.dgp.proto.AgentGroup.MetadataEntry\x12\x31\n\rcreation_date\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12H\n\x12\x66\x65\x61ture_ontologies\x18\x08 \x03(\x0b\x32,.dgp.proto.AgentGroup.FeatureOntologiesEntry\x12\x44\n\x10\x61gent_ontologies\x18\t \x03(\x0b\x32*.dgp.proto.AgentGroup.AgentOntologiesEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x38\n\x16\x46\x65\x61tureOntologiesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x36\n\x14\x41gentOntologiesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xf0\x01\n\rAgentSnapshot\x12\x37\n\x11\x61gent_snapshot_2D\x18\x01 \x01(\x0b\x32\x1a.dgp.proto.AgentSnapshot2DH\x00\x12\x37\n\x11\x61gent_snapshot_3D\x18\x02 \x01(\x0b\x32\x1a.dgp.proto.AgentSnapshot3DH\x00\x12$\n\x08slice_id\x18\x03 \x01(\x0b\x32\x12.dgp.proto.DatumId\x12/\n\x13raw_sensor_datum_id\x18\x04 \x01(\x0b\x32\x12.dgp.proto.DatumIdB\x16\n\x14\x61gent_snapshot_oneof\"f\n\x0b\x41gentsSlice\x12$\n\x08slice_id\x18\x01 \x01(\x0b\x32\x12.dgp.proto.DatumId\x12\x31\n\x0f\x61gent_snapshots\x18\x02 \x03(\x0b\x32\x18.dgp.proto.AgentSnapshot\"\xbd\x01\n\x0c\x41gentsSlices\x12-\n\ragents_slices\x18\x01 \x03(\x0b\x32\x16.dgp.proto.AgentsSlice\x12\x37\n\x08metadata\x18\x02 \x03(\x0b\x32%.dgp.proto.AgentsSlices.MetadataEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\x8e\x01\n\nAgentTrack\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\x13\n\x0binstance_id\x18\x02 \x01(\r\x12\x31\n\x0f\x61gent_snapshots\x18\x03 \x03(\x0b\x32\x18.dgp.proto.AgentSnapshot\x12&\n\x08metadata\x18\x04 \x01(\x0b\x32\x14.google.protobuf.Any\"\xb9\x01\n\x0b\x41gentTracks\x12+\n\x0c\x61gent_tracks\x18\x01 \x03(\x0b\x32\x15.dgp.proto.AgentTrack\x12\x36\n\x08metadata\x18\x02 \x03(\x0b\x32$.dgp.proto.AgentTracks.MetadataEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\xa6\x01\n\x0f\x41gentSnapshot2D\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox2D\x12\x0c\n\x04\x61rea\x18\x03 \x01(\r\x12\x0f\n\x07iscrowd\x18\x04 \x01(\x08\x12\x13\n\x0binstance_id\x18\x05 \x01(\r\x12\x10\n\x08\x66\x65\x61tures\x18\x06 \x03(\t\x12\x14\n\x0c\x66\x65\x61ture_type\x18\x07 \x01(\x05\"\x87\x01\n\x0f\x41gentSnapshot3D\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox3D\x12\x13\n\x0binstance_id\x18\x03 \x01(\r\x12\x10\n\x08\x66\x65\x61tures\x18\x04 \x03(\t\x12\x14\n\x0c\x66\x65\x61ture_type\x18\x05 \x01(\x05\x62\x06proto3'
+  serialized_pb=b'\n\x15\x64gp/proto/agent.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x1b\x64gp/proto/annotations.proto\x1a\x1b\x64gp/proto/identifiers.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa6\x01\n\x0f\x41gentSnapshot2D\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox2D\x12\x0c\n\x04\x61rea\x18\x03 \x01(\r\x12\x0f\n\x07iscrowd\x18\x04 \x01(\x08\x12\x13\n\x0binstance_id\x18\x05 \x01(\r\x12\x10\n\x08\x66\x65\x61tures\x18\x06 \x03(\t\x12\x14\n\x0c\x66\x65\x61ture_type\x18\x07 \x01(\r\"\x87\x01\n\x0f\x41gentSnapshot3D\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox3D\x12\x13\n\x0binstance_id\x18\x03 \x01(\r\x12\x10\n\x08\x66\x65\x61tures\x18\x04 \x03(\t\x12\x14\n\x0c\x66\x65\x61ture_type\x18\x05 \x01(\r\"\xf0\x01\n\rAgentSnapshot\x12\x37\n\x11\x61gent_snapshot_2D\x18\x01 \x01(\x0b\x32\x1a.dgp.proto.AgentSnapshot2DH\x00\x12\x37\n\x11\x61gent_snapshot_3D\x18\x02 \x01(\x0b\x32\x1a.dgp.proto.AgentSnapshot3DH\x00\x12$\n\x08slice_id\x18\x03 \x01(\x0b\x32\x12.dgp.proto.DatumId\x12/\n\x13raw_sensor_datum_id\x18\x04 \x01(\x0b\x32\x12.dgp.proto.DatumIdB\x16\n\x14\x61gent_snapshot_oneof\"f\n\x0b\x41gentsSlice\x12$\n\x08slice_id\x18\x01 \x01(\x0b\x32\x12.dgp.proto.DatumId\x12\x31\n\x0f\x61gent_snapshots\x18\x02 \x03(\x0b\x32\x18.dgp.proto.AgentSnapshot\"\xbd\x01\n\x0c\x41gentsSlices\x12-\n\ragents_slices\x18\x01 \x03(\x0b\x32\x16.dgp.proto.AgentsSlice\x12\x37\n\x08metadata\x18\x02 \x03(\x0b\x32%.dgp.proto.AgentsSlices.MetadataEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\x8e\x01\n\nAgentTrack\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\x13\n\x0binstance_id\x18\x02 \x01(\r\x12\x31\n\x0f\x61gent_snapshots\x18\x03 \x03(\x0b\x32\x18.dgp.proto.AgentSnapshot\x12&\n\x08metadata\x18\x04 \x01(\x0b\x32\x14.google.protobuf.Any\"\xb9\x01\n\x0b\x41gentTracks\x12+\n\x0c\x61gent_tracks\x18\x01 \x03(\x0b\x32\x15.dgp.proto.AgentTrack\x12\x36\n\x08metadata\x18\x02 \x03(\x0b\x32$.dgp.proto.AgentTracks.MetadataEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\xa6\x04\n\nAgentGroup\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0b\n\x03log\x18\x03 \x01(\t\x12\x1a\n\x12\x61gents_slices_file\x18\x04 \x01(\t\x12\x19\n\x11\x61gent_tracks_file\x18\x05 \x01(\t\x12\x35\n\x08metadata\x18\x06 \x03(\x0b\x32#.dgp.proto.AgentGroup.MetadataEntry\x12\x31\n\rcreation_date\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12H\n\x12\x66\x65\x61ture_ontologies\x18\x08 \x03(\x0b\x32,.dgp.proto.AgentGroup.FeatureOntologiesEntry\x12\x44\n\x10\x61gent_ontologies\x18\t \x03(\x0b\x32*.dgp.proto.AgentGroup.AgentOntologiesEntry\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\x1a\x38\n\x16\x46\x65\x61tureOntologiesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x36\n\x14\x41gentOntologiesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,dgp_dot_proto_dot_annotations__pb2.DESCRIPTOR,dgp_dot_proto_dot_identifiers__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 
+
+
+_AGENTSNAPSHOT2D = _descriptor.Descriptor(
+  name='AgentSnapshot2D',
+  full_name='dgp.proto.AgentSnapshot2D',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='class_id', full_name='dgp.proto.AgentSnapshot2D.class_id', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='box', full_name='dgp.proto.AgentSnapshot2D.box', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='area', full_name='dgp.proto.AgentSnapshot2D.area', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='iscrowd', full_name='dgp.proto.AgentSnapshot2D.iscrowd', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='instance_id', full_name='dgp.proto.AgentSnapshot2D.instance_id', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='features', full_name='dgp.proto.AgentSnapshot2D.features', index=5,
+      number=6, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='feature_type', full_name='dgp.proto.AgentSnapshot2D.feature_type', index=6,
+      number=7, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=155,
+  serialized_end=321,
+)
+
+
+_AGENTSNAPSHOT3D = _descriptor.Descriptor(
+  name='AgentSnapshot3D',
+  full_name='dgp.proto.AgentSnapshot3D',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='class_id', full_name='dgp.proto.AgentSnapshot3D.class_id', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='box', full_name='dgp.proto.AgentSnapshot3D.box', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='instance_id', full_name='dgp.proto.AgentSnapshot3D.instance_id', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='features', full_name='dgp.proto.AgentSnapshot3D.features', index=3,
+      number=4, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='feature_type', full_name='dgp.proto.AgentSnapshot3D.feature_type', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=324,
+  serialized_end=459,
+)
+
+
+_AGENTSNAPSHOT = _descriptor.Descriptor(
+  name='AgentSnapshot',
+  full_name='dgp.proto.AgentSnapshot',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='agent_snapshot_2D', full_name='dgp.proto.AgentSnapshot.agent_snapshot_2D', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='agent_snapshot_3D', full_name='dgp.proto.AgentSnapshot.agent_snapshot_3D', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='slice_id', full_name='dgp.proto.AgentSnapshot.slice_id', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='raw_sensor_datum_id', full_name='dgp.proto.AgentSnapshot.raw_sensor_datum_id', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='agent_snapshot_oneof', full_name='dgp.proto.AgentSnapshot.agent_snapshot_oneof',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=462,
+  serialized_end=702,
+)
+
+
+_AGENTSSLICE = _descriptor.Descriptor(
+  name='AgentsSlice',
+  full_name='dgp.proto.AgentsSlice',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='slice_id', full_name='dgp.proto.AgentsSlice.slice_id', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='agent_snapshots', full_name='dgp.proto.AgentsSlice.agent_snapshots', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=704,
+  serialized_end=806,
+)
+
+
+_AGENTSSLICES_METADATAENTRY = _descriptor.Descriptor(
+  name='MetadataEntry',
+  full_name='dgp.proto.AgentsSlices.MetadataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.AgentsSlices.MetadataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='dgp.proto.AgentsSlices.MetadataEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=929,
+  serialized_end=998,
+)
+
+_AGENTSSLICES = _descriptor.Descriptor(
+  name='AgentsSlices',
+  full_name='dgp.proto.AgentsSlices',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='agents_slices', full_name='dgp.proto.AgentsSlices.agents_slices', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='dgp.proto.AgentsSlices.metadata', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_AGENTSSLICES_METADATAENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=809,
+  serialized_end=998,
+)
+
+
+_AGENTTRACK = _descriptor.Descriptor(
+  name='AgentTrack',
+  full_name='dgp.proto.AgentTrack',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='class_id', full_name='dgp.proto.AgentTrack.class_id', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='instance_id', full_name='dgp.proto.AgentTrack.instance_id', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='agent_snapshots', full_name='dgp.proto.AgentTrack.agent_snapshots', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='dgp.proto.AgentTrack.metadata', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1001,
+  serialized_end=1143,
+)
+
+
+_AGENTTRACKS_METADATAENTRY = _descriptor.Descriptor(
+  name='MetadataEntry',
+  full_name='dgp.proto.AgentTracks.MetadataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.AgentTracks.MetadataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='dgp.proto.AgentTracks.MetadataEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=929,
+  serialized_end=998,
+)
+
+_AGENTTRACKS = _descriptor.Descriptor(
+  name='AgentTracks',
+  full_name='dgp.proto.AgentTracks',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='agent_tracks', full_name='dgp.proto.AgentTracks.agent_tracks', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='dgp.proto.AgentTracks.metadata', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_AGENTTRACKS_METADATAENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1146,
+  serialized_end=1331,
+)
 
 
 _AGENTGROUP_METADATAENTRY = _descriptor.Descriptor(
@@ -64,8 +502,8 @@ _AGENTGROUP_METADATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=522,
-  serialized_end=591,
+  serialized_start=929,
+  serialized_end=998,
 )
 
 _AGENTGROUP_FEATUREONTOLOGIESENTRY = _descriptor.Descriptor(
@@ -102,8 +540,8 @@ _AGENTGROUP_FEATUREONTOLOGIESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=593,
-  serialized_end=649,
+  serialized_start=1772,
+  serialized_end=1828,
 )
 
 _AGENTGROUP_AGENTONTOLOGIESENTRY = _descriptor.Descriptor(
@@ -140,8 +578,8 @@ _AGENTGROUP_AGENTONTOLOGIESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=651,
-  serialized_end=705,
+  serialized_start=1830,
+  serialized_end=1884,
 )
 
 _AGENTGROUP = _descriptor.Descriptor(
@@ -227,456 +665,12 @@ _AGENTGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=155,
-  serialized_end=705,
-)
-
-
-_AGENTSNAPSHOT = _descriptor.Descriptor(
-  name='AgentSnapshot',
-  full_name='dgp.proto.AgentSnapshot',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='agent_snapshot_2D', full_name='dgp.proto.AgentSnapshot.agent_snapshot_2D', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='agent_snapshot_3D', full_name='dgp.proto.AgentSnapshot.agent_snapshot_3D', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='slice_id', full_name='dgp.proto.AgentSnapshot.slice_id', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='raw_sensor_datum_id', full_name='dgp.proto.AgentSnapshot.raw_sensor_datum_id', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-    _descriptor.OneofDescriptor(
-      name='agent_snapshot_oneof', full_name='dgp.proto.AgentSnapshot.agent_snapshot_oneof',
-      index=0, containing_type=None,
-      create_key=_descriptor._internal_create_key,
-    fields=[]),
-  ],
-  serialized_start=708,
-  serialized_end=948,
-)
-
-
-_AGENTSSLICE = _descriptor.Descriptor(
-  name='AgentsSlice',
-  full_name='dgp.proto.AgentsSlice',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='slice_id', full_name='dgp.proto.AgentsSlice.slice_id', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='agent_snapshots', full_name='dgp.proto.AgentsSlice.agent_snapshots', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=950,
-  serialized_end=1052,
-)
-
-
-_AGENTSSLICES_METADATAENTRY = _descriptor.Descriptor(
-  name='MetadataEntry',
-  full_name='dgp.proto.AgentsSlices.MetadataEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='dgp.proto.AgentsSlices.MetadataEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='dgp.proto.AgentsSlices.MetadataEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=522,
-  serialized_end=591,
-)
-
-_AGENTSSLICES = _descriptor.Descriptor(
-  name='AgentsSlices',
-  full_name='dgp.proto.AgentsSlices',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='agents_slices', full_name='dgp.proto.AgentsSlices.agents_slices', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='dgp.proto.AgentsSlices.metadata', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_AGENTSSLICES_METADATAENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1055,
-  serialized_end=1244,
-)
-
-
-_AGENTTRACK = _descriptor.Descriptor(
-  name='AgentTrack',
-  full_name='dgp.proto.AgentTrack',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='class_id', full_name='dgp.proto.AgentTrack.class_id', index=0,
-      number=1, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='instance_id', full_name='dgp.proto.AgentTrack.instance_id', index=1,
-      number=2, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='agent_snapshots', full_name='dgp.proto.AgentTrack.agent_snapshots', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='dgp.proto.AgentTrack.metadata', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1247,
-  serialized_end=1389,
-)
-
-
-_AGENTTRACKS_METADATAENTRY = _descriptor.Descriptor(
-  name='MetadataEntry',
-  full_name='dgp.proto.AgentTracks.MetadataEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='dgp.proto.AgentTracks.MetadataEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='dgp.proto.AgentTracks.MetadataEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=522,
-  serialized_end=591,
-)
-
-_AGENTTRACKS = _descriptor.Descriptor(
-  name='AgentTracks',
-  full_name='dgp.proto.AgentTracks',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='agent_tracks', full_name='dgp.proto.AgentTracks.agent_tracks', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='dgp.proto.AgentTracks.metadata', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_AGENTTRACKS_METADATAENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1392,
-  serialized_end=1577,
-)
-
-
-_AGENTSNAPSHOT2D = _descriptor.Descriptor(
-  name='AgentSnapshot2D',
-  full_name='dgp.proto.AgentSnapshot2D',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='class_id', full_name='dgp.proto.AgentSnapshot2D.class_id', index=0,
-      number=1, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='box', full_name='dgp.proto.AgentSnapshot2D.box', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='area', full_name='dgp.proto.AgentSnapshot2D.area', index=2,
-      number=3, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='iscrowd', full_name='dgp.proto.AgentSnapshot2D.iscrowd', index=3,
-      number=4, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='instance_id', full_name='dgp.proto.AgentSnapshot2D.instance_id', index=4,
-      number=5, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='features', full_name='dgp.proto.AgentSnapshot2D.features', index=5,
-      number=6, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='feature_type', full_name='dgp.proto.AgentSnapshot2D.feature_type', index=6,
-      number=7, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1580,
-  serialized_end=1746,
-)
-
-
-_AGENTSNAPSHOT3D = _descriptor.Descriptor(
-  name='AgentSnapshot3D',
-  full_name='dgp.proto.AgentSnapshot3D',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='class_id', full_name='dgp.proto.AgentSnapshot3D.class_id', index=0,
-      number=1, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='box', full_name='dgp.proto.AgentSnapshot3D.box', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='instance_id', full_name='dgp.proto.AgentSnapshot3D.instance_id', index=2,
-      number=3, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='features', full_name='dgp.proto.AgentSnapshot3D.features', index=3,
-      number=4, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='feature_type', full_name='dgp.proto.AgentSnapshot3D.feature_type', index=4,
-      number=5, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1749,
+  serialized_start=1334,
   serialized_end=1884,
 )
 
-_AGENTGROUP_METADATAENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
-_AGENTGROUP_METADATAENTRY.containing_type = _AGENTGROUP
-_AGENTGROUP_FEATUREONTOLOGIESENTRY.containing_type = _AGENTGROUP
-_AGENTGROUP_AGENTONTOLOGIESENTRY.containing_type = _AGENTGROUP
-_AGENTGROUP.fields_by_name['metadata'].message_type = _AGENTGROUP_METADATAENTRY
-_AGENTGROUP.fields_by_name['creation_date'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_AGENTGROUP.fields_by_name['feature_ontologies'].message_type = _AGENTGROUP_FEATUREONTOLOGIESENTRY
-_AGENTGROUP.fields_by_name['agent_ontologies'].message_type = _AGENTGROUP_AGENTONTOLOGIESENTRY
+_AGENTSNAPSHOT2D.fields_by_name['box'].message_type = dgp_dot_proto_dot_annotations__pb2._BOUNDINGBOX2D
+_AGENTSNAPSHOT3D.fields_by_name['box'].message_type = dgp_dot_proto_dot_annotations__pb2._BOUNDINGBOX3D
 _AGENTSNAPSHOT.fields_by_name['agent_snapshot_2D'].message_type = _AGENTSNAPSHOT2D
 _AGENTSNAPSHOT.fields_by_name['agent_snapshot_3D'].message_type = _AGENTSNAPSHOT3D
 _AGENTSNAPSHOT.fields_by_name['slice_id'].message_type = dgp_dot_proto_dot_identifiers__pb2._DATUMID
@@ -699,48 +693,37 @@ _AGENTTRACKS_METADATAENTRY.fields_by_name['value'].message_type = google_dot_pro
 _AGENTTRACKS_METADATAENTRY.containing_type = _AGENTTRACKS
 _AGENTTRACKS.fields_by_name['agent_tracks'].message_type = _AGENTTRACK
 _AGENTTRACKS.fields_by_name['metadata'].message_type = _AGENTTRACKS_METADATAENTRY
-_AGENTSNAPSHOT2D.fields_by_name['box'].message_type = dgp_dot_proto_dot_annotations__pb2._BOUNDINGBOX2D
-_AGENTSNAPSHOT3D.fields_by_name['box'].message_type = dgp_dot_proto_dot_annotations__pb2._BOUNDINGBOX3D
-DESCRIPTOR.message_types_by_name['AgentGroup'] = _AGENTGROUP
+_AGENTGROUP_METADATAENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
+_AGENTGROUP_METADATAENTRY.containing_type = _AGENTGROUP
+_AGENTGROUP_FEATUREONTOLOGIESENTRY.containing_type = _AGENTGROUP
+_AGENTGROUP_AGENTONTOLOGIESENTRY.containing_type = _AGENTGROUP
+_AGENTGROUP.fields_by_name['metadata'].message_type = _AGENTGROUP_METADATAENTRY
+_AGENTGROUP.fields_by_name['creation_date'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_AGENTGROUP.fields_by_name['feature_ontologies'].message_type = _AGENTGROUP_FEATUREONTOLOGIESENTRY
+_AGENTGROUP.fields_by_name['agent_ontologies'].message_type = _AGENTGROUP_AGENTONTOLOGIESENTRY
+DESCRIPTOR.message_types_by_name['AgentSnapshot2D'] = _AGENTSNAPSHOT2D
+DESCRIPTOR.message_types_by_name['AgentSnapshot3D'] = _AGENTSNAPSHOT3D
 DESCRIPTOR.message_types_by_name['AgentSnapshot'] = _AGENTSNAPSHOT
 DESCRIPTOR.message_types_by_name['AgentsSlice'] = _AGENTSSLICE
 DESCRIPTOR.message_types_by_name['AgentsSlices'] = _AGENTSSLICES
 DESCRIPTOR.message_types_by_name['AgentTrack'] = _AGENTTRACK
 DESCRIPTOR.message_types_by_name['AgentTracks'] = _AGENTTRACKS
-DESCRIPTOR.message_types_by_name['AgentSnapshot2D'] = _AGENTSNAPSHOT2D
-DESCRIPTOR.message_types_by_name['AgentSnapshot3D'] = _AGENTSNAPSHOT3D
+DESCRIPTOR.message_types_by_name['AgentGroup'] = _AGENTGROUP
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-AgentGroup = _reflection.GeneratedProtocolMessageType('AgentGroup', (_message.Message,), {
-
-  'MetadataEntry' : _reflection.GeneratedProtocolMessageType('MetadataEntry', (_message.Message,), {
-    'DESCRIPTOR' : _AGENTGROUP_METADATAENTRY,
-    '__module__' : 'dgp.proto.agent_pb2'
-    # @@protoc_insertion_point(class_scope:dgp.proto.AgentGroup.MetadataEntry)
-    })
-  ,
-
-  'FeatureOntologiesEntry' : _reflection.GeneratedProtocolMessageType('FeatureOntologiesEntry', (_message.Message,), {
-    'DESCRIPTOR' : _AGENTGROUP_FEATUREONTOLOGIESENTRY,
-    '__module__' : 'dgp.proto.agent_pb2'
-    # @@protoc_insertion_point(class_scope:dgp.proto.AgentGroup.FeatureOntologiesEntry)
-    })
-  ,
-
-  'AgentOntologiesEntry' : _reflection.GeneratedProtocolMessageType('AgentOntologiesEntry', (_message.Message,), {
-    'DESCRIPTOR' : _AGENTGROUP_AGENTONTOLOGIESENTRY,
-    '__module__' : 'dgp.proto.agent_pb2'
-    # @@protoc_insertion_point(class_scope:dgp.proto.AgentGroup.AgentOntologiesEntry)
-    })
-  ,
-  'DESCRIPTOR' : _AGENTGROUP,
+AgentSnapshot2D = _reflection.GeneratedProtocolMessageType('AgentSnapshot2D', (_message.Message,), {
+  'DESCRIPTOR' : _AGENTSNAPSHOT2D,
   '__module__' : 'dgp.proto.agent_pb2'
-  # @@protoc_insertion_point(class_scope:dgp.proto.AgentGroup)
+  # @@protoc_insertion_point(class_scope:dgp.proto.AgentSnapshot2D)
   })
-_sym_db.RegisterMessage(AgentGroup)
-_sym_db.RegisterMessage(AgentGroup.MetadataEntry)
-_sym_db.RegisterMessage(AgentGroup.FeatureOntologiesEntry)
-_sym_db.RegisterMessage(AgentGroup.AgentOntologiesEntry)
+_sym_db.RegisterMessage(AgentSnapshot2D)
+
+AgentSnapshot3D = _reflection.GeneratedProtocolMessageType('AgentSnapshot3D', (_message.Message,), {
+  'DESCRIPTOR' : _AGENTSNAPSHOT3D,
+  '__module__' : 'dgp.proto.agent_pb2'
+  # @@protoc_insertion_point(class_scope:dgp.proto.AgentSnapshot3D)
+  })
+_sym_db.RegisterMessage(AgentSnapshot3D)
 
 AgentSnapshot = _reflection.GeneratedProtocolMessageType('AgentSnapshot', (_message.Message,), {
   'DESCRIPTOR' : _AGENTSNAPSHOT,
@@ -793,24 +776,41 @@ AgentTracks = _reflection.GeneratedProtocolMessageType('AgentTracks', (_message.
 _sym_db.RegisterMessage(AgentTracks)
 _sym_db.RegisterMessage(AgentTracks.MetadataEntry)
 
-AgentSnapshot2D = _reflection.GeneratedProtocolMessageType('AgentSnapshot2D', (_message.Message,), {
-  'DESCRIPTOR' : _AGENTSNAPSHOT2D,
+AgentGroup = _reflection.GeneratedProtocolMessageType('AgentGroup', (_message.Message,), {
+
+  'MetadataEntry' : _reflection.GeneratedProtocolMessageType('MetadataEntry', (_message.Message,), {
+    'DESCRIPTOR' : _AGENTGROUP_METADATAENTRY,
+    '__module__' : 'dgp.proto.agent_pb2'
+    # @@protoc_insertion_point(class_scope:dgp.proto.AgentGroup.MetadataEntry)
+    })
+  ,
+
+  'FeatureOntologiesEntry' : _reflection.GeneratedProtocolMessageType('FeatureOntologiesEntry', (_message.Message,), {
+    'DESCRIPTOR' : _AGENTGROUP_FEATUREONTOLOGIESENTRY,
+    '__module__' : 'dgp.proto.agent_pb2'
+    # @@protoc_insertion_point(class_scope:dgp.proto.AgentGroup.FeatureOntologiesEntry)
+    })
+  ,
+
+  'AgentOntologiesEntry' : _reflection.GeneratedProtocolMessageType('AgentOntologiesEntry', (_message.Message,), {
+    'DESCRIPTOR' : _AGENTGROUP_AGENTONTOLOGIESENTRY,
+    '__module__' : 'dgp.proto.agent_pb2'
+    # @@protoc_insertion_point(class_scope:dgp.proto.AgentGroup.AgentOntologiesEntry)
+    })
+  ,
+  'DESCRIPTOR' : _AGENTGROUP,
   '__module__' : 'dgp.proto.agent_pb2'
-  # @@protoc_insertion_point(class_scope:dgp.proto.AgentSnapshot2D)
+  # @@protoc_insertion_point(class_scope:dgp.proto.AgentGroup)
   })
-_sym_db.RegisterMessage(AgentSnapshot2D)
-
-AgentSnapshot3D = _reflection.GeneratedProtocolMessageType('AgentSnapshot3D', (_message.Message,), {
-  'DESCRIPTOR' : _AGENTSNAPSHOT3D,
-  '__module__' : 'dgp.proto.agent_pb2'
-  # @@protoc_insertion_point(class_scope:dgp.proto.AgentSnapshot3D)
-  })
-_sym_db.RegisterMessage(AgentSnapshot3D)
+_sym_db.RegisterMessage(AgentGroup)
+_sym_db.RegisterMessage(AgentGroup.MetadataEntry)
+_sym_db.RegisterMessage(AgentGroup.FeatureOntologiesEntry)
+_sym_db.RegisterMessage(AgentGroup.AgentOntologiesEntry)
 
 
+_AGENTSSLICES_METADATAENTRY._options = None
+_AGENTTRACKS_METADATAENTRY._options = None
 _AGENTGROUP_METADATAENTRY._options = None
 _AGENTGROUP_FEATUREONTOLOGIESENTRY._options = None
 _AGENTGROUP_AGENTONTOLOGIESENTRY._options = None
-_AGENTSSLICES_METADATAENTRY._options = None
-_AGENTTRACKS_METADATAENTRY._options = None
 # @@protoc_insertion_point(module_scope)

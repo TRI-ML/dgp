@@ -26,6 +26,7 @@ message OntologyItem {
     uint32 g = 2;
     uint32 b = 3;
   }
+
   // OntologyItem RGB color code.
   Color color = 3;
 
@@ -56,7 +57,7 @@ message FeatureOntologyItem {
   uint32 id = 2;
 
   // Specify the feature value type in dgp.proto.features.
-  int32 feature_value_type = 3;
+  uint32 feature_value_type = 3;
 }
 
 // Feature ontology for dgp.proto.agent.
