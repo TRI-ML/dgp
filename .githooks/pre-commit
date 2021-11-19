@@ -30,7 +30,7 @@ CHANGED_FILES=$(git diff --name-only "${PYTHON_FILES}")
 CHANGED_FILES="${CHANGED_FILES//$'\n'/ }" # Replace all newline with a space.
 if [ "${CHANGED_FILES[@]}" ]; then
   echo 'You have unstaged changes to some files in your commit; skipping '
-  echo 'auto-format. Please stage, stash, or revert these changes. You may '
+  echo 'autoformat. Please stage, stash, or revert these changes. You may '
   echo "find 'git stash -k' helpful here."
   echo
   echo 'Files with unstaged changes:'
