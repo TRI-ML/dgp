@@ -1,0 +1,1 @@
+.. mdinclude:: ../../dgp/proto/README.md
