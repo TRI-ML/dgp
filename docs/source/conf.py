@@ -12,6 +12,7 @@
 #
 import os
 import sys
+import solar_theme
 
 sys.path.insert(0, os.path.abspath('../..'))
 sys.setrecursionlimit(1500)
@@ -31,7 +32,8 @@ release = '1.0'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'm2r2']
+source_suffix = ['.rst', '.md']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -43,13 +45,25 @@ templates_path = ['_templates']
 exclude_patterns = ['**/*pb2_grpc.py', '**/*_pb2.py']
 
 # -- Options for HTML output -------------------------------------------------
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
-html_theme = 'alabaster'
+html_theme = 'solar_theme'
+html_theme_path = [solar_theme.theme_path]
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = [
+    'tri_colors.css',
+]
+html_style = 'tri_colors.css'
+html_sidebars = {
+    '**': [
+        # located at _templates/
+        'side.html',
+        #auto-gen
+        'searchbox.html',
+        'links.html',
+        'localtoc.html',
+        'relations.html',
+    ]
+}

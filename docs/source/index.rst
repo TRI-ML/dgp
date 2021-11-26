@@ -5,12 +5,15 @@
 
 Welcome to DGP's documentation!
 ===============================
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   Command Line Interface Info <cli>
+   Getting Started <getting_started>
+   Contributing Guidelines <contributing_guidelines>
+   DGP Schema <dgp_schema>
+   dgp
 
 
 Indices and tables
