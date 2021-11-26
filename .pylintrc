@@ -59,4 +59,10 @@ disable=
    # allow catching general exceptions
    W0703,
    # allow lazy % or .format() or % formatting in logging functions
-   W1203
+   W1203,
+   #Exceptions for pytest compatibility, unique to tests folder
+   ##@scope='/tests'
+   W0613,
+   W0611,
+   W0621
+   ##@scope
