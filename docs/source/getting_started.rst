@@ -1,0 +1,1 @@
+.. mdinclude:: ../GETTING_STARTED.md

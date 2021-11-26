@@ -1,8 +1,6 @@
 dgp.annotations package
 =======================
 
-Submodules
-----------
 
 dgp.annotations.base\_annotation module
 ---------------------------------------

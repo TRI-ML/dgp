@@ -1,8 +1,6 @@
 dgp.utils.cloud package
 =======================
 
-Submodules
-----------
 
 dgp.utils.cloud.s3 module
 -------------------------

@@ -1,8 +1,6 @@
 dgp.utils.structures package
 ============================
 
-Submodules
-----------
 
 dgp.utils.structures.bounding\_box\_2d module
 ---------------------------------------------
