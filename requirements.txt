@@ -15,6 +15,7 @@ pycocotools>=2.0.0
 pylint>=2.8.1
 pyquaternion==0.9.5
 pytest==6.2.5
+pytest-timeout==2.0.1
 rinohtype==0.5.3
 Sphinx==4.2.0
 torch>=1.8.1
