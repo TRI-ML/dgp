@@ -3,6 +3,7 @@
 Common DGP constants. Constants here only depened on dgp.proto to avoid circular imports. 
 """
 from collections import OrderedDict
+from dataclasses import dataclass
 
 from dgp.proto import annotations_pb2, dataset_pb2, features_pb2
 
@@ -34,3 +35,12 @@ FEATURE_KEY_TO_TYPE_ID = OrderedDict({k.lower(): v for k, v in features_pb2.Feat
 FEATURE_TYPE_ID_TO_KEY = OrderedDict({v: k for k, v in FEATURE_KEY_TO_TYPE_ID.items()})
 # String identifiers for feature types
 ALL_FEATURE_TYPES = tuple(FEATURE_KEY_TO_TYPE_ID.keys())
+
+
+@dataclass
+class Vehicle:
+    vehicle_name: str
+    vehicle_length: float
+    vehicle_width: float
+    vehicle_height: float
+    vehicle_applanix_origin_to_r_bumper: float

@@ -385,6 +385,12 @@ class BEVImage:
 
     background_clr: tuple[int], defaults: (0, 0, 0)
         Background color in BGR order.
+
+    center_offset_w: int, default: 0
+        Offset in pixels to move ego center in BEV.
+
+    center_offset_h: int, default: 0
+        Offset in pixels to move ego center in BEV.
     """
     def __init__(
         self,
@@ -394,7 +400,9 @@ class BEVImage:
         polar_step_size_meters=10,
         forward=(1, 0, 0),
         left=(0, 1, 0),
-        background_clr=(0, 0, 0)
+        background_clr=(0, 0, 0),
+        center_offset_w=0,
+        center_offset_h=0,
     ):
         forward, left = np.array(forward, np.float64), np.array(left, np.float64)
         assert np.dot(forward, left) == 0  # orthogonality check.
@@ -405,7 +413,7 @@ class BEVImage:
         self._polar_step_size_meters = polar_step_size_meters
         self._forward = forward
         self._left = left
-        self._bg_clr = np.uint8(background_clr)[::-1].reshape(1, 1, 3)
+        self._bg_clr = np.array(background_clr)[::-1].reshape(1, 1, 3).astype(np.uint8)
 
         # Body frame -> BEV frame
         right = -left
@@ -413,8 +421,10 @@ class BEVImage:
         bev_rotation = Pose.from_rotation_translation(bev_rotation, tvec=np.zeros(3))
         self._bev_rotation = bev_rotation
 
-        self._center_pixel = (int(metric_height * pixels_per_meter) // 2, int(metric_width * pixels_per_meter) // 2)
-
+        self._center_pixel = (
+            int((metric_width * pixels_per_meter) // 2 - pixels_per_meter * center_offset_w),
+            int((metric_height * pixels_per_meter) // 2 - pixels_per_meter * center_offset_h)
+        )
         self.reset()
 
     def __repr__(self):
@@ -432,7 +442,7 @@ class BEVImage:
         for i in range(1, int(max(self._metric_width, self._metric_height)) // self._polar_step_size_meters):
             cv2.circle(
                 self.data, self._center_pixel, int(i * self._polar_step_size_meters * self._pixels_per_meter),
-                (50, 50, 50), 2
+                (50, 50, 50), 1
             )
 
     def render_point_cloud(self, point_cloud, extrinsics=Pose(), color=GRAY):
@@ -544,6 +554,46 @@ class BEVImage:
                     color = (255, 110, 199)
                 cv2.arrowedLine(self.data, (cx, cy), (cx2, cy2), color, thickness=1, line_type=cv2.LINE_AA)
 
+    def render_paths(self, paths, extrinsics=Pose(), colors=(GREEN, ), line_thickness=1, tint=1.0):
+        """Render object paths on bev.
+
+        Parameters
+        ----------
+        paths: list[list[Pose]]
+            List of object poses in the coordinate frame of the current timestep.
+
+        extrinsics: Pose, default: Identity pose
+            The pose of the pointcloud sensor wrt the body frame (Sensor frame -> (Vehicle) Body frame).
+
+        colors: List of RGB tuple, default: [GREEN,]
+            Draw path using this color.
+
+        line_thickness: int, default: 1
+            Thickness of lines.
+
+        tint: float, default: 1.0
+            Mulitiplicative factor applied to color used to darken lines.
+        """
+
+        if len(colors) == 1:
+            colors = list(colors) * len(paths)
+
+        if tint != 1.0:
+            colors = [[int(tint * c) for c in color] for color in colors]
+
+        combined_transform = self._bev_rotation * extrinsics
+
+        for path, color in zip(paths, colors):
+            # path should contain a list of Pose objects or None types. None types will be skipped.
+            # TODO: add option to interpolate skipped poses.
+            path3d = [combined_transform * pose.tvec.reshape(1, 3) for pose in path if pose is not None]
+            path2d = np.round(self._pixels_per_meter * np.stack(path3d, 0)[..., :2],
+                              0).astype(np.int32).reshape(1, -1, 2)
+            offset = np.array(self._center_pixel).reshape(1, 1, 2)  # pylint: disable=E1121
+            path2d = path2d + offset
+            # TODO: if we group the paths by color we can draw all paths with the same color at once
+            cv2.polylines(self.data, path2d, 0, color, line_thickness, cv2.LINE_AA)
+
     def render_bounding_box_3d(
         self,
         bboxes3d,
@@ -554,12 +604,16 @@ class BEVImage:
         texts=None,
         line_thickness=2,
         font_scale=0.5,
+        font_colors=(WHITE, ),
+        markers=None,
+        marker_scale=.5,
+        marker_colors=(RED, ),
     ):
         """Render bounding box 3d in BEV perspective.
 
         Parameters
         ----------
-        bboxes3d: list of BoundingBox3D
+        bboxes3d: List of BoundingBox3D
             3D annotations in the sensor coordinate frame.
 
         extrinsics: Pose, default: Identity pose
@@ -578,21 +632,40 @@ class BEVImage:
             3D annotation category name.
 
         line_thickness: int, default: 2
-            Thickness of lines
+            Thickness of lines.
 
         font_scale: float, default: 0.5
             Font scale used for text labels.
+
+        font_colors: List of RGB tuple, default: [WHITE,]
+            Color used for text labels.
+
+        markers: List[int], default: None
+            List of opencv markers to draw in bottom right corner of cuboid. Should be one of: 
+            cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.
+
+        marker_scale: float, default: .5
+            Scale factor for markers,
+
+        marker_colors: List of RGB Tuple, default: [RED,]
+            Draw markers using this color.
         """
 
         if len(colors) == 1:
             colors = list(colors) * len(bboxes3d)
+
+        if len(font_colors) == 1:
+            font_colors = list(font_colors) * len(bboxes3d)
+
+        if len(marker_colors) == 1:
+            marker_colors = list(marker_colors) * len(bboxes3d)
 
         combined_transform = self._bev_rotation * extrinsics
 
         # Draw cuboids
         for bidx, (bbox, color) in enumerate(zip(bboxes3d, colors)):
             # Create 3 versions of colors for face coding.
-            front_face_color = RED
+            front_face_color = color
             side_line_color = [int(side_color_fraction * c) for c in color]
             rear_face_color = [int(rear_color_fraction * c) for c in color]
 
@@ -608,26 +681,41 @@ class BEVImage:
             center = np.mean(corners2d, axis=0).astype(np.int32)
             corners2d = corners2d.astype(np.int32)
 
+            # Draw front face, side faces and back face
+            cv2.line(self.data, tuple(corners2d[0]), tuple(corners2d[1]), front_face_color, line_thickness, cv2.LINE_AA)
+            cv2.line(self.data, tuple(corners2d[1]), tuple(corners2d[2]), side_line_color, line_thickness, cv2.LINE_AA)
+            cv2.line(self.data, tuple(corners2d[2]), tuple(corners2d[3]), rear_face_color, line_thickness, cv2.LINE_AA)
+            cv2.line(self.data, tuple(corners2d[3]), tuple(corners2d[0]), side_line_color, line_thickness, cv2.LINE_AA)
+
             # Draw white light connecting center and font side.
-            cv2.line(
+            cv2.arrowedLine(
                 self.data, tuple(center), (
                     (corners2d[0][0] + corners2d[1][0]) // 2,
                     (corners2d[0][1] + corners2d[1][1]) // 2,
-                ), GREEN, 2
+                ), WHITE, 1, cv2.LINE_AA
             )
 
-            # Draw front face, side faces and back face
-            cv2.line(self.data, tuple(corners2d[0]), tuple(corners2d[1]), front_face_color, line_thickness)
-            cv2.line(self.data, tuple(corners2d[1]), tuple(corners2d[2]), side_line_color, line_thickness)
-            cv2.line(self.data, tuple(corners2d[2]), tuple(corners2d[3]), rear_face_color, line_thickness)
-            cv2.line(self.data, tuple(corners2d[3]), tuple(corners2d[0]), side_line_color, line_thickness)
-
             if texts:
-                top_left = np.argmin(np.linalg.norm(corners2d, axis=1))
-                cv2.putText(
-                    self.data, texts[bidx], tuple(corners2d[top_left]), cv2.FONT_HERSHEY_SIMPLEX, font_scale, WHITE,
-                    line_thickness // 2, cv2.LINE_AA
-                )
+                if texts[bidx] is not None:
+                    top_left = np.argmin(np.linalg.norm(corners2d, axis=1))
+                    cv2.putText(
+                        self.data, texts[bidx], tuple(corners2d[top_left]), cv2.FONT_HERSHEY_SIMPLEX, font_scale,
+                        font_colors[bidx], line_thickness // 2, cv2.LINE_AA
+                    )
+
+            if markers:
+                if markers[bidx] is not None:
+                    bottom_right = np.argmax(np.linalg.norm(corners2d, axis=1))
+
+                    assert markers[bidx] in [
+                        cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR,
+                        cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP
+                    ]
+
+                    cv2.drawMarker(
+                        self.data, tuple(corners2d[bottom_right]), marker_colors[bidx], markers[bidx],
+                        int(20 * marker_scale), 2, cv2.LINE_AA
+                    )
 
     def render_camera_frustrum(self, intrinsics, extrinsics, width, color=YELLOW, line_thickness=1):
         """
@@ -774,6 +862,13 @@ def visualize_bev(
     bev_line_thickness=4,
     bev_font_scale=0.5,
     radar_datums=None,
+    instance_colormap=None,
+    cuboid_caption_fn=None,
+    marker_fn=None,
+    marker_scale=.5,
+    show_paths_on_bev=False,
+    bev_center_offset_w=0,
+    bev_center_offset_h=0,
 ):
     """Create BEV visualization that shows pointcloud, 3D bounding boxes, and optionally camera frustrums.
     Parameters
@@ -782,7 +877,7 @@ def visualize_bev(
         List of lidar datums as a dictionary.
     class_colormap: Dict
         Mapping from class IDs to RGB colors.
-    show_instance_id_on_bev: bool, default: False
+    show_instance_id_on_bev: Bool, default: False
         If True, then show `instance_id` on a corner of 3D bounding boxes in BEV view.
         If False, then show `class_name` instead.
     id_to_name: OrderedDict, default: None
@@ -795,14 +890,39 @@ def visualize_bev(
         See `BEVImage` for these keyword arguments.
     radar_datums: List[OrderedDict], default: None
         List of radar datums to visualize
+    instance_colormap: Dict
+        Mapping from instance id to RGB colors.
+    cuboid_caption_fn: Callable, BoundingBox3d -> Tuple[String,Tuple[3]]
+        Function taking a BoundingBox3d object and returning a tuple with the caption string, and the rgb
+        value for that caption. e.g., ( 'car', (255,0,0) )
+    marker_fn: Callable, BoundingBox3d -> Tuple[int,Tuple[3]]
+        Function taking a BoundingBox3d object and returning a tuple with the caption a marker id, and the rgb
+        value for that marker. e.g., ( cv2.MARKER_DIAMOND, (255,0,0) ). Marker should be one of
+        cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.
+    show_paths_on_bev: Bool, default: False
+        If true draw a path for each cuboid. Paths are stored in cuboid attributes under the 'path' key, i.e.,
+        path = cuboid.attributes['path'], paths are themselves a list of pose objects transformed to the
+        correct frame. This method does not handle creating or transforming the paths.
+    bev_enter_offset_w: int, default: 0
+        Offset in pixels to move ego center in BEV.
+    bev_center_offset_h: int, default: 0
+        Offset in pixels to move ego center in BEV.
+
     Returns
     -------
     np.ndarray
         BEV visualization as an image.
     """
     bev = BEVImage(
-        bev_metric_width, bev_metric_height, bev_pixels_per_meter, bev_polar_step_size_meters, bev_forward, bev_left,
-        bev_background_clr
+        bev_metric_width,
+        bev_metric_height,
+        bev_pixels_per_meter,
+        bev_polar_step_size_meters,
+        bev_forward,
+        bev_left,
+        bev_background_clr,
+        center_offset_w=bev_center_offset_w,
+        center_offset_h=bev_center_offset_h
     )
 
     # 1. Render pointcloud
@@ -823,24 +943,58 @@ def visualize_bev(
     # 3. Render 3D bboxes.
     for lidar_datum in lidar_datums:
         if 'bounding_box_3d' in lidar_datum:
-            class_ids = [bbox3d.class_id for bbox3d in lidar_datum['bounding_box_3d']]
-            colors = [class_colormap[class_id] for class_id in class_ids]
-            if show_instance_id_on_bev:
-                labels = [str(bbox3d.instance_id) for bbox3d in lidar_datum['bounding_box_3d']]
-            else:  # show class names
-                labels = [id_to_name[i] for i in class_ids]
+
+            if len(lidar_datum['bounding_box_3d']) == 0:
+                continue
+
+            if instance_colormap is not None:
+                colors = [
+                    instance_colormap.get(bbox.instance_id, class_colormap[bbox.class_id])
+                    for bbox in lidar_datum['bounding_box_3d']
+                ]
+            else:
+                colors = [class_colormap[bbox.class_id] for bbox in lidar_datum['bounding_box_3d']]
+
+            # If no caption function is supplied, generate one from the instance ids or class ids
+            # Caption functions should return a tuple (string, color)
+            # TODO: expand to include per caption font size.
+            if show_instance_id_on_bev and cuboid_caption_fn is None:
+                cuboid_caption_fn = lambda x: (str(x.instance_id), WHITE)
+            elif cuboid_caption_fn is None:  # show class names
+                cuboid_caption_fn = lambda x: (id_to_name[x.class_id], WHITE)
+
+            labels, font_colors = zip(*[cuboid_caption_fn(bbox3d) for bbox3d in lidar_datum['bounding_box_3d']])
+
+            markers, marker_colors = None, (RED, )
+            if marker_fn is not None:
+                markers, marker_colors = zip(*[marker_fn(bbox3d) for bbox3d in lidar_datum['bounding_box_3d']])
+
             bev.render_bounding_box_3d(
                 lidar_datum['bounding_box_3d'],
                 lidar_datum['extrinsics'],
                 colors=colors,
-                texts=labels,
+                texts=labels if bev_font_scale > 0 else None,
                 line_thickness=bev_line_thickness,
                 font_scale=bev_font_scale,
+                font_colors=font_colors,
+                markers=markers if marker_scale > 0 else None,
+                marker_scale=marker_scale,
+                marker_colors=marker_colors,
             )
 
+            if show_paths_on_bev:
+                # Collect the paths and path colors
+                paths, path_colors = zip(
+                    *[(bbox.attributes['path'], c)
+                      for bbox, c in zip(lidar_datum['bounding_box_3d'], colors)
+                      if 'path' in bbox.attributes]
+                )
+                if len(paths) > 0:
+                    bev.render_paths(paths, extrinsics=lidar_datum['extrinsics'], colors=path_colors, line_thickness=1)
+
+    # 4. Render camera frustrums.
     if camera_datums is not None:
         for cam_datum, cam_color in zip(camera_datums, camera_colors):
-            # 3. Render camera frustrums.
             bev.render_camera_frustrum(
                 cam_datum['intrinsics'],
                 cam_datum['extrinsics'],
@@ -937,3 +1091,162 @@ def visualize_cameras(
         rgb_viz.append(cv2.resize(rgb, None, fx=rgb_resize_factor, fy=rgb_resize_factor))
 
     return rgb_viz
+
+
+def visualize_agent_bev(
+    agent_datums,
+    lidar_datums,
+    render_pointcloud,
+    class_colormap,
+    show_instance_id_on_bev=False,
+    id_to_name=None,
+    camera_datums=None,
+    camera_colors=None,
+    bev_metric_width=100,
+    bev_metric_height=100,
+    bev_pixels_per_meter=10,
+    bev_polar_step_size_meters=10,
+    bev_forward=(1, 0, 0),
+    bev_left=(0, 1, 0),
+    bev_background_clr=(0, 0, 0),
+    bev_line_thickness=4,
+    bev_font_scale=0.5,
+    radar_datums=None,
+    instance_colormap=None,
+    cuboid_caption_fn=None,
+    marker_fn=None,
+    marker_scale=.5,
+    show_paths_on_bev=False,
+    bev_center_offset_w=0,
+    bev_center_offset_h=0,
+):
+    """Create BEV visualization that shows pointcloud, 3D bounding boxes, and optionally camera frustrums.
+    Parameters
+    ----------
+    agent_datums: List[BoundingBox3D]
+        List of agent bounding boxes in frame
+    lidar_datums: List[OrderedDict]
+        List of lidar datums as a dictionary.
+    class_colormap: Dict
+        Mapping from class IDs to RGB colors.
+    show_instance_id_on_bev: Bool, default: False
+        If True, then show `instance_id` on a corner of 3D bounding boxes in BEV view.
+        If False, then show `class_name` instead.
+    id_to_name: OrderedDict, default: None
+        Mapping from class IDs to class names.
+    camera_datums: List[OrderedDict], default: None
+        List of camera datums as a dictionary.
+    camera_colors: List[Tuple[int]], default: None
+        List of RGB colors associated with each camera. The colors are used to draw frustrum.
+    bev_*:
+        See `BEVImage` for these keyword arguments.
+    radar_datums: List[OrderedDict], default: None
+        List of radar datums to visualize
+    instance_colormap: Dict
+        Mapping from instance id to RGB colors.
+    cuboid_caption_fn: Callable, BoundingBox3d -> Tuple[String,Tuple[3]]
+        Function taking a BoundingBox3d object and returning a tuple with the caption string, and the rgb
+        value for that caption. e.g., ( 'car', (255,0,0) )
+    marker_fn: Callable, BoundingBox3d -> Tuple[int,Tuple[3]]
+        Function taking a BoundingBox3d object and returning a tuple with the caption a marker id, and the rgb
+        value for that marker. e.g., ( cv2.MARKER_DIAMOND, (255,0,0) ). Marker should be one of
+        cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.
+    show_paths_on_bev: Bool, default: False
+        If true draw a path for each cuboid. Paths are stored in cuboid attributes under the 'path' key, i.e.,
+        path = cuboid.attributes['path'], paths are themselves a list of pose objects transformed to the
+        correct frame. This method does not handle creating or transforming the paths.
+    bev_enter_offset_w: int, default: 0
+        Offset in pixels to move ego center in BEV.
+    bev_center_offset_h: int, default: 0
+        Offset in pixels to move ego center in BEV.
+
+    Returns
+    -------
+    np.ndarray
+        BEV visualization as an image.
+    """
+    bev = BEVImage(
+        bev_metric_width,
+        bev_metric_height,
+        bev_pixels_per_meter,
+        bev_polar_step_size_meters,
+        bev_forward,
+        bev_left,
+        bev_background_clr,
+        center_offset_w=bev_center_offset_w,
+        center_offset_h=bev_center_offset_h
+    )
+
+    # 1. Render pointcloud
+    if render_pointcloud:
+        if len(lidar_datums) > 1:
+            pc_colors = get_unique_colors(len(lidar_datums))
+        else:
+            pc_colors = [GRAY]
+        for lidar_datum, clr in zip(lidar_datums, pc_colors):
+            bev.render_point_cloud(lidar_datum['point_cloud'], lidar_datum['extrinsics'], color=clr)
+
+    # 2. Render radars
+    if radar_datums is not None:
+        for radar_datum in radar_datums:
+            bev.render_radar_point_cloud(
+                radar_datum['point_cloud'], radar_datum['extrinsics'], velocity=radar_datum['velocity']
+            )
+
+    # 3. Render 3D bboxes.
+    #for agent_datum in agent_datums:
+    if instance_colormap is not None:
+        colors = [
+            instance_colormap.get(agent_datum.instance_id, class_colormap[agent_datum.class_id])
+            for agent_datum in agent_datums
+        ]
+    else:
+        colors = [class_colormap[agent_datum.class_id] for agent_datum in agent_datums]
+
+    # If no caption function is supplied, generate one from the instance ids or class ids
+    # Caption functions should return a tuple (string, color)
+    # TODO: expand to include per caption font size.
+    if show_instance_id_on_bev and cuboid_caption_fn is None:
+        cuboid_caption_fn = lambda x: (str(x.instance_id), WHITE)
+    elif cuboid_caption_fn is None:  # show class names
+        cuboid_caption_fn = lambda x: (id_to_name[x.class_id], WHITE)
+
+    labels, font_colors = zip(*[cuboid_caption_fn(agent_datum) for agent_datum in agent_datums])
+
+    markers, marker_colors = None, (RED, )
+    if marker_fn is not None:
+        markers, marker_colors = zip(*[marker_fn(agent_datum) for agent_datum in agent_datums])
+
+    bev.render_bounding_box_3d(
+        agent_datums,
+        lidar_datums[0]['extrinsics'],
+        colors=colors,
+        texts=labels if bev_font_scale > 0 else None,
+        line_thickness=bev_line_thickness,
+        font_scale=bev_font_scale,
+        font_colors=font_colors,
+        markers=markers if marker_scale > 0 else None,
+        marker_scale=marker_scale,
+        marker_colors=marker_colors,
+    )
+
+    if show_paths_on_bev:
+        # Collect the paths and path colors
+        paths, path_colors = zip(
+            *[(bbox.attributes['path'], c) for bbox, c in zip(agent_datums, colors) if 'path' in bbox.attributes]
+        )
+        if len(paths) > 0:
+            bev.render_paths(paths, extrinsics=lidar_datums[0]['extrinsics'], colors=path_colors, line_thickness=1)
+
+    # 4. Render camera frustrums.
+    if camera_datums is not None:
+        for cam_datum, cam_color in zip(camera_datums, camera_colors):
+            bev.render_camera_frustrum(
+                cam_datum['intrinsics'],
+                cam_datum['extrinsics'],
+                cam_datum['rgb'].size[0],
+                color=cam_color,
+                line_thickness=bev_line_thickness // 2
+            )
+
+    return bev.data
