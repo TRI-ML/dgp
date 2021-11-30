@@ -11,9 +11,14 @@ a robot session. Normally we extract 10~20 seconds Scenes at 10Hz from raw drivi
 (images, point clouds, radar point clouds, etc) and calibrations.
 * Datum: A Datum encapsulates sensory data (image, point cloud, radar point cloud, etc),
 along with their associated annotations.
+* AgentDataset: Dataset for agent-centric prediction or planning use cases,but guaranteeing
+trajectory of main agent is present in any fetched sample.
+* Feature: Agent's requested feature type can include agent_2d, agent_3d, ego_intention, corridor, intersection or parked car.
+* Ontology: An Ontology represents a set of unique objects such as Vehicle, Truck, Pedestrian, etc.
+* Feature Ontology: A Feature Ontology represents a set of unique feature fields such as Speed, Parking attribute, etc.
 
-## Protobuf Directory Structure
-
+Protobuf Directory Structure
+-----------
 All the protobuf schemas are defined under this [proto/](./)
 directory. Schema for the following types are specified their
 corresponding `proto` files.
@@ -25,13 +30,18 @@ corresponding `proto` files.
 * PointCloud container: [`point_cloud.proto`](./point_cloud.proto)
 * Radar PointCloud container: [`radar_point_cloud.proto`](./radar_point_cloud.proto)
 * Remote Storage: [`remote.proto`](./remote.proto)
+* Agent: [`agent.proto`](./agent.proto)
+* Features: [`features.proto`](./features.proto)
+* Ontology: [`ontology.proto`](./ontology.proto)
 
-### SceneDataset schema graph
+SceneDataset schema graph
+----------
 ![SceneDataset schema](../../docs/scene-dataset-schema.jpg?raw=true "SceneDataset schema")
 
-## DGP SceneDataset Structure
+DGP SceneDataset Structure
+----------
 Scenes are stored in the DGP under the following structure:
-```
+``` text
 <dataset_root_dir>
 ├── <scene_name>
 │   ├── point_cloud // datum
@@ -64,4 +74,47 @@ Scenes are stored in the DGP under the following structure:
 ├── <scene_name>
 └── ...
 └── scene_dataset_v<version>.json
+```
+
+DGP AgentDataset Structure
+----------
+Agents are stored in the DGP under the following structure:
+``` text
+📦dataset_root_dir
+ ┣ 📂scene_name
+ ┃ ┣ 📂agent
+ ┃ ┃ ┣ 📜agent_tracks_<agent_hash>.json
+ ┃ ┃ ┗ 📜agents_slices_<agent_hash>.json
+ ┃ ┣ 📂bounding_box_2d
+ ┃ ┃ ┣ 📂CAMERA_NAME
+ ┃ ┃ ┃ ┣ 📜<annotation_hash>.json
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┃ ┗ .. 
+ ┃ ┣ 📂bounding_box_3d
+ ┃ ┃ ┣ 📂CAMERA_NAME
+ ┃ ┃ ┃ ┗ 📜<annotation_hash>.json
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┃ ┗ ..
+ ┃ ┃ ┗ 📂LIDAR_NAME
+ ┃ ┃ ┃ ┗ 📜<annotation_hash>.json
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┣ 📂calibration
+ ┃ ┃ ┗ 📜<calibration_hash>.json
+ ┃ ┣ 📂feature_ontology
+ ┃ ┃ ┗ 📜<feature_ontology_hash>.json
+ ┃ ┣ 📂ontology
+ ┃ ┃ ┗ 📜<ontology_hash>.json
+ ┃ ┣ 📂point_cloud
+ ┃ ┃ ┗ 📂LIDAR
+ ┃ ┃ ┃ ┣ 📜<posix_timestamp_us>.npz
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┣ 📂rgb
+ ┃ ┃ ┣ 📂CAMERA_NAME
+ ┃ ┃ ┃ ┣ 📜<posix_timestamp_us>.jpg
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┃ ┗ ..
+ ┃ ┣ 📜agents_<agent_hash>.json
+ ┃ ┗ 📜scene_<scene_hash>.json
+ ┣ 📜agents_pcc_mini_v<version>.json
+ ┗ 📜scene_dataset_v<version>.json
 ```
