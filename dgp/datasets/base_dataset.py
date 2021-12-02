@@ -43,7 +43,9 @@ class SceneContainer:
     This class also provides functionality for reinjecting autolabeled scenes into other scenes.
     """
     random_str = ''.join([str(random.randint(0, 9)) for _ in range(5)])
-    cache_dir = os.path.join(DGP_CACHE_DIR, f'dgp_diskcache_{random_str}')
+    cache_suffix = os.environ.get('DGP_SCENE_CACHE_SUFFIX', random_str)
+    cache_dir = os.path.join(DGP_CACHE_DIR, f'dgp_diskcache_{cache_suffix}')
+    logging.debug(f'using {cache_dir} for dgp scene container disk cache')
     SCENE_CACHE = Cache(cache_dir)
 
     def __init__(
