@@ -22,6 +22,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install cython==0.29.21 numpy==1.19.4
         pip install -r requirements.txt
+        pip install -r docs/requirements-doc.txt
         cd docs
         make html
     - name: Push Sphinx Pages to Webserver

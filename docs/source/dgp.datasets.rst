@@ -1,8 +1,6 @@
 dgp.datasets package
 ====================
 
-Submodules
-----------
 
 dgp.datasets.base\_dataset module
 ---------------------------------
