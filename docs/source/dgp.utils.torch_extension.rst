@@ -1,8 +1,6 @@
 dgp.utils.torch\_extension package
 ==================================
 
-Submodules
-----------
 
 dgp.utils.torch\_extension.camera module
 ----------------------------------------

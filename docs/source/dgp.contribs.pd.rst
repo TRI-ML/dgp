@@ -1,8 +1,6 @@
 dgp.contribs.pd package
 =======================
 
-Submodules
-----------
 
 dgp.contribs.pd.metadata\_pb2 module
 ------------------------------------
