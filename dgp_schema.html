@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRI Dataset Governance Policy (DGP) Schema &#8212; DGP 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dgp package" href="dgp.html" />
+    <link rel="prev" title="Contribution Guidelines" href="contributing_guidelines.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dgp.html" title="dgp package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contributing_guidelines.html" title="Contribution Guidelines"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">TRI Dataset Governance Policy (DGP) Schema</a></li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><!DOCTYPE html>
+<hr />
+<p>
+<h2 class="logo">
+    <a href="https://www.tri.global/">
+        <img src="_static/tri_logo.png" alt="TRI">
+    </a>
+</h2>
+</p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><!DOCTYPE html>
+<h3><a href="#">Quick Links</a></h3>
+<ul>
+    <li><a class="reference internal" href="cli.html">Command Line Interface Info</a></li>
+    <li><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+    <li><a class="reference internal" href="contributing_guidelines.html">Contributing Guidelines</a></li>
+    <li><a class="reference internal" href="dgp_schema.html">DGP Schema</a></li>
+</ul>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">TRI Dataset Governance Policy (DGP) Schema</a><ul>
+<li><a class="reference internal" href="#protobuf-directory-structure">Protobuf Directory Structure</a><ul>
+<li><a class="reference internal" href="#scenedataset-schema-graph">SceneDataset schema graph</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dgp-scenedataset-structure">DGP SceneDataset Structure</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="contributing_guidelines.html"
+                        title="previous chapter">Contribution Guidelines</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dgp.html"
+                        title="next chapter">dgp package</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tri-dataset-governance-policy-dgp-schema">
+<h1>TRI Dataset Governance Policy (DGP) Schema<a class="headerlink" href="#tri-dataset-governance-policy-dgp-schema" title="Permalink to this headline">¶</a></h1>
+<p>DGP-compliant datasets follow the structure and schema defined in this directory. Top-level
+data containers are listed below:</p>
+<ul class="simple">
+<li><p>SceneDataset: A SceneDataset contains <code class="docutils literal notranslate"><span class="pre">DatasetMetadata</span></code> and a collection of <code class="docutils literal notranslate"><span class="pre">Scene</span></code>
+assigned to different <code class="docutils literal notranslate"><span class="pre">split</span></code> for training, evaluation and inference.</p></li>
+<li><p>Scene: A Scene consists of consecutive <code class="docutils literal notranslate"><span class="pre">Sample</span></code> extracted at a fixed frequency in
+a robot session. Normally we extract 10~20 seconds Scenes at 10Hz from raw driving logs.</p></li>
+<li><p>Sample: A sample is a container that encapsulates time-synchronized sensory <code class="docutils literal notranslate"><span class="pre">Datum</span></code>
+(images, point clouds, radar point clouds, etc) and calibrations.</p></li>
+<li><p>Datum: A Datum encapsulates sensory data (image, point cloud, radar point cloud, etc),
+along with their associated annotations.</p></li>
+</ul>
+<div class="section" id="protobuf-directory-structure">
+<h2>Protobuf Directory Structure<a class="headerlink" href="#protobuf-directory-structure" title="Permalink to this headline">¶</a></h2>
+<p>All the protobuf schemas are defined under this <a class="reference external" href="./">proto/</a>
+directory. Schema for the following types are specified their
+corresponding <code class="docutils literal notranslate"><span class="pre">proto</span></code> files.</p>
+<ul class="simple">
+<li><p>Annotations and Annotation Types: <cite>``annotations.proto`</cite> &lt;./annotations.proto&gt;`_</p></li>
+<li><p>Dataset Artifacts: <cite>``artifacts.proto`</cite> &lt;./artifacts.proto&gt;`_</p></li>
+<li><p>Dataset Provenance / Tracking: <cite>``identifiers.proto`</cite> &lt;./identifiers.proto&gt;`_</p></li>
+<li><p>Dataset: <cite>``dataset.proto`</cite> &lt;./dataset.proto&gt;`_</p></li>
+<li><p>Image container: <cite>``image.proto`</cite> &lt;./image.proto&gt;`_</p></li>
+<li><p>PointCloud container: <cite>``point_cloud.proto`</cite> &lt;./point_cloud.proto&gt;`_</p></li>
+<li><p>Radar PointCloud container: <cite>``radar_point_cloud.proto`</cite> &lt;./radar_point_cloud.proto&gt;`_</p></li>
+<li><p>Remote Storage: <cite>``remote.proto`</cite> &lt;./remote.proto&gt;`_</p></li>
+</ul>
+<div class="section" id="scenedataset-schema-graph">
+<h3>SceneDataset schema graph<a class="headerlink" href="#scenedataset-schema-graph" title="Permalink to this headline">¶</a></h3>
+<a class="reference external image-reference" href="../../docs/scene-dataset-schema.jpg?raw=true"><img alt="SceneDataset schema" src="../../docs/scene-dataset-schema.jpg?raw=true" /></a>
+</div>
+</div>
+<div class="section" id="dgp-scenedataset-structure">
+<h2>DGP SceneDataset Structure<a class="headerlink" href="#dgp-scenedataset-structure" title="Permalink to this headline">¶</a></h2>
+<p>Scenes are stored in the DGP under the following structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;dataset_root_dir&gt;
+├── &lt;scene_name&gt;
+│   ├── point_cloud // datum
+│   │   └── &lt;lidar_name&gt;
+│   │       ├── &lt;posix_timestamp_us&gt;.npz
+│   │       └── ...
+│   │   └── ...
+│   ├── rgb // datum
+│   │   └── &lt;camera_name&gt;
+│   │       ├── &lt;posix_timestamp_us&gt;.png
+│   │       └── ...
+│   │   └── ...
+│   ├── bounding_box_2d // annotation
+│   │   └── &lt;camera_name&gt;
+│   │       ├── &lt;annotation_hash&gt;.json
+│   │       └── ...
+│   │   └── ...
+│   ├── bounding_box_3d // annotation
+│   │   └── &lt;lidar_name&gt;
+│   │       ├── &lt;annotation_hash&gt;.json
+│   │       └── ...
+│   │   └── ...
+│   ├── calibration // calibration
+│   │   └── &lt;calibration_hash&gt;.json
+│   │   └── ...
+│   ├── ontology // ontology
+│   │   └── &lt;ontology_hash&gt;.json
+|   └── ...
+│   └── scene_&lt;scene_hash&gt;.json
+├── &lt;scene_name&gt;
+└── ...
+└── scene_dataset_v&lt;version&gt;.json
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dgp.html" title="dgp package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="contributing_guidelines.html" title="Contribution Guidelines"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">TRI Dataset Governance Policy (DGP) Schema</a></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2021, Toyota Research Institute.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Getting Started &#8212; DGP 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contribution Guidelines" href="contributing_guidelines.html" />
+    <link rel="prev" title="DGP Command Line Interface" href="cli.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contributing_guidelines.html" title="Contribution Guidelines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cli.html" title="DGP Command Line Interface"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Getting Started</a></li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><!DOCTYPE html>
+<hr />
+<p>
+<h2 class="logo">
+    <a href="https://www.tri.global/">
+        <img src="_static/tri_logo.png" alt="TRI">
+    </a>
+</h2>
+</p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><!DOCTYPE html>
+<h3><a href="#">Quick Links</a></h3>
+<ul>
+    <li><a class="reference internal" href="cli.html">Command Line Interface Info</a></li>
+    <li><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+    <li><a class="reference internal" href="contributing_guidelines.html">Contributing Guidelines</a></li>
+    <li><a class="reference internal" href="dgp_schema.html">DGP Schema</a></li>
+</ul>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#develop-within-docker">Develop within docker</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cli.html"
+                        title="previous chapter">DGP Command Line Interface</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="contributing_guidelines.html"
+                        title="next chapter">Contribution Guidelines</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Linux or macOS</p></li>
+<li><p>Python 3.6+</p></li>
+<li><p><a class="reference external" href="https://docs.docker.com/engine/install/">docker</a></p></li>
+<li><p>CUDA 10.0+</p></li>
+<li><p>(Optional) <a class="reference external" href="AWS.md">AWS</a></p></li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Dockerized environment is encouraged for all DGP contributors and users. Alternatively, you can use python virtual environments. Please see <a class="reference external" href="VIRTUAL_ENV.md">virtual environment setup</a> for instructions.</p>
+<p>To setup DGP docker image:</p>
+<ul>
+<li><p>You can pull the latest master docker via:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>   dgp$ docker pull ghcr.io/tri-ml/dgp:master <span class="o">&amp;&amp;</span> docker image tag ghcr.io/tri-ml/dgp:master dgp:latest
+
+---or---
+</pre></div>
+</div>
+</li>
+<li><p>Build the docker from scratch via:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make docker-build
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Inspect if docker image <code class="docutils literal notranslate"><span class="pre">dgp:latest</span></code> has been pulled or built successfully:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ docker inspect --type<span class="o">=</span>image dgp:latest
+</pre></div>
+</div>
+<p>If you get a response, then you already have DGP docker image on the machine!</p>
+<p>To check if DGP docker image is built successfully, run the unit tests via:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make docker-run-tests
+</pre></div>
+</div>
+</div>
+<div class="section" id="develop-within-docker">
+<h2>Develop within docker<a class="headerlink" href="#develop-within-docker" title="Permalink to this headline">¶</a></h2>
+<p>In order to start development, the quickest way to get started would
+be use the interactive docker mode via:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make docker-start-interactive
+</pre></div>
+</div>
+<p>The DGP base directory is mounted within the
+docker container, and gives you a sandbox to develop quickly without
+needing to set up a local virtual environment.</p>
+<p>Within the interactive docker container (after <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-start-interactive</span></code>), you can now build the proto definitions (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build-proto</span></code>) and run the tests (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code>) to make sure everything is functioning properly.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make build-proto
+dgp$ make <span class="nb">test</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contributing_guidelines.html" title="Contribution Guidelines"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cli.html" title="DGP Command Line Interface"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Getting Started</a></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2021, Toyota Research Institute.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+    </div>
+  </body>
+</html>

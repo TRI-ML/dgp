@@ -12,8 +12,6 @@ Subpackages
    dgp.scripts
    dgp.utils
 
-Submodules
-----------
 
 dgp.cli module
 --------------

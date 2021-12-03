@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DGP Command Line Interface &#8212; DGP 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" />
+    <link rel="prev" title="Welcome to DGP’s documentation!" href="index.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to DGP’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DGP Command Line Interface</a></li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><!DOCTYPE html>
+<hr />
+<p>
+<h2 class="logo">
+    <a href="https://www.tri.global/">
+        <img src="_static/tri_logo.png" alt="TRI">
+    </a>
+</h2>
+</p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><!DOCTYPE html>
+<h3><a href="#">Quick Links</a></h3>
+<ul>
+    <li><a class="reference internal" href="cli.html">Command Line Interface Info</a></li>
+    <li><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+    <li><a class="reference internal" href="contributing_guidelines.html">Contributing Guidelines</a></li>
+    <li><a class="reference internal" href="dgp_schema.html">DGP Schema</a></li>
+</ul>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DGP Command Line Interface</a><ul>
+<li><a class="reference internal" href="#visualize-dgp-compliant-scene-and-scenedataset">Visualize DGP-compliant Scene and SceneDataset</a></li>
+<li><a class="reference internal" href="#coming-soon-retrieve-information-about-an-ml-dataset-in-the-dgp">Coming soon: Retrieve information about an ML dataset in the DGP</a></li>
+<li><a class="reference internal" href="#coming-soon-validate-a-dataset">Coming soon: Validate a dataset</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to DGP’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="getting_started.html"
+                        title="next chapter">Getting Started</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dgp-command-line-interface">
+<h1>DGP Command Line Interface<a class="headerlink" href="#dgp-command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="cli.py">dgp/cli.py</a> is the main CLI entrypoint for handling DGP datasets.</p>
+<div class="section" id="visualize-dgp-compliant-scene-and-scenedataset">
+<h2>Visualize DGP-compliant Scene and SceneDataset<a class="headerlink" href="#visualize-dgp-compliant-scene-and-scenedataset" title="Permalink to this headline">¶</a></h2>
+<p>DGP CLI subcommands <code class="docutils literal notranslate"><span class="pre">visualize-scenes</span></code> and <code class="docutils literal notranslate"><span class="pre">visualize-scene</span></code> can be used to visualize DGP-compliant data.</p>
+<ul>
+<li><p>To visualize a split of a <a href="#id1"><span class="problematic" id="id2">**</span></a><a class="reference external" href="proto/dataset.proto#L127">DGP SceneDataset</a><a href="#id3"><span class="problematic" id="id4">**</span></a>, run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">dgp/cli.py</span> <span class="pre">visualize-scenes</span></code>:</p>
+<p>Show the help message via:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scenes --help
+</pre></div>
+</div>
+<p>Example command to visualize the images from <code class="docutils literal notranslate"><span class="pre">CAMERA_01,</span> <span class="pre">CAMERA_05,</span> <span class="pre">CAMERA_06</span></code> and point cloud from <code class="docutils literal notranslate"><span class="pre">LIDAR</span></code> along with ground_truth annotations <code class="docutils literal notranslate"><span class="pre">bounding_box_2d,</span> <span class="pre">bounding_box_3d</span></code> from <code class="docutils literal notranslate"><span class="pre">train</span></code> split of the toy dataset <code class="docutils literal notranslate"><span class="pre">tests/data/dgp/test_scene/scene_dataset_v1.0.json</span></code>, and store the resulting videos in <code class="docutils literal notranslate"><span class="pre">--dst-dir</span> <span class="pre">vis</span></code>.
+One can find the resulting 3D visualization videos in <code class="docutils literal notranslate"><span class="pre">vis/3d</span></code> and 2D visualization videos in <code class="docutils literal notranslate"><span class="pre">vis/2d</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d
+</pre></div>
+</div>
+<p align="center">
+<img src="../docs/3d-viz.gif" alt="3d-viz"/>
+</p></li>
+</ul>
+<p>Add flag <code class="docutils literal notranslate"><span class="pre">render-pointcloud</span></code> to render projected pointcloud onto images:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d --render-pointcloud
+</pre></div>
+</div>
+<p align="center">
+  <img src="../docs/3d-viz-proj.gif" alt="3d-viz-proj"/>
+</p><ul>
+<li><p>To visualize a single <a href="#id5"><span class="problematic" id="id6">**</span></a><a class="reference external" href="proto/scene.proto#L14">DGP Scene</a><a href="#id7"><span class="problematic" id="id8">**</span></a>, run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">dgp/cli.py</span> <span class="pre">visualize-scene</span></code>:</p>
+<p>Show the help message via:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scene --help
+</pre></div>
+</div>
+<p>Example command to visualize the images from <code class="docutils literal notranslate"><span class="pre">CAMERA_01,</span> <span class="pre">CAMERA_05,</span> <span class="pre">CAMERA_06</span></code> and point cloud from <code class="docutils literal notranslate"><span class="pre">LIDAR</span></code> along with ground_truth annotations <code class="docutils literal notranslate"><span class="pre">bounding_box_2d,</span> <span class="pre">bounding_box_3d</span></code> from the toy Scene <code class="docutils literal notranslate"><span class="pre">tests/data/dgp/test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json</span></code>, and store the resulting videos in <code class="docutils literal notranslate"><span class="pre">--dst-dir</span> <span class="pre">vis</span></code>.
+One can find the resulting 3D visualization video in <code class="docutils literal notranslate"><span class="pre">vis/3d</span></code> and 2D visualization video in <code class="docutils literal notranslate"><span class="pre">vis/2d</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scene --scene-json tests/data/dgp/test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="coming-soon-retrieve-information-about-an-ml-dataset-in-the-dgp">
+<h2>Coming soon: Retrieve information about an ML dataset in the DGP<a class="headerlink" href="#coming-soon-retrieve-information-about-an-ml-dataset-in-the-dgp" title="Permalink to this headline">¶</a></h2>
+<p>DGP CLI provides information about a dataset, including
+the remote location (S3 url) of the dataset, its raw dataset url, the
+set of available annotation types contained in the dataset, etc. For
+more information, see relevant metadata stored with a dataset artifact
+in <a class="reference external" href="proto/dataset.proto">DatasetMetadata</a> and <a class="reference external" href="proto/artifacts.proto">DatasetArtifacts</a>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py info --scene-dataset-json &lt;scene-dataset-json&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="coming-soon-validate-a-dataset">
+<h2>Coming soon: Validate a dataset<a class="headerlink" href="#coming-soon-validate-a-dataset" title="Permalink to this headline">¶</a></h2>
+<p>DGP CLI provides a simplified mechanism for validating newly
+created datasets, ensuring that the dataset schema is maintained and
+valid. This is done via:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py validate --scene-dataset-json &lt;scene-dataset-json&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to DGP’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DGP Command Line Interface</a></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2021, Toyota Research Institute.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+    </div>
+  </body>
+</html>

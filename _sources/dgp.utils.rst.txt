@@ -11,8 +11,6 @@ Subpackages
    dgp.utils.structures
    dgp.utils.torch_extension
 
-Submodules
-----------
 
 dgp.utils.accumulate module
 ---------------------------

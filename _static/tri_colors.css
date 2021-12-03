@@ -1,0 +1,17 @@
+@import "./solar.css";
+
+div.body {
+  min-width: 450px;
+  max-width: 1000px;
+}
+
+div.body a,
+div.sphinxsidebarwrapper a {
+  color: #cf152d;
+  text-decoration: none;
+}
+
+pre,
+div[class*="highlight-"] {
+  clear: none;
+}
