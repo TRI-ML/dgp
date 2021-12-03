@@ -1,5 +1,5 @@
-TRI Dataset Governance Policy (DGP) Schema
-==========
+# TRI Dataset Governance Policy (DGP) Schema
+
 DGP-compliant datasets follow the structure and schema defined in this directory. Top-level
 data containers are listed below:
 
@@ -27,11 +27,11 @@ corresponding `proto` files.
 * Remote Storage: [`remote.proto`](./remote.proto)
 
 ### SceneDataset schema graph
-![SceneDataset schema](../../docs/scene-dataset-schema.jpg?raw=true "SceneDataset schema")
+![SceneDataset schema](https://raw.githubusercontent.com/TRI-ML/dgp/master/docs/scene-dataset-schema.jpg?raw=true "SceneDataset schema")
 
 ## DGP SceneDataset Structure
 Scenes are stored in the DGP under the following structure:
-```
+```filelist
 <dataset_root_dir>
 ├── <scene_name>
 │   ├── point_cloud // datum

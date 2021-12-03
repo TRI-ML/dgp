@@ -1,4 +1,4 @@
-# DGP Command Line Interface
+# DGP Command-Line Interface
 
 [dgp/cli.py](cli.py) is the main CLI entrypoint for handling DGP datasets.
 
@@ -23,7 +23,7 @@ One can find the resulting 3D visualization videos in `vis/3d` and 2D visualizat
   dgp$ python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d
   ```
 <p align="center">
-  <img src="../docs/3d-viz.gif" alt="3d-viz"/>
+  <img src="https://raw.githubusercontent.com/TRI-ML/dgp/master/docs/3d-viz.gif" alt="3d-viz"/>
 </p>
 
 Add flag `render-pointcloud` to render projected pointcloud onto images:
@@ -31,7 +31,7 @@ Add flag `render-pointcloud` to render projected pointcloud onto images:
   dgp$ python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d --render-pointcloud
   ```
 <p align="center">
-  <img src="../docs/3d-viz-proj.gif" alt="3d-viz-proj"/>
+  <img src="https://raw.githubusercontent.com/TRI-ML/dgp/master/docs/3d-viz-proj.gif" alt="3d-viz-proj"/>
 </p>
 
 
