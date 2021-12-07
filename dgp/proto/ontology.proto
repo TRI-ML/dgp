@@ -1,11 +1,11 @@
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
 // Definitions for OntologyItem and Ontology.
 // OntologyItem and Ontology are defined in an Object Oriented way for the ease of downstream
 // consumption. Ontology is simply a collection of multiple OntologyItems that contain all
-// all property fields that represent a category/concept.
+// property fields that represent a category/concept.
 
 syntax = "proto3";
 
-// TODO: move package back to dgp.proto once dataset_pb2 is deprecated.
 package dgp.proto.v2;
 
 // An Ontology represents a set of unique concepts/categories that expresses their properties.
@@ -26,6 +26,7 @@ message OntologyItem {
     uint32 g = 2;
     uint32 b = 3;
   }
+
   // OntologyItem RGB color code.
   Color color = 3;
 
@@ -42,4 +43,25 @@ message OntologyItem {
 message Ontology {
   // List of OntologyItems.
   repeated OntologyItem items = 1;
+}
+
+// A Feature Ontology represents a set of unique feature fields that expresses their properties.
+// A FeatureOntologyItem defines a single, unique element within in an FeatureOntology.
+message FeatureOntologyItem {
+  // OntologyItem name. For e.g., 'Speed', 'Link_to_rasterized_image', 'parking_attribute', etc.
+  string name = 1;
+
+  // FeatureOntologyItem id.
+  // Note: Downstream consumption code ought to assert if every FeatureOntologyItem.id is
+  // unique in an Ontology.
+  uint32 id = 2;
+
+  // Specify the feature value type in dgp.proto.features.
+  uint32 feature_value_type = 3;
+}
+
+// Feature ontology for dgp.proto.agent.
+message FeatureOntology {
+  // List of FeatureOntologyItems.
+  repeated FeatureOntologyItem items = 1;
 }

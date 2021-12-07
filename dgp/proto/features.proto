@@ -1,0 +1,38 @@
+// Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
+// Definitions for annotation types for images and point clouds
+
+syntax = "proto3";
+
+import "dgp/proto/geometry.proto";
+
+package dgp.proto;
+
+// Generic Feature Type Enumeration.
+// Features will be available under the corresponding enum name.
+enum FeatureType {
+  // Feature type of default 2D agents.
+  AGENT_2D = 0;
+
+  // Feature type of default 3D agents.
+  AGENT_3D = 1;
+
+  // Feature type of ego intent ontology.
+  EGO_INTENTION = 2;
+
+  // Feature type of corridor map element.
+  CORRIDOR = 3;
+
+  // Feature type of intersection.
+  INTERSECTION = 4;
+
+  // Feature type of parked car ontology.
+  PARKED_CAR = 5;
+}
+
+// The feature value type specified in dgp.ontology.FeatureOntologyItem.
+enum FeatureValueType {
+ // Feature value type of numeric values.
+ NUMERIC = 0;
+ // Feature value type of file.
+ FILE = 1;
+}
