@@ -60,14 +60,28 @@ class _ParallelDomainDataset(_SynchronizedDataset):
         Tuple of annotation types similar to `requested_annotations`, but associated with a particular autolabeling model.
         Expected format is "<model_id>/<annotation_type>"
 
-    backward_context: int, default: 0
-        Backward context in frames [T-backward, ..., T-1]
-
     forward_context: int, default: 0
         Forward context in frames [T+1, ..., T+forward]
 
+    backward_context: int, default: 0
+        Backward context in frames [T-backward, ..., T-1]
+
+    generate_depth_from_datum: str, default: None
+        Datum name of the point cloud. If is not None, then the depth map will be generated for the camera using
+        the desired point cloud.
+
     only_annotated_datums: bool, default: False
         If True, only datums with annotations matching the requested annotation types are returned.
+
+    use_virtual_camera_datums: bool, default: True
+        If True, uses virtual camera datums. See dgp.datasets.pd_dataset.VIRTUAL_CAMERA_DATUM_NAMES for more details.
+
+    accumulation_context: dict, default None
+        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, 'accumulation_context={'lidar':(3,1)}
+        accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.
+
+    transform_accumulated_box_points: bool, default: False
+        Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
     """
     def __init__(
         self,
@@ -80,7 +94,9 @@ class _ParallelDomainDataset(_SynchronizedDataset):
         backward_context=0,
         generate_depth_from_datum=None,
         only_annotated_datums=False,
-        use_virtual_camera_datums=True
+        use_virtual_camera_datums=True,
+        accumulation_context=None,
+        transform_accumulated_box_points=False,
     ):
         self.coalesce_point_cloud = datum_names is not None and \
                                     COALESCED_LIDAR_DATUM_NAME in datum_names
@@ -96,6 +112,13 @@ class _ParallelDomainDataset(_SynchronizedDataset):
             if use_virtual_camera_datums:
                 new_datum_names.extend(VIRTUAL_CAMERA_DATUM_NAMES)
 
+            # If we request the coalesced lidar with accumulation, update the accumulation for the
+            # individual lidars
+            if accumulation_context is not None and COALESCED_LIDAR_DATUM_NAME in accumulation_context:
+                acc_context = accumulation_context.pop(COALESCED_LIDAR_DATUM_NAME)
+                updated_acc = {datum_name: acc_context for datum_name in LIDAR_DATUM_NAMES}
+                accumulation_context.update(updated_acc)
+
             # Update datum_names with the full set of lidar datums, if requested.
             logging.info('Datum names with lidar datums={}'.format(new_datum_names))
             datum_names = new_datum_names
@@ -109,7 +132,9 @@ class _ParallelDomainDataset(_SynchronizedDataset):
             forward_context=forward_context,
             backward_context=backward_context,
             generate_depth_from_datum=generate_depth_from_datum,
-            only_annotated_datums=only_annotated_datums
+            only_annotated_datums=only_annotated_datums,
+            accumulation_context=accumulation_context,
+            transform_accumulated_box_points=transform_accumulated_box_points,
         )
 
     def coalesce_pc_data(self, items):
@@ -203,6 +228,11 @@ class _ParallelDomainDataset(_SynchronizedDataset):
 
 class ParallelDomainSceneDataset(_ParallelDomainDataset):
     """
+    Parameters
+    ----------
+    dataset_root: str
+        Optional path to dataset root folder. Useful if dataset scene json is not in the same directory as the rest of the data.
+
     Refer to SynchronizedSceneDataset for parameters.
     """
     def __init__(
@@ -218,6 +248,9 @@ class ParallelDomainSceneDataset(_ParallelDomainDataset):
         only_annotated_datums=False,
         use_virtual_camera_datums=True,
         skip_missing_data=False,
+        accumulation_context=None,
+        dataset_root=None,
+        transform_accumulated_box_points=False,
     ):
         # Extract all scenes from the scene dataset JSON for the appropriate split
         scenes = BaseDataset._extract_scenes_from_scene_dataset_json(
@@ -225,7 +258,8 @@ class ParallelDomainSceneDataset(_ParallelDomainDataset):
             split,
             requested_autolabels,
             is_datums_synchronized=True,
-            skip_missing_data=skip_missing_data
+            skip_missing_data=skip_missing_data,
+            dataset_root=dataset_root,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
@@ -240,7 +274,9 @@ class ParallelDomainSceneDataset(_ParallelDomainDataset):
             forward_context=forward_context,
             generate_depth_from_datum=generate_depth_from_datum,
             only_annotated_datums=only_annotated_datums,
-            use_virtual_camera_datums=use_virtual_camera_datums
+            use_virtual_camera_datums=use_virtual_camera_datums,
+            accumulation_context=accumulation_context,
+            transform_accumulated_box_points=transform_accumulated_box_points,
         )
 
 
@@ -260,11 +296,16 @@ class ParallelDomainScene(_ParallelDomainDataset):
         only_annotated_datums=False,
         use_virtual_camera_datums=True,
         skip_missing_data=False,
+        accumulation_context=None,
+        transform_accumulated_box_points=False,
     ):
 
         # Extract a single scene from the scene JSON
         scene = BaseDataset._extract_scene_from_scene_json(
-            scene_json, requested_autolabels, is_datums_synchronized=True, skip_missing_data=skip_missing_data
+            scene_json,
+            requested_autolabels,
+            is_datums_synchronized=True,
+            skip_missing_data=skip_missing_data,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
@@ -279,5 +320,7 @@ class ParallelDomainScene(_ParallelDomainDataset):
             forward_context=forward_context,
             generate_depth_from_datum=generate_depth_from_datum,
             only_annotated_datums=only_annotated_datums,
-            use_virtual_camera_datums=use_virtual_camera_datums
+            use_virtual_camera_datums=use_virtual_camera_datums,
+            accumulation_context=accumulation_context,
+            transform_accumulated_box_points=transform_accumulated_box_points,
         )
