@@ -85,7 +85,7 @@ class _SynchronizedDataset(BaseDataset):
             scenes=scenes,
             datum_names=datum_names,
             requested_annotations=requested_annotations,
-            requested_autolabels=requested_autolabels
+            requested_autolabels=requested_autolabels,
         )
 
     def _build_item_index(self):
@@ -503,7 +503,9 @@ class SynchronizedScene(_SynchronizedDataset):
 
         # Extract a single scene from the scene JSON
         scene = BaseDataset._extract_scene_from_scene_json(
-            scene_json, requested_autolabels, is_datums_synchronized=True
+            scene_json,
+            requested_autolabels,
+            is_datums_synchronized=True,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
