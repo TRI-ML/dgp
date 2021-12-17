@@ -77,8 +77,9 @@ class _ParallelDomainDataset(_SynchronizedDataset):
         If True, uses virtual camera datums. See dgp.datasets.pd_dataset.VIRTUAL_CAMERA_DATUM_NAMES for more details.
 
     accumulation_context: dict, default None
-        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, 'accumulation_context={'lidar':(3,1)}
-        accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.
+        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation.
+        For example, 'accumulation_context={'lidar':(3,1)} accumulates lidar points over the past three time steps and
+        one forward step. Only valid for lidar and radar datums.
 
     transform_accumulated_box_points: bool, default: False
         Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
@@ -228,11 +229,6 @@ class _ParallelDomainDataset(_SynchronizedDataset):
 
 class ParallelDomainSceneDataset(_ParallelDomainDataset):
     """
-    Parameters
-    ----------
-    dataset_root: str
-        Optional path to dataset root folder. Useful if dataset scene json is not in the same directory as the rest of the data.
-
     Refer to SynchronizedSceneDataset for parameters.
     """
     def __init__(
@@ -251,6 +247,7 @@ class ParallelDomainSceneDataset(_ParallelDomainDataset):
         accumulation_context=None,
         dataset_root=None,
         transform_accumulated_box_points=False,
+        use_diskcache=True,
     ):
         # Extract all scenes from the scene dataset JSON for the appropriate split
         scenes = BaseDataset._extract_scenes_from_scene_dataset_json(
@@ -260,6 +257,7 @@ class ParallelDomainSceneDataset(_ParallelDomainDataset):
             is_datums_synchronized=True,
             skip_missing_data=skip_missing_data,
             dataset_root=dataset_root,
+            use_diskcache=use_diskcache,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
@@ -298,6 +296,7 @@ class ParallelDomainScene(_ParallelDomainDataset):
         skip_missing_data=False,
         accumulation_context=None,
         transform_accumulated_box_points=False,
+        use_diskcache=True,
     ):
 
         # Extract a single scene from the scene JSON
@@ -306,6 +305,7 @@ class ParallelDomainScene(_ParallelDomainDataset):
             requested_autolabels,
             is_datums_synchronized=True,
             skip_missing_data=skip_missing_data,
+            use_diskcache=use_diskcache,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
