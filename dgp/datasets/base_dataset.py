@@ -702,8 +702,6 @@ class BaseDataset:
 
         # Build index for each scene. See `SceneContainer.datum_index` for more details
         self.datum_index = self._build_datum_index()
-        # Build index of annotations if any are desired.
-        self.annotation_index = self._build_annotation_index() if self.requested_annotations else None
 
         # Dataset item index
         # This is the main index into the pytorch Dataset, where the index is
