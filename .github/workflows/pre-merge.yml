@@ -28,7 +28,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install cython==0.29.21 numpy==1.19.4
           pip install -r requirements.txt
-      - name: Run tests with nosetests
+      - name: Run tests
         run: make test
       - name: Check python code formatting with YAPF
         # Documentation: https://github.com/AlexanderMelde/yapf-action
