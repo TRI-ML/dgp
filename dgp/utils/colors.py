@@ -90,7 +90,7 @@ def adjust_lightness(color, factor=1.0):
     Tuple[int]
         Adjusted RGB color.
     """
-    hls = cv2.cvtColor(np.uint8(color).reshape(1, 1, 3), cv2.COLOR_RGB2HLS).flatten()
+    hls = cv2.cvtColor(np.uint8(color).reshape(1, 1, 3), cv2.COLOR_RGB2HLS).flatten()  # pylint: disable=too-many-function-args
     adjusted_hls = [hls[0], int(max(0, min(255, hls[1] * factor))), hls[2]]
-    adjusted_rgb = cv2.cvtColor(np.uint8(adjusted_hls).reshape(1, 1, 3), cv2.COLOR_HLS2RGB).flatten()
+    adjusted_rgb = cv2.cvtColor(np.uint8(adjusted_hls).reshape(1, 1, 3), cv2.COLOR_HLS2RGB).flatten()  # pylint: disable=too-many-function-args
     return (int(adjusted_rgb[0]), int(adjusted_rgb[1]), int(adjusted_rgb[2]))

@@ -197,6 +197,9 @@ class FrameSceneDataset(_FrameDataset):
         use_diskcache=True,
         skip_missing_data=False,
     ):
+        if not use_diskcache:
+            logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
+
         # Extract all scenes from the scene dataset JSON for the appropriate split
         scenes = BaseDataset._extract_scenes_from_scene_dataset_json(
             scene_dataset_json,
@@ -262,6 +265,8 @@ class FrameScene(_FrameDataset):
         use_diskcache=True,
         skip_missing_data=False,
     ):
+        if not use_diskcache:
+            logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
 
         # Extract a single scene from the scene JSON
         scene = BaseDataset._extract_scene_from_scene_json(

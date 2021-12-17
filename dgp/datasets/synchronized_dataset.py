@@ -378,8 +378,9 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
         Forward context in frames [T+1, ..., T+forward]
 
     accumulation_context: dict, default None
-        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, 'accumulation_context={'lidar':(3,1)}
-        accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.
+        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation.
+        For example, 'accumulation_context={'lidar':(3,1)} accumulates lidar points over the past three time steps and
+        one forward step. Only valid for lidar and radar datums.
 
     generate_depth_from_datum: str, default: None
         Datum name of the point cloud. If is not None, then the depth map will be generated for the camera using
@@ -396,6 +397,10 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
 
     transform_accumulated_box_points: bool, default: False
         Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
+
+    use_diskcache: bool, default: True
+        If True, cache ScenePb2 object using diskcache. If False, save the object in memory.
+        NOTE: Setting use_diskcache to False would exhaust the memory if have a large number of scenes.
 
     Refer to _SynchronizedDataset for remaining parameters.
     """
@@ -414,7 +419,11 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
         skip_missing_data=False,
         dataset_root=None,
         transform_accumulated_box_points=False,
+        use_diskcache=True,
     ):
+        if not use_diskcache:
+            logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
+
         # Extract all scenes from the scene dataset JSON for the appropriate split
         scenes = BaseDataset._extract_scenes_from_scene_dataset_json(
             scene_dataset_json,
@@ -422,7 +431,8 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
             requested_autolabels,
             is_datums_synchronized=True,
             skip_missing_data=skip_missing_data,
-            dataset_root=dataset_root
+            dataset_root=dataset_root,
+            use_diskcache=use_diskcache,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
@@ -472,8 +482,9 @@ class SynchronizedScene(_SynchronizedDataset):
         Forward context in frames [T+1, ..., T+forward]
 
     accumulation_context: dict, default None
-        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation. For example, 'accumulation_context={'lidar':(3,1)}
-        accumulates lidar points over the past three time steps and one forward step. Only valid for lidar and radar datums.
+        Dictionary of datum names containing a tuple of (backward_context, forward_context) for sensor accumulation.
+        For example, 'accumulation_context={'lidar':(3,1)} accumulates lidar points over the past three time steps and
+        one forward step. Only valid for lidar and radar datums.
 
     generate_depth_from_datum: str, default: None
         Datum name of the point cloud. If is not None, then the depth map will be generated for the camera using
@@ -484,6 +495,10 @@ class SynchronizedScene(_SynchronizedDataset):
 
     transform_accumulated_box_points: bool, default: False
         Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
+
+    use_diskcache: bool, default: True
+        If True, cache ScenePb2 object using diskcache. If False, save the object in memory.
+        NOTE: Setting use_diskcache to False would exhaust the memory if have a large number of scenes.
 
     Refer to _SynchronizedDataset for remaining parameters.
     """
@@ -499,13 +514,17 @@ class SynchronizedScene(_SynchronizedDataset):
         generate_depth_from_datum=None,
         only_annotated_datums=False,
         transform_accumulated_box_points=False,
+        use_diskcache=True,
     ):
+        if not use_diskcache:
+            logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
 
         # Extract a single scene from the scene JSON
         scene = BaseDataset._extract_scene_from_scene_json(
             scene_json,
             requested_autolabels,
             is_datums_synchronized=True,
+            use_diskcache=use_diskcache,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
