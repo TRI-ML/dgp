@@ -1,17 +1,29 @@
 # Copyright 2019-2020 Toyota Research Institute. All rights reserved.
 import unittest
 
-from nose.tools import nottest
 from numpy.testing import (
     assert_allclose, assert_almost_equal, assert_approx_equal, assert_array_almost_equal, assert_array_equal,
     assert_array_less
 )
 
 __all__ = [
-    "assert_between", "assert_equal", "assert_not_equal", "assert_raises", "assert_true", "assert_false",
-    "assert_allclose", "assert_almost_equal", "assert_array_equal", "assert_array_almost_equal", "assert_array_less",
-    "assert_less", "assert_less_equal", "assert_greater", "assert_greater_equal", "assert_approx_equal", "SkipTest",
-    "nottest"
+    "assert_between",
+    "assert_equal",
+    "assert_not_equal",
+    "assert_raises",
+    "assert_true",
+    "assert_false",
+    "assert_allclose",
+    "assert_almost_equal",
+    "assert_array_equal",
+    "assert_array_almost_equal",
+    "assert_array_less",
+    "assert_less",
+    "assert_less_equal",
+    "assert_greater",
+    "assert_greater_equal",
+    "assert_approx_equal",
+    "SkipTest",
 ]
 
 _dummy = unittest.TestCase('__init__')
