@@ -1,0 +1,22 @@
+{
+    "metadata": {
+        "name": "james",
+        "version": "1.0",
+        "creation_date": "2021-12-05T01:40:40.587281Z",
+        "creator": "PD",
+        "origin": "INTERNAL",
+        "available_annotation_types": [
+            11
+        ],
+        "metadata": {},
+        "description": "",
+        "frame_per_second": 0.0
+    },
+    "scene_splits": {
+        "0": {
+            "filenames": [
+                "scene_000000/scene_4c7aafdba3082705e020eb1311834d6963cf18a5.json"
+            ]
+        }
+    }
+}
