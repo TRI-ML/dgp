@@ -67,11 +67,14 @@
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">TRI Dataset Governance Policy (DGP) Schema</a><ul>
+<li><a class="reference internal" href="#scenedataset-data-structure-description">SceneDataset data structure description</a></li>
+<li><a class="reference internal" href="#agentdataset-data-structure-description">AgentDataset data structure description</a></li>
 <li><a class="reference internal" href="#protobuf-directory-structure">Protobuf Directory Structure</a><ul>
 <li><a class="reference internal" href="#scenedataset-schema-graph">SceneDataset schema graph</a></li>
+<li><a class="reference internal" href="#dgp-scenedataset-structure">DGP SceneDataset Structure</a></li>
+<li><a class="reference internal" href="#dgp-agentdataset-structure">DGP AgentDataset Structure</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#dgp-scenedataset-structure">DGP SceneDataset Structure</a></li>
 </ul>
 </li>
 </ul>
@@ -94,6 +97,8 @@
 <h1>TRI Dataset Governance Policy (DGP) Schema<a class="headerlink" href="#tri-dataset-governance-policy-dgp-schema" title="Permalink to this headline">¶</a></h1>
 <p>DGP-compliant datasets follow the structure and schema defined in this directory. Top-level
 data containers are listed below:</p>
+<div class="section" id="scenedataset-data-structure-description">
+<h2>SceneDataset data structure description<a class="headerlink" href="#scenedataset-data-structure-description" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>SceneDataset: A SceneDataset contains <code class="docutils literal notranslate"><span class="pre">DatasetMetadata</span></code> and a collection of <code class="docutils literal notranslate"><span class="pre">Scene</span></code>
 assigned to different <code class="docutils literal notranslate"><span class="pre">split</span></code> for training, evaluation and inference.</p></li>
@@ -104,17 +109,34 @@ a robot session. Normally we extract 10~20 seconds Scenes at 10Hz from raw drivi
 <li><p>Datum: A Datum encapsulates sensory data (image, point cloud, radar point cloud, etc),
 along with their associated annotations.</p></li>
 </ul>
+</div>
+<div class="section" id="agentdataset-data-structure-description">
+<h2>AgentDataset data structure description<a class="headerlink" href="#agentdataset-data-structure-description" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>AgentDataset: Dataset for agent-centric prediction or planning use cases,but guaranteeing trajectory of main agent is present in any fetched sample.</p></li>
+<li><p>AgentSnapshot: An Agent in a Scene can be represented by either an AgentSnapshot2D or AgentSnapshot3D. If it is AgentSnaphot3D, then the agent is represented as a BoundingBox3D along with other fields such as features, instance id’s, etc. In case it is represented as AgentSnapshot2D, then a BoundingBox2D is used.</p></li>
+<li><p>AgentSlice: Encapsulates all Agents in a Sample.</p></li>
+<li><p>AgentTrack: The track of a single Agent in the Scene.</p></li>
+<li><p>AgentGroup: Encapsulates all Agents in a Scene.</p></li>
+<li><p>Feature: Agent’s requested feature type can include agent_2d, agent_3d, ego_intention, corridor, intersection or parked car.</p></li>
+<li><p>Ontology: An Ontology represents a set of unique objects such as Vehicle, Truck, Pedestrian, etc.</p></li>
+<li><p>Feature Ontology: A Feature Ontology represents a set of unique feature fields such as Speed, Parking attribute, etc.</p></li>
+</ul>
+</div>
 <div class="section" id="protobuf-directory-structure">
 <h2>Protobuf Directory Structure<a class="headerlink" href="#protobuf-directory-structure" title="Permalink to this headline">¶</a></h2>
 <p>All the protobuf schemas are defined under this <a class="reference external" href="./">proto/</a>
 directory. Schema for the following types are specified their
 corresponding <code class="docutils literal notranslate"><span class="pre">proto</span></code> files.</p>
 <ul class="simple">
+<li><p>Agent: <cite>``agent.proto`</cite> &lt;./agent.proto&gt;`_</p></li>
 <li><p>Annotations and Annotation Types: <cite>``annotations.proto`</cite> &lt;./annotations.proto&gt;`_</p></li>
 <li><p>Dataset Artifacts: <cite>``artifacts.proto`</cite> &lt;./artifacts.proto&gt;`_</p></li>
 <li><p>Dataset Provenance / Tracking: <cite>``identifiers.proto`</cite> &lt;./identifiers.proto&gt;`_</p></li>
 <li><p>Dataset: <cite>``dataset.proto`</cite> &lt;./dataset.proto&gt;`_</p></li>
+<li><p>Features: <cite>``features.proto`</cite> &lt;./features.proto&gt;`_</p></li>
 <li><p>Image container: <cite>``image.proto`</cite> &lt;./image.proto&gt;`_</p></li>
+<li><p>Ontology: <cite>``ontology.proto`</cite> &lt;./ontology.proto&gt;`_</p></li>
 <li><p>PointCloud container: <cite>``point_cloud.proto`</cite> &lt;./point_cloud.proto&gt;`_</p></li>
 <li><p>Radar PointCloud container: <cite>``radar_point_cloud.proto`</cite> &lt;./radar_point_cloud.proto&gt;`_</p></li>
 <li><p>Remote Storage: <cite>``remote.proto`</cite> &lt;./remote.proto&gt;`_</p></li>
@@ -123,9 +145,8 @@ corresponding <code class="docutils literal notranslate"><span class="pre">proto
 <h3>SceneDataset schema graph<a class="headerlink" href="#scenedataset-schema-graph" title="Permalink to this headline">¶</a></h3>
 <a class="reference external image-reference" href="https://raw.githubusercontent.com/TRI-ML/dgp/master/docs/scene-dataset-schema.jpg?raw=true"><img alt="SceneDataset schema" src="https://raw.githubusercontent.com/TRI-ML/dgp/master/docs/scene-dataset-schema.jpg?raw=true" /></a>
 </div>
-</div>
 <div class="section" id="dgp-scenedataset-structure">
-<h2>DGP SceneDataset Structure<a class="headerlink" href="#dgp-scenedataset-structure" title="Permalink to this headline">¶</a></h2>
+<h3>DGP SceneDataset Structure<a class="headerlink" href="#dgp-scenedataset-structure" title="Permalink to this headline">¶</a></h3>
 <p>Scenes are stored in the DGP under the following structure:</p>
 <div class="highlight-filelist notranslate"><div class="highlight"><pre><span></span>&lt;dataset_root_dir&gt;
 ├── &lt;scene_name&gt;
@@ -160,6 +181,50 @@ corresponding <code class="docutils literal notranslate"><span class="pre">proto
 └── ...
 └── scene_dataset_v&lt;version&gt;.json
 </pre></div>
+</div>
+</div>
+<div class="section" id="dgp-agentdataset-structure">
+<h3>DGP AgentDataset Structure<a class="headerlink" href="#dgp-agentdataset-structure" title="Permalink to this headline">¶</a></h3>
+<p>Agents are stored in the DGP under the following structure:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>📦&lt;dataset_root_dir&gt;
+ ┣ 📂&lt;scene_name&gt;
+ ┃ ┣ 📂agent
+ ┃ ┃ ┣ 📜agent_tracks_&lt;agent_hash&gt;.json
+ ┃ ┃ ┗ 📜agents_slices_&lt;agent_hash&gt;.json
+ ┃ ┣ 📂bounding_box_2d
+ ┃ ┃ ┣ 📂&lt;camera_name&gt;
+ ┃ ┃ ┃ ┣ 📜&lt;annotation_hash&gt;.json
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┃ ┗ ..
+ ┃ ┣ 📂bounding_box_3d
+ ┃ ┃ ┣ 📂&lt;camera_name&gt;
+ ┃ ┃ ┃ ┗ 📜&lt;annotation_hash&gt;.json
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┃ ┗ ..
+ ┃ ┃ ┗ 📂&lt;lidar_name&gt;
+ ┃ ┃ ┃ ┗ 📜&lt;annotation_hash&gt;.json
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┣ 📂calibration
+ ┃ ┃ ┗ 📜&lt;calibration_hash&gt;.json
+ ┃ ┣ 📂feature_ontology
+ ┃ ┃ ┗ 📜&lt;feature_ontology_hash&gt;.json
+ ┃ ┣ 📂ontology
+ ┃ ┃ ┗ 📜&lt;ontology_hash&gt;.json
+ ┃ ┣ 📂point_cloud
+ ┃ ┃ ┗ 📂&lt;lidar_name&gt;
+ ┃ ┃ ┃ ┣ 📜&lt;posix_timestamp_us&gt;.npz
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┣ 📂rgb
+ ┃ ┃ ┣ 📂&lt;camera_name&gt;
+ ┃ ┃ ┃ ┣ 📜&lt;posix_timestamp_us&gt;.jpg
+ ┃ ┃ ┃ ┗ ..
+ ┃ ┃ ┗ ..
+ ┃ ┣ 📜agents_&lt;agent_hash&gt;.json
+ ┃ ┗ 📜scene_&lt;scene_hash&gt;.json
+ ┣ 📜agents_v&lt;version&gt;.json
+ ┗ 📜scene_dataset_v&lt;version&gt;.json
+</pre></div>
+</div>
 </div>
 </div>
 </div>
