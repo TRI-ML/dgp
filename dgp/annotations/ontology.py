@@ -235,6 +235,10 @@ class KeyPointOntology(BoundingBoxOntology):
     """Keypoint ontologies derive directly from bounding box ontologies"""
 
 
+class KeyLineOntology(BoundingBoxOntology):
+    """Keyline ontologies derive directly from bounding box ontologies"""
+
+
 class InstanceSegmentationOntology(BoundingBoxOntology):
     """Instance segmentation ontologies derive directly from bounding box ontologies"""
 
