@@ -1,0 +1,136 @@
+{
+  "name": "scene_000000",
+  "samples": [
+    {
+      "id": {
+        "timestamp": "2021-12-04T02:48:14.367Z",
+        "log": "",
+        "name": "",
+        "index": "0"
+      },
+      "datum_keys": [
+        "9a10080c2e8d8fd70cb5e6a89c8b65cc4f014fad9b1197532595e858a3ec200e",
+        "6bf50a909f6537b867e7c62b21d802c23d6cc5ddeb78ea4eae340fdbc11c6e67",
+        "c5051a3761de13d47d58bf5d49dbaee06e2431e6289d0de96b53cb65f242d5b6"
+      ],
+      "calibration_key": "e885422e616c1bb7bf79fb0f6fe2bd3b096a732b",
+      "metadata": {}
+    }
+  ],
+  "metadata": {},
+  "data": [
+    {
+      "id": {
+        "name": "FCM_front",
+        "timestamp": "2021-12-04T02:48:14.367Z",
+        "log": "",
+        "index": "0"
+      },
+      "key": "9a10080c2e8d8fd70cb5e6a89c8b65cc4f014fad9b1197532595e858a3ec200e",
+      "datum": {
+        "image": {
+          "filename": "rgb/FCM_front/000000000000000005.png",
+          "height": 1964,
+          "width": 3856,
+          "channels": 4,
+          "annotations": {
+            "11": "key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
+          },
+          "metadata": {},
+          "pose": {
+            "translation": {
+              "x": -88.65010070800781,
+              "y": 48.50935745239258,
+              "z": 4.513813018798828
+            },
+            "rotation": {
+              "qx": -0.48395266092030587,
+              "qy": -0.5100259389638944,
+              "qz": 0.5333693241671508,
+              "qw": 0.4702983389399011
+            }
+          }
+        }
+      },
+      "next_key": "",
+      "prev_key": ""
+    },
+    {
+      "id": {
+        "name": "Locator",
+        "timestamp": "2021-12-04T02:48:14.367Z",
+        "log": "",
+        "index": "0"
+      },
+      "key": "6bf50a909f6537b867e7c62b21d802c23d6cc5ddeb78ea4eae340fdbc11c6e67",
+      "datum": {
+        "image": {
+          "filename": "rgb/Locator/000000000000000005.png",
+          "height": 1920,
+          "width": 2592,
+          "channels": 4,
+          "annotations": {
+            "11": "key_line_2d/Locator/000000000000000005_4593fb374a6bea2563ee0b6c4f59bbc1b4e3ea6d.json"
+          },
+          "metadata": {},
+          "pose": {
+            "translation": {
+              "x": -87.64920806884766,
+              "y": 48.5986213684082,
+              "z": 4.419371128082275
+            },
+            "rotation": {
+              "qx": -0.46788157099919,
+              "qy": -0.49182156850310094,
+              "qz": 0.5502007729160101,
+              "qw": 0.48628951228368483
+            }
+          }
+        }
+      },
+      "next_key": "",
+      "prev_key": ""
+    },
+    {
+      "id": {
+        "name": "PVM_front",
+        "timestamp": "2021-12-04T02:48:14.367Z",
+        "log": "",
+        "index": "0"
+      },
+      "key": "c5051a3761de13d47d58bf5d49dbaee06e2431e6289d0de96b53cb65f242d5b6",
+      "datum": {
+        "image": {
+          "filename": "rgb/PVM_front/000000000000000005.png",
+          "height": 960,
+          "width": 1280,
+          "channels": 4,
+          "annotations": {
+            "11": "key_line_2d/PVM_front/000000000000000005_84d254ac556587ad5e6d538f33ee9e62023da49f.json"
+          },
+          "metadata": {},
+          "pose": {
+            "translation": {
+              "x": -89.84957122802734,
+              "y": 48.371761322021484,
+              "z": 3.6502554416656494
+            },
+            "rotation": {
+              "qx": 0.5053925999006791,
+              "qy": 0.5285790446264416,
+              "qz": -0.5160898452630214,
+              "qw": -0.4459078213754734
+            }
+          }
+        }
+      },
+      "next_key": "",
+      "prev_key": ""
+    }
+  ],
+  "ontologies": {
+    "11": "b20123bf8d5fcb9dcd0cd5fc6bf0efbcd70504f5"
+  },
+  "description": "",
+  "log": ""
+}
