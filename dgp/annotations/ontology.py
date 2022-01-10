@@ -78,7 +78,7 @@ class Ontology:
 
         if ontology_pb2 is not None:
             return cls(ontology_pb2)
-        raise 'Could not open ontology {}'.format(ontology_file)
+        raise Exception('Could not open ontology {}'.format(ontology_file))
 
     def to_proto(self):
         """Serialize ontology. Only supports exporting in OntologyV2.
