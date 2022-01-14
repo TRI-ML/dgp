@@ -975,6 +975,45 @@ Used for creating unique IDs.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.protobuf.get_latest_scene">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.protobuf.</span></span><span class="sig-name descname"><span class="pre">get_latest_scene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s3_scene_jsons</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.protobuf.get_latest_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>From a list of ‘scene.json’ and/or ‘scene_&lt;sha1&gt;.json’ paths in s3,
+return a Scene object for the one with the latest timestamp.
+Parameters
+———-
+s3_scene_jsons: List[str]</p>
+<blockquote>
+<div><p>List of ‘scene.json’ or ‘scene_&lt;sha1&gt;.json’ paths in s3</p>
+</div></blockquote>
+<dl class="simple">
+<dt>latest_scene: dgp.proto.scene_pb2.Scene</dt><dd><p>Scene pb object with the latest creation timestamp.</p>
+</dd>
+<dt>scene_json_path: str</dt><dd><p>S3 Path to the latest scene JSON.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>This function can be called on the output:</dt><dd><p>out, _ = s3_recursive_list(os.path.join(scene_s3_dir, ‘scene’)</p>
+</dd>
+</dl>
+<p>which is grabbing all ‘scene*’ files from the Scene directory</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dgp.utils.protobuf.open_feature_ontology_pbobject">
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.protobuf.</span></span><span class="sig-name descname"><span class="pre">open_feature_ontology_pbobject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.protobuf.open_feature_ontology_pbobject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open feature ontology objects.</p>
+<dl class="simple">
+<dt>ontology_file: str</dt><dd><p>JSON ontology file path to load.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ontology: FeatureOntology object</dt><dd><p>Desired Feature Ontology pb2 object to be opened. Returns
+None if neither fails to load.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="dgp.utils.protobuf.open_ontology_pbobject">
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.protobuf.</span></span><span class="sig-name descname"><span class="pre">open_ontology_pbobject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.protobuf.open_ontology_pbobject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open ontology objects, first attempt to open V2 before trying V1.</p>
@@ -996,7 +1035,7 @@ None if neither fails to load.</p>
 <p>Any calls to load protobuf objects from JSON in this repository should be through this function.
 Returns <cite>None</cite> if the loading failed.</p>
 <dl class="simple">
-<dt>path: str</dt><dd><p>Local JSON file path.</p>
+<dt>path: str</dt><dd><p>Local JSON file path or remote scene dataset JSON URI to load.</p>
 </dd>
 <dt>pb_class: pb2 object class</dt><dd><p>Protobuf object we want to load into.</p>
 </dd>

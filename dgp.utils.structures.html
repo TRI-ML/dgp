@@ -197,7 +197,7 @@ To serialize a complete annotation, see <cite>dgp/annotations/bounding_box_2d_an
 <span id="dgp-utils-structures-bounding-box-3d-module"></span><h2>dgp.utils.structures.bounding_box_3d module<a class="headerlink" href="#module-dgp.utils.structures.bounding_box_3d" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.bounding_box_3d.</span></span><span class="sig-name descname"><span class="pre">BoundingBox3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occlusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.bounding_box_3d.</span></span><span class="sig-name descname"><span class="pre">BoundingBox3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occlusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_ontology_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>3D bounding box (cuboid) that is centered at <cite>pose</cite> with extent <cite>sizes</cite>.</p>
 <dl class="simple">
@@ -210,16 +210,20 @@ To serialize a complete annotation, see <cite>dgp/annotations/bounding_box_2d_an
 <dt>instance_id: int, default: None</dt><dd><p>Unique instance ID for bounding box. If None provided, the ID is a hash of the bounding box
 location and class.</p>
 </dd>
-<dt>color: tuple, default: (0, 0, 0)</dt><dd><p>RGB tuple for bounding box color</p>
+<dt>color: tuple, default: (0, 0, 0)</dt><dd><p>RGB tuple for bounding box color.</p>
 </dd>
 <dt>attributes: dict, default: None</dt><dd><p>Dictionary of attributes associated with bounding box. If None provided,
 defaults to empty dict.</p>
 </dd>
 <dt>num_points: int, default: 0</dt><dd><p>Number of LIDAR points associated with this bounding box.</p>
 </dd>
-<dt>occlusion: int, default: 0</dt><dd><p>Occlusion state (KITTI3D style)</p>
+<dt>occlusion: int, default: 0</dt><dd><p>Occlusion state (KITTI3D style).</p>
 </dd>
-<dt>truncation: float, default: 0</dt><dd><p>Fraction of truncation of object (KITTI3D style)</p>
+<dt>truncation: float, default: 0</dt><dd><p>Fraction of truncation of object (KITTI3D style).</p>
+</dd>
+<dt>feature_ontology_type: dgp.proto.features.FeatureType</dt><dd><p>Type of feature of attributions.</p>
+</dd>
+<dt>sample_idx: int</dt><dd><p>index of sample in scene</p>
 </dd>
 </dl>
 <dl class="py property">
@@ -257,6 +261,11 @@ defined by <cite>self.corners`</cite>.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.feature_ontology_type">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">feature_ontology_type</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.feature_ontology_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.hexdigest">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.hexdigest" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -292,17 +301,21 @@ defined by <cite>self.corners`</cite>.</p>
 </dd>
 <dt>line_thickness: int, default: 2</dt><dd><p>Thickness of bounding box lines.</p>
 </dd>
-<dt>class_name: str, default: None</dt><dd><p>Class name of the bounding box.
-TODO: make this a property of <cite>self</cite>?</p>
+<dt>class_name: str, default: None</dt><dd><p>Class name of the bounding box.</p>
 </dd>
 <dt>font_scale: float, default: 0.5</dt><dd><p>Font scale used in text labels.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>image: np.uint8 array</dt><dd><p>Rendered image (H, W, 3)</p>
+<dt>image: np.uint8 array</dt><dd><p>Rendered image (H, W, 3).</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.sample_idx">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">sample_idx</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.sample_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.sizes">
@@ -316,7 +329,7 @@ TODO: make this a property of <cite>self</cite>?</p>
 <p>NOTE: Does not serialize class or instance information, just box properties.
 To serialize a complete annotation, see <cite>dgp/annotations/bounding_box_3d_annotation.py</cite></p>
 <dl class="simple">
-<dt>BoundingBox3D.pb2</dt><dd><p>As defined in <cite>proto/annotations.proto</cite></p>
+<dt>BoundingBox3D.pb2</dt><dd><p>As defined in <cite>proto/annotations.proto</cite>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -332,7 +345,7 @@ To serialize a complete annotation, see <cite>dgp/annotations/bounding_box_3d_an
 <dd><p>Get a np.ndarray of with 10 dimensions representing the 3D bounding box</p>
 <dl class="simple">
 <dt>box_3d: np.float32 array</dt><dd><p>Box with coordinates (pose.quat.qw, pose.quat.qx, pose.quat.qy, pose.quat.qz,
-pose.tvec.x, pose.tvec.y, pose.tvec.z, width, length, height)</p>
+pose.tvec.x, pose.tvec.y, pose.tvec.z, width, length, height).</p>
 </dd>
 </dl>
 </dd></dl>
