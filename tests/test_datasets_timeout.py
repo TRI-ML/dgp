@@ -7,8 +7,10 @@ import pytest
 from dgp.datasets.frame_dataset import FrameSceneDataset
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
 from tests import TEST_DATA_DIR
+from tests.utilities import requires_env
 
 
+@requires_env("TEST_RUNNER")
 @pytest.mark.parametrize(
     "split, datum_names, requested_autolabels, only_annotated_datums, use_diskcache, requested_annotations, skip_missing_data, expected_len",
     [
@@ -37,6 +39,7 @@ def test_create_frame_scene_dataset(
         assert len(dataset) == expected_len
 
 
+@requires_env("TEST_RUNNER")
 @pytest.mark.parametrize(
     "split, datum_names, forward_context, backward_context, generate_depth_from_datum, requested_annotations, expected_len",
     [

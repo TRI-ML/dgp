@@ -10,6 +10,7 @@ jobs:
   code-coverage:
     runs-on: ubuntu-18.04
     env:
+      ENVIRONMENT: TEST_RUNNER
       OS: ubuntu-18.04
       PYTHON: '3.6'
       COVERAGE_TOTAL: 46 # Coverage threshold percentage
@@ -37,6 +38,9 @@ jobs:
         sudo apt-get install jq
         pip install -r requirements.txt
         pip install coverage-badge
+    - name: Run tests and calculate coverage
+      id: test-runner
+      run: |
         coverage run -m pytest
         coverage-badge -f -o docs/coverage.svg
         COVERAGE_SCORE=$(coverage json -o /dev/stdout | jq .totals.percent_covered)
@@ -64,7 +68,7 @@ jobs:
         github_token: ${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}
         branch: ${{ github.event.pull_request.head.repo.full_name }}
     - name: Coverage total fail - exit
-      if: ${{github.event_name == 'pull_request' && steps.coverage-installer.outputs.coverageScore < env.COVERAGE_TOTAL}}
+      if: ${{github.event_name == 'pull_request' && steps.test-runner.outputs.coverageScore < env.COVERAGE_TOTAL}}
       run: |
-        echo "cov total fail ${{ steps.coverage-installer.outputs.coverageScore }}"
+        echo "cov total fail ${{ steps.test-runner.outputs.coverageScore }}"
         exit 1
