@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 __version__ = '1.0'
 
-DGP_PATH = os.getenv('DGP_PATH', default=os.getenv('HOME'))
+DGP_PATH = os.getenv('DGP_PATH', default=os.getenv('HOME', os.getcwd()))
 DGP_DATA_DIR = os.path.join(DGP_PATH, '.dgp')
 DGP_CACHE_DIR = os.path.join(DGP_DATA_DIR, 'cache')
 DGP_DATASETS_CACHE_DIR = os.path.join(DGP_DATA_DIR, 'datasets')
