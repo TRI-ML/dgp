@@ -19,6 +19,7 @@ def get_ontology_kl(scene_dataset_json, annotation_type):
     return dataset.dataset_metadata.ontology_table.get(annotation_type, None)
 
 
+
 @pytest.fixture
 def kl_ontology():
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
