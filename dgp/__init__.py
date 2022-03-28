@@ -27,6 +27,7 @@ DEPTH_FOLDER = 'depth'
 EXTRA_DATA_FOLDER = "extra_data"
 FEATURE_ONTOLOGY_FOLDER = "feature_ontology"
 AGENT_FOLDER = "agent"
+CLASSIFICATION_FOLDER = "classification"
 
 # Scene Directory structure constants
 AUTOLABEL_FOLDER = 'autolabels'
