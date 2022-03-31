@@ -68,21 +68,22 @@ def compute_image_statistics(image_list, image_open_fn):
         num_processes = len(image_list)
 
     chunk_size = int(len(image_list) / num_processes)
-    p = Pool(num_processes)
 
-    image_stats_per_process = p.starmap(
-        _get_image_stats,
-        [(image_list[i:i + chunk_size], i, num_processes, image_open_fn) for i in range(0, len(image_list), chunk_size)]
-    )
+    with Pool(num_processes) as p:
 
-    global_mean, global_var, all_image_sizes = np.array([0., 0., 0.]), np.array([0., 0., 0.]), {}
-    for means, variances, image_sizes in image_stats_per_process:
-        global_mean += means
-        global_var += variances
-        all_image_sizes.update(image_sizes)
+        image_stats_per_process = p.starmap(
+            _get_image_stats, [(image_list[i:i + chunk_size], i, num_processes, image_open_fn)
+                               for i in range(0, len(image_list), chunk_size)]
+        )
 
-    global_mean /= len(image_list)
-    global_stdev = np.sqrt(global_var / len(image_list))
+        global_mean, global_var, all_image_sizes = np.array([0., 0., 0.]), np.array([0., 0., 0.]), {}
+        for means, variances, image_sizes in image_stats_per_process:
+            global_mean += means
+            global_var += variances
+            all_image_sizes.update(image_sizes)
+
+        global_mean /= len(image_list)
+        global_stdev = np.sqrt(global_var / len(image_list))
 
     return list(global_mean), list(global_stdev), all_image_sizes
 
