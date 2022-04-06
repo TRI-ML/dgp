@@ -66,6 +66,10 @@ enum AnnotationType {
 
   // Agent behavior
   AGENT_BEHAVIOR = 14;             // agent_behavior
+
+  // Classification.
+  // (i.e. imagenet classification label)
+  CLASSIFICATION = 15;             // classification
 }
 
 // 2D bounding box
@@ -215,6 +219,12 @@ message Polygon2DAnnotation{
   map<string, string> attributes = 3;
 }
 
+// Classification annotation.
+message ClassificationAnnotation{
+  // Class identifier (should be in [0, num_classes - 1])
+  uint32 class_id = 1;
+}
+
 // List of BoundingBox2DAnnotation.
 message BoundingBox2DAnnotations {
   repeated BoundingBox2DAnnotation annotations = 1;
@@ -238,4 +248,9 @@ message KeyLine2DAnnotations {
 // List of Polygon2DAnnotation.
 message Polygon2DAnnotations {
   repeated Polygon2DAnnotation annotations = 1;
+}
+
+// List of ClassificationAnnotation.
+message ClassificationAnnotations {
+  repeated ClassificationAnnotation annotations = 1;
 }
