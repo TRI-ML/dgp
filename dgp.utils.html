@@ -693,13 +693,15 @@ color: list</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dgp.utils.dataset_conversion.compute_image_statistics">
-<span class="sig-prename descclassname"><span class="pre">dgp.utils.dataset_conversion.</span></span><span class="sig-name descname"><span class="pre">compute_image_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_open_fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.compute_image_statistics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.dataset_conversion.</span></span><span class="sig-name descname"><span class="pre">compute_image_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_open_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">single_process</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.compute_image_statistics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of images (paths to files), return the per channel mean and stdev.
 Also returns a dictionary mapping filename to image size</p>
 <dl class="simple">
 <dt>image_list: list</dt><dd><p>List of str of filepaths to images that can be opened by PIL</p>
 </dd>
 <dt>image_open_fn: function</dt><dd><p>Function to open image files in image_list, i.e. PIL.Image.open</p>
+</dd>
+<dt>single_process: bool</dt><dd><p>If it’s True, it gets image stats in single process for debugging. Defaults to False.</p>
 </dd>
 </dl>
 <dl class="simple">
