@@ -6,11 +6,11 @@ import logging
 import os
 from collections import OrderedDict
 from functools import lru_cache
-from multiprocessing import Pool, cpu_count
 
 import numpy as np
 from google.protobuf.timestamp_pb2 import Timestamp
 from PIL import Image, ImageStat
+from torch.multiprocessing import Pool, cpu_count
 
 from dgp.proto import dataset_pb2
 from dgp.proto.dataset_pb2 import SceneDataset
@@ -36,7 +36,7 @@ def _write_annotation(filename, annotation):
     save_pbobject_as_json(annotation, filename)
 
 
-def compute_image_statistics(image_list, image_open_fn):
+def compute_image_statistics(image_list, image_open_fn, single_process=False):
     """Given a list of images (paths to files), return the per channel mean and stdev.
     Also returns a dictionary mapping filename to image size
 
@@ -47,6 +47,9 @@ def compute_image_statistics(image_list, image_open_fn):
 
     image_open_fn: function
         Function to open image files in image_list, i.e. PIL.Image.open
+
+    single_process: bool
+        If it's True, it gets image stats in single process for debugging. Defaults to False.
 
     Returns
     -------
@@ -63,17 +66,22 @@ def compute_image_statistics(image_list, image_open_fn):
     valid_extensions = (".jpg", ".png", ".bmp", ".pgm", ".tiff")
     image_list = list(filter(lambda x: x.endswith(valid_extensions), image_list))
 
-    num_processes = cpu_count()
-    if len(image_list) < num_processes:
-        num_processes = len(image_list)
+    if single_process:
+        image_stats_per_process = []
+        for idx, image in enumerate(image_list):
+            image_stats_per_process.append(_get_image_stats([image], idx, len(image_list), image_open_fn))
+    else:
+        num_processes = cpu_count()
+        if len(image_list) < num_processes:
+            num_processes = len(image_list)
 
-    chunk_size = int(len(image_list) / num_processes)
-    p = Pool(num_processes)
+        chunk_size = int(len(image_list) / num_processes)
 
-    image_stats_per_process = p.starmap(
-        _get_image_stats,
-        [(image_list[i:i + chunk_size], i, num_processes, image_open_fn) for i in range(0, len(image_list), chunk_size)]
-    )
+        with Pool(num_processes) as p:
+            image_stats_per_process = p.starmap(
+                _get_image_stats, [(image_list[i:i + chunk_size], i, num_processes, image_open_fn)
+                                   for i in range(0, len(image_list), chunk_size)]
+            )
 
     global_mean, global_var, all_image_sizes = np.array([0., 0., 0.]), np.array([0., 0., 0.]), {}
     for means, variances, image_sizes in image_stats_per_process:
