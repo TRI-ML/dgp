@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1b\x64gp/proto/annotations.proto\x12\tdgp.proto\x1a\x18\x64gp/proto/geometry.proto\";\n\rBoundingBox2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\t\n\x01w\x18\x03 \x01(\r\x12\t\n\x01h\x18\x04 \x01(\r\"\x81\x02\n\x17\x42oundingBox2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox2D\x12\x0c\n\x04\x61rea\x18\x03 \x01(\r\x12\x0f\n\x07iscrowd\x18\x04 \x01(\x08\x12\x13\n\x0binstance_id\x18\x05 \x01(\r\x12\x46\n\nattributes\x18\x06 \x03(\x0b\x32\x32.dgp.proto.BoundingBox2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x84\x01\n\rBoundingBox3D\x12\x1d\n\x04pose\x18\x01 \x01(\x0b\x32\x0f.dgp.proto.Pose\x12\r\n\x05width\x18\x02 \x01(\x01\x12\x0e\n\x06length\x18\x03 \x01(\x01\x12\x0e\n\x06height\x18\x04 \x01(\x01\x12\x11\n\tocclusion\x18\x05 \x01(\r\x12\x12\n\ntruncation\x18\x06 \x01(\x01\"\xf6\x01\n\x17\x42oundingBox3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox3D\x12\x13\n\x0binstance_id\x18\x03 \x01(\r\x12\x46\n\nattributes\x18\x04 \x03(\x0b\x32\x32.dgp.proto.BoundingBox3DAnnotation.AttributesEntry\x12\x12\n\nnum_points\x18\x05 \x01(\r\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\"\n\nKeyPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xd3\x01\n\x14KeyPoint2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12$\n\x05point\x18\x02 \x01(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x43\n\nattributes\x18\x03 \x03(\x0b\x32/.dgp.proto.KeyPoint2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd4\x01\n\x13KeyLine2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\'\n\x08vertices\x18\x02 \x03(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.KeyLine2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"&\n\x0ePolygonPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xcb\x01\n\x13Polygon2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12+\n\x08vertices\x18\x02 \x03(\x0b\x32\x19.dgp.proto.PolygonPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.Polygon2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\",\n\x18\x43lassificationAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\"S\n\x18\x42oundingBox2DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox2DAnnotation\"S\n\x18\x42oundingBox3DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox3DAnnotation\"M\n\x15KeyPoint2DAnnotations\x12\x34\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1f.dgp.proto.KeyPoint2DAnnotation\"K\n\x14KeyLine2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.KeyLine2DAnnotation\"K\n\x14Polygon2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.Polygon2DAnnotation\"U\n\x19\x43lassificationAnnotations\x12\x38\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32#.dgp.proto.ClassificationAnnotation*\xf6\x02\n\x0e\x41nnotationType\x12\x13\n\x0f\x42OUNDING_BOX_2D\x10\x00\x12\x13\n\x0f\x42OUNDING_BOX_3D\x10\x01\x12\x1c\n\x18SEMANTIC_SEGMENTATION_2D\x10\x02\x12\x1c\n\x18SEMANTIC_SEGMENTATION_3D\x10\x03\x12\x1c\n\x18INSTANCE_SEGMENTATION_2D\x10\x04\x12\x1c\n\x18INSTANCE_SEGMENTATION_3D\x10\x05\x12\t\n\x05\x44\x45PTH\x10\x06\x12\x16\n\x12SURFACE_NORMALS_2D\x10\r\x12\x16\n\x12SURFACE_NORMALS_3D\x10\x07\x12\x15\n\x11MOTION_VECTORS_2D\x10\x08\x12\x15\n\x11MOTION_VECTORS_3D\x10\t\x12\x10\n\x0cKEY_POINT_2D\x10\n\x12\x0f\n\x0bKEY_LINE_2D\x10\x0b\x12\x0e\n\nPOLYGON_2D\x10\x0c\x12\x12\n\x0e\x41GENT_BEHAVIOR\x10\x0e\x12\x12\n\x0e\x43LASSIFICATION\x10\x0f\x62\x06proto3'
+  serialized_pb=b'\n\x1b\x64gp/proto/annotations.proto\x12\tdgp.proto\x1a\x18\x64gp/proto/geometry.proto\";\n\rBoundingBox2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\t\n\x01w\x18\x03 \x01(\r\x12\t\n\x01h\x18\x04 \x01(\r\"\x81\x02\n\x17\x42oundingBox2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox2D\x12\x0c\n\x04\x61rea\x18\x03 \x01(\r\x12\x0f\n\x07iscrowd\x18\x04 \x01(\x08\x12\x13\n\x0binstance_id\x18\x05 \x01(\r\x12\x46\n\nattributes\x18\x06 \x03(\x0b\x32\x32.dgp.proto.BoundingBox2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x84\x01\n\rBoundingBox3D\x12\x1d\n\x04pose\x18\x01 \x01(\x0b\x32\x0f.dgp.proto.Pose\x12\r\n\x05width\x18\x02 \x01(\x01\x12\x0e\n\x06length\x18\x03 \x01(\x01\x12\x0e\n\x06height\x18\x04 \x01(\x01\x12\x11\n\tocclusion\x18\x05 \x01(\r\x12\x12\n\ntruncation\x18\x06 \x01(\x01\"\xf6\x01\n\x17\x42oundingBox3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox3D\x12\x13\n\x0binstance_id\x18\x03 \x01(\r\x12\x46\n\nattributes\x18\x04 \x03(\x0b\x32\x32.dgp.proto.BoundingBox3DAnnotation.AttributesEntry\x12\x12\n\nnum_points\x18\x05 \x01(\r\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\"\n\nKeyPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xd3\x01\n\x14KeyPoint2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12$\n\x05point\x18\x02 \x01(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x43\n\nattributes\x18\x03 \x03(\x0b\x32/.dgp.proto.KeyPoint2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd4\x01\n\x13KeyLine2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\'\n\x08vertices\x18\x02 \x03(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.KeyLine2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"&\n\x0ePolygonPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xcb\x01\n\x13Polygon2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12+\n\x08vertices\x18\x02 \x03(\x0b\x32\x19.dgp.proto.PolygonPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.Polygon2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa8\x01\n\x18\x43lassificationAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12G\n\nattributes\x18\x02 \x03(\x0b\x32\x33.dgp.proto.ClassificationAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"S\n\x18\x42oundingBox2DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox2DAnnotation\"S\n\x18\x42oundingBox3DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox3DAnnotation\"M\n\x15KeyPoint2DAnnotations\x12\x34\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1f.dgp.proto.KeyPoint2DAnnotation\"K\n\x14KeyLine2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.KeyLine2DAnnotation\"K\n\x14Polygon2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.Polygon2DAnnotation\"U\n\x19\x43lassificationAnnotations\x12\x38\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32#.dgp.proto.ClassificationAnnotation*\xf6\x02\n\x0e\x41nnotationType\x12\x13\n\x0f\x42OUNDING_BOX_2D\x10\x00\x12\x13\n\x0f\x42OUNDING_BOX_3D\x10\x01\x12\x1c\n\x18SEMANTIC_SEGMENTATION_2D\x10\x02\x12\x1c\n\x18SEMANTIC_SEGMENTATION_3D\x10\x03\x12\x1c\n\x18INSTANCE_SEGMENTATION_2D\x10\x04\x12\x1c\n\x18INSTANCE_SEGMENTATION_3D\x10\x05\x12\t\n\x05\x44\x45PTH\x10\x06\x12\x16\n\x12SURFACE_NORMALS_2D\x10\r\x12\x16\n\x12SURFACE_NORMALS_3D\x10\x07\x12\x15\n\x11MOTION_VECTORS_2D\x10\x08\x12\x15\n\x11MOTION_VECTORS_3D\x10\t\x12\x10\n\x0cKEY_POINT_2D\x10\n\x12\x0f\n\x0bKEY_LINE_2D\x10\x0b\x12\x0e\n\nPOLYGON_2D\x10\x0c\x12\x12\n\x0e\x41GENT_BEHAVIOR\x10\x0e\x12\x12\n\x0e\x43LASSIFICATION\x10\x0f\x62\x06proto3'
   ,
   dependencies=[dgp_dot_proto_dot_geometry__pb2.DESCRIPTOR,])
 
@@ -115,8 +115,8 @@ _ANNOTATIONTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2021,
-  serialized_end=2395,
+  serialized_start=2146,
+  serialized_end=2520,
 )
 _sym_db.RegisterEnumDescriptor(_ANNOTATIONTYPE)
 
@@ -807,6 +807,44 @@ _POLYGON2DANNOTATION = _descriptor.Descriptor(
 )
 
 
+_CLASSIFICATIONANNOTATION_ATTRIBUTESENTRY = _descriptor.Descriptor(
+  name='AttributesEntry',
+  full_name='dgp.proto.ClassificationAnnotation.AttributesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='dgp.proto.ClassificationAnnotation.AttributesEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='dgp.proto.ClassificationAnnotation.AttributesEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=338,
+  serialized_end=387,
+)
+
 _CLASSIFICATIONANNOTATION = _descriptor.Descriptor(
   name='ClassificationAnnotation',
   full_name='dgp.proto.ClassificationAnnotation',
@@ -822,10 +860,17 @@ _CLASSIFICATIONANNOTATION = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='attributes', full_name='dgp.proto.ClassificationAnnotation.attributes', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_CLASSIFICATIONANNOTATION_ATTRIBUTESENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -834,8 +879,8 @@ _CLASSIFICATIONANNOTATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1484,
-  serialized_end=1528,
+  serialized_start=1485,
+  serialized_end=1653,
 )
 
 
@@ -866,8 +911,8 @@ _BOUNDINGBOX2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1530,
-  serialized_end=1613,
+  serialized_start=1655,
+  serialized_end=1738,
 )
 
 
@@ -898,8 +943,8 @@ _BOUNDINGBOX3DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1615,
-  serialized_end=1698,
+  serialized_start=1740,
+  serialized_end=1823,
 )
 
 
@@ -930,8 +975,8 @@ _KEYPOINT2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1700,
-  serialized_end=1777,
+  serialized_start=1825,
+  serialized_end=1902,
 )
 
 
@@ -962,8 +1007,8 @@ _KEYLINE2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1779,
-  serialized_end=1854,
+  serialized_start=1904,
+  serialized_end=1979,
 )
 
 
@@ -994,8 +1039,8 @@ _POLYGON2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1856,
-  serialized_end=1931,
+  serialized_start=1981,
+  serialized_end=2056,
 )
 
 
@@ -1026,8 +1071,8 @@ _CLASSIFICATIONANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1933,
-  serialized_end=2018,
+  serialized_start=2058,
+  serialized_end=2143,
 )
 
 _BOUNDINGBOX2DANNOTATION_ATTRIBUTESENTRY.containing_type = _BOUNDINGBOX2DANNOTATION
@@ -1046,6 +1091,8 @@ _KEYLINE2DANNOTATION.fields_by_name['attributes'].message_type = _KEYLINE2DANNOT
 _POLYGON2DANNOTATION_ATTRIBUTESENTRY.containing_type = _POLYGON2DANNOTATION
 _POLYGON2DANNOTATION.fields_by_name['vertices'].message_type = _POLYGONPOINT2D
 _POLYGON2DANNOTATION.fields_by_name['attributes'].message_type = _POLYGON2DANNOTATION_ATTRIBUTESENTRY
+_CLASSIFICATIONANNOTATION_ATTRIBUTESENTRY.containing_type = _CLASSIFICATIONANNOTATION
+_CLASSIFICATIONANNOTATION.fields_by_name['attributes'].message_type = _CLASSIFICATIONANNOTATION_ATTRIBUTESENTRY
 _BOUNDINGBOX2DANNOTATIONS.fields_by_name['annotations'].message_type = _BOUNDINGBOX2DANNOTATION
 _BOUNDINGBOX3DANNOTATIONS.fields_by_name['annotations'].message_type = _BOUNDINGBOX3DANNOTATION
 _KEYPOINT2DANNOTATIONS.fields_by_name['annotations'].message_type = _KEYPOINT2DANNOTATION
@@ -1175,11 +1222,19 @@ _sym_db.RegisterMessage(Polygon2DAnnotation)
 _sym_db.RegisterMessage(Polygon2DAnnotation.AttributesEntry)
 
 ClassificationAnnotation = _reflection.GeneratedProtocolMessageType('ClassificationAnnotation', (_message.Message,), {
+
+  'AttributesEntry' : _reflection.GeneratedProtocolMessageType('AttributesEntry', (_message.Message,), {
+    'DESCRIPTOR' : _CLASSIFICATIONANNOTATION_ATTRIBUTESENTRY,
+    '__module__' : 'dgp.proto.annotations_pb2'
+    # @@protoc_insertion_point(class_scope:dgp.proto.ClassificationAnnotation.AttributesEntry)
+    })
+  ,
   'DESCRIPTOR' : _CLASSIFICATIONANNOTATION,
   '__module__' : 'dgp.proto.annotations_pb2'
   # @@protoc_insertion_point(class_scope:dgp.proto.ClassificationAnnotation)
   })
 _sym_db.RegisterMessage(ClassificationAnnotation)
+_sym_db.RegisterMessage(ClassificationAnnotation.AttributesEntry)
 
 BoundingBox2DAnnotations = _reflection.GeneratedProtocolMessageType('BoundingBox2DAnnotations', (_message.Message,), {
   'DESCRIPTOR' : _BOUNDINGBOX2DANNOTATIONS,
@@ -1229,4 +1284,5 @@ _BOUNDINGBOX3DANNOTATION_ATTRIBUTESENTRY._options = None
 _KEYPOINT2DANNOTATION_ATTRIBUTESENTRY._options = None
 _KEYLINE2DANNOTATION_ATTRIBUTESENTRY._options = None
 _POLYGON2DANNOTATION_ATTRIBUTESENTRY._options = None
+_CLASSIFICATIONANNOTATION_ATTRIBUTESENTRY._options = None
 # @@protoc_insertion_point(module_scope)
