@@ -34,6 +34,28 @@ from dgp.utils.pose import Pose
 from dgp.utils.protobuf import open_pbobject
 
 AVAILABLE_DATUM_TYPES = ("image", "point_cloud")
+AVAILABLE_DISTORTION_PARAMS = (
+    'k1',
+    'k2',
+    'k3',
+    'k4',
+    'k5',
+    'k6',
+    'p1',
+    'p2',
+    'alpha',
+    'beta',
+    'xi',
+    's1',
+    's2',
+    's3',
+    's4',
+    'taux',
+    'tauy',
+    'fov',
+    'fisheye',
+    'w',
+)
 
 
 class SceneContainer:
@@ -164,7 +186,7 @@ class SceneContainer:
         assert sample_idx_in_scene >= 0 and sample_idx_in_scene < len(self.datum_index)
         return self.samples[self.datum_index.coords["samples"][sample_idx_in_scene].data]
 
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=1024)
     def get_datum_type(self, datum_name):
         """Get datum type based on the datum name"""
         for datum in self.data:
@@ -1062,9 +1084,20 @@ class BaseDataset:
             for (name, intrinsic, extrinsic) in zip(calibration.names, calibration.intrinsics, calibration.extrinsics):
                 p_WS = Pose.load(extrinsic)
                 # If the intrinsics are invalid, i.e. fx = fy = 0, then it is
-                # assumed to be a LIDAR or RADAR sensor.
+                # assumed to be a LIDAR sensor.
+
+                # TODO: this needs a refactor for two reasons,
+                # 1. This uses a hardcoded list of distortion parameters, it should instead use the proto defintion
+                # 2. We probably want the camera class to calculate and cache the remaps for undistortion
+
+                # Get a dictionary of distortion parameters
+                distortion = {}
+                for k in AVAILABLE_DISTORTION_PARAMS:
+                    if hasattr(intrinsic, k):
+                        distortion[k] = getattr(intrinsic, k)
+
                 cam = Camera.from_params(
-                    intrinsic.fx, intrinsic.fy, intrinsic.cx, intrinsic.cy, p_WS
+                    intrinsic.fx, intrinsic.fy, intrinsic.cx, intrinsic.cy, p_WS, distortion=distortion
                 ) if intrinsic.fx > 0 and intrinsic.fy > 0 else None
                 calibration_table[(calibration_key, name.lower())] = (p_WS, cam)
         return calibration_table
@@ -1577,12 +1610,15 @@ class BaseDataset:
         sample = self.get_sample(scene_idx, sample_idx_in_scene)
 
         if self.calibration_table:
-            camera_intrinsics = self.get_camera_calibration(sample.calibration_key, datum.id.name).K
+            camera = self.get_camera_calibration(sample.calibration_key, datum.id.name)
+            camera_intrinsics = camera.K
+            camera_distortion = camera.D
             pose_VC = self.get_sensor_extrinsics(sample.calibration_key, datum.id.name)
             # Get ego-pose for the image (at the corresponding image timestamp t=Tc)
             pose_WC_Tc = Pose.load(datum.datum.image.pose)
         else:
             camera_intrinsics = None
+            camera_distortion = None
             pose_VC = None
             pose_WC_Tc = Pose()
 
@@ -1594,6 +1630,7 @@ class BaseDataset:
             "datum_name": datum.id.name,
             "rgb": image,
             "intrinsics": camera_intrinsics,
+            "distortion": camera_distortion,
             "extrinsics": pose_VC,
             "pose": pose_WC_Tc
         })
