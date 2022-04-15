@@ -40,4 +40,58 @@ message CameraIntrinsics {
   double cx = 3;
   double cy = 4;
   double skew = 5;
+
+  // Camera distortion parameters, copied over from Parallel Domain
+  // These include the default opencv distorition model parameters (Brown Conrady)
+  // See https://en.wikipedia.org/wiki/Distortion_(optics) and opencv calibrateCamera for details
+  // Additionally the Double Sphere Camera Model (https://arxiv.org/pdf/1807.08957.pdf) by Usenko, Demmel, and Cremers
+  // is an excellent reference
+  double fov = 6;
+  int32  fisheye = 7;
+  double k1 = 8;
+  double k2 = 9;
+  double k3 = 10;
+  double k4 = 11;
+  double k5 = 12;
+  double k6 = 13;
+  double p1 = 14;
+  double p2 = 15;
+
+  // Additional parameters for thin prism model
+  double s1 = 16;
+  double s2 = 17;
+  double s3 = 18;
+  double s4 = 19;
+
+  // Additional parameters for tilted sensor model
+  double taux = 20;
+  double tauy = 21;
+
+  // Additional parameters for UCM and EUCM camera models
+  double alpha = 22;
+  double beta = 23;
+
+  // Additional parameters for FOV camera model
+  double w = 24;
+
+  // Parameters for Double Sphere model
+  double xi = 25;
+
+  enum CameraModel {
+    UNDEFINED =0;
+    PINHOLE =1; // fx,fy,cx,cy,skew. No distortion parameters
+    BC = 2; // Brown Conrady, k1,k2,p1,p2,k3
+    RATIONAL = 3; // Same as above but adds k4,k5,k6
+    THIN_PRISM = 4; // Same as above but adds s1,s2,s3,s4
+    TILTED = 5; // Same as above but adds taux, tauy
+    UCM = 6; // unified camera model: only alpha
+    EUCM = 7; // extended unified camera model: alpha, beta
+    KB = 8; // Kannala Brandt: k1,k2,k3,k4
+    FOV = 9; // Field of View: w
+    DS = 10; // Double Sphere: alpha, xi
+    OTHER = 255;
+  }
+
+  CameraModel model = 26;
+
 }
