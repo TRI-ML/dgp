@@ -45,13 +45,16 @@ def generate_depth_map(camera, Xw, shape):
     return depth
 
 
-def pbobject_from_camera_matrix(K):
+def pbobject_from_camera_matrix(K, distortion=None):
     """Convert camera intrinsic matrix into pb object.
  
     Parameters
     ----------
     K: np.ndarray
         Camera Intrinsic Matrix
+
+    distortion: dict[str, float]
+            Dictionary of distortion params i.e, k1,k2,p1,p2,k3,k4,xi,alpha etc
  
     Returns
     -------
@@ -65,6 +68,12 @@ def pbobject_from_camera_matrix(K):
         intrinsics.cx = K[0, 2]
         intrinsics.cy = K[1, 2]
         intrinsics.skew = K[0, 1]
+
+    if distortion is not None:
+        for k,v in distortion.items():
+            # TODO: assert the proto contains this value
+            setattr(intrinsics, k, v) 
+
     return intrinsics
 
 
@@ -114,13 +123,14 @@ class Camera:
         K: np.ndarray (3x3)
             Camera calibration matrix.
 
-        D: np.ndarray (5,) or (H x W)
-            Distortion parameters or distortion map.
+        D: np.ndarray (5,) or (H x W) or Dict[str,float]
+            Distortion parameters or distortion map or dictionary of distortion values
 
         p_cw: dgp.utils.pose.Pose
             Pose from world to camera frame.
         """
         self.K = K
+        # TODO: refactor this class to support other camera models. This assumes Brown Conrady
         self.D = Distortion() if D is None else D
         self.p_cw = Pose() if p_cw is None else p_cw
         assert isinstance(self.K, np.ndarray)
@@ -140,7 +150,7 @@ class Camera:
         return rvec
 
     @classmethod
-    def from_params(cls, fx, fy, cx, cy, p_cw=None):
+    def from_params(cls, fx, fy, cx, cy, p_cw=None, distortion=None):
         """Create camera batch from calibration parameters.
 
         Parameters
@@ -160,17 +170,21 @@ class Camera:
         p_cw: Pose
             Pose from world to camera frame.
 
+        distortion_params: dict[str, float], default: None
+            Optional dictionary of distortion parameters k1,k2,.. etc.
+
         Returns
         ----------
         Camera
             Camera object with relevant intrinsics.
         """
+        # TODO: add skew
         K = np.float32([
             [fx, 0, cx],
             [0, fy, cy],
             [0, 0, 1],
         ])
-        return cls(K=K, p_cw=p_cw)
+        return cls(K=K, D = distortion, p_cw=p_cw)
 
     @property
     def fx(self):
