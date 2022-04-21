@@ -223,6 +223,10 @@ message Polygon2DAnnotation{
 message ClassificationAnnotation{
   // Class identifier (should be in [0, num_classes - 1])
   uint32 class_id = 1;
+
+  // An associative map stores arbitrary attributes, where the key is attribute name
+  // and the value is attribute value. Both key_type and value_type are string.
+  map<string, string> attributes = 2;
 }
 
 // List of BoundingBox2DAnnotation.
