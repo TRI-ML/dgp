@@ -1,5 +1,5 @@
 // Copyright 2020 Parallel Domain.  All rights reserved.
-// Definitions for Parallel Domain Scene-level Metadata
+// Definitions for Parallel Domain Scene-level and Frame-level Metadata
 
 syntax = "proto3";
 
@@ -22,6 +22,11 @@ enum RegionType
   SYNTHETIC_REGION = 0;
   NORTHERN_CALIFORNIA = 1;
   MICHIGAN = 2;
+}
+
+// Frame-level metadata to encode attribute information in key-value pairs.
+message ParallelDomainFrameMetadata {
+  map<string, string> attributes = 1;
 }
 
 message ParallelDomainSceneMetadata {
