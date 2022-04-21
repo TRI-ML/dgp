@@ -24,6 +24,12 @@ enum RegionType
   MICHIGAN = 2;
 }
 
+// Generic metadata to encode scene-level and frame-level metadata
+// in key-value pairs.
+message GenericMetadata {
+  map<string, string> metadata = 1;
+}
+
 message ParallelDomainSceneMetadata {
   // Location name in PD location library
   // The location name string will be of the form xx_yy,
