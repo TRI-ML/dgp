@@ -1,5 +1,5 @@
 // Copyright 2020 Parallel Domain.  All rights reserved.
-// Definitions for Parallel Domain Scene-level Metadata
+// Definitions for Parallel Domain Scene-level and Sample-level Metadata
 
 syntax = "proto3";
 
@@ -24,6 +24,12 @@ enum RegionType
   MICHIGAN = 2;
 }
 
+// Sample-level metadata to encode attribute information in key-value pairs.
+message ParallelDomainSampleMetadata {
+  map<string, string> attributes = 1;
+}
+
+// Scene-level metadata.
 message ParallelDomainSceneMetadata {
   // Location name in PD location library
   // The location name string will be of the form xx_yy,
@@ -72,5 +78,8 @@ message ParallelDomainSceneMetadata {
   // Batch ID and version for delivery tracking
   uint32 batch_id = 7;
   uint32 version = 8;
+
+  // Additional metadata
+  map<string, string> attributes = 14;
 }
-// Next ID: 14
+// Next ID: 15
