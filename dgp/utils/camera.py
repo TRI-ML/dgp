@@ -1,5 +1,6 @@
 # Copyright 2021 Toyota Research Institute.  All rights reserved.
 """General-purpose class for cameras."""
+import logging
 from functools import lru_cache
 
 import cv2
@@ -251,7 +252,22 @@ class Camera:
         """
         _, C = Xw.shape
         assert C == 3
-        uv, _ = cv2.projectPoints(Xw, self.rodrigues, self.p_cw.tvec, self.K, self.D.coefficients)
+
+        # Since self.D can be a distoriton object or a dictionary, handle the appropriate case and
+        # throw a warning about the model being used. This currenty does not support fisheye.
+        distortion = np.zeros(5, dtype=np.float32)
+        if isinstance(self.D, Distortion):
+            distortion = self.D.coefficients
+        elif isinstance(self.D, dict):
+            logging.warning('Using Brown-Conrady (Opencv default) distortion model for projection.')
+            k1 = self.D.get('k1', 0.0)
+            k2 = self.D.get('k2', 0.0)
+            p1 = self.D.get('p1', 0.0)
+            p2 = self.D.get('p2', 0.0)
+            k3 = self.D.get('k3', 0.0)
+            distortion = np.array([k1, k2, p1, p2, k3])
+
+        uv, _ = cv2.projectPoints(Xw, self.rodrigues, self.p_cw.tvec, self.K, distortion)
         return uv.reshape(-1, 2)
 
     @staticmethod
@@ -293,6 +309,7 @@ class Camera:
         points_in_3d: np.ndarray
             Array of shape (N, 3) of points projected into 3D
         """
+        logging.warning('unproject currently does not consider distortion parameters')
         rays = cv2.undistortPoints(points_in_2d[:, None], self.K, None)
         return cv2.convertPointsToHomogeneous(rays).reshape(-1, 3).astype(np.float32)
 
