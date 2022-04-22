@@ -1,11 +1,13 @@
 import json
 import os
+
 import cv2
-
 import numpy as np
-from dgp.datasets.synchronized_dataset import SynchronizedScene
-from dgp.utils.visualization_engine import visualize_dataset_3d, visualize_dataset_2d, visualize_dataset_sample_3d, visualize_dataset_sample_2d
 
+from dgp.datasets.synchronized_dataset import SynchronizedScene
+from dgp.utils.visualization_engine import (
+    visualize_dataset_2d, visualize_dataset_3d, visualize_dataset_sample_2d, visualize_dataset_sample_3d
+)
 from tests import TEST_DATA_DIR
 
 
@@ -78,5 +80,5 @@ def test_visualize_dataset_sample_3d():
     )
 
     result = visualize_dataset_sample_3d(dataset=dataset, scene_idx=0, sample_idx=0, camera_datum_names=['camera_05'])
-    data = cv2.imread('tests/data/dgp/vis_output.png', cv2.IMREAD_COLOR)
-    assert np.allclose(result["camera_05"], data)
+    data = cv2.cvtColor(cv2.imread('tests/data/dgp/vis_output.png', cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB)
+    assert np.allclose(result['camera_05'], data, rtol=1e-3)

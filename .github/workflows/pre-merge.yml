@@ -21,10 +21,10 @@ jobs:
         uses: wagoid/commitlint-github-action@v4
         with:
           configFile: .commitlintrc.yml
-      - name: Install Python 3.6
+      - name: Install Python 3.7
         uses: actions/setup-python@v1
         with:
-          python-version: 3.6
+          python-version: 3.7
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
