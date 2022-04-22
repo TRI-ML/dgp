@@ -54,7 +54,7 @@ def pbobject_from_camera_matrix(K, distortion=None):
         Camera Intrinsic Matrix
 
     distortion: dict[str, float]
-            Dictionary of distortion params i.e, k1,k2,p1,p2,k3,k4,xi,alpha etc
+        Dictionary of distortion params i.e, k1,k2,p1,p2,k3,k4,xi,alpha etc
  
     Returns
     -------
@@ -70,9 +70,9 @@ def pbobject_from_camera_matrix(K, distortion=None):
         intrinsics.skew = K[0, 1]
 
     if distortion is not None:
-        for k,v in distortion.items():
+        for k, v in distortion.items():
             # TODO: assert the proto contains this value
-            setattr(intrinsics, k, v) 
+            setattr(intrinsics, k, v)
 
     return intrinsics
 
@@ -184,7 +184,7 @@ class Camera:
             [0, fy, cy],
             [0, 0, 1],
         ])
-        return cls(K=K, D = distortion, p_cw=p_cw)
+        return cls(K=K, D=distortion, p_cw=p_cw)
 
     @property
     def fx(self):
