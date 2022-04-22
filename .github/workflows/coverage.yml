@@ -13,7 +13,7 @@ jobs:
       ENVIRONMENT: TEST_RUNNER
       OS: ubuntu-18.04
       PYTHON: '3.7'
-      COVERAGE_TOTAL: 46 # Coverage threshold percentage
+      COVERAGE_TOTAL: 49 # Coverage threshold percentage
     steps:
     - name: Checkout (admin token)
       if: ${{github.event_name != 'pull_request'}} # We don't want to use the admin token for PR flows
