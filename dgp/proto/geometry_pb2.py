@@ -19,85 +19,10 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18\x64gp/proto/geometry.proto\x12\tdgp.proto\"*\n\x07Point3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"*\n\x07Vector3\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\t\n\x01z\x18\x03 \x01(\x01\"<\n\nQuaternion\x12\n\n\x02qx\x18\x01 \x01(\x01\x12\n\n\x02qy\x18\x02 \x01(\x01\x12\n\n\x02qz\x18\x03 \x01(\x01\x12\n\n\x02qw\x18\x04 \x01(\x01\"X\n\x04Pose\x12\'\n\x0btranslation\x18\x01 \x01(\x0b\x32\x12.dgp.proto.Vector3\x12\'\n\x08rotation\x18\x02 \x01(\x0b\x32\x15.dgp.proto.Quaternion\"\x9c\x04\n\x10\x43\x61meraIntrinsics\x12\n\n\x02\x66x\x18\x01 \x01(\x01\x12\n\n\x02\x66y\x18\x02 \x01(\x01\x12\n\n\x02\x63x\x18\x03 \x01(\x01\x12\n\n\x02\x63y\x18\x04 \x01(\x01\x12\x0c\n\x04skew\x18\x05 \x01(\x01\x12\x0b\n\x03\x66ov\x18\x06 \x01(\x01\x12\x0f\n\x07\x66isheye\x18\x07 \x01(\x05\x12\n\n\x02k1\x18\x08 \x01(\x01\x12\n\n\x02k2\x18\t \x01(\x01\x12\n\n\x02k3\x18\n \x01(\x01\x12\n\n\x02k4\x18\x0b \x01(\x01\x12\n\n\x02k5\x18\x0c \x01(\x01\x12\n\n\x02k6\x18\r \x01(\x01\x12\n\n\x02p1\x18\x0e \x01(\x01\x12\n\n\x02p2\x18\x0f \x01(\x01\x12\n\n\x02s1\x18\x10 \x01(\x01\x12\n\n\x02s2\x18\x11 \x01(\x01\x12\n\n\x02s3\x18\x12 \x01(\x01\x12\n\n\x02s4\x18\x13 \x01(\x01\x12\x0c\n\x04taux\x18\x14 \x01(\x01\x12\x0c\n\x04tauy\x18\x15 \x01(\x01\x12\r\n\x05\x61lpha\x18\x16 \x01(\x01\x12\x0c\n\x04\x62\x65ta\x18\x17 \x01(\x01\x12\t\n\x01w\x18\x18 \x01(\x01\x12\n\n\x02xi\x18\x19 \x01(\x01\x12\x36\n\x05model\x18\x1a \x01(\x0e\x32\'.dgp.proto.CameraIntrinsics.CameraModel\"\x93\x01\n\x0b\x43\x61meraModel\x12\r\n\tUNDEFINED\x10\x00\x12\x0b\n\x07PINHOLE\x10\x01\x12\x06\n\x02\x42\x43\x10\x02\x12\x0c\n\x08RATIONAL\x10\x03\x12\x0e\n\nTHIN_PRISM\x10\x04\x12\n\n\x06TILTED\x10\x05\x12\x07\n\x03UCM\x10\x06\x12\x08\n\x04\x45UCM\x10\x07\x12\x06\n\x02KB\x10\x08\x12\x07\n\x03\x46OV\x10\t\x12\x06\n\x02\x44S\x10\n\x12\n\n\x05OTHER\x10\xff\x01\x62\x06proto3'
+  serialized_pb=b'\n\x18\x64gp/proto/geometry.proto\x12\tdgp.proto\"*\n\x07Point3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"*\n\x07Vector3\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\t\n\x01z\x18\x03 \x01(\x01\"<\n\nQuaternion\x12\n\n\x02qx\x18\x01 \x01(\x01\x12\n\n\x02qy\x18\x02 \x01(\x01\x12\n\n\x02qz\x18\x03 \x01(\x01\x12\n\n\x02qw\x18\x04 \x01(\x01\"X\n\x04Pose\x12\'\n\x0btranslation\x18\x01 \x01(\x0b\x32\x12.dgp.proto.Vector3\x12\'\n\x08rotation\x18\x02 \x01(\x0b\x32\x15.dgp.proto.Quaternion\"\xce\x02\n\x10\x43\x61meraIntrinsics\x12\n\n\x02\x66x\x18\x01 \x01(\x01\x12\n\n\x02\x66y\x18\x02 \x01(\x01\x12\n\n\x02\x63x\x18\x03 \x01(\x01\x12\n\n\x02\x63y\x18\x04 \x01(\x01\x12\x0c\n\x04skew\x18\x05 \x01(\x01\x12\x0b\n\x03\x66ov\x18\x06 \x01(\x01\x12\x0f\n\x07\x66isheye\x18\x07 \x01(\x05\x12\n\n\x02k1\x18\x08 \x01(\x01\x12\n\n\x02k2\x18\t \x01(\x01\x12\n\n\x02k3\x18\n \x01(\x01\x12\n\n\x02k4\x18\x0b \x01(\x01\x12\n\n\x02k5\x18\x0c \x01(\x01\x12\n\n\x02k6\x18\r \x01(\x01\x12\n\n\x02p1\x18\x0e \x01(\x01\x12\n\n\x02p2\x18\x0f \x01(\x01\x12\n\n\x02s1\x18\x10 \x01(\x01\x12\n\n\x02s2\x18\x11 \x01(\x01\x12\n\n\x02s3\x18\x12 \x01(\x01\x12\n\n\x02s4\x18\x13 \x01(\x01\x12\x0c\n\x04taux\x18\x14 \x01(\x01\x12\x0c\n\x04tauy\x18\x15 \x01(\x01\x12\r\n\x05\x61lpha\x18\x16 \x01(\x01\x12\x0c\n\x04\x62\x65ta\x18\x17 \x01(\x01\x12\t\n\x01w\x18\x18 \x01(\x01\x12\n\n\x02xi\x18\x19 \x01(\x01\x62\x06proto3'
 )
 
 
-
-_CAMERAINTRINSICS_CAMERAMODEL = _descriptor.EnumDescriptor(
-  name='CameraModel',
-  full_name='dgp.proto.CameraIntrinsics.CameraModel',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='UNDEFINED', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='PINHOLE', index=1, number=1,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='BC', index=2, number=2,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='RATIONAL', index=3, number=3,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='THIN_PRISM', index=4, number=4,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='TILTED', index=5, number=5,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='UCM', index=6, number=6,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='EUCM', index=7, number=7,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='KB', index=8, number=8,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='FOV', index=9, number=9,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='DS', index=10, number=10,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='OTHER', index=11, number=255,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=673,
-  serialized_end=820,
-)
-_sym_db.RegisterEnumDescriptor(_CAMERAINTRINSICS_CAMERAMODEL)
 
 
 _POINT3D = _descriptor.Descriptor(
@@ -467,19 +392,11 @@ _CAMERAINTRINSICS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='model', full_name='dgp.proto.CameraIntrinsics.model', index=25,
-      number=26, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
-    _CAMERAINTRINSICS_CAMERAMODEL,
   ],
   serialized_options=None,
   is_extendable=False,
@@ -488,13 +405,11 @@ _CAMERAINTRINSICS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=280,
-  serialized_end=820,
+  serialized_end=614,
 )
 
 _POSE.fields_by_name['translation'].message_type = _VECTOR3
 _POSE.fields_by_name['rotation'].message_type = _QUATERNION
-_CAMERAINTRINSICS.fields_by_name['model'].enum_type = _CAMERAINTRINSICS_CAMERAMODEL
-_CAMERAINTRINSICS_CAMERAMODEL.containing_type = _CAMERAINTRINSICS
 DESCRIPTOR.message_types_by_name['Point3D'] = _POINT3D
 DESCRIPTOR.message_types_by_name['Vector3'] = _VECTOR3
 DESCRIPTOR.message_types_by_name['Quaternion'] = _QUATERNION
