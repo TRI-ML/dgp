@@ -34,6 +34,27 @@ from dgp.utils.pose import Pose
 from dgp.utils.protobuf import open_pbobject
 
 AVAILABLE_DATUM_TYPES = ("image", "point_cloud")
+AVAILABLE_DISTORTION_PARAMS = (
+    'k1',
+    'k2',
+    'k4',
+    'k5',
+    'k6',
+    'p1',
+    'p2',
+    'alpha',
+    'beta',
+    'xi',
+    's1',
+    's2',
+    's3',
+    's4',
+    'taux',
+    'tauy',
+    'fov',
+    'fisheye',
+    'w',
+)
 
 
 class SceneContainer:
@@ -936,31 +957,13 @@ class BaseDataset:
                 # If the intrinsics are invalid, i.e. fx = fy = 0, then it is
                 # assumed to be a LIDAR sensor.
 
-                # TODO: refactor this
+                # TODO: this needs a refactor for two reasons,
+                # 1. This uses a hardcoded list of distortion parameters, it should instead use the proto defintion
+                # 2. We probably want the camera class to calculate and cache the remaps for undistortion
+
                 # Get a dictionary of distortion parameters
-                attributes = [
-                    'k1',
-                    'k2',
-                    'k4',
-                    'k5',
-                    'k6',
-                    'p1',
-                    'p2',
-                    'alpha',
-                    'beta',
-                    'xi',
-                    's1',
-                    's2',
-                    's3',
-                    's4',
-                    'taux',
-                    'tauy',
-                    'fov',
-                    'fisheye',
-                    'w',
-                ]
                 distortion = {}
-                for k in attributes:
+                for k in AVAILABLE_DISTORTION_PARAMS:
                     if hasattr(intrinsic, k):
                         distortion[k] = getattr(intrinsic, k)
 
