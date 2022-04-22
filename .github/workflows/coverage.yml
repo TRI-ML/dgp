@@ -12,7 +12,7 @@ jobs:
     env:
       ENVIRONMENT: TEST_RUNNER
       OS: ubuntu-18.04
-      PYTHON: '3.6'
+      PYTHON: '3.7'
       COVERAGE_TOTAL: 46 # Coverage threshold percentage
     steps:
     - name: Checkout (admin token)
@@ -29,7 +29,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@master
       with:
-        python-version: 3.6
+        python-version: 3.7
     - name: Install dependencies
       id: coverage-installer
       run: |
