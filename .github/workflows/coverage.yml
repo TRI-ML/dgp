@@ -12,8 +12,8 @@ jobs:
     env:
       ENVIRONMENT: TEST_RUNNER
       OS: ubuntu-18.04
-      PYTHON: '3.6'
-      COVERAGE_TOTAL: 46 # Coverage threshold percentage
+      PYTHON: '3.7'
+      COVERAGE_TOTAL: 49 # Coverage threshold percentage
     steps:
     - name: Checkout (admin token)
       if: ${{github.event_name != 'pull_request'}} # We don't want to use the admin token for PR flows
@@ -29,7 +29,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@master
       with:
-        python-version: 3.6
+        python-version: 3.7
     - name: Install dependencies
       id: coverage-installer
       run: |

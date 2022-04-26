@@ -1,6 +1,6 @@
 FROM nvidia/cuda:11.1-devel-ubuntu18.04
 
-ARG python=3.6
+ARG python=3.7
 ENV PYTORCH_VERSION=1.8.1+cu111
 ENV TORCHVISION_VERSION=0.9.1+cu111
 
