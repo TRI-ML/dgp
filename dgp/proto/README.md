@@ -128,3 +128,7 @@ Agents are stored in the DGP under the following structure:
  ┣ 📜agents_v<version>.json
  ┗ 📜scene_dataset_v<version>.json
 ```
+
+### Autolabel Structure
+
+Autolabels for a particular scene are scene directories themselves. They should be stored within their parent scene directory under ```<parent scene dir>/autolabels/<autolabel model>``` folder. Autolabels may also be stored outside of the parent scene folder, in this case they must be stored with the following directory structure: ```<autolabel root>/<parent scene dir basename>/autolabels/<autolabel model>```. In both cases ```<autolabel model>``` should be unique string denoting which model or process generated the autolabels.

@@ -30,7 +30,6 @@ AGENT_FOLDER = "agent"
 CLASSIFICATION_FOLDER = "classification"
 
 # Scene Directory structure constants
-AUTOLABEL_FOLDER = 'autolabels'
 CALIBRATION_FOLDER = 'calibration'
 ONTOLOGY_FOLDER = 'ontology'
 SCENE_JSON_FILENAME = 'scene.json'
@@ -47,4 +46,7 @@ TRI_DGP_SCENE_JSON_NAME = "scene_{scene_hash}.json"
 ANNOTATION_FILE_NAME = '{image_content_hash}_{annotation_content_hash}.json'
 TRI_DGP_AGENTS_JSON_NAME = "agents_{agent_hash}.json"
 TRI_DGP_AGENTS_SLICES_JSON_NAME = "agents_slices_{slice_hash}.json"
+
+# Autolabel constants
+AUTOLABEL_FOLDER = 'autolabels'
 AUTOLABEL_SCENE_JSON_NAME = 'scene.json'
