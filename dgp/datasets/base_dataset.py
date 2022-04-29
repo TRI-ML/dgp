@@ -635,7 +635,7 @@ class DatasetMetadata:
 
         # Determine scenes with unique ontologies based on the ontology file basename.
         # NOTE: We walk the directories instead of taking the ontology files directly from the scene proto purely for performance reasons,
-        # a valid but slow method would be to call scene.ontology_files on ever scene.
+        # a valid but slow method would be to call scene.ontology_files on every scene.
         unique_scenes = {
             os.path.basename(f): scene_container
             for scene_container in scene_containers
@@ -879,7 +879,7 @@ class BaseDataset:
             Optional path to dataset root folder. Useful if dataset scene json is not in the same directory as the rest of the data.
 
         autolabel_root: str, default: None
-            Optional path to autolabel root directory
+            Optional path to autolabel root directory.
 
         Returns
         -------
@@ -1845,7 +1845,7 @@ def _parse_autolabeled_scenes(scene_dir, requested_autolabels, autolabel_root=No
 
     requested_autolabels: tuple[str]
         Tuple of strings of format "<autolabel_model>/<annotation_key>"
-    
+
     autolabel_root: str, default: None
         Path to autolabel root folder
 
