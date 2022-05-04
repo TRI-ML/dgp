@@ -60,7 +60,7 @@ class DenseDepthAnnotation(Annotation):
             Full path to the output NPZ file.
         """
         pointcloud_path = os.path.join(save_dir, '{}.npz'.format(self.hexdigest))
-        np.savez_compressed(pointcloud_path, self.depth)
+        np.savez_compressed(pointcloud_path, data=self.depth)
         return pointcloud_path
 
     def render(self):

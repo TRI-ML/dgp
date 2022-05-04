@@ -60,6 +60,9 @@ class _SynchronizedDataset(BaseDataset):
 
     transform_accumulated_box_points: bool, default: False
         Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
+
+    autolabel_root: str, default: None
+        Path to autolabels.
     """
     def __init__(
         self,
@@ -74,10 +77,11 @@ class _SynchronizedDataset(BaseDataset):
         generate_depth_from_datum=None,
         only_annotated_datums=False,
         transform_accumulated_box_points=False,
+        autolabel_root=None,
     ):
         self.set_context(backward=backward_context, forward=forward_context, accumulation_context=accumulation_context)
         self.generate_depth_from_datum = generate_depth_from_datum
-        self.only_annotated_datums = only_annotated_datums if requested_annotations else False
+        self.only_annotated_datums = only_annotated_datums if requested_annotations or requested_autolabels else False
         self.transform_accumulated_box_points = transform_accumulated_box_points
 
         super().__init__(
@@ -86,6 +90,7 @@ class _SynchronizedDataset(BaseDataset):
             datum_names=datum_names,
             requested_annotations=requested_annotations,
             requested_autolabels=requested_autolabels,
+            autolabel_root=autolabel_root,
         )
 
     def _build_item_index(self):
@@ -136,7 +141,6 @@ class _SynchronizedDataset(BaseDataset):
     def _item_index_for_scene(scene_idx, scene, backward_context, forward_context, only_annotated_datums):
         st = time.time()
         logging.debug(f'Indexing scene items for {scene.scene_path}')
-
         if not only_annotated_datums:
             # Define a safe sample range given desired context
             sample_range = np.arange(backward_context, len(scene.datum_index) - forward_context)
@@ -402,6 +406,11 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
         If True, cache ScenePb2 object using diskcache. If False, save the object in memory.
         NOTE: Setting use_diskcache to False would exhaust the memory if have a large number of scenes.
 
+    autolabel_root: str, default: None
+        Path to autolabels if not stored inside scene root. Note this must still respect the scene structure, i.e,
+        autolabel_root = '/some-autolabels' means the autolabel scene.json is found at
+        /some-autolabels/<scene-dir>/autolabels/my-model/scene.json.
+
     Refer to _SynchronizedDataset for remaining parameters.
     """
     def __init__(
@@ -420,6 +429,7 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
         dataset_root=None,
         transform_accumulated_box_points=False,
         use_diskcache=True,
+        autolabel_root=None,
     ):
         if not use_diskcache:
             logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
@@ -433,10 +443,13 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
             skip_missing_data=skip_missing_data,
             dataset_root=dataset_root,
             use_diskcache=use_diskcache,
+            autolabel_root=autolabel_root,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
-        dataset_metadata = DatasetMetadata.from_scene_containers(scenes, requested_annotations, requested_autolabels)
+        dataset_metadata = DatasetMetadata.from_scene_containers(
+            scenes, requested_annotations, requested_autolabels, autolabel_root=autolabel_root
+        )
         super().__init__(
             dataset_metadata,
             scenes=scenes,
@@ -449,6 +462,7 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
             generate_depth_from_datum=generate_depth_from_datum,
             only_annotated_datums=only_annotated_datums,
             transform_accumulated_box_points=transform_accumulated_box_points,
+            autolabel_root=autolabel_root,
         )
 
 
@@ -500,6 +514,11 @@ class SynchronizedScene(_SynchronizedDataset):
         If True, cache ScenePb2 object using diskcache. If False, save the object in memory.
         NOTE: Setting use_diskcache to False would exhaust the memory if have a large number of scenes.
 
+    autolabel_root: str, default: None
+        Path to autolabels if not stored inside scene root. Note this must still respect the scene structure, i.e,
+        autolabel_root = '/some-autolabels' means the autolabel scene.json is found at
+        /some-autolabels/<scene-dir>/autolabels/my-model/scene.json.
+
     Refer to _SynchronizedDataset for remaining parameters.
     """
     def __init__(
@@ -515,6 +534,7 @@ class SynchronizedScene(_SynchronizedDataset):
         only_annotated_datums=False,
         transform_accumulated_box_points=False,
         use_diskcache=True,
+        autolabel_root=None,
     ):
         if not use_diskcache:
             logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
@@ -525,10 +545,16 @@ class SynchronizedScene(_SynchronizedDataset):
             requested_autolabels,
             is_datums_synchronized=True,
             use_diskcache=use_diskcache,
+            autolabel_root=autolabel_root,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
-        dataset_metadata = DatasetMetadata.from_scene_containers([scene], requested_annotations, requested_autolabels)
+        dataset_metadata = DatasetMetadata.from_scene_containers(
+            [scene],
+            requested_annotations,
+            requested_autolabels,
+            autolabel_root=autolabel_root,
+        )
         super().__init__(
             dataset_metadata,
             scenes=[scene],
@@ -541,4 +567,5 @@ class SynchronizedScene(_SynchronizedDataset):
             generate_depth_from_datum=generate_depth_from_datum,
             only_annotated_datums=only_annotated_datums,
             transform_accumulated_box_points=transform_accumulated_box_points,
+            autolabel_root=autolabel_root,
         )

@@ -233,10 +233,17 @@ class SceneContainer:
         if self.autolabeled_scenes is not None:
             # Merge autolabeled scene ontologies into base scene ontology index.
             # Per autolabeled scene, we should only have a single ontology file.
+
+            # TODO: maybe remove this single ontology file constraint
+            # no reason to have an autolabel be 1-1, the same scene can/should
+            # be used for multiple annotations types because a single model can/should/will
+            # output multiple predictions.
+
             ontology_files.update({
                 autolabel_key: list(autolabeled_scene.ontology_files.values())[0]
                 for autolabel_key, autolabeled_scene in self.autolabeled_scenes.items()
             })
+
         return ontology_files
 
     @property
@@ -259,7 +266,7 @@ class SceneContainer:
         for datum_idx, datum in enumerate(self.data):
             datum_type = datum.datum.WhichOneof('datum_oneof')
             for autolabel_key, autolabeled_scene in self.autolabeled_scenes.items():
-                (_autolabel_model, annotation_key) = os.path.split(autolabel_key)
+                (_, annotation_key) = os.path.split(autolabel_key)
                 requested_annotation_id = ANNOTATION_KEY_TO_TYPE_ID[annotation_key]
                 annotations = getattr(autolabeled_scene.data[datum_idx].datum, datum_type).annotations
                 if requested_annotation_id in annotations:
@@ -309,17 +316,40 @@ class SceneContainer:
             Boolean index of annotations for this scene
         """
         logging.debug(f"Building annotation index for scene {self.scene_path}")
+
+        total_annotations = list(self.requested_annotations)
+        if self.autolabeled_scenes is not None:
+            total_annotations += list(self.autolabeled_scenes.keys())
+
         scene_annotation_index = xr.DataArray(
-            np.zeros((len(self.data), len(self.requested_annotations)), dtype=np.bool),
+            np.zeros((len(self.data), len(total_annotations)), dtype=np.bool),
             dims=["datums", "annotations"],
-            coords={"annotations": list(self.requested_annotations)}
+            coords={"annotations": total_annotations}
         )
+
         requested_annotation_ids = [ANNOTATION_KEY_TO_TYPE_ID[ann] for ann in self.requested_annotations]
+
+        autolabel_ids = {}
+        if self.autolabeled_scenes is not None:
+            autolabel_ids = {ann: ANNOTATION_KEY_TO_TYPE_ID[ann.split('/')[1]] for ann in self.autolabeled_scenes}
+
         for datum_idx_in_scene, datum in enumerate(self.data):
             datum_annotations = BaseDataset.get_annotations(datum).keys()
-            scene_annotation_index[datum_idx_in_scene] = [
-                ann_id in datum_annotations for ann_id in requested_annotation_ids
-            ]
+            has_annotation = [ann_id in datum_annotations for ann_id in requested_annotation_ids]
+
+            # Find out which autolabels are present
+            has_autolabel = []
+            for key, ann_id in autolabel_ids.items():
+                # TODO: make this robust to missing data
+                datum = self.autolabeled_scenes[key].data[datum_idx_in_scene]
+                datum_annotations = BaseDataset.get_annotations(datum).keys()
+                if ann_id in datum_annotations:
+                    has_autolabel.append(True)
+                else:
+                    has_autolabel.append(False)
+
+            scene_annotation_index[datum_idx_in_scene] = has_annotation + has_autolabel
+
         logging.debug(f'Done building annotation index for scene {self.scene_path}')
         return scene_annotation_index
 
@@ -459,6 +489,45 @@ class SceneContainer:
             logging.debug(f'Missing {filename}')
             return False
 
+    def get_autolabels(self, sample_idx_in_scene, datum_name):
+        """Get autolabels associated with a datum if available
+
+        Parameters
+        ----------
+        scene_idx: int
+            Index of the scene.
+
+        sample_idx_in_scene: int
+            Index of the sample within the scene at scene_idx.
+
+        datum_name: str
+            Name of the datum within sample
+
+        Returns
+        -------
+        autolabels: dict
+            Map of <autolabel_model>/<annotation_key> : <annotation_path>. Returns empty dictionary
+            if no autolabels exist for that datum.
+        """
+        autolabels = dict()
+        if self.autolabeled_scenes is None:
+            return autolabels
+
+        datum_idx_in_scene = self.datum_index[sample_idx_in_scene].loc[datum_name].data
+        datum = self.data[datum_idx_in_scene]
+
+        datum_type = datum.datum.WhichOneof('datum_oneof')
+        for autolabel_key, autolabeled_scene in self.autolabeled_scenes.items():
+            (_, annotation_key) = os.path.split(autolabel_key)
+            requested_annotation_id = ANNOTATION_KEY_TO_TYPE_ID[annotation_key]
+            # TODO: Autolabels have to be valid on construction, we do not have a good way to make sure that the
+            # same datum_idx is valid here.
+            annotations = getattr(autolabeled_scene.data[datum_idx_in_scene].datum, datum_type).annotations
+            if requested_annotation_id in annotations:
+                autolabels[autolabel_key] = annotations[requested_annotation_id]
+
+        return autolabels
+
 
 class DatasetMetadata:
     """A Wrapper Dataset metadata class to support two entrypoints for datasets
@@ -520,7 +589,13 @@ class DatasetMetadata:
         return stats
 
     @classmethod
-    def from_scene_containers(cls, scene_containers, requested_annotations=None, requested_autolabels=None):
+    def from_scene_containers(
+        cls,
+        scene_containers,
+        requested_annotations=None,
+        requested_autolabels=None,
+        autolabel_root=None,
+    ):
         """Load DatasetMetadata from Scene Dataset JSON.
 
         Parameters
@@ -533,6 +608,9 @@ class DatasetMetadata:
 
         requested_autolabels: List(str)
             List of autolabels, such as['model_a/bounding_box_3d', 'model_a/bounding_box_2d']
+
+        autolabel_root: str, default: None
+            Optional path to autolabel root directory
         """
         assert len(scene_containers), 'SceneContainers is empty.'
         requested_annotations = [] if requested_annotations is None else requested_annotations
@@ -556,11 +634,40 @@ class DatasetMetadata:
         st = time.time()
 
         # Determine scenes with unique ontologies based on the ontology file basename.
+        # NOTE: We walk the directories instead of taking the ontology files directly from the scene proto purely for performance reasons,
+        # a valid but slow method would be to call scene.ontology_files on every scene.
         unique_scenes = {
             os.path.basename(f): scene_container
             for scene_container in scene_containers
             for _, _, filenames in os.walk(os.path.join(scene_container.directory, ONTOLOGY_FOLDER)) for f in filenames
         }
+
+        # Do the same as above but for the autolabel scenes
+        # autolabels are in autolabel_root/<scene_dir>/autolabels/model_name/...>
+        if requested_autolabels is not None and len(scene_containers) > 0:
+            if autolabel_root is None:
+                autolabel_root = os.path.dirname(scene_containers[0].directory)
+
+            all_ontology_files = glob.glob(os.path.join(autolabel_root, '**', ONTOLOGY_FOLDER, '*'), recursive=True)
+
+            # Extract just the scene directory from the files found above
+            onotology_file_scene_dirs = [
+                os.path.dirname(os.path.relpath(f, autolabel_root)).split('/')[0] for f in all_ontology_files
+            ]
+
+            # The contract with autolabels is that the scene directory name for the autolabel must match that of the non autolabel scene
+            # therefore we can find the original scene container by the directory
+            scene_dir_to_scene = {
+                os.path.basename(scene_container.directory): scene_container
+                for scene_container in scene_containers
+            }
+            unique_autolabel_scenes = {
+                os.path.basename(f): scene_dir_to_scene[k]
+                for f, k in zip(all_ontology_files, onotology_file_scene_dirs)
+                if k in scene_dir_to_scene
+            }
+            unique_scenes.update(unique_autolabel_scenes)
+
         # Parse through relevant scenes that have unique ontology keys.
         for _, scene_container in unique_scenes.items():
             for ontology_key, ontology_file in scene_container.ontology_files.items():
@@ -657,6 +764,9 @@ class BaseDataset:
         Split of dataset to read ("train" | "val" | "test" | "train_overfit").
         If the split is None, the split type is not known and the dataset can
         be used for unsupervised / self-supervised learning.
+
+    autolabel_root: str, default: None
+       Optional path to autolabel root directory
     """
     def __init__(
         self,
@@ -666,6 +776,7 @@ class BaseDataset:
         requested_annotations=None,
         requested_autolabels=None,
         split=None,
+        autolabel_root=None,
     ):
         logging.info(f'Instantiating dataset with {len(scenes)} scenes.')
         # Dataset metadata
@@ -723,6 +834,9 @@ class BaseDataset:
         # For example:
         # >> sample_metadata = self.metadata_index[(scene_idx, sample_idx_scene)]
         self.additional_metadata = None
+        self.autolabel_root = autolabel_root
+        if self.autolabel_root is not None:
+            self.autolabel_root = os.path.abspath(self.autolabel_root)
 
     @staticmethod
     def _extract_scenes_from_scene_dataset_json(
@@ -732,7 +846,8 @@ class BaseDataset:
         is_datums_synchronized=False,
         use_diskcache=True,
         skip_missing_data=False,
-        dataset_root=None
+        dataset_root=None,
+        autolabel_root=None,
     ):
         """Extract scene objects and calibration from the scene dataset JSON
         for the appropriate split.
@@ -762,6 +877,9 @@ class BaseDataset:
 
         dataset_root: str
             Optional path to dataset root folder. Useful if dataset scene json is not in the same directory as the rest of the data.
+
+        autolabel_root: str, default: None
+            Optional path to autolabel root directory.
 
         Returns
         -------
@@ -803,6 +921,7 @@ class BaseDataset:
                         is_datums_synchronized=is_datums_synchronized,
                         use_diskcache=use_diskcache,
                         skip_missing_data=skip_missing_data,
+                        autolabel_root=autolabel_root,
                     ), scene_jsons
                 )
             )
@@ -843,6 +962,7 @@ class BaseDataset:
         is_datums_synchronized=False,
         use_diskcache=True,
         skip_missing_data=False,
+        autolabel_root=None,
     ):
         """Extract scene object and calibration from a single scene JSON.
         If autolabels are requested, inject them into the SceneContainer and merge ontologies
@@ -867,7 +987,8 @@ class BaseDataset:
             requested_autolabels,
             is_datums_synchronized,
             use_diskcache=use_diskcache,
-            skip_missing_data=skip_missing_data
+            skip_missing_data=skip_missing_data,
+            autolabel_root=autolabel_root,
         )
         return scene_container
 
@@ -878,13 +999,16 @@ class BaseDataset:
         is_datums_synchronized=False,
         use_diskcache=True,
         skip_missing_data=False,
+        autolabel_root=None,
     ):
 
         scene_dir = os.path.dirname(scene_json)
 
         if requested_autolabels is not None:
             logging.debug(f"Loading autolabeled annotations from {scene_dir}.")
-            autolabeled_scenes = _parse_autolabeled_scenes(scene_dir, requested_autolabels)
+            autolabeled_scenes = _parse_autolabeled_scenes(
+                scene_dir, requested_autolabels, autolabel_root=autolabel_root, skip_missing_data=skip_missing_data
+            )
         else:
             autolabeled_scenes = None
 
@@ -934,7 +1058,7 @@ class BaseDataset:
             for (name, intrinsic, extrinsic) in zip(calibration.names, calibration.intrinsics, calibration.extrinsics):
                 p_WS = Pose.load(extrinsic)
                 # If the intrinsics are invalid, i.e. fx = fy = 0, then it is
-                # assumed to be a LIDAR sensor.
+                # assumed to be a LIDAR or RADAR sensor.
                 cam = Camera.from_params(
                     intrinsic.fx, intrinsic.fy, intrinsic.cx, intrinsic.cy, p_WS
                 ) if intrinsic.fx > 0 and intrinsic.fy > 0 else None
@@ -1252,6 +1376,46 @@ class BaseDataset:
                 annotation_objects[annotation_key] = ANNOTATION_REGISTRY[annotation_key].load(annotation_file, None)
             else:
                 raise Exception(f"Cannot load annotation type {annotation_key}, no ontology found!")
+
+        # Now do the same but for autolabels
+        autolabel_annotations = self.get_autolabels_for_datum(scene_idx, sample_idx_in_scene, datum_name)
+        for autolabel_key in self.requested_autolabels:
+            # Some datums in a sample may not have associated annotations. Return "None" for those datums
+            _, annotation_key = autolabel_key.split('/')
+            # NOTE: model_name should already be stored in the scene json
+            # which is why we do not have to add it here to the annotation_file
+            annotation_path = autolabel_annotations.get(autolabel_key, None)
+
+            if annotation_path is None:
+                autolabel_annotations[autolabel_key] = None
+                continue
+            if self.autolabel_root is not None:
+                annotation_file = os.path.join(
+                    self.autolabel_root, os.path.basename(self.scenes[scene_idx].directory), 'autolabels',
+                    annotation_path
+                )
+            else:
+                annotation_file = os.path.join(self.scenes[scene_idx].directory, 'autolabels', annotation_path)
+
+            if not os.path.exists(annotation_file):
+                logging.warning(f'missing {annotation_file}')
+                autolabel_annotations[autolabel_key] = None
+                continue
+
+            if autolabel_key in self.dataset_metadata.ontology_table:
+                # Load annotation object with ontology
+                autolabel_annotations[autolabel_key] = ANNOTATION_REGISTRY[annotation_key].load(
+                    annotation_file, self.dataset_metadata.ontology_table[autolabel_key]
+                )
+
+            elif ONTOLOGY_REGISTRY[annotation_key] is None:
+                # Some tasks have no associated ontology
+                autolabel_annotations[autolabel_key] = ANNOTATION_REGISTRY[annotation_key].load(annotation_file, None)
+            else:
+                raise Exception(f"Cannot load annotation type {autolabel_key}, no ontology found!")
+
+        annotation_objects.update(autolabel_annotations)
+
         return annotation_objects
 
     @staticmethod
@@ -1671,7 +1835,7 @@ class BaseDataset:
         return data, annotations
 
 
-def _parse_autolabeled_scenes(scene_dir, requested_autolabels):
+def _parse_autolabeled_scenes(scene_dir, requested_autolabels, autolabel_root=None, skip_missing_data=False):
     """Parse autolabeled scene JSONs
 
     Parameters
@@ -1681,6 +1845,12 @@ def _parse_autolabeled_scenes(scene_dir, requested_autolabels):
 
     requested_autolabels: tuple[str]
         Tuple of strings of format "<autolabel_model>/<annotation_key>"
+
+    autolabel_root: str, default: None
+        Path to autolabel root folder
+
+    skip_missing_data: bool, defaul: False
+        If true, skip over missing autolabel scenes
 
     Returns
     -------
@@ -1695,11 +1865,23 @@ def _parse_autolabeled_scenes(scene_dir, requested_autolabels):
             raise ValueError(
                 "Expected autolabel format <autolabel_model>/<annotation_key>, got {}".format(autolabel)
             ) from e
-        autolabel_dir = os.path.join(scene_dir, AUTOLABEL_FOLDER, autolabel_model)
+        if autolabel_root is not None:
+            autolabel_dir = os.path.join(
+                os.path.abspath(autolabel_root), os.path.basename(scene_dir), AUTOLABEL_FOLDER, autolabel_model
+            )
+        else:
+            autolabel_dir = os.path.join(scene_dir, AUTOLABEL_FOLDER, autolabel_model)
         autolabel_scene = os.path.join(autolabel_dir, SCENE_JSON_FILENAME)
 
         assert autolabel_type in ANNOTATION_KEY_TO_TYPE_ID, 'Autolabel type {} not valid'.format(autolabel_type)
-        assert os.path.exists(autolabel_dir), 'Path to autolabels {} does not exist'.format(autolabel_dir)
-        assert os.path.exists(autolabel_scene), 'Scene JSON expected but not found at {}'.format(autolabel_scene)
+
+        if skip_missing_data:
+            if not (os.path.exists(autolabel_dir) and os.path.exists(autolabel_scene)):
+                logging.debug(f'skipping autolabel {autolabel_dir}')
+                continue
+        else:
+            assert os.path.exists(autolabel_dir), 'Path to autolabels {} does not exist'.format(autolabel_dir)
+            assert os.path.exists(autolabel_scene), 'Scene JSON expected but not found at {}'.format(autolabel_scene)
+
         autolabeled_scenes[autolabel] = SceneContainer(autolabel_scene, directory=autolabel_dir)
     return autolabeled_scenes
