@@ -73,6 +73,7 @@
 <li><a class="reference internal" href="#scenedataset-schema-graph">SceneDataset schema graph</a></li>
 <li><a class="reference internal" href="#dgp-scenedataset-structure">DGP SceneDataset Structure</a></li>
 <li><a class="reference internal" href="#dgp-agentdataset-structure">DGP AgentDataset Structure</a></li>
+<li><a class="reference internal" href="#autolabel-structure">Autolabel Structure</a></li>
 </ul>
 </li>
 </ul>
@@ -225,6 +226,11 @@ corresponding <code class="docutils literal notranslate"><span class="pre">proto
  ┗ 📜scene_dataset_v&lt;version&gt;.json
 </pre></div>
 </div>
+</div>
+<div class="section" id="autolabel-structure">
+<h3>Autolabel Structure<a class="headerlink" href="#autolabel-structure" title="Permalink to this headline">¶</a></h3>
+<p>Autolabes should be stored within their parent scene directory under <code class="docutils literal notranslate"><span class="pre">&lt;parent</span> <span class="pre">scene</span> <span class="pre">dir&gt;/autolabels/&lt;autolabel</span> <span class="pre">model&gt;</span></code> folder. Autolabels may also be stored outside of the parent scene folder, in this case they must be stored with the following directory structure: <code class="docutils literal notranslate"><span class="pre">&lt;autolabel</span> <span class="pre">root&gt;/&lt;parent</span> <span class="pre">scene</span> <span class="pre">dir</span> <span class="pre">basename&gt;/autolabels/&lt;autolabel</span> <span class="pre">model&gt;</span></code>.</p>
+<p>In both cases <code class="docutils literal notranslate"><span class="pre">&lt;autolabel</span> <span class="pre">model&gt;</span></code> should be unique a string denoting which model or process generated the autolabels.</p>
 </div>
 </div>
 </div>
