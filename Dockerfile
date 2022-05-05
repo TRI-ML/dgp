@@ -13,6 +13,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Set default shell to /bin/bash
 SHELL ["/bin/bash", "-cu"]
 
+# Temporary fix for invalid GPG key see
+# https://forums.developer.nvidia.com/t/gpg-error-http-developer-download-nvidia-com-compute-cuda-repos-ubuntu1804-x86-64/212904
+RUN apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
+
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
   build-essential \
   ca-certificates \
