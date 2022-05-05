@@ -83,6 +83,9 @@ class _ParallelDomainDataset(_SynchronizedDataset):
 
     transform_accumulated_box_points: bool, default: False
         Flag to use cuboid pose and instance id to warp points when using lidar accumulation.
+
+    autolabel_root: str, default: None
+        Path to autolabels.
     """
     def __init__(
         self,
@@ -98,6 +101,7 @@ class _ParallelDomainDataset(_SynchronizedDataset):
         use_virtual_camera_datums=True,
         accumulation_context=None,
         transform_accumulated_box_points=False,
+        autolabel_root=None,
     ):
         self.coalesce_point_cloud = datum_names is not None and \
                                     COALESCED_LIDAR_DATUM_NAME in datum_names
@@ -136,6 +140,7 @@ class _ParallelDomainDataset(_SynchronizedDataset):
             only_annotated_datums=only_annotated_datums,
             accumulation_context=accumulation_context,
             transform_accumulated_box_points=transform_accumulated_box_points,
+            autolabel_root=autolabel_root,
         )
 
     def coalesce_pc_data(self, items):
@@ -154,6 +159,12 @@ class _ParallelDomainDataset(_SynchronizedDataset):
         pc_items = [item for item in items if POINT_CLOUD_KEY in item]
         assert self.coalesce_point_cloud
         assert len(pc_items) == len(LIDAR_DATUM_NAMES)
+
+        # TODO: fix this
+        if len(self.requested_autolabels) > 0:
+            logging.warning(
+                'autolabels were requested, however point cloud coalesce does not support coalescing autolabels'
+            )
 
         # Only coalesce if there's more than 1 point cloud
         coalesced_pc = OrderedDict()
@@ -248,6 +259,7 @@ class ParallelDomainSceneDataset(_ParallelDomainDataset):
         dataset_root=None,
         transform_accumulated_box_points=False,
         use_diskcache=True,
+        autolabel_root=None,
     ):
         if not use_diskcache:
             logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
@@ -261,10 +273,16 @@ class ParallelDomainSceneDataset(_ParallelDomainDataset):
             skip_missing_data=skip_missing_data,
             dataset_root=dataset_root,
             use_diskcache=use_diskcache,
+            autolabel_root=autolabel_root,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
-        dataset_metadata = DatasetMetadata.from_scene_containers(scenes, requested_annotations, requested_autolabels)
+        dataset_metadata = DatasetMetadata.from_scene_containers(
+            scenes,
+            requested_annotations,
+            requested_autolabels,
+            autolabel_root=autolabel_root,
+        )
         super().__init__(
             dataset_metadata,
             scenes=scenes,
@@ -278,6 +296,7 @@ class ParallelDomainSceneDataset(_ParallelDomainDataset):
             use_virtual_camera_datums=use_virtual_camera_datums,
             accumulation_context=accumulation_context,
             transform_accumulated_box_points=transform_accumulated_box_points,
+            autolabel_root=autolabel_root,
         )
 
 
@@ -300,6 +319,7 @@ class ParallelDomainScene(_ParallelDomainDataset):
         accumulation_context=None,
         transform_accumulated_box_points=False,
         use_diskcache=True,
+        autolabel_root=None,
     ):
         if not use_diskcache:
             logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
@@ -311,10 +331,16 @@ class ParallelDomainScene(_ParallelDomainDataset):
             is_datums_synchronized=True,
             skip_missing_data=skip_missing_data,
             use_diskcache=use_diskcache,
+            autolabel_root=autolabel_root,
         )
 
         # Return SynchronizedDataset with scenes built from dataset.json
-        dataset_metadata = DatasetMetadata.from_scene_containers([scene], requested_annotations, requested_autolabels)
+        dataset_metadata = DatasetMetadata.from_scene_containers(
+            [scene],
+            requested_annotations,
+            requested_autolabels,
+            autolabel_root=autolabel_root,
+        )
         super().__init__(
             dataset_metadata,
             scenes=[scene],

@@ -62,12 +62,16 @@ def clone_scene_as_autolabel(dataset_root, autolabel_root, autolabel_model, auto
             if 'scene' in scene_json and scene_json.endswith('json'):
                 base_scene = open_pbobject(os.path.join(full_scene_dir, scene_json), Scene)
                 for i in range(len(base_scene.data)):
+                    name = base_scene.data[i].id.name
                     datum = base_scene.data[i].datum
                     datum_type = datum.WhichOneof('datum_oneof')
                     datum_value = getattr(datum, datum_type)  # This is datum.image or datum.point_cloud etc
                     annotation_type_id = ANNOTATION_KEY_TO_TYPE_ID[autolabel_type]
                     current_annotation = datum_value.annotations[annotation_type_id]
-                    datum_value.annotations[annotation_type_id] = os.path.join(autolabel_scene_dir, current_annotation)
+                    # NOTE: this should not actually change the path but is included for clarity
+                    datum_value.annotations[annotation_type_id] = os.path.join(
+                        ANNOTATION_TYPE_ID_TO_FOLDER[autolabel_type], name, os.path.basename(current_annotation)
+                    )
 
                 save_pbobject_as_json(base_scene, os.path.join(autolabel_scene_dir, AUTOLABEL_SCENE_JSON_NAME))
                 # Only modify one scene.json, test scene should not contain multiple scene.jsons
@@ -109,7 +113,8 @@ class TestAutolabelDataset(unittest.TestCase):
             backward_context=1,
             requested_annotations=('bounding_box_3d', ),
             requested_autolabels=requested_autolabels,
-            autolabel_root=autolabel_root
+            autolabel_root=autolabel_root,
+            use_diskcache=False,
         )
 
         assert len(dataset) == 2
@@ -139,7 +144,8 @@ class TestAutolabelDataset(unittest.TestCase):
             backward_context=1,
             requested_annotations=('bounding_box_3d', ),
             requested_autolabels=requested_autolabels,
-            autolabel_root=autolabel_root
+            autolabel_root=autolabel_root,
+            use_diskcache=False,
         )
 
         assert len(dataset) == 2
@@ -174,6 +180,7 @@ class TestAutolabelDataset(unittest.TestCase):
             requested_autolabels=requested_autolabels,
             autolabel_root=autolabel_root,
             skip_missing_data=True,
+            use_diskcache=False,
         )
 
         assert len(dataset) == 2
@@ -210,6 +217,7 @@ class TestAutolabelDataset(unittest.TestCase):
             autolabel_root=autolabel_root,
             only_annotated_datums=True,
             skip_missing_data=True,
+            use_diskcache=False,
         )
 
         assert len(dataset) == 1
