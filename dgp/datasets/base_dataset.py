@@ -1007,7 +1007,11 @@ class BaseDataset:
         if requested_autolabels is not None:
             logging.debug(f"Loading autolabeled annotations from {scene_dir}.")
             autolabeled_scenes = _parse_autolabeled_scenes(
-                scene_dir, requested_autolabels, autolabel_root=autolabel_root, skip_missing_data=skip_missing_data
+                scene_dir,
+                requested_autolabels,
+                autolabel_root=autolabel_root,
+                skip_missing_data=skip_missing_data,
+                use_diskcache=use_diskcache,
             )
         else:
             autolabeled_scenes = None
@@ -1381,9 +1385,10 @@ class BaseDataset:
         autolabel_annotations = self.get_autolabels_for_datum(scene_idx, sample_idx_in_scene, datum_name)
         for autolabel_key in self.requested_autolabels:
             # Some datums in a sample may not have associated annotations. Return "None" for those datums
-            _, annotation_key = autolabel_key.split('/')
-            # NOTE: model_name should already be stored in the scene json
-            # which is why we do not have to add it here to the annotation_file
+            model_name, annotation_key = autolabel_key.split('/')
+            # NOTE: model_name should typically not be included in the annotation_path stored inside the scene.json
+            # if for some reason it is, then it needs to be removed.
+
             annotation_path = autolabel_annotations.get(autolabel_key, None)
 
             if annotation_path is None:
@@ -1391,11 +1396,13 @@ class BaseDataset:
                 continue
             if self.autolabel_root is not None:
                 annotation_file = os.path.join(
-                    self.autolabel_root, os.path.basename(self.scenes[scene_idx].directory), 'autolabels',
-                    annotation_path
+                    self.autolabel_root, os.path.basename(self.scenes[scene_idx].directory), AUTOLABEL_FOLDER,
+                    model_name, annotation_path
                 )
             else:
-                annotation_file = os.path.join(self.scenes[scene_idx].directory, 'autolabels', annotation_path)
+                annotation_file = os.path.join(
+                    self.scenes[scene_idx].directory, AUTOLABEL_FOLDER, model_name, annotation_path
+                )
 
             if not os.path.exists(annotation_file):
                 logging.warning(f'missing {annotation_file}')
@@ -1835,7 +1842,13 @@ class BaseDataset:
         return data, annotations
 
 
-def _parse_autolabeled_scenes(scene_dir, requested_autolabels, autolabel_root=None, skip_missing_data=False):
+def _parse_autolabeled_scenes(
+    scene_dir,
+    requested_autolabels,
+    autolabel_root=None,
+    skip_missing_data=False,
+    use_diskcache=False,
+):
     """Parse autolabeled scene JSONs
 
     Parameters
@@ -1851,6 +1864,9 @@ def _parse_autolabeled_scenes(scene_dir, requested_autolabels, autolabel_root=No
 
     skip_missing_data: bool, defaul: False
         If true, skip over missing autolabel scenes
+
+    use_diskcache: bool, default: False
+        If diskcache should be used for autolabels
 
     Returns
     -------
@@ -1883,5 +1899,7 @@ def _parse_autolabeled_scenes(scene_dir, requested_autolabels, autolabel_root=No
             assert os.path.exists(autolabel_dir), 'Path to autolabels {} does not exist'.format(autolabel_dir)
             assert os.path.exists(autolabel_scene), 'Scene JSON expected but not found at {}'.format(autolabel_scene)
 
-        autolabeled_scenes[autolabel] = SceneContainer(autolabel_scene, directory=autolabel_dir)
+        autolabeled_scenes[autolabel] = SceneContainer(
+            autolabel_scene, directory=autolabel_dir, use_diskcache=use_diskcache
+        )
     return autolabeled_scenes
