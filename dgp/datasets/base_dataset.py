@@ -758,7 +758,7 @@ class BaseDataset:
 
     requested_autolabels: tuple[str], default: None
         Tuple of annotation keys similar to `requested_annotations`, but associated with a particular autolabeling model.
-        Expected format is "<autolabel_model>/<annotation_key>"
+        Expected format is "<autolabel_model>/<annotation_key>".
 
     split: str, default: None
         Split of dataset to read ("train" | "val" | "test" | "train_overfit").
@@ -766,7 +766,11 @@ class BaseDataset:
         be used for unsupervised / self-supervised learning.
 
     autolabel_root: str, default: None
-       Optional path to autolabel root directory
+       Optional path to autolabel root directory.
+
+    load_image_rgb: bool, default: True
+        If set to false, raw image data will be skipped when loading and image datums will be returned having an 'rgb'
+        key set to None. This is useful when only annotations or extrinsics are needed.
     """
     def __init__(
         self,
@@ -777,6 +781,7 @@ class BaseDataset:
         requested_autolabels=None,
         split=None,
         autolabel_root=None,
+        load_image_rgb=True,
     ):
         logging.info(f'Instantiating dataset with {len(scenes)} scenes.')
         # Dataset metadata
@@ -837,6 +842,8 @@ class BaseDataset:
         self.autolabel_root = autolabel_root
         if self.autolabel_root is not None:
             self.autolabel_root = os.path.abspath(self.autolabel_root)
+
+        self.load_image_rgb = load_image_rgb
 
     @staticmethod
     def _extract_scenes_from_scene_dataset_json(
@@ -1587,7 +1594,10 @@ class BaseDataset:
             pose_WC_Tc = Pose()
 
         # Populate data for image data
-        image = self.load_datum(scene_idx, sample_idx_in_scene, datum_name)
+        image = None
+        if self.load_image_rgb:
+            image = self.load_datum(scene_idx, sample_idx_in_scene, datum_name)
+
         annotations = self.load_annotations(scene_idx, sample_idx_in_scene, datum_name)
         data = OrderedDict({
             "timestamp": datum.id.timestamp.ToMicroseconds(),
