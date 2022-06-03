@@ -37,6 +37,7 @@ AVAILABLE_DATUM_TYPES = ("image", "point_cloud")
 AVAILABLE_DISTORTION_PARAMS = (
     'k1',
     'k2',
+    'k3',
     'k4',
     'k5',
     'k6',
