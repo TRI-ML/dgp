@@ -19,6 +19,6 @@ torch>=1.8.1
 torchvision>=0.9.1
 tqdm>=4.29.1
 tenacity>=6.0.0
-ujson==1.35
+ujson==5.2.0
 xarray==0.16.2
 yapf==0.31.0
