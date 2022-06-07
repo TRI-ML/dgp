@@ -124,14 +124,14 @@ def open_ontology_pbobject(ontology_file):
             logging.info('Successfully loaded Ontology V2 spec.')
             return ontology
     except Exception:
-        logging.error('Failed to load ontology file with V2 spec, trying V1 spec.')
-    try:
-        ontology = open_pbobject(ontology_file, OntologyV1Pb2)
-        if ontology is not None:
-            logging.info('Successfully loaded Ontology V1 spec.')
-            return ontology
-    except Exception:
-        logging.error('Failed to load ontology file' + ontology_file + 'with V1 spec also, returning None.')
+        logging.warning('Failed to load ontology file with V2 spec, trying V1 spec.')
+        try:
+            ontology = open_pbobject(ontology_file, OntologyV1Pb2)
+            if ontology is not None:
+                logging.info('Successfully loaded Ontology V1 spec.')
+                return ontology
+        except Exception:
+            logging.error('Failed to load ontology file' + ontology_file + 'with V1 spec also, returning None.')
 
 
 def open_feature_ontology_pbobject(ontology_file):
