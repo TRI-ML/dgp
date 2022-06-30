@@ -30,6 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install cython==0.29.21 numpy==1.19.4
           pip install -r requirements.txt
+          pip install -r requirements-dev.txt
       - name: Check python code formatting with YAPF
         # Documentation: https://github.com/AlexanderMelde/yapf-action
         uses: AlexanderMelde/yapf-action@master

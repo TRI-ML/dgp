@@ -42,9 +42,10 @@ RUN pip install --no-cache-dir \
 # Install python dependencies
 ARG WORKSPACE=/home/dgp
 WORKDIR ${WORKSPACE}
-COPY requirements.txt /tmp/
+COPY requirements.txt requirements-dev.txt /tmp/
 RUN pip install --no-cache-dir cython==0.29.21 numpy==1.19.4
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements-dev.txt
 
 # Settings for S3
 RUN aws configure set default.s3.max_concurrent_requests 100 && \
