@@ -272,7 +272,7 @@ dgp cache for arbitrary pickle-able / numpy objects.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.camera.Camera.from_params">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.camera.Camera.from_params" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distortion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.camera.Camera.from_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create camera batch from calibration parameters.</p>
 <dl class="simple">
 <dt>fx: float</dt><dd><p>Camera focal length along x-axis.</p>
@@ -284,6 +284,8 @@ dgp cache for arbitrary pickle-able / numpy objects.</p>
 <dt>cy: float</dt><dd><p>Camera y-axis principal point.</p>
 </dd>
 <dt>p_cw: Pose</dt><dd><p>Pose from world to camera frame.</p>
+</dd>
+<dt>distortion_params: dict[str, float], default: None</dt><dd><p>Optional dictionary of distortion parameters k1,k2,.. etc.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -438,10 +440,12 @@ Note: This function works for both torch and numpy.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dgp.utils.camera.pbobject_from_camera_matrix">
-<span class="sig-prename descclassname"><span class="pre">dgp.utils.camera.</span></span><span class="sig-name descname"><span class="pre">pbobject_from_camera_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.camera.pbobject_from_camera_matrix" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dgp.utils.camera.</span></span><span class="sig-name descname"><span class="pre">pbobject_from_camera_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distortion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.camera.pbobject_from_camera_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert camera intrinsic matrix into pb object.</p>
 <dl class="simple">
 <dt>K: np.ndarray</dt><dd><p>Camera Intrinsic Matrix</p>
+</dd>
+<dt>distortion: dict[str, float]</dt><dd><p>Dictionary of distortion params i.e, k1,k2,p1,p2,k3,k4,xi,alpha etc</p>
 </dd>
 </dl>
 <dl class="simple">
