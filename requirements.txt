@@ -1,24 +1,14 @@
-awscli
 boto3
 botocore
 Click>=7.1.2
-coverage==6.0.2
 diskcache>=4.1.0
-grpcio==1.41.0
-grpcio-tools==1.41.0
-isort >=5.0,<6.0
 matplotlib>=3.0.3,<4.0
-opencv-python==4.5.3.56
+opencv-python>=4.5.3.56
 Pillow>=8.3.2
 pycocotools>=2.0.0
-pylint>=2.8.1
 pyquaternion==0.9.5
-pytest==6.2.5
-pytest-timeout==2.0.1
 torch>=1.8.1
 torchvision>=0.9.1
 tqdm>=4.29.1
 tenacity>=6.0.0
-ujson==5.2.0
 xarray==0.16.2
-yapf==0.31.0
