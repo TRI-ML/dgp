@@ -36,7 +36,7 @@ def _write_annotation(filename, annotation):
     save_pbobject_as_json(annotation, filename)
 
 
-def compute_image_statistics(image_list, image_open_fn, single_process=False):
+def compute_image_statistics(image_list, image_open_fn, single_process=False, num_processes=None):
     """Given a list of images (paths to files), return the per channel mean and stdev.
     Also returns a dictionary mapping filename to image size
 
@@ -50,6 +50,10 @@ def compute_image_statistics(image_list, image_open_fn, single_process=False):
 
     single_process: bool
         If it's True, it gets image stats in single process for debugging. Defaults to False.
+
+    num_processes: int
+        A number of process in multiprocessing.Pool. If it's None, it uses cpu count.
+        Defaults to None.
 
     Returns
     -------
@@ -71,7 +75,7 @@ def compute_image_statistics(image_list, image_open_fn, single_process=False):
         for idx, image in enumerate(image_list):
             image_stats_per_process.append(_get_image_stats([image], idx, len(image_list), image_open_fn))
     else:
-        num_processes = cpu_count()
+        num_processes = num_processes or cpu_count()
         if len(image_list) < num_processes:
             num_processes = len(image_list)
 
