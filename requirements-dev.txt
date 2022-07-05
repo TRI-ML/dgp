@@ -6,5 +6,5 @@ isort >=5.0,<6.0
 pylint>=2.8.1
 pytest==6.2.5
 pytest-timeout==2.0.1
-ujson==5.2.0
+ujson==5.4.0
 yapf==0.31.0
