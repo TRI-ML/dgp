@@ -78,6 +78,8 @@ schema: add map schema
 
 **NOTE:** Any [proto schema](../dgp/proto) changes must be seperated from code changes into an independent commit and PR.
 
+Also, please ensure to commit the compiled protos to the aformentioned PR by first running `make build-proto`. 
+
 ### Pre-commit / Pre-push
 
 DGP runs `isort` and `yapf` to autoformat the files in pre-commit, and perform additional linting using `pylint` in pre-push. One can enable githooks via:
