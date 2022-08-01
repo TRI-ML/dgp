@@ -76,7 +76,8 @@ schema: add map schema
 - modify dgp.proto.dataset to hold map message
 ```
 
-**NOTE:** Any [proto schema](../dgp/proto) changes must be seperated from code changes into an independent commit and PR.
+**NOTE:** For adding any new [proto schema](../dgp/proto), please run `make build-proto` and also commit the compiled protos. Further, these [proto schema](../dgp/proto) and their compiled protos must be separated from code changes into one independent commit and PR.
+
 
 ### Pre-commit / Pre-push
 
