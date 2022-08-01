@@ -70,6 +70,15 @@ enum AnnotationType {
   // Classification.
   // (i.e. imagenet classification label)
   CLASSIFICATION = 15;             // classification
+
+  // 3D Key Point in sensor space
+  KEY_POINT_3D = 16;               // key_point_3d
+
+  // 3D Key Line in sensor space
+  KEY_LINE_3D = 17;                // key_line_3d
+
+  // 3D Polygon in sensor space
+  POLYGON_3D = 18;                 // polygon_3d
 }
 
 // 2D bounding box
@@ -105,8 +114,7 @@ message BoundingBox2DAnnotation {
   // Instance identifier
   uint32 instance_id = 5;
 
-  // An associative map stores arbitrary attributes, where the key is attribute name
-  // and the value is attribute value. Both key_type and value_type are string.
+  // A map of attribute names to their values.
   // This can be used to stored `agent_behavior` states (i.e., parked car, pedestrian intent).
   map<string, string> attributes = 6;
 }
@@ -138,7 +146,8 @@ message BoundingBox3D {
 
 // 3D bounding box annotation.
 message BoundingBox3DAnnotation {
-  // Class identifier. Should be in range [0, num_classes - 1].
+  // Class identifier. Should be in range [0, num_classes - 1],
+  // where num_classes is the total number of classes in your ontology.
   uint32 class_id = 1;
 
   // 3D box.
@@ -148,8 +157,7 @@ message BoundingBox3DAnnotation {
   // This needs to be unique to a scene.
   uint32 instance_id = 3;
 
-  // An associative map stores arbitrary attributes, where the key is attribute name
-  // and the value is attribute value. Both key_type and value_type are string.
+  // A map of attribute names to their values.
   map<string, string> attributes = 4;
 
   // Number of LIDAR points in the Bounding Box
@@ -166,33 +174,37 @@ message KeyPoint2D {
 
 // 2D point annotation.
 message KeyPoint2DAnnotation {
-  // Class identifier (should be in [0, num_classes - 1])
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
   uint32 class_id = 1;
 
   // 2D point.
   KeyPoint2D point = 2;
 
-  // An associative map stores arbitrary attributes, where the key is attribute name
-  // and the value is attribute value. Both key_type and value_type are string.
+  // A map of attribute names to their values.
   map<string, string> attributes = 3;
 
-  // An identifier key. Used to link with other annotations.
+  // An identifier key. Used to link with other annotations (example: BoundingBox2D)
+  // which specify this key in their instance to link to corresponding KeyPoint2DAnnotation.
   string key = 4;
 }
 
 // 2D line annotation.
 message KeyLine2DAnnotation{
-  // Class identifier (should be in [0, num_classes - 1])
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
   uint32 class_id = 1;
 
   // 2D line.
   repeated KeyPoint2D vertices = 2;
 
-  // An associative map stores arbitrary attributes, where the key is attribute name
-  // and the value is attribute value. Both key_type and value_type are string.
+  // A map of attribute names to their values.
+  // Add only key/value pairs that are stored in a project document accessible to
+  // project contributors.
   map<string, string> attributes = 3;
 
-  // An identifier key. Used to link with other annotations.
+  // An identifier key. Used to link with other annotations, which specify this key
+  // in their instance to link to corresponding KeyLine2DAnnotation.
   string key = 4;
 }
 
@@ -207,29 +219,99 @@ message PolygonPoint2D {
 
 // 2D polygon annotation.
 message Polygon2DAnnotation{
-  // Class identifier (should be in [0, num_classes - 1])
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
   uint32 class_id = 1;
 
   // 2D polygon.
   // Points should be put into this field with counter-clockwise order.
   repeated PolygonPoint2D vertices = 2;
 
-  // An associative map stores arbitrary attributes, where the key is attribute name
-  // and the value is attribute value. Both key_type and value_type are string.
+  // A map of attribute names to their values.
   map<string, string> attributes = 3;
 }
 
 // Classification annotation.
 message ClassificationAnnotation{
-  // Class identifier (should be in [0, num_classes - 1])
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
   uint32 class_id = 1;
 
-  // An associative map stores arbitrary attributes, where the key is attribute name
-  // and the value is attribute value. Both key_type and value_type are string.
+  // A map of attribute names to their values.
   map<string, string> attributes = 2;
 }
 
-// List of BoundingBox2DAnnotation.
+// 3D point.
+message KeyPoint3D {
+  // (x, y, z) point (in 3D Cartesian coordinates).
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+// 3D point annotation.
+message KeyPoint3DAnnotation {
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
+  uint32 class_id = 1;
+
+  // 3D point.
+  KeyPoint3D point = 2;
+
+  // A map of attribute names to their values.
+  // Add only key/value pairs that are stored in a project document accessible to
+  // project contributors.
+  map<string, string> attributes = 3;
+
+  // An identifier key. Used to link with other annotations, which specify this key
+  // in their instance to link to corresponding KeyPoint3DAnnotation.
+  string key = 4;
+}
+
+// 3D line annotation.
+message KeyLine3DAnnotation{
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
+  uint32 class_id = 1;
+
+  // 3D line.
+  repeated KeyPoint3D vertices = 2;
+
+  // A map of attribute names to their values.
+  // Add only key/value pairs that are stored in a project document accessible to
+  // project contributors.
+  map<string, string> attributes = 3;
+
+  // An identifier key. Used to link with other annotations, which specify this key
+  // in their instance to link to corresponding KeyLine3DAnnotation.
+  string key = 4;
+}
+
+message PolygonPoint3D {
+  // (x, y, z) point (in 3D Cartesian coordinates).
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+// 3D polygon annotation.
+message Polygon3DAnnotation{
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
+  uint32 class_id = 1;
+
+  // 3D polygon.
+  // Points should be put into this field with counter-clockwise order.
+  repeated PolygonPoint3D vertices = 2;
+
+  // A map of attribute names to their values.
+  // Add only key/value pairs that are stored in a project document accessible to
+  // project contributors.
+  map<string, string> attributes = 3;
+}
+
+
+// List of BoundingBox2DAnnotation
 message BoundingBox2DAnnotations {
   repeated BoundingBox2DAnnotation annotations = 1;
 }
@@ -257,4 +339,19 @@ message Polygon2DAnnotations {
 // List of ClassificationAnnotation.
 message ClassificationAnnotations {
   repeated ClassificationAnnotation annotations = 1;
+}
+
+// List of KeyPoint3DAnnotation.
+message KeyPoint3DAnnotations {
+  repeated KeyPoint3DAnnotation annotations = 1;
+}
+
+// List of KeyLine3DAnnotation.
+message KeyLine3DAnnotations {
+  repeated KeyLine3DAnnotation annotations = 1;
+}
+
+// List of Polygon3DAnnotation.
+message Polygon3DAnnotations {
+  repeated Polygon3DAnnotation annotations = 1;
 }
