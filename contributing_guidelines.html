@@ -173,7 +173,7 @@ This repository follows <a class="reference external" href="https://www.conventi
 - modify dgp.proto.dataset to hold map message
 </pre></div>
 </div>
-<p><strong>NOTE:</strong> Any <a class="reference external" href="../dgp/proto">proto schema</a> changes must be seperated from code changes into an independent commit and PR.</p>
+<p><strong>NOTE:</strong> For adding any new <a class="reference external" href="../dgp/proto">proto schema</a>, please run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build-proto</span></code> and also commit the compiled protos. Further, these <a class="reference external" href="../dgp/proto">proto schema</a> and their compiled protos must be separated from code changes into one independent commit and PR.</p>
 </div>
 <div class="section" id="pre-commit-pre-push">
 <h3>Pre-commit / Pre-push<a class="headerlink" href="#pre-commit-pre-push" title="Permalink to this headline">¶</a></h3>
