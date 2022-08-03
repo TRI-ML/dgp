@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.1-devel-ubuntu18.04
+FROM nvidia/cuda:11.1.1-devel-ubuntu18.04
 
 ARG python=3.7
 ENV PYTORCH_VERSION=1.8.1+cu111
