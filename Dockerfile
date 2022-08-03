@@ -28,9 +28,9 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
   python${PYTHON_VERSION} \
   python${PYTHON_VERSION}-dev \
   && rm -rf /var/lib/apt/lists/*
-RUN ln -sf /usr/bin/python${PYTHON_VERSION} /usr/bin/python
+RUN ln -sf /usr/bin/python${PYTHON_VERSION} /usr/bin/python3
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
-  python get-pip.py && \
+  python3 get-pip.py && \
   rm get-pip.py
 
 # Install Pytorch
