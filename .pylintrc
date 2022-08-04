@@ -1,4 +1,7 @@
 # Copyright 2019-2020 Toyota Research Institute.  All rights reserved.
+[MAIN]
+load-plugins=pylint.extensions.docparams
+
 [MASTER]
 accept-no-param-doc=no
 accept-no-return-doc=yes
