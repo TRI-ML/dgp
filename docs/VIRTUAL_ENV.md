@@ -16,10 +16,10 @@ While active, running python will run the virtual environment's python, and inst
 
 ```sh
 dgp$ pip install --upgrade pip
-dgp$ pip install cython==0.29.21 numpy==1.19.4 grpcio==1.41.0 grpcio-tools==1.41.0
+dgp$ pip install cython==0.29.21 numpy==1.19.4 grpcio==1.41.0 grpcio-tools==1.41.0 pytest==6.2.5 pytest-timeout==2.0.1
 ```
 
-Finally DGP can be installed. Installing in editable mode means that changes you make to DGP locally will be reflected in the version installed in pip which makes local development very convenient. From DGP repo root:
+Finally DGP can be installed. Installing in editable mode means that changes you make to DGP locally will be reflected in the version installed in pip which makes local development very convenient. From DGP repository root:
 ```sh
 dgp$ pip install --editable .
 ```
