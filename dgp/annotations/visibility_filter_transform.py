@@ -3,7 +3,11 @@ from collections import OrderedDict
 
 import numpy as np
 
-from dgp.annotations import (BoundingBox2DAnnotationList, BoundingBox3DAnnotationList, PanopticSegmentation2DAnnotation)
+from dgp.annotations import (
+    BoundingBox2DAnnotationList,
+    BoundingBox3DAnnotationList,
+    PanopticSegmentation2DAnnotation,
+)
 from dgp.annotations.transforms import BaseTransform
 from dgp.utils.structures import BoundingBox2D
 

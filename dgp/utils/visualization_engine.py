@@ -6,9 +6,18 @@ import cv2
 import numpy as np
 from matplotlib.cm import get_cmap
 
-from dgp.utils.colors import (WHITE, adjust_lightness, color_borders, get_unique_colors)
+from dgp.utils.colors import (
+    WHITE,
+    adjust_lightness,
+    color_borders,
+    get_unique_colors,
+)
 from dgp.utils.visualization_utils import (
-    mosaic, render_bbox2d_on_image, visualize_bev, visualize_cameras, visualize_semantic_segmentation_2d
+    mosaic,
+    render_bbox2d_on_image,
+    visualize_bev,
+    visualize_cameras,
+    visualize_semantic_segmentation_2d,
 )
 
 MPL_JET_CMAP = get_cmap('jet')

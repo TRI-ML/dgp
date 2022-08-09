@@ -6,7 +6,10 @@ import numpy as np
 
 from dgp.datasets.synchronized_dataset import SynchronizedScene
 from dgp.utils.visualization_engine import (
-    visualize_dataset_2d, visualize_dataset_3d, visualize_dataset_sample_2d, visualize_dataset_sample_3d
+    visualize_dataset_2d,
+    visualize_dataset_3d,
+    visualize_dataset_sample_2d,
+    visualize_dataset_sample_3d,
 )
 from tests import TEST_DATA_DIR
 

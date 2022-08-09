@@ -1,3 +1,5 @@
+# pre-commit declares the same extension, but we keep this here for the sake of
+# the commitlint action run in CI.
 extends:
     - '@commitlint/config-conventional'
 rules:

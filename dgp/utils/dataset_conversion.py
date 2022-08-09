@@ -15,7 +15,11 @@ from torch.multiprocessing import Pool, cpu_count
 from dgp.proto import dataset_pb2
 from dgp.proto.dataset_pb2 import SceneDataset
 from dgp.utils.cloud.s3 import s3_copy
-from dgp.utils.protobuf import (open_pbobject, open_remote_pb_object, save_pbobject_as_json)
+from dgp.utils.protobuf import (
+    open_pbobject,
+    open_remote_pb_object,
+    save_pbobject_as_json,
+)
 
 
 @lru_cache(maxsize=None)

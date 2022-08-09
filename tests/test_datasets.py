@@ -4,7 +4,10 @@ import unittest
 from collections import OrderedDict
 
 from dgp import DGP_CACHE_DIR
-from dgp.datasets.synchronized_dataset import (SynchronizedScene, SynchronizedSceneDataset)
+from dgp.datasets.synchronized_dataset import (
+    SynchronizedScene,
+    SynchronizedSceneDataset,
+)
 from dgp.utils.cache import diskcache
 from dgp.utils.pose import Pose
 from dgp.utils.testing import assert_array_equal, assert_true

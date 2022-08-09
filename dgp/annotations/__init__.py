@@ -3,8 +3,13 @@
 from collections import OrderedDict
 
 from dgp.annotations.ontology import (
-    AgentBehaviorOntology, BoundingBoxOntology, InstanceSegmentationOntology, KeyPointOntology, KeyLineOntology,
-    Ontology, SemanticSegmentationOntology
+    AgentBehaviorOntology,
+    BoundingBoxOntology,
+    InstanceSegmentationOntology,
+    KeyLineOntology,
+    KeyPointOntology,
+    Ontology,
+    SemanticSegmentationOntology,
 )
 
 # Ontologies are used in Annotations, hence import ordering

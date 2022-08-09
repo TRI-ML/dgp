@@ -1,6 +1,7 @@
 import os
 
 import numpy as np
+
 from dgp.annotations.depth_annotation import DenseDepthAnnotation
 from tests import TEST_DATA_DIR
 

@@ -1,0 +1,5 @@
+[tool.isort]
+# Configure isort to play nicely with our YAPF configuration.
+# https://pycqa.github.io/isort/docs/configuration/multi_line_output_modes.html#3-vertical-hanging-indent
+multi_line_output = 3
+include_trailing_comma = true

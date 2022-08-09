@@ -10,8 +10,9 @@ from dgp import INSTANCE_SEGMENTATION_2D_FOLDER
 from dgp.annotations.base_annotation import Annotation
 from dgp.annotations.ontology import BoundingBoxOntology
 from dgp.proto import annotations_pb2
-from dgp.utils.dataset_conversion import \
-    generate_uid_from_instance_segmentation_2d_annotation
+from dgp.utils.dataset_conversion import (
+    generate_uid_from_instance_segmentation_2d_annotation,
+)
 from dgp.utils.structures import InstanceMask2D
 
 

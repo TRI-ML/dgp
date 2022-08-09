@@ -46,6 +46,7 @@ be use the interactive docker mode via:
 ```sh
 dgp$ make docker-start-interactive
 ```
+
 The DGP base directory is mounted within the
 docker container, and gives you a sandbox to develop quickly without
 needing to set up a local virtual environment.
@@ -55,3 +56,21 @@ Within the interactive docker container (after `make docker-start-interactive`),
 dgp$ make build-proto
 dgp$ make test
 ```
+
+To set up linters wherever you plan on using `git` from (either on your host or
+inside the container), run
+
+```none
+# If in Docker, run the following; otherwise skip this block.
+dgp$ apt update
+dgp$ apt install -y git
+dgp$ git config --global --add safe.directory /home/dgp
+
+# Set up the linters.
+dgp$ make setup-linters
+```
+
+You may need to first `pip install pre-commit` if you use `git` in an environment
+that does not have DGP's `requirements-dev.txt` installed. Note that if you run
+linting outside of Docker, ensure that you use the same Python version DGP's Docker
+environment uses for a consistent linting experience.
