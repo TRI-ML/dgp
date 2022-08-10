@@ -24,12 +24,12 @@ def get_unique_colors(num_colors, in_bgr=False, cmap='tab20'):
     num_colors: int
         Number of colors. Must be less than 20.
 
-    in_bgr: bool, default: False
-        Whether or not to return the color in BGR order.
+    in_bgr: bool, optional
+        Whether or not to return the color in BGR order. Default: False.
 
-    cmap: str, default='tab20'
+    cmap: str, optional
         matplotlib colormap name (https://matplotlib.org/tutorials/colors/colormaps.html)
-        Must be a qualitative color map.
+        Must be a qualitative color map. Default: "tab20".
 
     Returns
     -------
@@ -52,11 +52,11 @@ def color_borders(img, color, thickness=10):
     img: np.ndarray
         Input image with shape of (H, W, 3) and unit8 type.
 
-    color: Tuple(int)
+    color: Tuple[int]
         Color to draw the frame.
 
-    thickness: int, default: 10
-        Thickness of the frame.
+    thickness: int, optional
+        Thickness of the frame. Default: 10.
 
     Returns
     -------
@@ -82,8 +82,8 @@ def adjust_lightness(color, factor=1.0):
     color: Tuple[int]
         RGB color
 
-    factor: float, default: 1.0
-        Factor of lightness adjustment.
+    factor: float, optional
+        Factor of lightness adjustment. Default: 1.0.
 
     Returns
     -------

@@ -25,8 +25,8 @@ def open_pbobject(path, pb_class):
     path: str
         Local JSON file path or remote scene dataset JSON URI to load.
 
-    pb_class: pb2 object class
-        Protobuf object we want to load into.
+    pb_class: object
+        Protobuf pb2 object we want to load into.
 
     Returns
     ----------
@@ -50,14 +50,18 @@ def open_remote_pb_object(s3_object_uri, pb_class):
     s3_object_uri: str
         Remote scene dataset JSON URI.
 
-    pb_class: pb2 object class
-        Protobuf object we want to load into.
+    pb_class: object
+        Protobuf pb2 object we want to load into.
 
     Returns
     ----------
     pb_object: pb2 object
         Desired pb2 object to be opened.
 
+    Raises
+    ------
+    ValueError
+        Raised if s3_object_uri is not a valid S3 path.
     """
     if s3_object_uri.startswith('s3://'):
         bucket_name, s3_base_path = convert_uri_to_bucket_path(s3_object_uri)
@@ -78,8 +82,8 @@ def save_pbobject_as_json(pb_object, save_path):
 
     Parameters
     ----------
-    pb_object: pb2 object
-        Protobuf object we want to save to file
+    pb_object: object
+        Protobuf pb2 object we want to save to file
 
     save_path: str
         If save path is a JSON, serialized object is saved to that path. If save path is directory,
@@ -163,8 +167,8 @@ def generate_uid_from_pbobject(pb_object):
 
     Parameters
     ----------
-    pb_object: pb2 object
-        pb_object to be hashed.
+    pb_object: object
+        A protobuf pb2 object to be hashed.
 
     Returns
     -------

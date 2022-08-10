@@ -185,12 +185,19 @@ def generate_uid_from_semantic_segmentation_2d_annotation(annotation):
 
     Parameters
     ----------
-    image: np.array
+    annotation: np.array
         semantic_segmentation_2d annotation to be hashed
 
     Returns
     -------
     Hexdigest of annotation content
+
+    Raises
+    ------
+    TypeError
+        Raised if annotation is not of type np.uint8.
+    ValueError
+        Raised if annotation is not 2-dimensional.
     """
     if annotation.dtype != np.uint8:
         raise TypeError('`annotation` should be of type np.uint8')
@@ -204,12 +211,19 @@ def generate_uid_from_instance_segmentation_2d_annotation(annotation):
 
     Parameters
     ----------
-    image: np.array
+    annotation: np.array
         instance_segmentation_2d annotation to be hashed
 
     Returns
     -------
     Hexdigest of annotation content
+
+    Raises
+    ------
+    TypeError
+        Raised if annotation is not of type np.uint16 or np.uint23.
+    ValueError
+        Raised if annotation is not 2-dimensional.
     """
     if annotation.dtype not in (np.uint16, np.uint32):
         raise TypeError('`annotation` should be of type np.uint16 or np.uint32')
@@ -322,43 +336,74 @@ class DatasetGen:
 
     def convert(self):
         """Parse raw data into DGP format and return the dataset json.
+
         Returns
         -------
         dataset_json_path: str
             Dataset json path
+
+        Raises
+        ------
+        NotImplementedError
+            Unconditionally.
         """
         raise NotImplementedError
 
     def populate_metadata(self):
         """Populate boilerplate fields for dataset conversion. Statistics, size, etc...
-        are recomputed during conversion"""
+        are recomputed during conversion
+
+        Raises
+        ------
+        NotImplementedError
+            Unconditionally.
+        """
         raise NotImplementedError
 
     def populate_ontologies(self):
         """Populate ontologies' fields for dataset conversion.
+
+        Raises
+        ------
+        NotImplementedError
+            Unconditionally.
         """
         raise NotImplementedError
 
     def populate_statistics(self):
-        """Compute dataset (image/point_cloud) statistics."""
+        """Compute dataset (image/point_cloud) statistics.
+
+        Raises
+        ------
+        NotImplementedError
+            Unconditionally.
+        """
         raise NotImplementedError
 
     @staticmethod
     def open_image(filename):
         """Returns an image given a filename.
+
+        Parameters
+        ----------
+        filename: str
+            A pathname of an image to open.
+
         Returns
         -------
-        image: PIL.Image
-            Image to be opened.
+        PIL.Image
+            Image that was opened.
         """
         return Image.open(filename)
 
     def write_dataset(self, upload=False):
         """Write the final scene dataset JSON.
+
         Parameters
         ----------
-        upload: bool, default: False
-            If true, upload the dataset to the scene pool in s3.
+        upload: bool, optional
+            If True, upload the dataset to the scene pool in s3. Default: False.
+
         Returns
         -------
         scene_dataset_json_path: str
@@ -513,10 +558,11 @@ class MergeSceneDatasetGen:
 
     def write_dataset(self, upload=False):
         """Write the final scene dataset JSON.
+
         Parameters
         ----------
-        upload: bool, default: False
-            If true, upload the dataset to the scene pool in s3.
+        upload: bool, optional
+            If true, upload the dataset to the scene pool in s3. Default: False.
 
         Returns
         -------

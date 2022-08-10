@@ -153,11 +153,11 @@ class OntologyMapper(BaseTransform):
                 class_name in self.remapped_ontology_table[annotation_key].class_names for class_name in lookup.values()
             ]), 'All values in `lookup` need to be valid class names in specified `remapped_ontology`'
 
-    def transform_datum(self, data):
+    def transform_datum(self, datum):
         """
         Parameters
         ----------
-        data: OrderedDict
+        datum: OrderedDict
             Dictionary containing raw data and annotations, with keys such as:
             'rgb', 'intrinsics', 'bounding_box_2d'.
             All annotation_keys in `self.lookup_table` (and `self.remapped_ontology_table`)
@@ -165,29 +165,34 @@ class OntologyMapper(BaseTransform):
 
         Returns
         -------
-        data: OrderedDict
+        datum: OrderedDict
             Same dictionary but with annotations in `self.lookup_table` remapped to desired ontologies
+
+        Raises
+        ------
+        ValueError
+            Raised if the datum to remap does not contain all expected annotations.
         """
-        if not all([annotation_key in data for annotation_key in self.remapped_ontology_table]):
+        if not all([annotation_key in datum for annotation_key in self.remapped_ontology_table]):
             raise ValueError('The data you are trying to remap does not have all annotations it expects')
 
         for annotation_key, remapped_ontology in self.remapped_ontology_table.items():
 
             lookup_table = self.lookup_table[annotation_key]
-            original_ontology = data[annotation_key].ontology
+            original_ontology = datum[annotation_key].ontology
 
             # Need to have specific handlers for each annotation type
             if annotation_key == 'bounding_box_2d' or annotation_key == 'bounding_box_3d':
-                data[annotation_key] = remap_bounding_box_annotations(
-                    data[annotation_key], lookup_table, original_ontology, remapped_ontology
+                datum[annotation_key] = remap_bounding_box_annotations(
+                    datum[annotation_key], lookup_table, original_ontology, remapped_ontology
                 )
             elif annotation_key == 'semantic_segmentation_2d':
-                data[annotation_key] = remap_semantic_segmentation_2d_annotation(
-                    data[annotation_key], lookup_table, original_ontology, remapped_ontology
+                datum[annotation_key] = remap_semantic_segmentation_2d_annotation(
+                    datum[annotation_key], lookup_table, original_ontology, remapped_ontology
                 )
             elif annotation_key == 'instance_segmentation_2d':
-                data[annotation_key] = remap_instance_segmentation_2d_annotation(
-                    data[annotation_key], lookup_table, original_ontology, remapped_ontology
+                datum[annotation_key] = remap_instance_segmentation_2d_annotation(
+                    datum[annotation_key], lookup_table, original_ontology, remapped_ontology
                 )
 
-        return data
+        return datum

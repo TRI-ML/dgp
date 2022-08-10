@@ -327,7 +327,7 @@ class AgentContainer:
         return feature_ontology_files
 
     @property
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=None)  # pylint: disable=method-cache-max-size-none
     def metadata_index(self):
         """Helper for building metadata index.
 
@@ -342,11 +342,11 @@ class AgentContainer:
             'agent_group_description': agent_group.description
         }
 
-    def agent_slice(self, sample_id):
+    def agent_slice(self, sample_id):  # pylint: disable=missing-param-doc,missing-type-doc
         """Return AgentSnapshotList in a frame."""
         return self.sample_id_to_agent_snapshots[sample_id]
 
-    def agent_track(self, instance_id):
+    def agent_track(self, instance_id):  # pylint: disable=missing-param-doc,missing-type-doc
         """Return AgentSnapshotList in a track."""
         return self.instance_id_to_agent_snapshots[instance_id]
 
@@ -1027,6 +1027,10 @@ class AgentMetadata:
         requested_feature_types: List(str)
             List of feature types, such as ['parked_car', 'ego_intention']
 
+        Raises
+        ------
+        Exception
+            Raised if an ontology from an agent container is not in our ontology registry.
         """
         assert len(agent_containers), 'SceneContainers is empty.'
         requested_agent_types = [] if requested_agent_types is None else requested_agent_types

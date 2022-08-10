@@ -32,18 +32,19 @@ class AgentSnapshotList(ABC):
 
         Parameters
         ----------
-        agent_snapshots_pb2: agent proto object
-            A proto message holding agent information.
+        agent_snapshots_pb2: object
+            An agent proto message holding agent information.
 
         ontology: Ontology
             Ontology for given agent.
 
-        feature_ontology_table: dict, default: None
+        feature_ontology_table: dict, optional
             A dictionary mapping feature type key(s) to Ontology(s), i.e.:
             {
                 "agent_2d": AgentFeatureOntology[<ontology_sha>],
                 "agent_3d": AgentFeatureOntology[<ontology_sha>]
             }
+            Default: None.
         """
 
     @abstractmethod

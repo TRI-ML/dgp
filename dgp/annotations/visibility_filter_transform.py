@@ -45,6 +45,11 @@ class InstanceMaskVisibilityFilter(BaseTransform):
         -------
         new_sample: list[OrderedDict]
             Multimodal sample with all detection annotations are filtered.
+
+        Raises
+        ------
+        ValueError
+            Raised if a 2D or 3D bounding box instance lacks any required instance IDs.
         """
         cam_datums = [datum for datum in sample if datum['datum_name'] in self._camera_datum_names]
 
@@ -189,6 +194,11 @@ class BoundingBox3DCoalescer(BaseTransform):
         -------
         new_sample: list[OrderedDict]
             Multimodal sample with updated 3D bounding box annotations.
+
+        Raises
+        ------
+        ValueError
+            Raised if there are multiple instances of the same kind of datum in a sample.
         """
         # Mapping index to datum. The order of datums is preserved in output.
         datums, src_datum_inds, dst_datum_ind = OrderedDict(), [], []

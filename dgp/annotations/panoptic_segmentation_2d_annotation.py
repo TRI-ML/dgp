@@ -1,5 +1,6 @@
 # Copyright 2021 Toyota Research Institute.  All rights reserved.
 import json
+import locale
 import os
 
 import cv2
@@ -98,6 +99,11 @@ class PanopticSegmentation2DAnnotation(Annotation):
         -------
         instance_masks: list[InstanceMask2D]
             Instance mask for each instance in panoptic annotation.
+
+        Raises
+        ------
+        ValueError
+            Raised if an instance ID, parsed from a label, is negative.
         """
         instance_masks = []
         for class_name, labels in self.index_to_label.items():
@@ -181,8 +187,8 @@ class PanopticSegmentation2DAnnotation(Annotation):
         ontology: Ontology
             Ontology for given annotation
 
-        panoptic_image_dtype: type, default: np.uint16
-            Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image.
+        panoptic_image_dtype: type, optional
+            Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image. Default: np.uint16.
         """
         panoptic_image = cv2.imread(annotation_file, cv2.IMREAD_UNCHANGED)
         if len(panoptic_image.shape) == 3:
@@ -191,7 +197,7 @@ class PanopticSegmentation2DAnnotation(Annotation):
             _L = panoptic_image
             label_map = _L[:, :, 2] + 256 * _L[:, :, 1] + 256 * 256 * _L[:, :, 0]
             panoptic_image = label_map.astype(panoptic_image_dtype)
-        with open('{}.json'.format(os.path.splitext(annotation_file)[0])) as _f:
+        with open('{}.json'.format(os.path.splitext(annotation_file)[0]), encoding=locale.getpreferredencoding()) as _f:
             index_to_label = json.load(_f)
         return cls(ontology, panoptic_image, index_to_label, panoptic_image_dtype)
 
@@ -219,8 +225,8 @@ class PanopticSegmentation2DAnnotation(Annotation):
         mask_shape: list[int]
             Height and width of the mask. Only used to create an empty panoptic image when masklist is empty.
 
-        panoptic_image_dtype: type, default: np.uint16
-            Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image.
+        panoptic_image_dtype: type, optional
+            Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image. Default: np.uint16.
         """
         if not masklist:
             panoptic_image = np.ones(mask_shape, panoptic_image_dtype) * ontology.VOID_ID
@@ -283,7 +289,7 @@ class PanopticSegmentation2DAnnotation(Annotation):
         cv2.imwrite(panoptic_image_path, self.panoptic_image)
 
         index_to_label_path = '{}.json'.format(os.path.splitext(panoptic_image_path)[0])
-        with open(index_to_label_path, 'w') as _f:
+        with open(index_to_label_path, 'w', encoding=locale.getpreferredencoding()) as _f:
             json.dump(self.index_to_label, _f)
 
         return panoptic_image_path

@@ -54,6 +54,13 @@ class FeatureOntology:
         ----------
         ontology_file: str
             Path to ontology JSON
+
+        Raises
+        ------
+        FileNotFoundError
+            Raised if ontology_file does not exist.
+        TypeError
+            Raised if we could not read an ontology out of the ontology file.
         """
         if os.path.exists(ontology_file):
             feature_ontology_pb2 = open_feature_ontology_pbobject(ontology_file)

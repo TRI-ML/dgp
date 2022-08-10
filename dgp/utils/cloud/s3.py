@@ -25,9 +25,9 @@ def init_s3_client(use_ssl=False):
 
     Parameters
     ----------
-    use_ssl: boolean, default: False
+    use_ssl: bool, optional
         Use secure sockets layer. Provieds better security to s3, but
-        can fail intermittently in a multithreaded environment.
+        can fail intermittently in a multithreaded environment. Default: False.
 
     Returns
     -------
@@ -86,7 +86,13 @@ def s3_recursive_list(s3_prefix):
 
 
 def return_last_value(retry_state):
-    """Return the result of the last call attempt"""
+    """Return the result of the last call attempt.
+
+    Parameters
+    ----------
+    retry_state: tenacity.RetryCallState
+        Retry-state metadata for a flaky call.
+    """
     return retry_state.outcome.result()
 
 
@@ -110,8 +116,8 @@ def s3_copy(source_path, target_path, verbose=True):
     target_path: str
         Path to copy file to
 
-    verbose: bool, default: True
-        If True print some helpful messages
+    verbose: bool, optional
+        If True print some helpful messages. Default: True.
 
     Returns
     -------
@@ -184,11 +190,11 @@ def sync_dir(source, target, file_ext=None, verbose=True):
     target: str
         Directory to which all files will be synced
 
-    file_ext: str, default: None
-        Only sync files ending with this extension. Eg: 'csv' or 'json'. If None, sync all files.
+    file_ext: str, optional
+        Only sync files ending with this extension. Eg: 'csv' or 'json'. If None, sync all files. Default: None.
 
-    verbose: bool, default: True
-        If True, log some helpful messages
+    verbose: bool, optional
+        If True, log some helpful messages. Default: True.
 
     Returns
     -------
@@ -265,8 +271,8 @@ def sync_dir_safe(source, target, verbose=True):
     target: str
         Directory to which all files will be synced
 
-    verbose: bool, default: True
-        If True, log some helpful messages
+    verbose: bool, optional
+        If True, log some helpful messages. Default: True.
 
     Returns
     -------
@@ -307,7 +313,7 @@ def s3_bucket(bucket_name):
 
     Parameters
     ----------
-    bucket : str
+    bucket_name : str
         Bucket name to instantiate.
 
     Returns
@@ -360,7 +366,7 @@ def convert_uri_to_bucket_path(uri, strip_trailing_slash=True):
     uri: str
         A full s3 path (e.g. 's3://<s3-bucket>/<s3-prefix>')
 
-    strip_trailing_slash: bool, default: True
+    strip_trailing_slash: bool, optional
         If True, we strip any trailing slash in `s3_path` before returning it
         (i.e. s3_path='<s3-prefix>' is returned for uri='s3://<s3-bucket>/<s3-prefix>/').
         Otherwise, we do not strip it
@@ -368,6 +374,7 @@ def convert_uri_to_bucket_path(uri, strip_trailing_slash=True):
 
         If there is no trailing slash in `uri` then there will be no trailing slash in `s3_path` regardless
         of the value of this parameter.
+        Default: True.
 
     Returns
     -------
@@ -398,10 +405,9 @@ def parallel_download_s3_objects(s3_files, destination_filepaths, bucket_name, p
     bucket_name: str
       S3 bucket to pull from
 
-    process_pool_size: int, default: None
+    process_pool_size: int, optional
         Number of threads to use to fetch these files. If not specified, will default to
-        number of cores on the machine.
-
+        number of cores on the machine. Default: None.
     """
     if process_pool_size is None:
         process_pool_size = cpu_count()
@@ -424,17 +430,17 @@ def parallel_upload_s3_objects(source_filepaths, s3_destinations, bucket_name, p
     Parameters
     ----------
     source_filepaths: list
-      List of all local files to upload
+      List of all local files to upload.
 
     s3_destinations: list
-      Paths relative to bucket in S3 where files are uploaded
+      Paths relative to bucket in S3 where files are uploaded.
 
     bucket_name: str
-      S3 bucket to upload to
+      S3 bucket to upload to.
 
-    process_pool_size: int, default: None
+    process_pool_size: int, optional
         Number of threads to use to fetch these files. If not specified, will default to
-        number of cores on the machine.
+        number of cores on the machine. Default: None.
     """
     if process_pool_size is None:
         process_pool_size = cpu_count()
@@ -493,8 +499,8 @@ def delete_s3_object(bucket_name, object_key, verbose=True):
     object_key: str
         Key name of the object to delete.
 
-    verbose: bool, default: True
-        If True print messages
+    verbose: bool, optional
+        If True print messages. Default: True.
 
     """
     s3_client = init_s3_client()
@@ -543,6 +549,11 @@ def get_s3_object(bucket_name, url):
     Returns
     -------
     S3 object
+
+    Raises
+    ------
+    ValueError
+        Raised if `url` cannot be found in S3.
     """
 
     # Retrieve a collection of S3 objects with that prefix and check first item in it

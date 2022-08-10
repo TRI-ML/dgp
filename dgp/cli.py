@@ -94,7 +94,7 @@ def cli():
 @cli.command(name='visualize-scene')
 @add_options(options=VISUALIZE_OPTIONS)
 @click.option("--scene-json", required=True, help="Path to Scene JSON")
-def visualize_scene(
+def visualize_scene( # pylint: disable=missing-any-param-doc
     scene_json, annotations, camera_datum_names, dataset_class, show_instance_id, max_num_items, video_fps, dst_dir,
     verbose, lidar_datum_names, render_pointcloud, radar_datum_names, render_radar_pointcloud, render_raw
 ):
@@ -216,7 +216,7 @@ def visualize_scene(
     help="Dataset split to be fetched."
 )
 @add_options(options=VISUALIZE_OPTIONS)
-def visualize_scenes(
+def visualize_scenes( # pylint: disable=missing-any-param-doc
     scene_dataset_json, split, annotations, camera_datum_names, dataset_class, show_instance_id, max_num_items,
     video_fps, dst_dir, verbose, lidar_datum_names, render_pointcloud, radar_datum_names, render_radar_pointcloud,
     render_raw

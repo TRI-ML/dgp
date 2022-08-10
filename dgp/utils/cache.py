@@ -16,7 +16,13 @@ from dgp import DGP_CACHE_DIR
 # in the case of varying arg/kwargs in the function / class-method to be
 # decorated.
 def clear_cache(directory=DGP_CACHE_DIR):
-    """Clear DGP cache to avoid growing disk-usage."""
+    """Clear DGP cache to avoid growing disk-usage.
+
+    Parameters
+    ----------
+    directory: str, optional
+        A pathname to the directory used by DGP for caching. Default: DGP_CACHE_DIR.
+    """
     if os.path.isdir(directory):
         logging.info('Clearing dgp disk-cache.')
         try:
@@ -31,14 +37,11 @@ def diskcache(protocol='npz', cache_dir=None):
 
     Parameters
     ----------
-    func: function
-        Function to be called and wrapped with disk-caching support.
+    protocol: str, optional
+        Serialization protocol. Choices: {npz, pkl}. Default: "npz" (numpy).
 
-    protocol: str, (default: npz)
-        Use numpy for serialization protocol, otherwise use pkl for pickle.
-
-    cache_dir: str, (default: None)
-        Directory to cache instead of the default DGP cache.
+    cache_dir: str, optional
+        Directory to cache instead of the default DGP cache. Default: None.
     """
     assert protocol in ('npz', 'pkl'), 'Unknown protocol {}'.format(protocol)
     logging.info('Using dgp disk-cache.')

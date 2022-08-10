@@ -33,6 +33,11 @@ class BoundingBox2D:
     mode: str, default: ltwh
         One of "ltwh" or "ltrb". Corresponds to "[left, top, width, height]" representation
         or "[left, top, right, bottom]"
+
+    Raises
+    ------
+    Exception
+        Raised if the value of mode is unsupported.
     """
     def __init__(
         self, box, class_id=GENERIC_OBJECT_CLASS, instance_id=None, color=(0, 0, 0), attributes=None, mode="ltwh"
@@ -52,7 +57,7 @@ class BoundingBox2D:
             self.w = box[2] - box[0]
             self.h = box[3] - box[1]
         else:
-            raise "Bounding box must be initialized as 'ltrb' or 'ltwh', cannot recognize {}".format(mode)
+            raise Exception(f"Bounding box must be initialized as 'ltrb' or 'ltwh', cannot recognize {mode}")
 
         self._class_id = class_id
         self._instance_id = instance_id
@@ -60,7 +65,18 @@ class BoundingBox2D:
         self._attributes = dict(attributes) if attributes is not None else {}
 
     def intersection_over_union(self, other):
-        """Compute intersection over union of this box against other(s)."""
+        """Compute intersection over union of this box against other(s).
+
+        Parameters
+        ----------
+        other: BoundingBox2D
+            A separate BoundingBox2D instance to compute IoU against.
+
+        Raises
+        ------
+        NotImplementedError
+            Unconditionally
+        """
         raise NotImplementedError
 
     @property

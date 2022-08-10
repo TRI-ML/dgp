@@ -49,7 +49,7 @@ class DenseDepthAnnotation(Annotation):
         """Serialize annotation object if possible, and saved to specified directory.
         Annotations are saved in format <save_dir>/<sha>.<ext>
 
-        Paramaters
+        Parameters
         ----------
         save_dir: str
             Path to directory to saved annotation

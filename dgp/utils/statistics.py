@@ -16,8 +16,8 @@ def get_scene_statistics(scene, verbose=True):
     scene: dgp.proto.scene_pb2.Scene
         Scene Object.
 
-    verbose: bool, default: True
-        Print the stats if True.
+    verbose: bool, optional
+        Print the stats if True. Default: True.
 
     Returns
     --------
@@ -78,6 +78,11 @@ def _get_bounding_box_annotation_info(annotation_enum):
     -------
     str, dgp.proto.annotations_pb2.[AnnotationClass]
         The datum type, and annotation class corresponding to the annotation enum
+
+    Raises
+    ------
+    Exception
+        Raised if annotation_enum value does not map to a supported box type.
     """
     if annotation_enum == annotations_pb2.BOUNDING_BOX_3D:
         return 'point_cloud', annotations_pb2.BoundingBox3DAnnotations

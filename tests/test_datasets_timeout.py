@@ -18,7 +18,7 @@ from tests.utilities import requires_env
     ]
 )
 @pytest.mark.timeout(6.0)  # Repeat 10 times, takes ~0.6 second to instantiate FrameSceneDataset.
-def test_create_frame_scene_dataset(
+def test_create_frame_scene_dataset( # pylint: disable=missing-any-param-doc
     split, datum_names, requested_autolabels, only_annotated_datums, use_diskcache, requested_annotations,
     skip_missing_data, expected_len
 ):
@@ -47,7 +47,7 @@ def test_create_frame_scene_dataset(
     ]
 )
 @pytest.mark.timeout(6.0)  # Repeat 10 times, takes ~0.6 second to instantiate SynchronizedSceneDataset.
-def test_create_sync_scene_dataset(
+def test_create_sync_scene_dataset( # pylint: disable=missing-any-param-doc
     split, datum_names, forward_context, backward_context, generate_depth_from_datum, requested_annotations,
     expected_len
 ):

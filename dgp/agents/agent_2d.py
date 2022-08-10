@@ -46,12 +46,13 @@ class AgentSnapshot2DList(AgentSnapshotList):
         ontology: Ontology
             Ontology for given agent.
 
-        feature_ontology_table: dict, default: None
+        feature_ontology_table: dict, optional
             A dictionary mapping feature type key(s) to Ontology(s), i.e.:
             {
                 "agent_2d": AgentFeatureOntology[<ontology_sha>],
                 "agent_3d": AgentFeatureOntology[<ontology_sha>]
             }
+            Default: None.
 
         Returns
         -------

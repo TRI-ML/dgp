@@ -147,6 +147,11 @@ class _FrameDataset(BaseDataset):
         -------
         data: OrderedDict
             See `get_point_cloud_from_datum` and `get_image_from_datum` for details.
+
+        Raises
+        ------
+        ValueError
+            Raised if the datum type of item at index is unsupported.
         """
         assert self.dataset_item_index is not None, ('Index is not built, select datums before getting elements.')
 
