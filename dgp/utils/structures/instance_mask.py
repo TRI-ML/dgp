@@ -13,7 +13,7 @@ class InstanceMask2D():
 
     Parameters
     ----------
-    mask: np.ndarray[np.bool, np.uint8, np.int64]
+    mask: np.ndarray[bool, np.uint8, np.int64]
         2D boolean array describiing instance mask.
 
     class_id: int, default: GENERIC_OBJECT_CLASS
@@ -28,7 +28,7 @@ class InstanceMask2D():
         defaults to empty dict.
     """
     def __init__(self, mask, class_id=GENERIC_OBJECT_CLASS, instance_id=None, color=(0, 0, 0), attributes=None):
-        assert mask.dtype in (np.bool, np.uint8, np.int64)
+        assert mask.dtype in (bool, np.uint8, np.int64)
         self._bitmask = mask
 
         self._class_id = class_id
@@ -120,7 +120,7 @@ class RLEMask():
 
     Parameters
     ----------
-    size: list[int] or np.ndarray[np.int]
+    size: list[int] or np.ndarray[int]
         Height and width of mask.
     counts: list[int]
         Count-encoding of RLE format.

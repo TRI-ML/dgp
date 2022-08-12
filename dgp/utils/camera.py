@@ -334,7 +334,7 @@ class Camera:
             Bool array for X which are inside frustum
         """
         if not len(X):
-            return np.array([], dtype=np.bool)
+            return np.array([], dtype=bool)
 
         corners = np.asarray([(0, 0), (width - 1, 0), (width - 1, height - 1), (0, height - 1)], dtype=np.float32)
         rays = self.unproject(corners)
