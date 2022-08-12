@@ -118,6 +118,10 @@ defaults to empty dict.</p>
 or “[left, top, right, bottom]”</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised if the value of mode is unsupported.</p>
+</dd>
+</dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.area">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">area</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.area" title="Permalink to this definition">¶</a></dt>
@@ -152,6 +156,14 @@ or “[left, top, right, bottom]”</p>
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.intersection_over_union">
 <span class="sig-name descname"><span class="pre">intersection_over_union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.intersection_over_union" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute intersection over union of this box against other(s).</p>
+<dl class="simple">
+<dt>other: BoundingBox2D</dt><dd><p>A separate BoundingBox2D instance to compute IoU against.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>NotImplementedError</dt><dd><p>Unconditionally</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -295,19 +307,26 @@ defined by <cite>self.corners`</cite>.</p>
 <span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_thickness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.render" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render the bounding box on the image.</p>
 <dl class="simple">
-<dt>image: np.uint8 array</dt><dd><p>Image (H, W, C) to render the bounding box onto. We assume the input image is in <em>RGB</em> format</p>
+<dt>image: np.ndarray</dt><dd><p>Image (H, W, C) to render the bounding box onto. We assume the input image is in <em>RGB</em> format.
+The type must be uint8.</p>
 </dd>
 <dt>camera: dgp.utils.camera.Camera</dt><dd><p>Camera used to render the bounding box.</p>
 </dd>
-<dt>line_thickness: int, default: 2</dt><dd><p>Thickness of bounding box lines.</p>
+<dt>line_thickness: int, optional</dt><dd><p>Thickness of bounding box lines. Default: 2.</p>
 </dd>
-<dt>class_name: str, default: None</dt><dd><p>Class name of the bounding box.</p>
+<dt>class_name: str, optional</dt><dd><p>Class name of the bounding box. Default: None.</p>
 </dd>
-<dt>font_scale: float, default: 0.5</dt><dd><p>Font scale used in text labels.</p>
+<dt>font_scale: float, optional</dt><dd><p>Font scale used in text labels. Default: 0.5.</p>
 </dd>
 </dl>
 <dl class="simple">
 <dt>image: np.uint8 array</dt><dd><p>Rendered image (H, W, 3).</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if image is not a 3-channel uint8 numpy array.</p>
+</dd>
+<dt>TypeError</dt><dd><p>Raised if camera is not an instance of Camera.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -412,6 +431,14 @@ defaults to empty dict.</p>
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.intersection_over_union">
 <span class="sig-name descname"><span class="pre">intersection_over_union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.intersection_over_union" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute intersection over union of this box against other(s).</p>
+<dl class="simple">
+<dt>other: InstanceMask2D</dt><dd><p>Another instance of InstanceMask2D to compute IoU against.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>NotImplementedError</dt><dd><p>Unconditionally.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

@@ -107,12 +107,13 @@
 <dl>
 <dt>uri: str</dt><dd><p>A full s3 path (e.g. ‘s3://&lt;s3-bucket&gt;/&lt;s3-prefix&gt;’)</p>
 </dd>
-<dt>strip_trailing_slash: bool, default: True</dt><dd><p>If True, we strip any trailing slash in <cite>s3_path</cite> before returning it
+<dt>strip_trailing_slash: bool, optional</dt><dd><p>If True, we strip any trailing slash in <cite>s3_path</cite> before returning it
 (i.e. s3_path=’&lt;s3-prefix&gt;’ is returned for uri=’s3://&lt;s3-bucket&gt;/&lt;s3-prefix&gt;/’).
 Otherwise, we do not strip it
 (i.e. s3_path=’&lt;s3-prefix&gt;’ is returned for uri=’s3://&lt;s3-bucket&gt;/&lt;s3-prefix&gt;/’).</p>
 <p>If there is no trailing slash in <cite>uri</cite> then there will be no trailing slash in <cite>s3_path</cite> regardless
-of the value of this parameter.</p>
+of the value of this parameter.
+Default: True.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -132,7 +133,7 @@ of the value of this parameter.</p>
 </dd>
 <dt>object_key: str</dt><dd><p>Key name of the object to delete.</p>
 </dd>
-<dt>verbose: bool, default: True</dt><dd><p>If True print messages</p>
+<dt>verbose: bool, optional</dt><dd><p>If True print messages. Default: True.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -185,6 +186,10 @@ Raises ValueError if non-existent.</p>
 </dd>
 </dl>
 <p>S3 object</p>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if <cite>url</cite> cannot be found in S3.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -206,8 +211,8 @@ Raises ValueError if non-existent.</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">init_s3_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.init_s3_client" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initiate S3 AWS client.</p>
 <dl class="simple">
-<dt>use_ssl: boolean, default: False</dt><dd><p>Use secure sockets layer. Provieds better security to s3, but
-can fail intermittently in a multithreaded environment.</p>
+<dt>use_ssl: bool, optional</dt><dd><p>Use secure sockets layer. Provieds better security to s3, but
+can fail intermittently in a multithreaded environment. Default: False.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -298,8 +303,8 @@ s3_path: str</p>
 </dd>
 <dt>bucket_name: str</dt><dd><p>S3 bucket to pull from</p>
 </dd>
-<dt>process_pool_size: int, default: None</dt><dd><p>Number of threads to use to fetch these files. If not specified, will default to
-number of cores on the machine.</p>
+<dt>process_pool_size: int, optional</dt><dd><p>Number of threads to use to fetch these files. If not specified, will default to
+number of cores on the machine. Default: None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -341,14 +346,14 @@ number of cores on the machine.</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">parallel_upload_s3_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_filepaths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s3_destinations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_pool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.parallel_upload_s3_objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload a list of s3 objects using a processpool.</p>
 <dl class="simple">
-<dt>source_filepaths: list</dt><dd><p>List of all local files to upload</p>
+<dt>source_filepaths: list</dt><dd><p>List of all local files to upload.</p>
 </dd>
-<dt>s3_destinations: list</dt><dd><p>Paths relative to bucket in S3 where files are uploaded</p>
+<dt>s3_destinations: list</dt><dd><p>Paths relative to bucket in S3 where files are uploaded.</p>
 </dd>
-<dt>bucket_name: str</dt><dd><p>S3 bucket to upload to</p>
+<dt>bucket_name: str</dt><dd><p>S3 bucket to upload to.</p>
 </dd>
-<dt>process_pool_size: int, default: None</dt><dd><p>Number of threads to use to fetch these files. If not specified, will default to
-number of cores on the machine.</p>
+<dt>process_pool_size: int, optional</dt><dd><p>Number of threads to use to fetch these files. If not specified, will default to
+number of cores on the machine. Default: None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -356,7 +361,11 @@ number of cores on the machine.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="dgp.utils.cloud.s3.return_last_value">
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">return_last_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retry_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.return_last_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the result of the last call attempt</p>
+<dd><p>Return the result of the last call attempt.</p>
+<dl class="simple">
+<dt>retry_state: tenacity.RetryCallState</dt><dd><p>Retry-state metadata for a flaky call.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -364,7 +373,7 @@ number of cores on the machine.</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">s3_bucket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.s3_bucket" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiate S3 bucket object from its bucket name</p>
 <dl class="simple">
-<dt>bucket<span class="classifier">str</span></dt><dd><p>Bucket name to instantiate.</p>
+<dt>bucket_name<span class="classifier">str</span></dt><dd><p>Bucket name to instantiate.</p>
 </dd>
 </dl>
 <p>S3 bucket</p>
@@ -379,7 +388,7 @@ number of cores on the machine.</p>
 </dd>
 <dt>target_path: str</dt><dd><p>Path to copy file to</p>
 </dd>
-<dt>verbose: bool, default: True</dt><dd><p>If True print some helpful messages</p>
+<dt>verbose: bool, optional</dt><dd><p>If True print some helpful messages. Default: True.</p>
 </dd>
 </dl>
 <p>bool: True if successful</p>
@@ -412,9 +421,9 @@ the full paths to the files contained in any directories (which is what s3 is ac
 </dd>
 <dt>target: str</dt><dd><p>Directory to which all files will be synced</p>
 </dd>
-<dt>file_ext: str, default: None</dt><dd><p>Only sync files ending with this extension. Eg: ‘csv’ or ‘json’. If None, sync all files.</p>
+<dt>file_ext: str, optional</dt><dd><p>Only sync files ending with this extension. Eg: ‘csv’ or ‘json’. If None, sync all files. Default: None.</p>
 </dd>
-<dt>verbose: bool, default: True</dt><dd><p>If True, log some helpful messages</p>
+<dt>verbose: bool, optional</dt><dd><p>If True, log some helpful messages. Default: True.</p>
 </dd>
 </dl>
 <p>bool: True if operation was successful</p>
@@ -431,7 +440,7 @@ have been edited in <cite>source</cite> (new files can exist in <cite>source</ci
 </dd>
 <dt>target: str</dt><dd><p>Directory to which all files will be synced</p>
 </dd>
-<dt>verbose: bool, default: True</dt><dd><p>If True, log some helpful messages</p>
+<dt>verbose: bool, optional</dt><dd><p>If True, log some helpful messages. Default: True.</p>
 </dd>
 </dl>
 <dl class="simple">

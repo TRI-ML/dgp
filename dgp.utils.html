@@ -143,8 +143,9 @@
 </dd>
 <dt>target_datum: dict</dt><dd><p>A single datum to use as the reference frame and reference time.</p>
 </dd>
-<dt>transform_boxes: bool, default: False</dt><dd><p>Flag to denote if cuboid annotations and instance ids should be used to warp points to the target frame.
-Only valid for Lidar.</p>
+<dt>transform_boxes: bool, optional</dt><dd><p>Flag to denote if cuboid annotations and instance ids should be used to warp points to the target frame.
+Only valid for Lidar.
+Default: False.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -202,7 +203,9 @@ datum within the sample.</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.annotation.</span></span><span class="sig-name descname"><span class="pre">is_empty_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.annotation.is_empty_annotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if JSON style annotation files are empty</p>
 <dl class="simple">
-<dt>annotations: str</dt><dd><p>Path to JSON file containing annotations for 2D/3D bounding boxes</p>
+<dt>annotation_file: str</dt><dd><p>Path to JSON file containing annotations for 2D/3D bounding boxes</p>
+</dd>
+<dt>annotation_type: object</dt><dd><p>Protobuf pb2 object we want to load into.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -218,6 +221,10 @@ datum within the sample.</p>
 <dt class="sig sig-object py" id="dgp.utils.cache.clear_cache">
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.cache.</span></span><span class="sig-name descname"><span class="pre">clear_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/runner/.dgp/cache'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cache.clear_cache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear DGP cache to avoid growing disk-usage.</p>
+<dl class="simple">
+<dt>directory: str, optional</dt><dd><p>A pathname to the directory used by DGP for caching. Default: DGP_CACHE_DIR.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -226,11 +233,9 @@ datum within the sample.</p>
 <dd><p>Disk-caching method/function decorator that caches results into
 dgp cache for arbitrary pickle-able / numpy objects.</p>
 <dl class="simple">
-<dt>func: function</dt><dd><p>Function to be called and wrapped with disk-caching support.</p>
+<dt>protocol: str, optional</dt><dd><p>Serialization protocol. Choices: {npz, pkl}. Default: “npz” (numpy).</p>
 </dd>
-<dt>protocol: str, (default: npz)</dt><dd><p>Use numpy for serialization protocol, otherwise use pkl for pickle.</p>
-</dd>
-<dt>cache_dir: str, (default: None)</dt><dd><p>Directory to cache instead of the default DGP cache.</p>
+<dt>cache_dir: str, optional</dt><dd><p>Directory to cache instead of the default DGP cache. Default: None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -285,7 +290,7 @@ dgp cache for arbitrary pickle-able / numpy objects.</p>
 </dd>
 <dt>p_cw: Pose</dt><dd><p>Pose from world to camera frame.</p>
 </dd>
-<dt>distortion_params: dict[str, float], default: None</dt><dd><p>Optional dictionary of distortion parameters k1,k2,.. etc.</p>
+<dt>distortion: dict[str, float], optional</dt><dd><p>Optional dictionary of distortion parameters k1,k2,.. etc. Default: None.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -309,11 +314,11 @@ dgp cache for arbitrary pickle-able / numpy objects.</p>
 <span class="sig-name descname"><span class="pre">in_frustum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.camera.Camera.in_frustum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a set of 3D points, return a boolean index of points in the camera frustum</p>
 <dl class="simple">
-<dt>X: np.ndarray (N x 3)</dt><dd><p>3D spatial coordinates for each pixel IN THE CAMERA FRAME</p>
+<dt>X: np.ndarray</dt><dd><p>3D spatial coordinates for each pixel IN THE CAMERA FRAME. Shape is (N x 3).</p>
 </dd>
-<dt>height: int</dt><dd><p>Height of image</p>
+<dt>height: int</dt><dd><p>Height of image.</p>
 </dd>
-<dt>width: int</dt><dd><p>Width of image</p>
+<dt>width: int</dt><dd><p>Width of image.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -327,7 +332,7 @@ dgp cache for arbitrary pickle-able / numpy objects.</p>
 <span class="sig-name descname"><span class="pre">project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Xw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.camera.Camera.project" title="Permalink to this definition">¶</a></dt>
 <dd><p>Project 3D points from specified reference frame onto image plane</p>
 <dl class="simple">
-<dt>Xw: np.ndarray (N x 3)</dt><dd><p>3D spatial coordinates for each pixel in the world reference frame.</p>
+<dt>Xw: np.ndarray</dt><dd><p>3D spatial coordinates for each pixel in the world reference frame. Shape is (N x 3).</p>
 </dd>
 </dl>
 <dl>
@@ -355,7 +360,7 @@ dgp cache for arbitrary pickle-able / numpy objects.</p>
 <dd><p>Scale intrinsic matrix (B33, or 33) given x and y-axes scales.
 Note: This function works for both torch and numpy.</p>
 <dl class="simple">
-<dt>K: np.ndarray (3x3)</dt><dd><p>Camera calibration matrix.</p>
+<dt>K: np.ndarray</dt><dd><p>Camera calibration matrix. Shape is (3 x 3).</p>
 </dd>
 <dt>x_scale: float</dt><dd><p>x-axis scale factor.</p>
 </dd>
@@ -427,9 +432,9 @@ Note: This function works for both torch and numpy.</p>
 <dl class="simple">
 <dt>camera: Camera</dt><dd><p>Camera object with appropriately set extrinsics wrt world.</p>
 </dd>
-<dt>Xw: np.ndarray (N x 3)</dt><dd><p>3D point cloud (x, y, z) in the world coordinate.</p>
+<dt>Xw: np.ndarray</dt><dd><p>3D point cloud (x, y, z) in the world coordinate. Shape is (N x 3).</p>
 </dd>
-<dt>shape: np.ndarray (H, W)</dt><dd><p>Output depth image shape.</p>
+<dt>shape: np.ndarray</dt><dd><p>Output depth image shape as (H, W).</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -462,6 +467,10 @@ Note: This function works for both torch and numpy.</p>
 <dt class="sig sig-object py" id="dgp.utils.cli_utils.add_options">
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.cli_utils.</span></span><span class="sig-name descname"><span class="pre">add_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cli_utils.add_options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorator function to add a list of Click options to a Click subcommand.</p>
+<dl class="simple">
+<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: dict</dt><dd><p>The <cite>options</cite> keyword argument shall be a list of string options to extend a Click CLI.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -475,7 +484,7 @@ Note: This function works for both torch and numpy.</p>
 <dl class="simple">
 <dt>color: Tuple[int]</dt><dd><p>RGB color</p>
 </dd>
-<dt>factor: float, default: 1.0</dt><dd><p>Factor of lightness adjustment.</p>
+<dt>factor: float, optional</dt><dd><p>Factor of lightness adjustment. Default: 1.0.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -491,9 +500,9 @@ Note: This function works for both torch and numpy.</p>
 <dl class="simple">
 <dt>img: np.ndarray</dt><dd><p>Input image with shape of (H, W, 3) and unit8 type.</p>
 </dd>
-<dt>color: Tuple(int)</dt><dd><p>Color to draw the frame.</p>
+<dt>color: Tuple[int]</dt><dd><p>Color to draw the frame.</p>
 </dd>
-<dt>thickness: int, default: 10</dt><dd><p>Thickness of the frame.</p>
+<dt>thickness: int, optional</dt><dd><p>Thickness of the frame. Default: 10.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -510,10 +519,10 @@ Note: This function works for both torch and numpy.</p>
 <dl class="simple">
 <dt>num_colors: int</dt><dd><p>Number of colors. Must be less than 20.</p>
 </dd>
-<dt>in_bgr: bool, default: False</dt><dd><p>Whether or not to return the color in BGR order.</p>
+<dt>in_bgr: bool, optional</dt><dd><p>Whether or not to return the color in BGR order. Default: False.</p>
 </dd>
-<dt>cmap: str, default=’tab20’</dt><dd><p>matplotlib colormap name (<a class="reference external" href="https://matplotlib.org/tutorials/colors/colormaps.html">https://matplotlib.org/tutorials/colors/colormaps.html</a>)
-Must be a qualitative color map.</p>
+<dt>cmap: str, optional</dt><dd><p>matplotlib colormap name (<a class="reference external" href="https://matplotlib.org/tutorials/colors/colormaps.html">https://matplotlib.org/tutorials/colors/colormaps.html</a>)
+Must be a qualitative color map. Default: “tab20”.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -573,25 +582,29 @@ Must be a qualitative color map.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.dataset_conversion.DatasetGen.convert">
 <span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.DatasetGen.convert" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse raw data into DGP format and return the dataset json.
-Returns
-——-
-dataset_json_path: str</p>
-<blockquote>
-<div><p>Dataset json path</p>
-</div></blockquote>
+<dd><p>Parse raw data into DGP format and return the dataset json.</p>
+<dl class="simple">
+<dt>dataset_json_path: str</dt><dd><p>Dataset json path</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>NotImplementedError</dt><dd><p>Unconditionally.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.dataset_conversion.DatasetGen.open_image">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">open_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.DatasetGen.open_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an image given a filename.
-Returns
-——-
-image: PIL.Image</p>
-<blockquote>
-<div><p>Image to be opened.</p>
-</div></blockquote>
+<dd><p>Returns an image given a filename.</p>
+<dl class="simple">
+<dt>filename: str</dt><dd><p>A pathname of an image to open.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>PIL.Image</dt><dd><p>Image that was opened.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -599,30 +612,40 @@ image: PIL.Image</p>
 <span class="sig-name descname"><span class="pre">populate_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.DatasetGen.populate_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate boilerplate fields for dataset conversion. Statistics, size, etc…
 are recomputed during conversion</p>
+<dl class="simple">
+<dt>NotImplementedError</dt><dd><p>Unconditionally.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.dataset_conversion.DatasetGen.populate_ontologies">
 <span class="sig-name descname"><span class="pre">populate_ontologies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.DatasetGen.populate_ontologies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate ontologies’ fields for dataset conversion.</p>
+<dl class="simple">
+<dt>NotImplementedError</dt><dd><p>Unconditionally.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.dataset_conversion.DatasetGen.populate_statistics">
 <span class="sig-name descname"><span class="pre">populate_statistics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.DatasetGen.populate_statistics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute dataset (image/point_cloud) statistics.</p>
+<dl class="simple">
+<dt>NotImplementedError</dt><dd><p>Unconditionally.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.dataset_conversion.DatasetGen.write_dataset">
 <span class="sig-name descname"><span class="pre">write_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">upload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.DatasetGen.write_dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write the final scene dataset JSON.
-Parameters
-———-
-upload: bool, default: False</p>
-<blockquote>
-<div><p>If true, upload the dataset to the scene pool in s3.</p>
-</div></blockquote>
+<dd><p>Write the final scene dataset JSON.</p>
+<dl class="simple">
+<dt>upload: bool, optional</dt><dd><p>If True, upload the dataset to the scene pool in s3. Default: False.</p>
+</dd>
+</dl>
 <dl class="simple">
 <dt>scene_dataset_json_path: str</dt><dd><p>Path of the scene dataset JSON file created.</p>
 </dd>
@@ -661,13 +684,11 @@ upload: bool, default: False</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.dataset_conversion.MergeSceneDatasetGen.write_dataset">
 <span class="sig-name descname"><span class="pre">write_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">upload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.MergeSceneDatasetGen.write_dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write the final scene dataset JSON.
-Parameters
-———-
-upload: bool, default: False</p>
-<blockquote>
-<div><p>If true, upload the dataset to the scene pool in s3.</p>
-</div></blockquote>
+<dd><p>Write the final scene dataset JSON.</p>
+<dl class="simple">
+<dt>upload: bool, optional</dt><dd><p>If true, upload the dataset to the scene pool in s3. Default: False.</p>
+</dd>
+</dl>
 <dl class="simple">
 <dt>scene_dataset_json_path: str</dt><dd><p>Path of the scene dataset JSON file created.</p>
 </dd>
@@ -738,10 +759,16 @@ Used for creating unique frame IDs</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.dataset_conversion.</span></span><span class="sig-name descname"><span class="pre">generate_uid_from_instance_segmentation_2d_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.generate_uid_from_instance_segmentation_2d_annotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a unique identifier, return the SHA1 hash hexdigest.</p>
 <dl class="simple">
-<dt>image: np.array</dt><dd><p>instance_segmentation_2d annotation to be hashed</p>
+<dt>annotation: np.array</dt><dd><p>instance_segmentation_2d annotation to be hashed</p>
 </dd>
 </dl>
 <p>Hexdigest of annotation content</p>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>Raised if annotation is not of type np.uint16 or np.uint23.</p>
+</dd>
+<dt>ValueError</dt><dd><p>Raised if annotation is not 2-dimensional.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -761,10 +788,16 @@ Used for creating unique datum IDs</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.dataset_conversion.</span></span><span class="sig-name descname"><span class="pre">generate_uid_from_semantic_segmentation_2d_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.dataset_conversion.generate_uid_from_semantic_segmentation_2d_annotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a unique identifier, return the SHA1 hash hexdigest.</p>
 <dl class="simple">
-<dt>image: np.array</dt><dd><p>semantic_segmentation_2d annotation to be hashed</p>
+<dt>annotation: np.array</dt><dd><p>semantic_segmentation_2d annotation to be hashed</p>
 </dd>
 </dl>
 <p>Hexdigest of annotation content</p>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>Raised if annotation is not of type np.uint8.</p>
+</dd>
+<dt>ValueError</dt><dd><p>Raised if annotation is not 2-dimensional.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -977,7 +1010,7 @@ inverse of this one.</p>
 <dd><p>Given a pb object, return the deterministic SHA1 hash hexdigest.
 Used for creating unique IDs.</p>
 <dl class="simple">
-<dt>pb_object: pb2 object</dt><dd><p>pb_object to be hashed.</p>
+<dt>pb_object: object</dt><dd><p>A protobuf pb2 object to be hashed.</p>
 </dd>
 </dl>
 <p>Hexdigest of annotation content</p>
@@ -1046,7 +1079,7 @@ Returns <cite>None</cite> if the loading failed.</p>
 <dl class="simple">
 <dt>path: str</dt><dd><p>Local JSON file path or remote scene dataset JSON URI to load.</p>
 </dd>
-<dt>pb_class: pb2 object class</dt><dd><p>Protobuf object we want to load into.</p>
+<dt>pb_class: object</dt><dd><p>Protobuf pb2 object we want to load into.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -1062,11 +1095,15 @@ Returns <cite>None</cite> if the loading failed.</p>
 <dl class="simple">
 <dt>s3_object_uri: str</dt><dd><p>Remote scene dataset JSON URI.</p>
 </dd>
-<dt>pb_class: pb2 object class</dt><dd><p>Protobuf object we want to load into.</p>
+<dt>pb_class: object</dt><dd><p>Protobuf pb2 object we want to load into.</p>
 </dd>
 </dl>
 <dl class="simple">
 <dt>pb_object: pb2 object</dt><dd><p>Desired pb2 object to be opened.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if s3_object_uri is not a valid S3 path.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1078,7 +1115,7 @@ Returns <cite>None</cite> if the loading failed.</p>
 settings.</p>
 <p>Any calls to save protobuf objects to JSON in this repository should be through this function.</p>
 <dl class="simple">
-<dt>pb_object: pb2 object</dt><dd><p>Protobuf object we want to save to file</p>
+<dt>pb_object: object</dt><dd><p>Protobuf pb2 object we want to save to file</p>
 </dd>
 <dt>save_path: str</dt><dd><p>If save path is a JSON, serialized object is saved to that path. If save path is directory,
 the <cite>pb_object</cite> is saved in &lt;save_path&gt;/&lt;pb_object_sha&gt;.json.</p>
@@ -1123,7 +1160,7 @@ the <cite>pb_object</cite> is saved in &lt;save_path&gt;/&lt;pb_object_sha&gt;.j
 <dl class="simple">
 <dt>scene: dgp.proto.scene_pb2.Scene</dt><dd><p>Scene Object.</p>
 </dd>
-<dt>verbose: bool, default: True</dt><dd><p>Print the stats if True.</p>
+<dt>verbose: bool, optional</dt><dd><p>Print the stats if True. Default: True.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -1544,9 +1581,9 @@ value : comparable</p>
 </dd>
 <dt>high<span class="classifier">comparable</span></dt><dd><p>Range upper bound.</p>
 </dd>
-<dt>low_inclusive<span class="classifier">bool, default: True</span></dt><dd><p>Allow case when value == low.</p>
+<dt>low_inclusive<span class="classifier">bool, optional</span></dt><dd><p>Allow case when value == low. Default: True.</p>
 </dd>
-<dt>high_inclusive<span class="classifier">bool, default: True</span></dt><dd><p>Allow case when value == high</p>
+<dt>high_inclusive<span class="classifier">bool, optional</span></dt><dd><p>Allow case when value == high. Default: True.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1641,27 +1678,32 @@ ParallelDomainScene). The output is a video, either rendered on X window or a vi
 <dl class="simple">
 <dt>dataset: _SynchronizedDataset</dt><dd><p>A multimodel dataset of which <cite>__getitem__</cite> returns a list of <cite>OrderedDict</cite>, one item for each datum.</p>
 </dd>
-<dt>camera_datum_names: None or List[str], default: None</dt><dd><p>Names of camera_datums. If None, then use all datums whose type is <cite>image</cite> and are available in all scenes.
-In the output video, the image visualizations are tiled in row-major order according to the order of this list.</p>
+<dt>camera_datum_names: None or List[str], optional</dt><dd><p>Names of camera_datums. If None, then use all datums whose type is <cite>image</cite> and are available in all scenes.
+In the output video, the image visualizations are tiled in row-major order according to the order of this list.
+Default: None.</p>
 </dd>
-<dt>max_num_items: None or int, default: None</dt><dd><p>If not None, then show only up to this number of items. This is useful for debugging a large dataset.</p>
+<dt>max_num_items: None or int, optional</dt><dd><p>If not None, then show only up to this number of items. This is useful for debugging a large dataset.
+Default: None.</p>
 </dd>
-<dt>caption_fn: Callable or None</dt><dd><p>A function that take as input a <cite>_SynchronizedDataset</cite> and index, and return a text (str).
-The text is put as caption at the top left corner of video.</p>
+<dt>caption_fn: Callable, optional</dt><dd><p>A function that take as input a <cite>_SynchronizedDataset</cite> and index, and return a text (str).
+The text is put as caption at the top left corner of video.
+Default: None.</p>
 </dd>
-<dt>show_instance_id: bool, default: False</dt><dd><p>Option to show instance id instead of instance class name on annotated images.</p>
+<dt>show_instance_id: bool, optional</dt><dd><p>Option to show instance id instead of instance class name on annotated images.
+Default: False.</p>
 </dd>
-<dt>output_video_file: None or str, default: None</dt><dd><p>If not None, then write the visualization on a video of this name. It must ends with <cite>.avi</cite>.</p>
+<dt>output_video_file: None or str, optional</dt><dd><p>If not None, then write the visualization on a video of this name. It must ends with <cite>.avi</cite>.
+Default: None.</p>
 </dd>
-<dt>output_video_fps: int, default: 30</dt><dd><p>Frame rate of the video.</p>
+<dt>output_video_fps: int, optional</dt><dd><p>Frame rate of the video. Default: 30</p>
 </dd>
-<dt>class_colormap: dict or None, default: None</dt><dd><p>Dict of class name to RGB color tuple. If None, then use class color defined in <cite>dataset</cite>.</p>
+<dt>class_colormap: dict or None, optional</dt><dd><p>Dict of class name to RGB color tuple. If None, then use class color defined in <cite>dataset</cite>. Default: None.</p>
 </dd>
-<dt>adjust_lightness_factor: float, default: 1.0</dt><dd><p>Enhance the brightness of colormap by this factor.</p>
+<dt>adjust_lightness_factor: float, optional</dt><dd><p>Enhance the brightness of colormap by this factor. Default: 1.0.</p>
 </dd>
-<dt>font_scale: float, default: 1</dt><dd><p>Font scale used for all text.</p>
+<dt>font_scale: float, optional</dt><dd><p>Font scale used for all text. Default: 1.</p>
 </dd>
-<dt>rgb_resize_factor: float, default: 0.5</dt><dd><p>Resize images by this factor before tiling them into a single panel.</p>
+<dt>rgb_resize_factor: float, optional</dt><dd><p>Resize images by this factor before tiling them into a single panel. Default: 0.5.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1679,45 +1721,70 @@ dataset: _SynchronizedDataset</p>
 <div><p>A multimodel dataset of which <cite>__getitem__</cite> returns a list of <cite>OrderedDict</cite>, one item for each datum.</p>
 </div></blockquote>
 <dl class="simple">
-<dt>lidar_datum_names: None or List[str], default: None</dt><dd><p>Names of lidar datums. If None, then use all datums whose type is <cite>point_cloud</cite> and are available in all scenes.</p>
+<dt>lidar_datum_names: None or List[str], optional</dt><dd><p>Names of lidar datums. If None, then use all datums whose type is <cite>point_cloud</cite> and are available in all scenes.
+Default: None.</p>
 </dd>
-<dt>camera_datum_names: None or List[str], default: None</dt><dd><p>Names of camera_datums. If None, then use all datums whose type is <cite>image</cite> and are available in all scenes.
-In the output video, the image visualizations are tiled in row-major order according to the order of this list.</p>
+<dt>camera_datum_names: None or List[str], optional</dt><dd><p>Names of camera_datums. If None, then use all datums whose type is <cite>image</cite> and are available in all scenes.
+In the output video, the image visualizations are tiled in row-major order according to the order of this list.
+Default: None.</p>
 </dd>
-<dt>render_pointcloud_on_images: bool, default: True</dt><dd><p>Whether or not to render projected pointclouds on images.</p>
+<dt>render_pointcloud_on_images: bool, optional</dt><dd><p>Whether or not to render projected pointclouds on images. Default: True.</p>
 </dd>
-<dt>show_instance_id_on_bev: bool, default: True</dt><dd><p>If True, then show <cite>instance_id</cite> on a corner of 3D bounding boxes in BEV view.
-If False, then show <cite>class_name</cite> instead.</p>
+<dt>show_instance_id_on_bev: bool, optional</dt><dd><p>If True, then show <cite>instance_id</cite> on a corner of 3D bounding boxes in BEV view.
+If False, then show <cite>class_name</cite> instead.
+Default: True.</p>
 </dd>
-<dt>max_num_items: None or int, default: None</dt><dd><p>If not None, then show only up to this number of items. This is useful for debugging a large dataset.</p>
+<dt>max_num_items: None or int, optional</dt><dd><p>If not None, then show only up to this number of items. This is useful for debugging a large dataset.
+Default: None.</p>
 </dd>
-<dt>caption_fn: Callable or None</dt><dd><p>A function that take as input a <cite>_SynchronizedDataset</cite> and index, and return a text (str).
-The text is put as caption at the top left corner of video.</p>
+<dt>caption_fn: Callable, optional</dt><dd><p>A function that take as input a <cite>_SynchronizedDataset</cite> and index, and return a text (str).
+The text is put as caption at the top left corner of video. Default: None.</p>
 </dd>
-<dt>output_video_file: None or str, default: None</dt><dd><p>If not None, then write the visualization on a video of this name. It must ends with <cite>.avi</cite>.</p>
+<dt>output_video_file: None or str, optional</dt><dd><p>If not None, then write the visualization on a video of this name. It must ends with <cite>.avi</cite>. Default: None.</p>
 </dd>
-<dt>output_video_fps: int, default: 30</dt><dd><p>Frame rate of the video.</p>
+<dt>output_video_fps: int, optional</dt><dd><p>Frame rate of the video. Default: 30.</p>
 </dd>
-<dt>overwrite_output_file: bool, default: False</dt><dd><p>If True, then FFMPEG overwrites existing output file without prompting confirmation.
-This is useful when the <cite>output_video_file</cite> is created by <cite>tempfile</cite> with context manager.</p>
+<dt>class_colormap: dict, optional</dt><dd><p>Dict of class name to RGB color tuple. If None, then use class color defined in <cite>dataset</cite>. Default: None.</p>
 </dd>
-<dt>class_colormap: dict or None, default: None</dt><dd><p>Dict of class name to RGB color tuple. If None, then use class color defined in <cite>dataset</cite>.</p>
+<dt>adjust_lightness_factor: float, optional</dt><dd><p>Enhance the brightness of colormap by this factor. Default: 1.0.</p>
 </dd>
-<dt>adjust_lightness_factor: float, default: 1.0</dt><dd><p>Enhance the brightness of colormap by this factor.</p>
+<dt>rgb_resize_factor: float, optional</dt><dd><p>Resize images by this factor before tiling them into a single panel. Default: 0.5.</p>
 </dd>
-<dt>rgb_resize_factor: float, default: 0.5</dt><dd><p>Resize images by this factor before tiling them into a single panel.</p>
+<dt>rgb_border_thickness: int, optional</dt><dd><p>Put a colored boundary on camera visualization of this thickness before tiling them into single panel.
+Default: 4.</p>
 </dd>
-<dt>rgb_border_thickness: int, default: 10</dt><dd><p>Put a colored boundary on camera visualization of this thickness before tiling them into single panel.</p>
+<dt>bev_metric_width: float, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 100.0.</p>
 </dd>
-<dt>bev-<a href="#id1"><span class="problematic" id="id2">*</span></a>:</dt><dd><p>See <cite>BEVImage</cite> for these keyword arguments.</p>
+<dt>bev_metric_height: float, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 100.0.</p>
 </dd>
-<dt>bbox3d-<a href="#id3"><span class="problematic" id="id4">*</span></a>:</dt><dd><p>See <cite>geometry.BoundingBox3D</cite> for these keyword arguments.</p>
+<dt>bev_pixels_per_meter: float, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 10.0.</p>
 </dd>
-<dt>pc_rgb-<a href="#id5"><span class="problematic" id="id6">*</span></a>:</dt><dd><p>See <cite>render_pointcloud_on_image()</cite> for these keyword arguments.</p>
+<dt>bev_polar_step_size_meters: int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 10.</p>
 </dd>
-<dt>radar_datum_names: None or List[str], default: None</dt><dd><p>Names of the radar datums</p>
+<dt>bev_forward: tuple of int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (1, 0, 0).</p>
 </dd>
-<dt>render_radar_pointcloud_on_images: bool, default: True</dt><dd><p>Whether or not to render projected radar pointclouds on images.</p>
+<dt>bev_left: tuple of int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (0, 1, 0).</p>
+</dd>
+<dt>bev_background_clr: tuple of int</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (0, 0, 0).</p>
+</dd>
+<dt>bev_font_scale: float</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 0.5.</p>
+</dd>
+<dt>bev_line_thickness: int</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 4.</p>
+</dd>
+<dt>bbox3d_font_scale: float</dt><dd><p>See <cite>geometry.BoundingBox3D</cite> for this keyword argument. Default: 1.0.</p>
+</dd>
+<dt>bbox3d_line_thickness: int</dt><dd><p>See <cite>geometry.BoundingBox3D</cite> for this keyword argument. Default: 4.</p>
+</dd>
+<dt>pc_rgb_cmap: optional</dt><dd><p>See <cite>render_pointcloud_on_image()</cite> for this keyword argument. The value type comes from
+matplotlib.cm.get_cmap. Default: MPL_JET_CMAP.</p>
+</dd>
+<dt>pc_rgb_norm_depth: int, optional</dt><dd><p>See <cite>render_pointcloud_on_image()</cite> for this keyword argument. Default: 10.</p>
+</dd>
+<dt>pc_rgb_dilation: int, optional</dt><dd><p>See <cite>render_pointcloud_on_image()</cite> for this keyword argument. Default: 3.</p>
+</dd>
+<dt>radar_datum_names: List[str], optional</dt><dd><p>Names of the radar datums. Default: None</p>
+</dd>
+<dt>render_radar_pointcloud_on_images: bool, optional</dt><dd><p>Whether or not to render projected radar pointclouds on images. Default: True.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1730,18 +1797,21 @@ ParallelDomainScene). The output is a tuple dictionaries of images keyed by came
 <dl class="simple">
 <dt>dataset: _SynchronizedDataset</dt><dd><p>A multimodel dataset of which <cite>__getitem__</cite> returns a list of <cite>OrderedDict</cite>, one item for each datum.</p>
 </dd>
-<dt>camera_datum_names: None or List[str], default: None</dt><dd><p>Names of camera_datums. If None, then use all datums whose type is <cite>image</cite> and are available in all scenes.
-In the output video, the image visualizations are tiled in row-major order according to the order of this list.</p>
+<dt>scene_idx: int</dt><dd><p>The scene index into the dataset.</p>
 </dd>
-<dt>max_num_items: None or int, default: None</dt><dd><p>If not None, then show only up to this number of items. This is useful for debugging a large dataset.</p>
+<dt>sample_idx: int</dt><dd><p>The sample index into the scene.</p>
 </dd>
-<dt>show_instance_id: bool, default: False</dt><dd><p>Option to show instance id instead of instance class name on annotated images.</p>
+<dt>camera_datum_names: None or List[str], optional</dt><dd><p>Names of camera_datums. If None, then use all datums whose type is <cite>image</cite> and are available in all scenes.
+In the output video, the image visualizations are tiled in row-major order according to the order of this list.
+Default: None.</p>
 </dd>
-<dt>class_colormap: dict or None, default: None</dt><dd><p>Dict of class name to RGB color tuple. If None, then use class color defined in <cite>dataset</cite>.</p>
+<dt>show_instance_id: bool, optional</dt><dd><p>Option to show instance id instead of instance class name on annotated images. Default: False.</p>
 </dd>
-<dt>adjust_lightness_factor: float, default: 1.0</dt><dd><p>Enhance the brightness of colormap by this factor.</p>
+<dt>class_colormap: dict or None, optional</dt><dd><p>Dict of class name to RGB color tuple. If None, then use class color defined in <cite>dataset</cite>. Default: None.</p>
 </dd>
-<dt>rgb_resize_factor: float, default: 0.5</dt><dd><p>Resize images by this factor before tiling them into a single panel.</p>
+<dt>adjust_lightness_factor: float, optional</dt><dd><p>Enhance the brightness of colormap by this factor. Default: 1.0.</p>
+</dd>
+<dt>rgb_resize_factor: float, optional</dt><dd><p>Resize images by this factor before tiling them into a single panel. Default: 0.5.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -1764,30 +1834,55 @@ ParallelDomainScene). The output is a dictionary of images keyed by camera datum
 </dd>
 <dt>sample_idx: int</dt><dd><p>index of sample in scene</p>
 </dd>
-<dt>lidar_datum_names: None or List[str], default: None</dt><dd><p>Names of lidar datum</p>
+<dt>lidar_datum_names: None or List[str], optional</dt><dd><p>Names of lidar datum. Default: None.</p>
 </dd>
-<dt>camera_datum_names: None or List[str], default: None</dt><dd><p>Names of camera_datums</p>
+<dt>camera_datum_names: None or List[str], optional</dt><dd><p>Names of camera_datums. Default: None.</p>
 </dd>
-<dt>render_pointcloud_on_images: bool, default: True</dt><dd><p>Whether or not to render projected pointclouds on images.</p>
+<dt>render_pointcloud_on_images: bool, optional</dt><dd><p>Whether or not to render projected pointclouds on images. Default: True.</p>
 </dd>
-<dt>show_instance_id_on_bev: bool, default: True</dt><dd><p>If True, then show <cite>instance_id</cite> on a corner of 3D bounding boxes in BEV view.
-If False, then show <cite>class_name</cite> instead.</p>
+<dt>show_instance_id_on_bev: bool, optional</dt><dd><p>If True, then show <cite>instance_id</cite> on a corner of 3D bounding boxes in BEV view.
+If False, then show <cite>class_name</cite> instead.
+Default: True.</p>
 </dd>
-<dt>class_colormap: dict or None, default: None</dt><dd><p>Dict of class name to RGB color tuple. If None, then use class color defined in <cite>dataset</cite>.</p>
+<dt>class_colormap: dict or None, optional</dt><dd><p>Dict of class name to RGB color tuple. If None, then use class color defined in <cite>dataset</cite>. Default: None.</p>
 </dd>
-<dt>adjust_lightness_factor: float, default: 1.0</dt><dd><p>Enhance the brightness of colormap by this factor.</p>
+<dt>adjust_lightness_factor: float, optional</dt><dd><p>Enhance the brightness of colormap by this factor. Default: 1.0.</p>
 </dd>
-<dt>rgb_resize_factor: float, default: 0.5</dt><dd><p>Resize images by this factor before tiling them into a single panel.</p>
+<dt>rgb_resize_factor: float, optional</dt><dd><p>Resize images by this factor before tiling them into a single panel. Default: 0.5.</p>
 </dd>
-<dt>rgb_border_thickness: int, default: 10</dt><dd><p>Put a colored boundary on camera visualization of this thickness before tiling them into single panel.</p>
+<dt>rgb_border_thickness: int, optional</dt><dd><p>Put a colored boundary on camera visualization of this thickness before tiling them into single panel.
+Default: 4.</p>
 </dd>
-<dt>bev-<a href="#id7"><span class="problematic" id="id8">*</span></a>:</dt><dd><p>See <cite>BEVImage</cite> for these keyword arguments.</p>
+<dt>bev_metric_width: float, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 100.0.</p>
 </dd>
-<dt>bbox3d-<a href="#id9"><span class="problematic" id="id10">*</span></a>:</dt><dd><p>See <cite>geometry.BoundingBox3D</cite> for these keyword arguments.</p>
+<dt>bev_metric_height: float, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 100.0.</p>
 </dd>
-<dt>pc_rgb-<a href="#id11"><span class="problematic" id="id12">*</span></a>:</dt><dd><p>See <cite>render_pointcloud_on_image()</cite> for these keyword arguments.</p>
+<dt>bev_pixels_per_meter: float, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 10.0.</p>
 </dd>
-<dt>radar_datum_names: None or List[str], default: None</dt><dd><p>Names of the radar datums</p>
+<dt>bev_polar_step_size_meters: int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 10.</p>
+</dd>
+<dt>bev_forward: tuple, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (1, 0, 0).</p>
+</dd>
+<dt>bev_left: tuple, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (0, 1, 0).</p>
+</dd>
+<dt>bev_background_clr: tuple, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (0, 0, 0).</p>
+</dd>
+<dt>bev_font_scale: float, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 0.5.</p>
+</dd>
+<dt>bev_line_thickness: int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 4.</p>
+</dd>
+<dt>bbox3d_font_scale: float, optional</dt><dd><p>See <cite>geometry.BoundingBox3D</cite> for these keyword arguments. Default: 1.0.</p>
+</dd>
+<dt>bbox3d_line_thickness: int, optional</dt><dd><p>See <cite>geometry.BoundingBox3D</cite> for these keyword arguments. Default: 4.</p>
+</dd>
+<dt>pc_rgb_cmap: optional</dt><dd><p>See <cite>render_pointcloud_on_image()</cite> for these keyword arguments. The value type comes from
+matplotlib.cm.get_cmap. Default: MPL_JET_CMAP.</p>
+</dd>
+<dt>pc_rgb_norm_depth: int, optional</dt><dd><p>See <cite>render_pointcloud_on_image()</cite> for these keyword arguments. Default: 10.</p>
+</dd>
+<dt>pc_rgb_dilation: int, optional</dt><dd><p>See <cite>render_pointcloud_on_image()</cite> for these keyword arguments. Default: 3.</p>
+</dd>
+<dt>radar_datum_names: None or List[str], optional</dt><dd><p>Names of the radar datums. Default: None.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -1855,30 +1950,32 @@ These are used to construct a rotation transformation from the body frame to the
 <span class="sig-name descname"><span class="pre">render_bounding_box_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">bboxes3d</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span></em>, <em class="sig-param"><span class="pre">colors=((0</span></em>, <em class="sig-param"><span class="pre">255</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">)</span></em>, <em class="sig-param"><span class="pre">side_color_fraction=0.7</span></em>, <em class="sig-param"><span class="pre">rear_color_fraction=0.5</span></em>, <em class="sig-param"><span class="pre">texts=None</span></em>, <em class="sig-param"><span class="pre">line_thickness=2</span></em>, <em class="sig-param"><span class="pre">font_scale=0.5</span></em>, <em class="sig-param"><span class="pre">font_colors=((255</span></em>, <em class="sig-param"><span class="pre">255</span></em>, <em class="sig-param"><span class="pre">255)</span></em>, <em class="sig-param"><span class="pre">)</span></em>, <em class="sig-param"><span class="pre">markers=None</span></em>, <em class="sig-param"><span class="pre">marker_scale=0.5</span></em>, <em class="sig-param"><span class="pre">marker_colors=((255</span></em>, <em class="sig-param"><span class="pre">0</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_bounding_box_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render bounding box 3d in BEV perspective.</p>
 <dl class="simple">
-<dt>bboxes3d: List of BoundingBox3D</dt><dd><p>3D annotations in the sensor coordinate frame.</p>
+<dt>bboxes3d: List[BoundingBox3D]</dt><dd><p>3D annotations in the sensor coordinate frame.</p>
 </dd>
-<dt>extrinsics: Pose, default: Identity pose</dt><dd><p>The pose of the pointcloud sensor wrt the body frame (Sensor frame -&gt; (Vehicle) Body frame).</p>
+<dt>extrinsics: Pose, optional</dt><dd><p>The pose of the pointcloud sensor wrt the body frame (Sensor frame -&gt; (Vehicle) Body frame).
+Default: Identity pose.</p>
 </dd>
-<dt>colors: List of RGB tuple, default: [GREEN,]</dt><dd><p>Draw boxes using this color.</p>
+<dt>colors: Sequence[Tuple[int, int, int]], optional</dt><dd><p>Draw boxes using this color where each color is an RGB tuple. Default: (GREEN, ).</p>
 </dd>
-<dt>side_color_fraction: float, default: 0.6</dt><dd><p>A fraction in brightness of side edge colors of bounding box wrt the front face.</p>
+<dt>side_color_fraction: float, optional</dt><dd><p>A fraction in brightness of side edge colors of bounding box wrt the front face. Default: 0.6.</p>
 </dd>
-<dt>rear_color_fraction: float, default: 0.3</dt><dd><p>A fraction in brightness of rear face colors of bounding box wrt the front face.</p>
+<dt>rear_color_fraction: float, optional</dt><dd><p>A fraction in brightness of rear face colors of bounding box wrt the front face. Default: 0.3.</p>
 </dd>
-<dt>texts: list of str, default: None</dt><dd><p>3D annotation category name.</p>
+<dt>texts: list of str, optional</dt><dd><p>3D annotation category name. Default: None.</p>
 </dd>
-<dt>line_thickness: int, default: 2</dt><dd><p>Thickness of lines.</p>
+<dt>line_thickness: int, optional</dt><dd><p>Thickness of lines. Default: 2.</p>
 </dd>
-<dt>font_scale: float, default: 0.5</dt><dd><p>Font scale used for text labels.</p>
+<dt>font_scale: float, optional</dt><dd><p>Font scale used for text labels. Default: 0.5.</p>
 </dd>
-<dt>font_colors: List of RGB tuple, default: [WHITE,]</dt><dd><p>Color used for text labels.</p>
+<dt>font_colors: Sequence[Tuple[int, int, int]], optional</dt><dd><p>Color used for text labels. Default: (WHITE, ).</p>
 </dd>
-<dt>markers: List[int], default: None</dt><dd><p>List of opencv markers to draw in bottom right corner of cuboid. Should be one of: 
-cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.</p>
+<dt>markers: List[int], optional</dt><dd><p>List of opencv markers to draw in bottom right corner of cuboid. Should be one of: 
+cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.
+Default: None.</p>
 </dd>
-<dt>marker_scale: float, default: .5</dt><dd><p>Scale factor for markers,</p>
+<dt>marker_scale: float, optional</dt><dd><p>Scale factor for markers. Default: 0.5.</p>
 </dd>
-<dt>marker_colors: List of RGB Tuple, default: [RED,]</dt><dd><p>Draw markers using this color.</p>
+<dt>marker_colors: Sequence[Tuple[int, int, int]], optional</dt><dd><p>Draw markers using this color. Default: (RED, ).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1895,9 +1992,9 @@ camera center and top-left / top-right corners of image plane.</p>
 </dd>
 <dt>width: int</dt><dd><p>Width of image.</p>
 </dd>
-<dt>color: Tuple[int], default: Yellow</dt><dd><p>Color in RGB of line.</p>
+<dt>color: Tuple[int], optional</dt><dd><p>Color in RGB of line. Default: YELLOW.</p>
 </dd>
-<dt>line_thickness: int, default: 1</dt><dd><p>Thickness of line.</p>
+<dt>line_thickness: int, optional</dt><dd><p>Thickness of line. Default: 1.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1909,13 +2006,14 @@ camera center and top-left / top-right corners of image plane.</p>
 <dl class="simple">
 <dt>paths: list[list[Pose]]</dt><dd><p>List of object poses in the coordinate frame of the current timestep.</p>
 </dd>
-<dt>extrinsics: Pose, default: Identity pose</dt><dd><p>The pose of the pointcloud sensor wrt the body frame (Sensor frame -&gt; (Vehicle) Body frame).</p>
+<dt>extrinsics: Pose, optional</dt><dd><p>The pose of the pointcloud sensor wrt the body frame (Sensor frame -&gt; (Vehicle) Body frame).
+Default: Identity pose.</p>
 </dd>
-<dt>colors: List of RGB tuple, default: [GREEN,]</dt><dd><p>Draw path using this color.</p>
+<dt>colors: List[Tuple[int, int, int]], optional</dt><dd><p>Draw path using this color. Default: (GREEN, ).</p>
 </dd>
-<dt>line_thickness: int, default: 1</dt><dd><p>Thickness of lines.</p>
+<dt>line_thickness: int, optional</dt><dd><p>Thickness of lines. Default: 1.</p>
 </dd>
-<dt>tint: float, default: 1.0</dt><dd><p>Mulitiplicative factor applied to color used to darken lines.</p>
+<dt>tint: float, optional</dt><dd><p>Mulitiplicative factor applied to color used to darken lines. Default: 1.0.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1925,11 +2023,12 @@ camera center and top-left / top-right corners of image plane.</p>
 <span class="sig-name descname"><span class="pre">render_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">point_cloud</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span></em>, <em class="sig-param"><span class="pre">color=(100</span></em>, <em class="sig-param"><span class="pre">100</span></em>, <em class="sig-param"><span class="pre">100)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_point_cloud" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render point cloud in BEV perspective.</p>
 <dl class="simple">
-<dt>point_cloud: numpy array with shape (N, 3)</dt><dd><p>3D cloud points in the sensor coordinate frame.</p>
+<dt>point_cloud: np.ndarray</dt><dd><p>3D cloud points in the sensor coordinate frame. Shape is (N, 3).</p>
 </dd>
-<dt>extrinsics: Pose, default: Identity pose</dt><dd><p>The pose of the pointcloud sensor wrt the body frame (Sensor frame -&gt; (Vehicle) Body frame).</p>
+<dt>extrinsics: Pose, optional</dt><dd><p>The pose of the pointcloud sensor wrt the body frame (Sensor frame -&gt; (Vehicle) Body frame).
+Default: Identity pose.</p>
 </dd>
-<dt>color: Tuple[int]</dt><dd><p>Color in RGB to render the points.</p>
+<dt>color: Tuple[int], optional</dt><dd><p>Color in RGB to render the points. Default: GRAY.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1939,17 +2038,18 @@ camera center and top-left / top-right corners of image plane.</p>
 <span class="sig-name descname"><span class="pre">render_radar_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">point_cloud</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span></em>, <em class="sig-param"><span class="pre">color=(255</span></em>, <em class="sig-param"><span class="pre">0</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">velocity=None</span></em>, <em class="sig-param"><span class="pre">velocity_scale=1</span></em>, <em class="sig-param"><span class="pre">velocity_max_pix=0.05</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_radar_point_cloud" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render radar point cloud in BEV perspective.</p>
 <dl class="simple">
-<dt>radar_point_cloud: numpy array with shape (N, 3)</dt><dd><p>point cloud in rectangular coordinates of sensor frame</p>
+<dt>point_cloud: np.ndarray</dt><dd><p>Point cloud in rectangular coordinates of sensor frame. Shape is (N, 3).</p>
 </dd>
-<dt>extrinsics: Pose, default: Identity pose</dt><dd><p>The pose of the pointcloud sensor wrt the body frame (Sensor frame -&gt; (Vehicle) Body frame).</p>
+<dt>extrinsics: Pose, optional</dt><dd><p>The pose of the pointcloud sensor wrt the body frame (Sensor frame -&gt; (Vehicle) Body frame).
+Default: Identity pose.</p>
 </dd>
-<dt>color: Tuple[int]</dt><dd><p>Color in RGB to render the points.</p>
+<dt>color: Tuple[int], optional</dt><dd><p>Color in RGB to render the points. Default: RED.</p>
 </dd>
-<dt>velocity: numpy array with shape (N,3), default None</dt><dd><p>velocity vector of points</p>
+<dt>velocity: np.ndarray, optional</dt><dd><p>Velocity vector of points. Shape: (N, 3). Default: None.</p>
 </dd>
-<dt>velocity_scale: float</dt><dd><p>factor to scale velocity vector by</p>
+<dt>velocity_scale: float, optional</dt><dd><p>Factor to scale velocity vector by. Default: 1.0.</p>
 </dd>
-<dt>velocity_max_pix: float</dt><dd><p>Maximum length of velocity vector rendering in percent of image width</p>
+<dt>velocity_max_pix: float, optional</dt><dd><p>Maximum length of velocity vector rendering in percent of image width. Default: 0.05.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1967,11 +2067,11 @@ camera center and top-left / top-right corners of image plane.</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.visualization_utils.</span></span><span class="sig-name descname"><span class="pre">make_caption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.make_caption" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make caption that tells scene directory and sample index.</p>
 <dl class="simple">
-<dt>dataset: BaseDataset</dt><dd><p>BaseDataset. e.g. ParallelDomainScene(Dataset), SynchronizedScene(Dataset)</p>
+<dt>dataset: BaseDataset</dt><dd><p>BaseDataset. e.g. ParallelDomainScene(Dataset), SynchronizedScene(Dataset).</p>
 </dd>
-<dt>idx: int</dt><dd><p>Image index</p>
+<dt>idx: int</dt><dd><p>Image index.</p>
 </dd>
-<dt>prefix: str</dt><dd><p>Caption prefix</p>
+<dt>prefix: str, optional</dt><dd><p>Caption prefix. Default: “”.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -1985,13 +2085,13 @@ camera center and top-left / top-right corners of image plane.</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.visualization_utils.</span></span><span class="sig-name descname"><span class="pre">mosaic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.mosaic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a mosaic from list of images.</p>
 <dl class="simple">
-<dt>items: list of np.ndarray</dt><dd><p>List of images to mosaic.</p>
+<dt>items: List[np.ndarray]</dt><dd><p>List of images to mosaic.</p>
 </dd>
-<dt>scale: float, default=1.0</dt><dd><p>Scale factor applied to images. scale &gt; 1.0 enlarges images.</p>
+<dt>scale: float, optional</dt><dd><p>Scale factor applied to images. scale &gt; 1.0 enlarges images. Default: 1.0.</p>
 </dd>
-<dt>pad: int, default=3</dt><dd><p>Padding size of the images before mosaic</p>
+<dt>pad: int, optional</dt><dd><p>Padding size of the images before mosaic. Default: 3.</p>
 </dd>
-<dt>grid_width: int, default=None</dt><dd><p>Mosaic width or grid width of the mosaic</p>
+<dt>grid_width: int, optional</dt><dd><p>Mosaic width or grid width of the mosaic. Default: None.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2007,7 +2107,7 @@ camera center and top-left / top-right corners of image plane.</p>
 <dl class="simple">
 <dt>ontology: dgp.proto.ontology_pb2.Ontology</dt><dd><p>DGP ontology object for which we want to create a viz-friendly colormap look-up</p>
 </dd>
-<dt>void_class_id: int, default: 255</dt><dd><p>Class ID used to denote VOID or IGNORE in ontology</p>
+<dt>void_class_id: int, optional</dt><dd><p>Class ID used to denote VOID or IGNORE in ontology. Default: 255.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2024,7 +2124,7 @@ camera center and top-left / top-right corners of image plane.</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.visualization_utils.</span></span><span class="sig-name descname"><span class="pre">print_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.print_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a status bar at the bottom of image, with provided text.</p>
 <dl class="simple">
-<dt>image: np.array of shape (H, W, 3)</dt><dd><p>Image to print status on.</p>
+<dt>image: np.ndarray</dt><dd><p>Image to print status on. Shape is (H, W, 3).</p>
 </dd>
 <dt>text: str</dt><dd><p>Text to be printed.</p>
 </dd>
@@ -2042,15 +2142,15 @@ camera center and top-left / top-right corners of image plane.</p>
 <dl class="simple">
 <dt>img: np.ndarray</dt><dd><p>Image to render bounding boxes onto.</p>
 </dd>
-<dt>bboxes2d: np.ndarray (N x 4)</dt><dd><p>Array of 2d bounding box (x, y, w, h).</p>
+<dt>bboxes2d: np.ndarray</dt><dd><p>Array of 2d bounding box (x, y, w, h). Shape is (N x 4).</p>
 </dd>
-<dt>instance_masks: list</dt><dd><p>List of binary instance masks cropped to (w,h).</p>
+<dt>instance_masks: list, optional</dt><dd><p>List of binary instance masks cropped to (w,h). Default: None.</p>
 </dd>
-<dt>colors: list</dt><dd><p>List of color tuples.</p>
+<dt>colors: list, optional</dt><dd><p>List of color tuples. Default: None.</p>
 </dd>
-<dt>texts: list, default: None</dt><dd><p>List of str classes.</p>
+<dt>texts: list, optional</dt><dd><p>List of str classes. Default: None.</p>
 </dd>
-<dt>line_thickness: int</dt><dd><p>Line thickness value for bounding box edges.</p>
+<dt>line_thickness: int, optional</dt><dd><p>Line thickness value for bounding box edges. Default: 4.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2068,13 +2168,13 @@ camera center and top-left / top-right corners of image plane.</p>
 </dd>
 <dt>camera: Camera</dt><dd><p>Camera object with appropriately set extrinsics wrt world.</p>
 </dd>
-<dt>Xw: np.ndarray (N x 3)</dt><dd><p>3D point cloud (x, y, z) in the world coordinate.</p>
+<dt>Xw: np.ndarray</dt><dd><p>3D point cloud (x, y, z) in the world coordinate. Shape is (N x 3).</p>
 </dd>
-<dt>cmap: matplotlib.colors.Colormap</dt><dd><p>Colormap used for visualizing the inverse depth.</p>
+<dt>cmap: matplotlib.colors.Colormap, optional</dt><dd><p>Colormap used for visualizing the inverse depth. Default: MPL_JET_CMAP.</p>
 </dd>
-<dt>norm_depth: float, default: 10</dt><dd><p>Depth value to normalize (inverse) pointcloud depths in color mapping.</p>
+<dt>norm_depth: float, optional</dt><dd><p>Depth value to normalize (inverse) pointcloud depths in color mapping. Default: 10.0.</p>
 </dd>
-<dt>dilation: int, default: 3</dt><dd><p>Dilation factor applied on each point.</p>
+<dt>dilation: int, optional</dt><dd><p>Dilation factor applied on each point. Default: 3.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2092,17 +2192,17 @@ camera center and top-left / top-right corners of image plane.</p>
 </dd>
 <dt>camera: Camera</dt><dd><p>Camera object with appropriately set extrinsics wrt world.</p>
 </dd>
-<dt>Xw: np.ndarray (N x 8)</dt><dd><p>point cloud in spherical coordinates of radar sensor frame</p>
+<dt>point_cloud: np.ndarray</dt><dd><p>point cloud in spherical coordinates of radar sensor frame. Shape is (N x 8).</p>
 </dd>
 <dt>cmap: matplotlib.colors.Colormap</dt><dd><p>Colormap used for visualizing the inverse depth.</p>
 </dd>
-<dt>norm_depth: float, default: 10</dt><dd><p>Depth value to normalize (inverse) pointcloud depths in color mapping.</p>
+<dt>norm_depth: float, optional</dt><dd><p>Depth value to normalize (inverse) pointcloud depths in color mapping. Default: 10.</p>
 </dd>
-<dt>velocity: numpy array with shape (N,3), default None</dt><dd><p>velocity vector of points</p>
+<dt>velocity: np.ndarray</dt><dd><p>Velocity vector of points. Shape is (N, 3). Default: None.</p>
 </dd>
-<dt>velocity_scale: float</dt><dd><p>factor to scale velocity vector by</p>
+<dt>velocity_scale: float, optional</dt><dd><p>Factor to scale velocity vector by. Default: 1.0.</p>
 </dd>
-<dt>velocity_max_pix: float</dt><dd><p>Maximum length of velocity vector rendering in percent of image width</p>
+<dt>velocity_max_pix: float, optional</dt><dd><p>Maximum length of velocity vector rendering in percent of image width. Default: 0.05.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2124,35 +2224,59 @@ lidar_datums: List[OrderedDict]</p>
 <dl class="simple">
 <dt>class_colormap: Dict</dt><dd><p>Mapping from class IDs to RGB colors.</p>
 </dd>
-<dt>show_instance_id_on_bev: Bool, default: False</dt><dd><p>If True, then show <cite>instance_id</cite> on a corner of 3D bounding boxes in BEV view.
-If False, then show <cite>class_name</cite> instead.</p>
+<dt>show_instance_id_on_bev: Bool, optional</dt><dd><p>If True, then show <cite>instance_id</cite> on a corner of 3D bounding boxes in BEV view.
+If False, then show <cite>class_name</cite> instead.
+Default: False.</p>
 </dd>
-<dt>id_to_name: OrderedDict, default: None</dt><dd><p>Mapping from class IDs to class names.</p>
+<dt>id_to_name: OrderedDict, optional</dt><dd><p>Mapping from class IDs to class names. Default: None.</p>
 </dd>
-<dt>camera_datums: List[OrderedDict], default: None</dt><dd><p>List of camera datums as a dictionary.</p>
+<dt>camera_datums: List[OrderedDict], optional</dt><dd><p>List of camera datums as a dictionary. Default: None.</p>
 </dd>
-<dt>camera_colors: List[Tuple[int]], default: None</dt><dd><p>List of RGB colors associated with each camera. The colors are used to draw frustrum.</p>
+<dt>camera_colors: List[Tuple[int]], optional</dt><dd><p>List of RGB colors associated with each camera. The colors are used to draw frustrum. Default: None.</p>
 </dd>
-<dt>bev_*:</dt><dd><p>See <cite>BEVImage</cite> for these keyword arguments.</p>
+<dt>bev_metric_width: int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 100.</p>
 </dd>
-<dt>radar_datums: List[OrderedDict], default: None</dt><dd><p>List of radar datums to visualize</p>
+<dt>bev_metric_height: int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 100.</p>
 </dd>
-<dt>instance_colormap: Dict</dt><dd><p>Mapping from instance id to RGB colors.</p>
+<dt>bev_pixels_per_meter: int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 10.</p>
 </dd>
-<dt>cuboid_caption_fn: Callable, BoundingBox3d -&gt; Tuple[String,Tuple[3]]</dt><dd><p>Function taking a BoundingBox3d object and returning a tuple with the caption string, and the rgb
-value for that caption. e.g., ( ‘car’, (255,0,0) )</p>
+<dt>bev_polar_step_size_meters: int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 10.</p>
 </dd>
-<dt>marker_fn: Callable, BoundingBox3d -&gt; Tuple[int,Tuple[3]]</dt><dd><p>Function taking a BoundingBox3d object and returning a tuple with the caption a marker id, and the rgb
+<dt>bev_forward: tuple of int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (1, 0, 0)</p>
+</dd>
+<dt>bev_left: tuple of int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (0, 1, 0)</p>
+</dd>
+<dt>bev_background_clr: tuple of int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: (0, 0, 0)</p>
+</dd>
+<dt>bev_line_thickness: int, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 4.</p>
+</dd>
+<dt>bev_font_scale: float, optional</dt><dd><p>See <cite>BEVImage</cite> for this keyword argument. Default: 0.5.</p>
+</dd>
+<dt>radar_datums: List[OrderedDict], optional</dt><dd><p>List of radar datums to visualize. Default: None.</p>
+</dd>
+<dt>instance_colormap: Dict, optional</dt><dd><p>Mapping from instance id to RGB colors. Default: None.</p>
+</dd>
+<dt>cuboid_caption_fn: Callable, optional</dt><dd><p>Function taking a BoundingBox3d object and returning a tuple with the caption string, and the rgb
+value for that caption. e.g., ( ‘car’, (255,0,0) ).
+Signature: f(BoundingBox3d) -&gt; Tuple[String, Tuple[3]]
+Default: None.</p>
+</dd>
+<dt>marker_fn: Callable, optional</dt><dd><p>Function taking a BoundingBox3d object and returning a tuple with the caption a marker id, and the rgb
 value for that marker. e.g., ( cv2.MARKER_DIAMOND, (255,0,0) ). Marker should be one of
-cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.</p>
+cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.
+Signature: f(BoundingBox3d) -&gt; Tuple[int,Tuple[3]]
+Default: None.</p>
 </dd>
-<dt>show_paths_on_bev: Bool, default: False</dt><dd><p>If true draw a path for each cuboid. Paths are stored in cuboid attributes under the ‘path’ key, i.e.,
+<dt>marker_scale: float, optional</dt><dd><p>Default: 0.5.</p>
+</dd>
+<dt>show_paths_on_bev: bool, optional</dt><dd><p>If true draw a path for each cuboid. Paths are stored in cuboid attributes under the ‘path’ key, i.e.,
 path = cuboid.attributes[‘path’], paths are themselves a list of pose objects transformed to the
-correct frame. This method does not handle creating or transforming the paths.</p>
+correct frame. This method does not handle creating or transforming the paths.
+Default: False.</p>
 </dd>
-<dt>bev_enter_offset_w: int, default: 0</dt><dd><p>Offset in pixels to move ego center in BEV.</p>
+<dt>bev_center_offset_w: int, optional</dt><dd><p>Offset in pixels to move ego center in BEV. Default: 0.</p>
 </dd>
-<dt>bev_center_offset_h: int, default: 0</dt><dd><p>Offset in pixels to move ego center in BEV.</p>
+<dt>bev_center_offset_h: int, optional</dt><dd><p>Offset in pixels to move ego center in BEV. Default: 0.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2166,14 +2290,13 @@ correct frame. This method does not handle creating or transforming the paths.</
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.visualization_utils.</span></span><span class="sig-name descname"><span class="pre">visualize_bounding_box_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounding_box_2d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.visualize_bounding_box_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>DGP-friendly bounding_box_2d visualization util</p>
 <dl class="simple">
-<dt>image: np.uint8 array</dt><dd><p>Image to visualize boxes on in BGR format
-shape: (H, W, 3)</p>
+<dt>image: np.ndarray</dt><dd><p>Image to visualize boxes on in BGR format. Data type is uint8. Shape is (H, W, 3).</p>
 </dd>
-<dt>bounding_box_2d: dgp.proto.annotations_pb2.BoundingBox2DAnnotations</dt><dd><p>Bounding box annotations</p>
+<dt>bounding_box_2d: dgp.proto.annotations_pb2.BoundingBox2DAnnotations</dt><dd><p>Bounding box annotations.</p>
 </dd>
-<dt>ontology: dgp.proto.ontology_pb2.Ontology</dt><dd><p>Ontology with which to visualize (for colors and class names)</p>
+<dt>ontology: dgp.proto.ontology_pb2.Ontology</dt><dd><p>Ontology with which to visualize (for colors and class names).</p>
 </dd>
-<dt>debug: bool, default: False</dt><dd><p>If True render image until key-press</p>
+<dt>debug: bool, optional</dt><dd><p>If True render image until key-press. Default: False.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2189,26 +2312,28 @@ shape: (H, W, 3)</p>
 <dd><p>Create camera visualization that shows 3D bounding boxes, and optionally projected pointcloud.
 Parameters
 ———-
-camera_datums: List[OrderedDict], default: None</p>
+camera_datums: List[OrderedDict]</p>
 <blockquote>
 <div><p>List of camera datums as a dictionary.</p>
 </div></blockquote>
 <dl class="simple">
-<dt>id_to_name: OrderedDict, default: None</dt><dd><p>Mapping from class IDs to class names.</p>
+<dt>id_to_name: OrderedDict</dt><dd><p>Mapping from class IDs to class names.</p>
 </dd>
-<dt>lidar_datums: List[OrderedDict] or None, default: None</dt><dd><p>List of lidar datums as a dictionary. If given, then draw pointcloud contained in all datums.</p>
+<dt>lidar_datums: List[OrderedDict] or None, optional</dt><dd><p>List of lidar datums as a dictionary. If given, then draw pointcloud contained in all datums. Default: None.</p>
 </dd>
-<dt>rgb_resize_factor: float, default: 1.0</dt><dd><p>Resize images by this factor before tiling them into a single panel.</p>
+<dt>rgb_resize_factor: float, optional</dt><dd><p>Resize images by this factor before tiling them into a single panel. Default: 1.0.</p>
 </dd>
-<dt>bbox3d_font_scale: float, default: 1.0</dt><dd><p>Font scale used for text labels.</p>
+<dt>bbox3d_font_scale: float, optional</dt><dd><p>Font scale used for text labels. Default: 1.0.</p>
 </dd>
-<dt>bbox3d_line_thickness: int, default: 4</dt><dd><p>Thickness of lines used for drawing 3D bounding boxes.</p>
+<dt>bbox3d_line_thickness: int, optional</dt><dd><p>Thickness of lines used for drawing 3D bounding boxes. Default: 4.</p>
 </dd>
-<dt>pc_rgb_norm_depth: int, default: 10</dt><dd><p>Depth value to normalize (inverse) pointcloud depths in color mapping.</p>
+<dt>pc_rgb_cmap: color_map</dt><dd><p>A matplotlib color map. Default: MPL_JET_CMAP.</p>
 </dd>
-<dt>pc_rgb_dilation: int, default: 3</dt><dd><p>Dilation factor applied on each point in pointcloud.</p>
+<dt>pc_rgb_norm_depth: int, optional</dt><dd><p>Depth value to normalize (inverse) pointcloud depths in color mapping. Default: 10.</p>
 </dd>
-<dt>radar_datums: List[OrderedDict], default: None</dt><dd><p>List of radar datums to visualize</p>
+<dt>pc_rgb_dilation: int, optional</dt><dd><p>Dilation factor applied on each point in pointcloud. Default: 3.</p>
+</dd>
+<dt>radar_datums: List[OrderedDict], optional</dt><dd><p>List of radar datums to visualize. Default: None.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2227,13 +2352,14 @@ shape: (H, W)</p>
 </dd>
 <dt>ontology: dgp.proto.ontology_pb2.Ontology</dt><dd><p>Ontology under which we want to visualize the semseg frame</p>
 </dd>
-<dt>void_class_id: int, default: 255</dt><dd><p>ID in <cite>semantic_segmentation_2d</cite> that denotes VOID or IGNORE</p>
+<dt>void_class_id: int, optional</dt><dd><p>ID in <cite>semantic_segmentation_2d</cite> that denotes VOID or IGNORE. Default: 255.</p>
 </dd>
-<dt>image: np.uint8 array, default: None</dt><dd><p>If specified then will blend image into visualization with weight <cite>alpha</cite></p>
+<dt>image: np.ndarray, optional</dt><dd><p>If specified then will blend image into visualization with weight <cite>alpha</cite>. Element type is uint8. Default: None.</p>
 </dd>
-<dt>alpha: float, default: 0.3</dt><dd><p>If <cite>image</cite> is specified, then will visualize an image/semseg blend with <cite>alpha</cite> weight given to image</p>
+<dt>alpha: float, optional</dt><dd><p>If <cite>image</cite> is specified, then will visualize an image/semseg blend with <cite>alpha</cite> weight given to image.
+Default: 0.3.</p>
 </dd>
-<dt>debug: bool, default: True</dt><dd><p>If True then visualize frame to display</p>
+<dt>debug: bool, optional</dt><dd><p>If True then visualize frame to display. Default: True.</p>
 </dd>
 </dl>
 <dl class="simple">

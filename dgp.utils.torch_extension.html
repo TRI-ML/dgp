@@ -175,19 +175,21 @@ back-projection.</p>
 <dd><p>Project 3D points from specified reference frame onto image plane
 TODO: Support sparse point cloud projection.</p>
 <dl class="simple">
-<dt>X: torch.FloatTensor (B3HW or B3N)</dt><dd><p>Batch of 3D spatial coordinates for each pixel in the specified
-reference frame.</p>
+<dt>X: torch.FloatTensor</dt><dd><p>Batch of 3D spatial coordinates for each pixel in the specified
+reference frame. Shape must be B3HW or B3N.</p>
 </dd>
-<dt>frame: str</dt><dd><p>Reference frame in which the input points (X) are specified.</p>
+<dt>frame: str, optional</dt><dd><p>Reference frame in which the input points (X) are specified. Default: ‘w’.</p>
 </dd>
-<dt>shape: tuple, default: None</dt><dd><p>Optional image shape.</p>
+<dt>shape: tuple, optional</dt><dd><p>Optional image shape. Default: None.</p>
 </dd>
 </dl>
-<dl>
-<dt>x: torch.FloatTensor (B2HW or B2N)</dt><dd><blockquote>
-<div><p>Batch of normalized 2D image coordinates for each pixel in the specified</p>
-</div></blockquote>
-<p>reference frame. Normalized points range from (-1,1).</p>
+<dl class="simple">
+<dt>x: torch.FloatTensor (B2HW or B2N)</dt><dd><p>Batch of normalized 2D image coordinates for each pixel in the specified
+reference frame. Normalized points range from (-1,1).</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if the shape of X is unsupported or if the frame type is unknown.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -197,14 +199,14 @@ reference frame.</p>
 <span class="sig-name descname"><span class="pre">reconstruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.reconstruct" title="Permalink to this definition">¶</a></dt>
 <dd><p>Back-project to 3D in specified reference frame, given depth map</p>
 <dl class="simple">
-<dt>target_depth: torch.FloatTensor (B1HW)</dt><dd><p>Depth image.</p>
+<dt>depth: torch.FloatTensor</dt><dd><p>Depth image. Shape must be B1HW.</p>
 </dd>
-<dt>frame: str</dt><dd><p>Reference frame in which the output 3-D points are specified.</p>
+<dt>frame: str, optional</dt><dd><p>Reference frame in which the output 3-D points are specified. Default: ‘c’.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>X: torch.FloatTensor (B3HW)</dt><dd><p>Batch of 3D spatial coordinates for each pixel in the specified
-reference frame.</p>
+<dt>X: torch.FloatTensor</dt><dd><p>Batch of 3D spatial coordinates for each pixel in the specified
+reference frame. Shape will be B3HW.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -228,7 +230,13 @@ reference frame.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.to">
 <span class="sig-name descname"><span class="pre">to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.to" title="Permalink to this definition">¶</a></dt>
-<dd><p>Move camera object to specified device</p>
+<dd><p>Move camera object to specified device.</p>
+<dl class="simple">
+<dt><a href="#id1"><span class="problematic" id="id2">*</span></a>args: tuple</dt><dd><p>Positional arguments to a to() call to move a tensor-like object to a particular device.</p>
+</dd>
+<dt><a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs: dict</dt><dd><p>Keyword arguments to a to() call to move a tensor-like object to a particular device.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -241,7 +249,7 @@ reference frame.</p>
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform 3D points into the camera reference frame.</p>
 <dl class="simple">
-<dt>X: torch.FloatTensor (B3*)</dt><dd><p>Points reference in the <cite>frame</cite> reference frame.</p>
+<dt>X: torch.FloatTensor</dt><dd><p>Points reference in the <cite>frame</cite> reference frame. Shape must be B3*.</p>
 </dd>
 <dt>frame: str</dt><dd><p>Reference frame in which the output 3-D points are specified.
 Options are ‘c’ and ‘w’ that correspond to camera and world
@@ -250,6 +258,10 @@ reference frames.</p>
 </dl>
 <dl class="simple">
 <dt>Xc: torch.FloatTensor (B3*)</dt><dd><p>Transformed 3D points into the camera reference frame.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if frame is an unsupported reference frame.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,16 +309,18 @@ reference frames.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.scale_intrinsics">
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.camera.</span></span><span class="sig-name descname"><span class="pre">scale_intrinsics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_scale</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.camera.scale_intrinsics" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scale intrinsic matrix (B33, or 33) given x and y-axes scales.
+<dd><p>Scale intrinsics matrix given x and y-axes scales.
 Note: This function works for both torch and numpy.</p>
 <dl class="simple">
+<dt>K: torch.FloatTensor, np.ndarray</dt><dd><p>An intrinsics matrix to scale. Shape is B33 or 33.</p>
+</dd>
 <dt>x_scale: float</dt><dd><p>x-axis scale factor.</p>
 </dd>
 <dt>y_scale: float</dt><dd><p>y-axis scale factor.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>torch.FloatTensor (33 or B33)</dt><dd><p>Scaled camera intrinsic matrix</p>
+<dt>torch.FloatTensor, np.ndarray</dt><dd><p>Scaled camera intrinsic matrix. Shape is B33 or 33.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -342,7 +356,11 @@ appropriately defined manifold.</p>
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">torch.float32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.identity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch of identity matrices.</p>
 <dl class="simple">
-<dt>N: int</dt><dd><p>Batch size.</p>
+<dt>B: int, optional</dt><dd><p>Batch size. Default: 1.</p>
+</dd>
+<dt>device: str, optional</dt><dd><p>A device for a tensor-like object; ex: “cpu”. Default: None.</p>
+</dd>
+<dt>dtype: optional</dt><dd><p>A data type for a tensor-like object. Default: torch.float.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -375,6 +393,12 @@ appropriately defined manifold.</p>
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.Pose.repeat">
 <span class="sig-name descname"><span class="pre">repeat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.repeat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Repeat the Pose tensor</p>
+<dl class="simple">
+<dt><a href="#id5"><span class="problematic" id="id6">*</span></a>args: tuple</dt><dd><p>Positional arguments to a repeat() call to repeat a tensor-like object along particular dimensions.</p>
+</dd>
+<dt><a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs: dict</dt><dd><p>Keyword arguments to a repeat() call to repeat a tensor-like object along particular dimension.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -391,6 +415,12 @@ appropriately defined manifold.</p>
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.Pose.to">
 <span class="sig-name descname"><span class="pre">to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move object to specified device</p>
+<dl class="simple">
+<dt><a href="#id9"><span class="problematic" id="id10">*</span></a>args: tuple</dt><dd><p>Positional arguments to a to() call to move a tensor-like object to a particular device.</p>
+</dd>
+<dt><a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs: dict</dt><dd><p>Keyword arguments to a to() call to move a tensor-like object to a particular device.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -398,7 +428,7 @@ appropriately defined manifold.</p>
 <span class="sig-name descname"><span class="pre">transform_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.transform_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform 3-D points from one frame to another via rigid-body transformation.</p>
 <dl class="simple">
-<dt>X0: torch.FloatTensor (B3N or B3HW)</dt><dd><p>3-D points in torch.FloatTensor (shaped either B3N or B3HW).</p>
+<dt>X0: torch.FloatTensor</dt><dd><p>3-D points in torch.FloatTensor (shaped either B3N or B3HW).</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -449,11 +479,11 @@ appropriately defined manifold.</p>
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.from_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a batched QuaternionPose from a batched homogeneous matrix.</p>
 <dl class="simple">
-<dt>value: torch.FloatTensor (B44)</dt><dd><p>Batched homogeneous matrix.</p>
+<dt>value: torch.FloatTensor</dt><dd><p>Batched homogeneous matrix. Shape is B44.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>pose: QuaternionPose with batch B</dt><dd><p>QuaternionPose batch.</p>
+<dt>pose: QuaternionPosec</dt><dd><p>QuaternionPose batch. Batch dimension is shape B.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -463,7 +493,11 @@ appropriately defined manifold.</p>
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">torch.float32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.identity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch of identity matrices.</p>
 <dl class="simple">
-<dt>N: int</dt><dd><p>Batch size.</p>
+<dt>B: int, optional</dt><dd><p>Batch size. Default: 1.</p>
+</dd>
+<dt>device: str</dt><dd><p>A device to send a tensor-like object to. Ex: “cpu”.</p>
+</dd>
+<dt>dtype: optional</dt><dd><p>A data type for a tensor-like object. Default: torch.float.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -496,6 +530,10 @@ Returns:</p>
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.QuaternionPose.repeat">
 <span class="sig-name descname"><span class="pre">repeat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.repeat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Repeat the QuaternionPose tensor</p>
+<dl class="simple">
+<dt>B: int</dt><dd><p>The size of the batch dimension.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -512,6 +550,12 @@ Returns:</p>
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.QuaternionPose.to">
 <span class="sig-name descname"><span class="pre">to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move object to specified device</p>
+<dl class="simple">
+<dt><a href="#id13"><span class="problematic" id="id14">*</span></a>args: tuple</dt><dd><p>Positional arguments to a to() call to move a tensor-like object to a particular device.</p>
+</dd>
+<dt><a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs: dict</dt><dd><p>Keyword arguments to a to() call to move a tensor-like object to a particular device.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -521,7 +565,7 @@ Returns:</p>
 <p>Note: This function can be modified to do batched rotation operation
 with quaternions directly.</p>
 <dl class="simple">
-<dt>X0: torch.FloatTensor (B3N or B3HW)</dt><dd><p>3-D points in torch.FloatTensor (shaped either B3N or B3HW).</p>
+<dt>X0: torch.FloatTensor</dt><dd><p>3-D points in torch.FloatTensor (shaped either B3N or B3HW).</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -564,7 +608,7 @@ with quaternions directly.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>T01: torch.FloatTensor (B44)</dt><dd><p>Input batch of transformation tensors.</p>
+<dt>T01: torch.FloatTensor</dt><dd><p>Input batch of transformation tensors. Shape is B44.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -579,13 +623,19 @@ with quaternions directly.</p>
 <dd><p>Normalizes a quaternion.
 The quaternion should be in (w, x, y, z) format.</p>
 <dl class="simple">
-<dt>quaternion: torch.FloatTensor (B4)</dt><dd><p>Input quaternion to normalize.</p>
+<dt>quaternion: torch.FloatTensor</dt><dd><p>Input quaternion to normalize. Shape is B4.</p>
 </dd>
-<dt>eps: float, default: 1e-12</dt><dd><p>Epsilon value to avoid zero division.</p>
+<dt>eps: float, optional</dt><dd><p>Epsilon value to avoid zero division. Default: 1e-12.</p>
 </dd>
 </dl>
 <dl class="simple">
 <dt>normalized_quaternion: torch.FloatTensor (B4)</dt><dd><p>Normalized quaternion.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>Raised if quaternion is not a torch.Tensor.</p>
+</dd>
+<dt>ValueError</dt><dd><p>Raised if the shape of quaternion is not supported.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -595,7 +645,7 @@ The quaternion should be in (w, x, y, z) format.</p>
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.pose.</span></span><span class="sig-name descname"><span class="pre">qinv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.qinv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the quaternion conjugate. (w, x, y, z)</p>
 <dl class="simple">
-<dt>quaternion: torch.FloatTensor (B4)</dt><dd><p>Input quaternion to invert.</p>
+<dt>q: torch.FloatTensor</dt><dd><p>Input quaternion to invert. Shape is B4.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -611,9 +661,9 @@ The quaternion should be in (w, x, y, z) format.</p>
 Expects two equally-sized tensors of shape (<em>, 4), where * denotes any number of dimensions.
 Returns q*r as a tensor of shape (</em>, 4).</p>
 <dl class="simple">
-<dt>q: torch.FloatTensor (B4)</dt><dd><p>Input quaternion to use for rotation.</p>
+<dt>q: torch.FloatTensor</dt><dd><p>Input quaternion to use for rotation. Shape is B4.</p>
 </dd>
-<dt>r: torch.FloatTensor (B4)</dt><dd><p>Second quaternion to use for rotation composition.</p>
+<dt>r: torch.FloatTensor</dt><dd><p>Second quaternion to use for rotation composition. Shape is B4.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -628,11 +678,11 @@ Returns q*r as a tensor of shape (</em>, 4).</p>
 <dd><p>Rotate vector(s) v about the rotation described by quaternion(s) q.
 Expects a tensor of shape (<em>, 4) for q and a tensor of shape (</em>, 3) for v,
 where * denotes any number of dimensions.
-Returns a tensor of shape (<a href="#id1"><span class="problematic" id="id2">*</span></a>, 3).</p>
+Returns a tensor of shape (<a href="#id17"><span class="problematic" id="id18">*</span></a>, 3).</p>
 <dl class="simple">
-<dt>q: torch.FloatTensor (B4)</dt><dd><p>Input quaternion to use for rotation.</p>
+<dt>q: torch.FloatTensor</dt><dd><p>Input quaternion to use for rotation. Shape is B4.</p>
 </dd>
-<dt>v: torch.FloatTensor (B3)</dt><dd><p>Input vector to rotate with.</p>
+<dt>v: torch.FloatTensor</dt><dd><p>Input vector to rotate with. Shape is B3.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -647,11 +697,17 @@ Returns a tensor of shape (<a href="#id1"><span class="problematic" id="id2">*</
 <dd><p>Converts a quaternion to a rotation matrix.
 The quaternion should be in (w, x, y, z) format.</p>
 <dl class="simple">
-<dt>quaternion: torch.FloatTensor (B4)</dt><dd><p>Input quaternion to convert.</p>
+<dt>quaternion: torch.FloatTensor</dt><dd><p>Input quaternion to convert. Shape is B4.</p>
 </dd>
 </dl>
 <dl class="simple">
 <dt>rotation_matrix: torch.FloatTensor (B33)</dt><dd><p>Batched rotation matrix.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>Raised if quaternion is not a torch.Tensor.</p>
+</dd>
+<dt>ValueError</dt><dd><p>Raised if the shape of quaternion is not supported.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -662,13 +718,19 @@ The quaternion should be in (w, x, y, z) format.</p>
 <dd><p>Convert 3x3 rotation matrix to 4d quaternion vector.
 The quaternion vector has components in (w, x, y, z) format.</p>
 <dl class="simple">
-<dt>rotation_matrix: torch.FloatTensor (B33)</dt><dd><p>Input rotation matrix to convert.</p>
+<dt>rotation_matrix: torch.FloatTensor</dt><dd><p>Input rotation matrix to convert. Shape is B33.</p>
 </dd>
-<dt>eps: float, default: 1e-8</dt><dd><p>Epsilon value to avoid zero division.</p>
+<dt>eps: float, optional</dt><dd><p>Epsilon value to avoid zero division. Default: 1e-8.</p>
 </dd>
 </dl>
 <dl class="simple">
 <dt>quaternion: torch.FloatTensor (B4)</dt><dd><p>Batched rotation in quaternion.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>Raised if rotation_matrix is not a torch.Tensor.</p>
+</dd>
+<dt>ValueError</dt><dd><p>Raised if the shape of rotation_matrix is unsupported.</p>
 </dd>
 </dl>
 </dd></dl>

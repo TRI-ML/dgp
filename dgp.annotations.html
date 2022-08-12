@@ -318,6 +318,14 @@ for more details.</p>
 <dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.project">
 <span class="sig-name descname"><span class="pre">project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.project" title="Permalink to this definition">¶</a></dt>
 <dd><p>Project bounding boxes into a camera and get back 2D bounding boxes in the frustum.</p>
+<dl class="simple">
+<dt>camera: Camera</dt><dd><p>The Camera instance to project into.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>NotImplementedError</dt><dd><p>Unconditionally.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -325,13 +333,20 @@ for more details.</p>
 <span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_thickness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.render" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render the 3D boxes in this annotation on the image in place</p>
 <dl class="simple">
-<dt>image: np.uint8 array</dt><dd><p>Image (H, W, C) to render the bounding box onto. We assume the input image is in <em>RGB</em> format</p>
+<dt>image: np.uint8</dt><dd><p>Image (H, W, C) to render the bounding box onto. We assume the input image is in <em>RGB</em> format.
+Element type must be uint8.</p>
 </dd>
 <dt>camera: dgp.utils.camera.Camera</dt><dd><p>Camera used to render the bounding box.</p>
 </dd>
-<dt>line_thickness: int, default: 2</dt><dd><p>Thickness of bounding box lines.</p>
+<dt>line_thickness: int, optional</dt><dd><p>Thickness of bounding box lines. Default: 2.</p>
 </dd>
-<dt>font_scale: float, default: 0.5</dt><dd><p>Font scale used in text labels.</p>
+<dt>font_scale: float, optional</dt><dd><p>Font scale used in text labels. Default: 0.5.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if image is not a 3-channel uint8 numpy array.</p>
+</dd>
+<dt>TypeError</dt><dd><p>Raised if camera is not an instance of Camera.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -340,6 +355,10 @@ for more details.</p>
 <dt class="sig sig-object py" id="dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.bounding_box_3d_annotation.BoundingBox3DAnnotationList.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize Annotation object and saved to specified directory. Annotations are saved in format &lt;save_dir&gt;/&lt;sha&gt;.&lt;ext&gt;</p>
+<dl class="simple">
+<dt>save_dir: str</dt><dd><p>A pathname to a directory to save the annotation object into.</p>
+</dd>
+</dl>
 <dl class="simple">
 <dt>output_annotation_file: str</dt><dd><p>Full path to saved annotation</p>
 </dd>
@@ -660,6 +679,12 @@ specifications for more details. Can be constructed from file or from deserializ
 <dt>ontology_file: str</dt><dd><p>Path to ontology JSON</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt>FileNotFoundError</dt><dd><p>Raised if ontology_file does not exist.</p>
+</dd>
+<dt>Exception</dt><dd><p>Raised if we could not open the ontology file for some reason.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -845,7 +870,7 @@ look like (e.g. if index_to_label is defined as a proto message).</p>
 </dd>
 <dt>mask_shape: list[int]</dt><dd><p>Height and width of the mask. Only used to create an empty panoptic image when masklist is empty.</p>
 </dd>
-<dt>panoptic_image_dtype: type, default: np.uint16</dt><dd><p>Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image.</p>
+<dt>panoptic_image_dtype: type, optional</dt><dd><p>Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image. Default: np.uint16.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -885,7 +910,7 @@ Format/data structure for annotations will vary based on task.</p>
 </dd>
 <dt>ontology: Ontology</dt><dd><p>Ontology for given annotation</p>
 </dd>
-<dt>panoptic_image_dtype: type, default: np.uint16</dt><dd><p>Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image.</p>
+<dt>panoptic_image_dtype: type, optional</dt><dd><p>Numpy data type (e.g. np.uint16, np.uint32, etc) of panoptic image. Default: np.uint16.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -906,6 +931,10 @@ Format/data structure for annotations will vary based on task.</p>
 <dd><p>Parses <cite>self.panoptic_image</cite> to produce instance_masks, class_names, and instance_ids</p>
 <dl class="simple">
 <dt>instance_masks: list[InstanceMask2D]</dt><dd><p>Instance mask for each instance in panoptic annotation.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if an instance ID, parsed from a label, is negative.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1045,7 +1074,7 @@ color for ‘DynamicObject’ will be the original color for ‘Car’</p>
 <dd><dl>
 <dt>bounding_box_annotations: BoundingBox2DAnnotationList or BoundingBox3DAnnotationList</dt><dd><p>Annotations to remap</p>
 </dd>
-<dt>lookup: dict</dt><dd><p>Lookup from old class names to new class names
+<dt>lookup_table: dict</dt><dd><p>Lookup from old class names to new class names
 e.g.:</p>
 <blockquote>
 <div><dl class="simple">
@@ -1072,9 +1101,9 @@ e.g.:</p>
 <dt class="sig sig-object py" id="dgp.annotations.transform_utils.remap_instance_segmentation_2d_annotation">
 <span class="sig-prename descclassname"><span class="pre">dgp.annotations.transform_utils.</span></span><span class="sig-name descname"><span class="pre">remap_instance_segmentation_2d_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance_segmentation_annotation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookup_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remapped_ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transform_utils.remap_instance_segmentation_2d_annotation" title="Permalink to this definition">¶</a></dt>
 <dd><dl>
-<dt>instance_segmentation_2d_annotation: PanopticSegmentation2DAnnotation</dt><dd><p>Annotation to remap</p>
+<dt>instance_segmentation_annotation: PanopticSegmentation2DAnnotation</dt><dd><p>Annotation to remap</p>
 </dd>
-<dt>lookup: dict</dt><dd><p>Lookup from old class names to new class names
+<dt>lookup_table: dict</dt><dd><p>Lookup from old class names to new class names
 e.g.:</p>
 <blockquote>
 <div><dl class="simple">
@@ -1101,9 +1130,9 @@ e.g.:</p>
 <dt class="sig sig-object py" id="dgp.annotations.transform_utils.remap_semantic_segmentation_2d_annotation">
 <span class="sig-prename descclassname"><span class="pre">dgp.annotations.transform_utils.</span></span><span class="sig-name descname"><span class="pre">remap_semantic_segmentation_2d_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semantic_segmentation_annotation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookup_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_ontology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remapped_ontology</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transform_utils.remap_semantic_segmentation_2d_annotation" title="Permalink to this definition">¶</a></dt>
 <dd><dl>
-<dt>semantic_segmentation_2d_annotation: SemanticSegmentation2DAnnotation</dt><dd><p>Annotation to remap</p>
+<dt>semantic_segmentation_annotation: SemanticSegmentation2DAnnotation</dt><dd><p>Annotation to remap</p>
 </dd>
-<dt>lookup: dict</dt><dd><p>Lookup from old class names to new class names
+<dt>lookup_table: dict</dt><dd><p>Lookup from old class names to new class names
 e.g.:</p>
 <blockquote>
 <div><dl class="simple">
@@ -1234,16 +1263,20 @@ If specified, the ontology will be remapped to the given remapped_ontology_table
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.annotations.transforms.OntologyMapper.transform_datum">
-<span class="sig-name descname"><span class="pre">transform_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.OntologyMapper.transform_datum" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">transform_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.OntologyMapper.transform_datum" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
-<dt>data: OrderedDict</dt><dd><p>Dictionary containing raw data and annotations, with keys such as:
+<dt>datum: OrderedDict</dt><dd><p>Dictionary containing raw data and annotations, with keys such as:
 ‘rgb’, ‘intrinsics’, ‘bounding_box_2d’.
 All annotation_keys in <cite>self.lookup_table</cite> (and <cite>self.remapped_ontology_table</cite>)
 are expected to be contained</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>data: OrderedDict</dt><dd><p>Same dictionary but with annotations in <cite>self.lookup_table</cite> remapped to desired ontologies</p>
+<dt>datum: OrderedDict</dt><dd><p>Same dictionary but with annotations in <cite>self.lookup_table</cite> remapped to desired ontologies</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if the datum to remap does not contain all expected annotations.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1277,6 +1310,10 @@ The bounding boxes are brought into the target datum frame.</p>
 </dl>
 <dl class="simple">
 <dt>new_sample: list[OrderedDict]</dt><dd><p>Multimodal sample with updated 3D bounding box annotations.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if there are multiple instances of the same kind of datum in a sample.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1325,6 +1362,10 @@ If False, then use “modal” bounding box (i.e. tight bounding box of instance
 </dl>
 <dl class="simple">
 <dt>new_sample: list[OrderedDict]</dt><dd><p>Multimodal sample with all detection annotations are filtered.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>Raised if a 2D or 3D bounding box instance lacks any required instance IDs.</p>
 </dd>
 </dl>
 </dd></dl>
