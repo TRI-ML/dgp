@@ -3,8 +3,15 @@ import numpy as np
 
 from dgp.annotations.base_annotation import Annotation
 from dgp.annotations.ontology import KeyPointOntology
-from dgp.proto.annotations_pb2 import (KeyPoint2DAnnotation, KeyPoint2DAnnotations)
-from dgp.utils.protobuf import (generate_uid_from_pbobject, open_pbobject, save_pbobject_as_json)
+from dgp.proto.annotations_pb2 import (
+    KeyPoint2DAnnotation,
+    KeyPoint2DAnnotations,
+)
+from dgp.utils.protobuf import (
+    generate_uid_from_pbobject,
+    open_pbobject,
+    save_pbobject_as_json,
+)
 from dgp.utils.structures.key_point_2d import KeyPoint2D
 
 

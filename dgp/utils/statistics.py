@@ -5,7 +5,11 @@ from collections import OrderedDict, defaultdict
 from dgp import ONTOLOGY_FOLDER
 from dgp.annotations.ontology import Ontology, open_ontology_pbobject
 from dgp.proto import annotations_pb2
-from dgp.utils.protobuf import (generate_uid_from_pbobject, open_pbobject, open_remote_pb_object)
+from dgp.utils.protobuf import (
+    generate_uid_from_pbobject,
+    open_pbobject,
+    open_remote_pb_object,
+)
 
 
 def get_scene_statistics(scene, verbose=True):

@@ -11,7 +11,10 @@ from dgp.proto.dataset_pb2 import Ontology as OntologyV1Pb2
 from dgp.proto.ontology_pb2 import FeatureOntology as FeatureOntologyPb2
 from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
 from dgp.proto.scene_pb2 import Scene
-from dgp.utils.cloud.s3 import (convert_uri_to_bucket_path, get_string_from_s3_file)
+from dgp.utils.cloud.s3 import (
+    convert_uri_to_bucket_path,
+    get_string_from_s3_file,
+)
 
 
 def open_pbobject(path, pb_class):

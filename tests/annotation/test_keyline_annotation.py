@@ -1,9 +1,10 @@
 import os
+
 import numpy as np
 import pytest
+
 from dgp.annotations.key_line_2d_annotation import KeyLine2DAnnotationList
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
-
 from dgp.utils.structures.key_line_2d import KeyLine2D
 from tests import TEST_DATA_DIR
 

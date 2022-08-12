@@ -1,0 +1,43 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+default_language_version:
+  python: python3
+  # Node 18+ requires GLIBC 2.18 which is only available by default in
+  # Ubuntu 18.10+. Fix to Node 17 while we still use Ubuntu 18.04.
+  node: 17.0.0
+
+default_stages: [commit]
+
+repos:
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v9.0.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
+        additional_dependencies: ["@commitlint/config-conventional"]
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        exclude: _pb2\.py$
+  - repo: https://github.com/PyCQA/pylint
+    rev: v2.14.5
+    hooks:
+      - id: pylint
+        args: [--rcfile=.pylintrc]
+  - repo: https://github.com/pre-commit/mirrors-yapf
+    rev: v0.32.0
+    hooks:
+      - id: yapf
+        # pre-commit requires that we split args at whitespce boundaries.
+        args: [
+          --style, .style.yapf,
+          -i,
+          -e, '*pb2.py',
+          -e, '*pb2_grpc.py',
+          -e, '*eggs*.py',
+          -e, '*env*',
+          -e, 'build/*'
+        ]
+        additional_dependencies: [toml]

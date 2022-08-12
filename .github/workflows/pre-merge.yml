@@ -31,11 +31,10 @@ jobs:
           pip install cython==0.29.21 numpy==1.19.4
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
-      - name: Check python code formatting with YAPF
-        # Documentation: https://github.com/AlexanderMelde/yapf-action
-        uses: AlexanderMelde/yapf-action@master
-        with:
-          args: --style .style.yapf --verbose --exclude '*pb2.py' --exclude '*pb2_grpc.py' --exclude '*eggs*.py' --exclude '*env*' --exclude 'build/*'
+      - name: Lint all files with pre-commit
+        run: |
+          pre-commit install
+          pre-commit run --all-files
       - name: Lint code base with SuperLinter
         # Documentation: https://github.com/github/super-linter#how-to-use
         uses: github/super-linter@v4
@@ -53,3 +52,4 @@ jobs:
           VALIDATE_PYTHON_FLAKE8: false # Formatted by YAPF.
           VALIDATE_PYTHON_ISORT: false # Formatted by YAPF.
           VALIDATE_PYTHON_MYPY: false
+          VALIDATE_PYTHON_PYLINT: false # Handled by pre-commit.

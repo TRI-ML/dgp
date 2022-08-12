@@ -1,5 +1,7 @@
 import os
+
 import pytest
+
 from dgp.annotations.ontology import BoundingBoxOntology, Ontology
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
 from tests import TEST_DATA_DIR

@@ -1,8 +1,11 @@
 import os
+
 import numpy as np
 import pytest
-from dgp.annotations.bounding_box_2d_annotation import BoundingBox2DAnnotationList
 
+from dgp.annotations.bounding_box_2d_annotation import (
+    BoundingBox2DAnnotationList,
+)
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
 from dgp.utils.structures.bounding_box_2d import BoundingBox2D
 from tests import TEST_DATA_DIR

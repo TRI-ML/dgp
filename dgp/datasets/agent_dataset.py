@@ -14,9 +14,17 @@ import numpy as np
 from diskcache import Cache
 
 from dgp import DGP_CACHE_DIR, FEATURE_ONTOLOGY_FOLDER, ONTOLOGY_FOLDER
-from dgp.agents import (AGENT_REGISTRY, AGENT_TYPE_TO_ANNOTATION_TYPE, ANNOTATION_TYPE_TO_AGENT_TYPE)
+from dgp.agents import (
+    AGENT_REGISTRY,
+    AGENT_TYPE_TO_ANNOTATION_TYPE,
+    ANNOTATION_TYPE_TO_AGENT_TYPE,
+)
 from dgp.annotations import ONTOLOGY_REGISTRY
-from dgp.constants import (ALL_FEATURE_TYPES, ANNOTATION_TYPE_ID_TO_KEY, FEATURE_TYPE_ID_TO_KEY)
+from dgp.constants import (
+    ALL_FEATURE_TYPES,
+    ANNOTATION_TYPE_ID_TO_KEY,
+    FEATURE_TYPE_ID_TO_KEY,
+)
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
 from dgp.features import FEATURE_ONTOLOGY_REGISTRY
 from dgp.proto import dataset_pb2
