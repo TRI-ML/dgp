@@ -56,11 +56,11 @@ def assert_between(value, low, high, low_inclusive=True, high_inclusive=True):
     high : comparable
         Range upper bound.
 
-    low_inclusive : bool, default: True
-        Allow case when value == low.
+    low_inclusive : bool, optional
+        Allow case when value == low. Default: True.
 
-    high_inclusive : bool, default: True
-        Allow case when value == high
+    high_inclusive : bool, optional
+        Allow case when value == high. Default: True.
     """
     if low_inclusive:
         assert_greater_equal(value, low)

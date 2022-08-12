@@ -70,6 +70,13 @@ class Ontology:
         ----------
         ontology_file: str
             Path to ontology JSON
+
+        Raises
+        ------
+        FileNotFoundError
+            Raised if ontology_file does not exist.
+        Exception
+            Raised if we could not open the ontology file for some reason.
         """
         if os.path.exists(ontology_file):
             ontology_pb2 = open_ontology_pbobject(ontology_file)

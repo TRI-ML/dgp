@@ -16,7 +16,7 @@ from dgp.utils.colors import get_unique_colors
         (3, False, 'Paired', [(166, 206, 227), (31, 120, 180), (178, 223, 138)]),
     ]
 )
-def test_get_unique_colors(num_colors, in_bgr, cmap, expected_map):
+def test_get_unique_colors(num_colors, in_bgr, cmap, expected_map):  # pylint: disable=missing-any-param-doc
     '''
     Uses parametrized testing to run multiple cases for colorbar retreival
     '''

@@ -35,11 +35,13 @@ def construct_K(fx, fy, cx, cy, dtype=torch.float, device=None):
 
 
 def scale_intrinsics(K, x_scale, y_scale):
-    """Scale intrinsic matrix (B33, or 33) given x and y-axes scales.
+    """Scale intrinsics matrix given x and y-axes scales.
     Note: This function works for both torch and numpy.
 
     Parameters
     ----------
+    K: torch.FloatTensor, np.ndarray
+        An intrinsics matrix to scale. Shape is B33 or 33.
     x_scale: float
         x-axis scale factor.
     y_scale: float
@@ -47,8 +49,8 @@ def scale_intrinsics(K, x_scale, y_scale):
 
     Returns
     -------
-    torch.FloatTensor (33 or B33)
-        Scaled camera intrinsic matrix
+    torch.FloatTensor, np.ndarray
+        Scaled camera intrinsic matrix. Shape is B33 or 33.
     """
     K[..., 0, 0] *= x_scale
     K[..., 1, 1] *= y_scale
@@ -87,7 +89,15 @@ class Camera(nn.Module):
         assert issubclass(type(self.p_cw), (Pose, QuaternionPose)), 'p_cw needs to be a Pose type'
 
     def to(self, *args, **kwargs):
-        """Move camera object to specified device"""
+        """Move camera object to specified device.
+
+        Parameters
+        ----------
+        *args: tuple
+            Positional arguments to a to() call to move a tensor-like object to a particular device.
+        **kwargs: dict
+            Keyword arguments to a to() call to move a tensor-like object to a particular device.
+        """
         self.K = self.K.to(*args, **kwargs)
         self.p_cw = self.p_cw.to(*args, **kwargs)
         return self
@@ -194,8 +204,8 @@ class Camera(nn.Module):
 
         Parameters
         ----------
-        X: torch.FloatTensor (B3*)
-            Points reference in the `frame` reference frame.
+        X: torch.FloatTensor
+            Points reference in the `frame` reference frame. Shape must be B3*.
 
         frame: str
             Reference frame in which the output 3-D points are specified.
@@ -203,9 +213,14 @@ class Camera(nn.Module):
             reference frames.
 
         Returns
-        ----------
+        -------
         Xc: torch.FloatTensor (B3*)
             Transformed 3D points into the camera reference frame.
+
+        Raises
+        ------
+        ValueError
+            Raised if frame is an unsupported reference frame.
         """
         if frame == 'c':
             Xc = X
@@ -220,17 +235,17 @@ class Camera(nn.Module):
 
         Parameters
         ----------
-        target_depth: torch.FloatTensor (B1HW)
-            Depth image.
+        depth: torch.FloatTensor
+            Depth image. Shape must be B1HW.
 
-        frame: str
-            Reference frame in which the output 3-D points are specified.
+        frame: str, optional
+            Reference frame in which the output 3-D points are specified. Default: 'c'.
 
         Returns
-        ----------
-        X: torch.FloatTensor (B3HW)
+        -------
+        X: torch.FloatTensor
             Batch of 3D spatial coordinates for each pixel in the specified
-            reference frame.
+            reference frame. Shape will be B3HW.
         """
         B, C, H, W = depth.shape
         assert C == 1
@@ -254,21 +269,26 @@ class Camera(nn.Module):
 
         Parameters
         ----------
-        X: torch.FloatTensor (B3HW or B3N)
+        X: torch.FloatTensor
             Batch of 3D spatial coordinates for each pixel in the specified
-            reference frame.
+            reference frame. Shape must be B3HW or B3N.
 
-        frame: str
-            Reference frame in which the input points (X) are specified.
+        frame: str, optional
+            Reference frame in which the input points (X) are specified. Default: 'w'.
 
-        shape: tuple, default: None
-            Optional image shape.
+        shape: tuple, optional
+            Optional image shape. Default: None.
 
         Returns
-        ----------
+        -------
         x: torch.FloatTensor (B2HW or B2N)
             Batch of normalized 2D image coordinates for each pixel in the specified
-           reference frame. Normalized points range from (-1,1).
+            reference frame. Normalized points range from (-1,1).
+
+        Raises
+        ------
+        ValueError
+            Raised if the shape of X is unsupported or if the frame type is unknown.
         """
         # If X.dim == 3, i.e. X shape is B3N, then we expect the image shape to be provided.
         # normalize and assume that X can be either B3HW or B3N

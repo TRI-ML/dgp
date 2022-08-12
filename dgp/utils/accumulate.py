@@ -78,9 +78,10 @@ def accumulate_points(point_datums, target_datum, transform_boxes=False):
     target_datum: dict
         A single datum to use as the reference frame and reference time.
 
-    transform_boxes: bool, default: False
+    transform_boxes: bool, optional
         Flag to denote if cuboid annotations and instance ids should be used to warp points to the target frame.
         Only valid for Lidar.
+        Default: False.
 
     Returns
     -------

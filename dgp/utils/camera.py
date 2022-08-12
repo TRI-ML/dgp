@@ -18,11 +18,11 @@ def generate_depth_map(camera, Xw, shape):
     camera: Camera
         Camera object with appropriately set extrinsics wrt world.
 
-    Xw: np.ndarray (N x 3)
-        3D point cloud (x, y, z) in the world coordinate.
+    Xw: np.ndarray
+        3D point cloud (x, y, z) in the world coordinate. Shape is (N x 3).
 
-    shape: np.ndarray (H, W)
-        Output depth image shape.
+    shape: np.ndarray
+        Output depth image shape as (H, W).
 
     Returns
     -------
@@ -171,11 +171,11 @@ class Camera:
         p_cw: Pose
             Pose from world to camera frame.
 
-        distortion_params: dict[str, float], default: None
-            Optional dictionary of distortion parameters k1,k2,.. etc.
+        distortion: dict[str, float], optional
+            Optional dictionary of distortion parameters k1,k2,.. etc. Default: None.
 
         Returns
-        ----------
+        -------
         Camera
             Camera object with relevant intrinsics.
         """
@@ -241,11 +241,11 @@ class Camera:
 
         Parameters
         ----------
-        Xw: np.ndarray (N x 3)
-            3D spatial coordinates for each pixel in the world reference frame.
+        Xw: np.ndarray
+            3D spatial coordinates for each pixel in the world reference frame. Shape is (N x 3).
 
         Returns
-        ----------
+        -------
         x: np.ndarray (N x 2)
             2D image coordinates for each pixel in the specified
            reference frame.
@@ -277,14 +277,15 @@ class Camera:
 
         Parameters
         ----------
-        K: np.ndarray (3x3)
-            Camera calibration matrix.
+        K: np.ndarray
+            Camera calibration matrix. Shape is (3 x 3).
 
         x_scale: float
             x-axis scale factor.
 
         y_scale: float
             y-axis scale factor.
+
         Returns
         -------
         np.array of shape (3x3)
@@ -318,14 +319,14 @@ class Camera:
 
         Parameters
         ----------
-        X: np.ndarray (N x 3)
-            3D spatial coordinates for each pixel IN THE CAMERA FRAME
+        X: np.ndarray
+            3D spatial coordinates for each pixel IN THE CAMERA FRAME. Shape is (N x 3).
 
         height: int
-            Height of image
+            Height of image.
 
         width: int
-            Width of image
+            Width of image.
 
         Returns
         -------

@@ -17,11 +17,11 @@ def qmul(q, r):
 
     Parameters
     ----------
-    q: torch.FloatTensor (B4)
-        Input quaternion to use for rotation.
+    q: torch.FloatTensor
+        Input quaternion to use for rotation. Shape is B4.
 
-    r: torch.FloatTensor (B4)
-        Second quaternion to use for rotation composition.
+    r: torch.FloatTensor
+        Second quaternion to use for rotation composition. Shape is B4.
 
     Returns
     ----------
@@ -52,14 +52,14 @@ def qrot(q, v):
 
     Parameters
     ----------
-    q: torch.FloatTensor (B4)
-        Input quaternion to use for rotation.
+    q: torch.FloatTensor
+        Input quaternion to use for rotation. Shape is B4.
 
-    v: torch.FloatTensor (B3)
-        Input vector to rotate with.
+    v: torch.FloatTensor
+        Input vector to rotate with. Shape is B3.
 
     Returns
-    ----------
+    -------
     vector: torch.FloatTensor (B3)
         Rotated vector.
     """
@@ -82,11 +82,11 @@ def qinv(q):
 
     Parameters
     ----------
-    quaternion: torch.FloatTensor (B4)
-        Input quaternion to invert.
+    q: torch.FloatTensor
+        Input quaternion to invert. Shape is B4.
 
     Returns
-    ----------
+    -------
     quaternion: torch.FloatTensor (B4)
         Inverted quaternion.
     """
@@ -100,13 +100,20 @@ def quaternion_to_rotation_matrix(quaternion):
 
     Parameters
     ----------
-    quaternion: torch.FloatTensor (B4)
-        Input quaternion to convert.
+    quaternion: torch.FloatTensor
+        Input quaternion to convert. Shape is B4.
 
     Returns
     ----------
     rotation_matrix: torch.FloatTensor (B33)
         Batched rotation matrix.
+
+    Raises
+    ------
+    TypeError
+        Raised if quaternion is not a torch.Tensor.
+    ValueError
+        Raised if the shape of quaternion is not supported.
     """
     if not isinstance(quaternion, torch.Tensor):
         raise TypeError("Input type is not a torch.Tensor. Got {}".format(type(quaternion)))
@@ -151,16 +158,23 @@ def rotation_matrix_to_quaternion(rotation_matrix, eps=1e-8):
 
     Parameters
     ----------
-    rotation_matrix: torch.FloatTensor (B33)
-        Input rotation matrix to convert.
+    rotation_matrix: torch.FloatTensor
+        Input rotation matrix to convert. Shape is B33.
 
-    eps: float, default: 1e-8
-        Epsilon value to avoid zero division.
+    eps: float, optional
+        Epsilon value to avoid zero division. Default: 1e-8.
 
     Returns
     ----------
     quaternion: torch.FloatTensor (B4)
         Batched rotation in quaternion.
+
+    Raises
+    ------
+    TypeError
+        Raised if rotation_matrix is not a torch.Tensor.
+    ValueError
+        Raised if the shape of rotation_matrix is unsupported.
     """
     if not isinstance(rotation_matrix, torch.Tensor):
         raise TypeError("Input type is not a torch.Tensor. Got {}".format(type(rotation_matrix)))
@@ -223,16 +237,23 @@ def normalize_quaternion(quaternion, eps=1e-12):
 
     Parameters
     ----------
-    quaternion: torch.FloatTensor (B4)
-        Input quaternion to normalize.
+    quaternion: torch.FloatTensor
+        Input quaternion to normalize. Shape is B4.
 
-    eps: float, default: 1e-12
-        Epsilon value to avoid zero division.
+    eps: float, optional
+        Epsilon value to avoid zero division. Default: 1e-12.
 
     Returns
     ----------
     normalized_quaternion: torch.FloatTensor (B4)
         Normalized quaternion.
+
+    Raises
+    ------
+    TypeError
+        Raised if quaternion is not a torch.Tensor.
+    ValueError
+        Raised if the shape of quaternion is not supported.
     """
     if not isinstance(quaternion, torch.Tensor):
         raise TypeError("Input type is not a torch.Tensor. Got {}".format(type(quaternion)))
@@ -248,8 +269,8 @@ def invert_pose(T01):
 
     Parameters
     ----------
-    T01: torch.FloatTensor (B44)
-        Input batch of transformation tensors.
+    T01: torch.FloatTensor
+        Input batch of transformation tensors. Shape is B44.
 
     Returns
     ----------
@@ -300,8 +321,14 @@ class Pose:
 
         Parameters
         ----------
-        N: int
-            Batch size.
+        B: int, optional
+            Batch size. Default: 1.
+
+        device: str, optional
+            A device for a tensor-like object; ex: "cpu". Default: None.
+
+        dtype: optional
+            A data type for a tensor-like object. Default: torch.float.
 
         Returns
         ----------
@@ -344,12 +371,28 @@ class Pose:
         return self.value[..., :3, -1]
 
     def repeat(self, *args, **kwargs):
-        """Repeat the Pose tensor"""
+        """Repeat the Pose tensor
+
+        Parameters
+        ----------
+        *args: tuple
+            Positional arguments to a repeat() call to repeat a tensor-like object along particular dimensions.
+        **kwargs: dict
+            Keyword arguments to a repeat() call to repeat a tensor-like object along particular dimension.
+        """
         self.value = self.value.repeat(*args, **kwargs)
         return self
 
     def to(self, *args, **kwargs):
-        """Move object to specified device"""
+        """Move object to specified device
+
+        Parameters
+        ----------
+        *args: tuple
+            Positional arguments to a to() call to move a tensor-like object to a particular device.
+        **kwargs: dict
+            Keyword arguments to a to() call to move a tensor-like object to a particular device.
+        """
         self.value = self.value.to(*args, **kwargs)
         return self
 
@@ -363,10 +406,17 @@ class Pose:
             Either Pose, or 3-D points torch.FloatTensor (B3N or B3HW).
 
         Returns
-        ----------
+        -------
         Pose
             Transformed pose, or 3-D points via rigid-transform on the manifold,
-           with same type as other.
+            with same type as other.
+
+        Raises
+        ------
+        ValueError
+            Raised if the shape of other is unsupported.
+        NotImplementedError
+            Raised if other is neither a Pose nor a torch.Tensor.
         """
         if isinstance(other, Pose):
             return self.transform_pose(other)
@@ -382,6 +432,12 @@ class Pose:
         # jscpd:ignore-end
 
     def __rmul__(self, other):
+        """
+        Raises
+        ------
+        NotImplementedError
+            Unconditionally.
+        """
         raise NotImplementedError('Right multiply not implemented yet!')
 
     def transform_pose(self, other):
@@ -405,7 +461,7 @@ class Pose:
 
         Parameters
         ----------
-        X0: torch.FloatTensor (B3N or B3HW)
+        X0: torch.FloatTensor
             3-D points in torch.FloatTensor (shaped either B3N or B3HW).
 
         Returns
@@ -466,8 +522,14 @@ class QuaternionPose:
 
         Parameters
         ----------
-        N: int
-            Batch size.
+        B: int, optional
+            Batch size. Default: 1.
+
+        device: str
+            A device to send a tensor-like object to. Ex: "cpu".
+
+        dtype: optional
+            A data type for a tensor-like object. Default: torch.float.
 
         Returns
         ----------
@@ -485,13 +547,13 @@ class QuaternionPose:
 
         Parameters
         ----------
-        value: torch.FloatTensor (B44)
-            Batched homogeneous matrix.
+        value: torch.FloatTensor
+            Batched homogeneous matrix. Shape is B44.
 
         Returns
         ----------
-        pose: QuaternionPose with batch B
-            QuaternionPose batch.
+        pose: QuaternionPosec
+            QuaternionPose batch. Batch dimension is shape B.
         """
         if value.dim() == 2:
             value = value.unsqueeze(0)
@@ -537,7 +599,13 @@ class QuaternionPose:
         return self.tvec
 
     def repeat(self, B):
-        """Repeat the QuaternionPose tensor"""
+        """Repeat the QuaternionPose tensor
+
+        Parameters
+        ----------
+        B: int
+            The size of the batch dimension.
+        """
         self.quat = self.quat.repeat([B, 1])
         self.tvec = self.tvec.repeat([B, 1])
         assert self.quat.dim() == self.tvec.dim() == 2, (
@@ -548,7 +616,15 @@ class QuaternionPose:
         return self
 
     def to(self, *args, **kwargs):
-        """Move object to specified device"""
+        """Move object to specified device
+
+        Parameters
+        ----------
+        *args: tuple
+            Positional arguments to a to() call to move a tensor-like object to a particular device.
+        **kwargs: dict
+            Keyword arguments to a to() call to move a tensor-like object to a particular device.
+        """
         self.quat = self.quat.to(*args, **kwargs)
         self.tvec = self.tvec.to(*args, **kwargs)
         return self
@@ -559,14 +635,21 @@ class QuaternionPose:
 
         Parameters
         ----------
-        other: Pose or torch.FloatTensor
+        other: QuaternionPose or torch.FloatTensor
             Either Pose, or 3-D points torch.FloatTensor (B3N or B3HW).
 
         Returns
         ----------
         Pose
             Transformed pose, or 3-D points via rigid-transform on the manifold,
-           with same type as other.
+            with same type as other.
+
+        Raises
+        ------
+        ValueError
+            Raised if other.shape is not supported.
+        NotImplementedError
+            Raised if other is neither a QuaternionPose or a torch.Tensor.
         """
         if isinstance(other, QuaternionPose):
             return self.transform_pose(other)
@@ -608,7 +691,7 @@ class QuaternionPose:
 
         Parameters
         ----------
-        X0: torch.FloatTensor (B3N or B3HW)
+        X0: torch.FloatTensor
             3-D points in torch.FloatTensor (shaped either B3N or B3HW).
 
         Returns

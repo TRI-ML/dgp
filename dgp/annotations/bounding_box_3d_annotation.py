@@ -88,6 +88,11 @@ class BoundingBox3DAnnotationList(Annotation):
     def save(self, save_dir):
         """Serialize Annotation object and saved to specified directory. Annotations are saved in format <save_dir>/<sha>.<ext>
 
+        Parameters
+        ----------
+        save_dir: str
+            A pathname to a directory to save the annotation object into.
+
         Returns
         -------
         output_annotation_file: str
@@ -107,17 +112,25 @@ class BoundingBox3DAnnotationList(Annotation):
 
         Parameters
         ----------
-        image: np.uint8 array
-            Image (H, W, C) to render the bounding box onto. We assume the input image is in *RGB* format
+        image: np.uint8
+            Image (H, W, C) to render the bounding box onto. We assume the input image is in *RGB* format.
+            Element type must be uint8.
 
         camera: dgp.utils.camera.Camera
             Camera used to render the bounding box.
 
-        line_thickness: int, default: 2
-            Thickness of bounding box lines.
+        line_thickness: int, optional
+            Thickness of bounding box lines. Default: 2.
 
-        font_scale: float, default: 0.5
-            Font scale used in text labels.
+        font_scale: float, optional
+            Font scale used in text labels. Default: 0.5.
+
+        Raises
+        ------
+        ValueError
+            Raised if image is not a 3-channel uint8 numpy array.
+        TypeError
+            Raised if camera is not an instance of Camera.
         """
         if (
             not isinstance(image, np.ndarray) or image.dtype != np.uint8 or len(image.shape) != 3 or image.shape[2] != 3
@@ -165,5 +178,16 @@ class BoundingBox3DAnnotationList(Annotation):
         return generate_uid_from_pbobject(self.to_proto())
 
     def project(self, camera):
-        """Project bounding boxes into a camera and get back 2D bounding boxes in the frustum."""
+        """Project bounding boxes into a camera and get back 2D bounding boxes in the frustum.
+
+        Parameters
+        ----------
+        camera: Camera
+            The Camera instance to project into.
+
+        Raises
+        ------
+        NotImplementedError
+            Unconditionally.
+        """
         raise NotImplementedError

@@ -204,7 +204,13 @@ class _ParallelDomainDataset(_SynchronizedDataset):
         return coalesced_pc
 
     def coalesce_sample(self, sample):
-        """Coalesce a point cloud for a single sample"""
+        """Coalesce a point cloud for a single sample.
+
+        Parameters
+        ----------
+        sample: list
+            List of OrderedDict, containing parsed point cloud or image data.
+        """
         # First coalesce the point cloud item and assign at the right index.
         items_dict = OrderedDict()
         items_dict[self._datum_name_to_index[COALESCED_LIDAR_DATUM_NAME]] = self.coalesce_pc_data(sample)

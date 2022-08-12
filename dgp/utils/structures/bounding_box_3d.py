@@ -234,25 +234,33 @@ class BoundingBox3D:
 
         Parameters
         ----------
-        image: np.uint8 array
-            Image (H, W, C) to render the bounding box onto. We assume the input image is in *RGB* format
+        image: np.ndarray
+            Image (H, W, C) to render the bounding box onto. We assume the input image is in *RGB* format.
+            The type must be uint8.
 
         camera: dgp.utils.camera.Camera
             Camera used to render the bounding box.
 
-        line_thickness: int, default: 2
-            Thickness of bounding box lines.
+        line_thickness: int, optional
+            Thickness of bounding box lines. Default: 2.
 
-        class_name: str, default: None
-            Class name of the bounding box.
+        class_name: str, optional
+            Class name of the bounding box. Default: None.
 
-        font_scale: float, default: 0.5
-            Font scale used in text labels.
+        font_scale: float, optional
+            Font scale used in text labels. Default: 0.5.
 
         Returns
         ----------
         image: np.uint8 array
             Rendered image (H, W, 3).
+
+        Raises
+        ------
+        ValueError
+            Raised if image is not a 3-channel uint8 numpy array.
+        TypeError
+            Raised if camera is not an instance of Camera.
         """
         if (
             not isinstance(image, np.ndarray) or image.dtype != np.uint8 or len(image.shape) != 3 or image.shape[2] != 3

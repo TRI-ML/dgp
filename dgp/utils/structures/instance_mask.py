@@ -37,7 +37,18 @@ class InstanceMask2D():
         self._attributes = dict(attributes) if attributes is not None else {}
 
     def intersection_over_union(self, other):
-        """Compute intersection over union of this box against other(s)."""
+        """Compute intersection over union of this box against other(s).
+
+        Parameters
+        ----------
+        other: InstanceMask2D
+            Another instance of InstanceMask2D to compute IoU against.
+
+        Raises
+        ------
+        NotImplementedError
+            Unconditionally.
+        """
         raise NotImplementedError
 
     @property

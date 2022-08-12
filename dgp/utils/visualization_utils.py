@@ -21,14 +21,14 @@ LOG.setLevel(logging.INFO)
 def make_caption(dataset, idx, prefix=''):
     """Make caption that tells scene directory and sample index.
 
-    Paramters
+    Parameters
     ---------
     dataset: BaseDataset
-        BaseDataset. e.g. ParallelDomainScene(Dataset), SynchronizedScene(Dataset)
+        BaseDataset. e.g. ParallelDomainScene(Dataset), SynchronizedScene(Dataset).
     idx: int
-        Image index
-    prefix: str
-        Caption prefix
+        Image index.
+    prefix: str, optional
+        Caption prefix. Default: "".
 
     Returns
     -------
@@ -45,8 +45,8 @@ def print_status(image, text):
 
     Parameters
     ----------
-    image: np.array of shape (H, W, 3)
-        Image to print status on.
+    image: np.ndarray
+        Image to print status on. Shape is (H, W, 3).
 
     text: str
         Text to be printed.
@@ -70,17 +70,17 @@ def mosaic(items, scale=1.0, pad=3, grid_width=None):
 
     Parameters
     ----------
-    items: list of np.ndarray
+    items: List[np.ndarray]
         List of images to mosaic.
 
-    scale: float, default=1.0
-        Scale factor applied to images. scale > 1.0 enlarges images.
+    scale: float, optional
+        Scale factor applied to images. scale > 1.0 enlarges images. Default: 1.0.
 
-    pad: int, default=3
-        Padding size of the images before mosaic
+    pad: int, optional
+        Padding size of the images before mosaic. Default: 3.
 
-    grid_width: int, default=None
-        Mosaic width or grid width of the mosaic
+    grid_width: int, optional
+        Mosaic width or grid width of the mosaic. Default: None.
 
     Returns
     -------
@@ -121,20 +121,20 @@ def render_bbox2d_on_image(img, bboxes2d, instance_masks=None, colors=None, text
     img: np.ndarray
         Image to render bounding boxes onto.
 
-    bboxes2d: np.ndarray (N x 4)
-        Array of 2d bounding box (x, y, w, h).
+    bboxes2d: np.ndarray
+        Array of 2d bounding box (x, y, w, h). Shape is (N x 4).
 
-    instance_masks: list
-        List of binary instance masks cropped to (w,h).
+    instance_masks: list, optional
+        List of binary instance masks cropped to (w,h). Default: None.
 
-    colors: list
-        List of color tuples.
+    colors: list, optional
+        List of color tuples. Default: None.
 
-    texts: list, default: None
-        List of str classes.
+    texts: list, optional
+        List of str classes. Default: None.
 
-    line_thickness: int
-        Line thickness value for bounding box edges.
+    line_thickness: int, optional
+        Line thickness value for bounding box edges. Default: 4.
 
     Returns
     -------
@@ -178,18 +178,17 @@ def visualize_bounding_box_2d(image, bounding_box_2d, ontology, debug=False):
 
     Parameters
     ----------
-    image: np.uint8 array
-        Image to visualize boxes on in BGR format
-        shape: (H, W, 3)
+    image: np.ndarray
+        Image to visualize boxes on in BGR format. Data type is uint8. Shape is (H, W, 3).
 
     bounding_box_2d: dgp.proto.annotations_pb2.BoundingBox2DAnnotations
-        Bounding box annotations
+        Bounding box annotations.
 
     ontology: dgp.proto.ontology_pb2.Ontology
-        Ontology with which to visualize (for colors and class names)
+        Ontology with which to visualize (for colors and class names).
 
-    debug: bool, default: False
-        If True render image until key-press
+    debug: bool, optional
+        If True render image until key-press. Default: False.
 
     Returns
     -------
@@ -221,17 +220,17 @@ def render_pointcloud_on_image(img, camera, Xw, cmap=MPL_JET_CMAP, norm_depth=10
     camera: Camera
         Camera object with appropriately set extrinsics wrt world.
 
-    Xw: np.ndarray (N x 3)
-        3D point cloud (x, y, z) in the world coordinate.
+    Xw: np.ndarray
+        3D point cloud (x, y, z) in the world coordinate. Shape is (N x 3).
 
-    cmap: matplotlib.colors.Colormap
-        Colormap used for visualizing the inverse depth.
+    cmap: matplotlib.colors.Colormap, optional
+        Colormap used for visualizing the inverse depth. Default: MPL_JET_CMAP.
 
-    norm_depth: float, default: 10
-        Depth value to normalize (inverse) pointcloud depths in color mapping.
+    norm_depth: float, optional
+        Depth value to normalize (inverse) pointcloud depths in color mapping. Default: 10.0.
 
-    dilation: int, default: 3
-        Dilation factor applied on each point.
+    dilation: int, optional
+        Dilation factor applied on each point. Default: 3.
 
     Returns
     -------
@@ -274,23 +273,23 @@ def render_radar_pointcloud_on_image(
     camera: Camera
         Camera object with appropriately set extrinsics wrt world.
 
-    Xw: np.ndarray (N x 8)
-        point cloud in spherical coordinates of radar sensor frame
+    point_cloud: np.ndarray
+        point cloud in spherical coordinates of radar sensor frame. Shape is (N x 8).
 
     cmap: matplotlib.colors.Colormap
         Colormap used for visualizing the inverse depth.
 
-    norm_depth: float, default: 10
-        Depth value to normalize (inverse) pointcloud depths in color mapping.
+    norm_depth: float, optional
+        Depth value to normalize (inverse) pointcloud depths in color mapping. Default: 10.
 
-    velocity: numpy array with shape (N,3), default None
-        velocity vector of points
+    velocity: np.ndarray
+        Velocity vector of points. Shape is (N, 3). Default: None.
 
-    velocity_scale: float
-            factor to scale velocity vector by
+    velocity_scale: float, optional
+        Factor to scale velocity vector by. Default: 1.0.
 
-    velocity_max_pix: float
-        Maximum length of velocity vector rendering in percent of image width
+    velocity_max_pix: float, optional
+        Maximum length of velocity vector rendering in percent of image width. Default: 0.05.
 
     Returns
     -------
@@ -450,14 +449,15 @@ class BEVImage:
 
         Parameters
         ----------
-        point_cloud: numpy array with shape (N, 3)
-            3D cloud points in the sensor coordinate frame.
+        point_cloud: np.ndarray
+            3D cloud points in the sensor coordinate frame. Shape is (N, 3).
 
-        extrinsics: Pose, default: Identity pose
+        extrinsics: Pose, optional
             The pose of the pointcloud sensor wrt the body frame (Sensor frame -> (Vehicle) Body frame).
+            Default: Identity pose.
 
-        color: Tuple[int]
-            Color in RGB to render the points.
+        color: Tuple[int], optional
+            Color in RGB to render the points. Default: GRAY.
         """
 
         combined_transform = self._bev_rotation * extrinsics
@@ -485,23 +485,24 @@ class BEVImage:
 
         Parameters
         ----------
-        radar_point_cloud: numpy array with shape (N, 3)
-            point cloud in rectangular coordinates of sensor frame
+        point_cloud: np.ndarray
+            Point cloud in rectangular coordinates of sensor frame. Shape is (N, 3).
 
-        extrinsics: Pose, default: Identity pose
+        extrinsics: Pose, optional
             The pose of the pointcloud sensor wrt the body frame (Sensor frame -> (Vehicle) Body frame).
+            Default: Identity pose.
 
-        color: Tuple[int]
-            Color in RGB to render the points.
+        color: Tuple[int], optional
+            Color in RGB to render the points. Default: RED.
 
-        velocity: numpy array with shape (N,3), default None
-            velocity vector of points
+        velocity: np.ndarray, optional
+            Velocity vector of points. Shape: (N, 3). Default: None.
 
-        velocity_scale: float
-            factor to scale velocity vector by
+        velocity_scale: float, optional
+            Factor to scale velocity vector by. Default: 1.0.
 
-        velocity_max_pix: float
-            Maximum length of velocity vector rendering in percent of image width
+        velocity_max_pix: float, optional
+            Maximum length of velocity vector rendering in percent of image width. Default: 0.05.
         """
         combined_transform = self._bev_rotation * extrinsics
 
@@ -562,17 +563,18 @@ class BEVImage:
         paths: list[list[Pose]]
             List of object poses in the coordinate frame of the current timestep.
 
-        extrinsics: Pose, default: Identity pose
+        extrinsics: Pose, optional
             The pose of the pointcloud sensor wrt the body frame (Sensor frame -> (Vehicle) Body frame).
+            Default: Identity pose.
 
-        colors: List of RGB tuple, default: [GREEN,]
-            Draw path using this color.
+        colors: List[Tuple[int, int, int]], optional
+            Draw path using this color. Default: (GREEN, ).
 
-        line_thickness: int, default: 1
-            Thickness of lines.
+        line_thickness: int, optional
+            Thickness of lines. Default: 1.
 
-        tint: float, default: 1.0
-            Mulitiplicative factor applied to color used to darken lines.
+        tint: float, optional
+            Mulitiplicative factor applied to color used to darken lines. Default: 1.0.
         """
 
         if len(colors) == 1:
@@ -613,42 +615,44 @@ class BEVImage:
 
         Parameters
         ----------
-        bboxes3d: List of BoundingBox3D
+        bboxes3d: List[BoundingBox3D]
             3D annotations in the sensor coordinate frame.
 
-        extrinsics: Pose, default: Identity pose
+        extrinsics: Pose, optional
             The pose of the pointcloud sensor wrt the body frame (Sensor frame -> (Vehicle) Body frame).
+            Default: Identity pose.
 
-        colors: List of RGB tuple, default: [GREEN,]
-            Draw boxes using this color.
+        colors: Sequence[Tuple[int, int, int]], optional
+            Draw boxes using this color where each color is an RGB tuple. Default: (GREEN, ).
 
-        side_color_fraction: float, default: 0.6
-            A fraction in brightness of side edge colors of bounding box wrt the front face.
+        side_color_fraction: float, optional
+            A fraction in brightness of side edge colors of bounding box wrt the front face. Default: 0.6.
 
-        rear_color_fraction: float, default: 0.3
-            A fraction in brightness of rear face colors of bounding box wrt the front face.
+        rear_color_fraction: float, optional
+            A fraction in brightness of rear face colors of bounding box wrt the front face. Default: 0.3.
 
-        texts: list of str, default: None
-            3D annotation category name.
+        texts: list of str, optional
+            3D annotation category name. Default: None.
 
-        line_thickness: int, default: 2
-            Thickness of lines.
+        line_thickness: int, optional
+            Thickness of lines. Default: 2.
 
-        font_scale: float, default: 0.5
-            Font scale used for text labels.
+        font_scale: float, optional
+            Font scale used for text labels. Default: 0.5.
 
-        font_colors: List of RGB tuple, default: [WHITE,]
-            Color used for text labels.
+        font_colors: Sequence[Tuple[int, int, int]], optional
+            Color used for text labels. Default: (WHITE, ).
 
-        markers: List[int], default: None
+        markers: List[int], optional
             List of opencv markers to draw in bottom right corner of cuboid. Should be one of: 
             cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.
+            Default: None.
 
-        marker_scale: float, default: .5
-            Scale factor for markers,
+        marker_scale: float, optional
+            Scale factor for markers. Default: 0.5.
 
-        marker_colors: List of RGB Tuple, default: [RED,]
-            Draw markers using this color.
+        marker_colors: Sequence[Tuple[int, int, int]], optional
+            Draw markers using this color. Default: (RED, ).
         """
 
         if len(colors) == 1:
@@ -733,11 +737,11 @@ class BEVImage:
         width: int
             Width of image.
 
-        color: Tuple[int], default: Yellow
-            Color in RGB of line.
+        color: Tuple[int], optional
+            Color in RGB of line. Default: YELLOW.
 
-        line_thickness: int, default: 1
-            Thickness of line.
+        line_thickness: int, optional
+            Thickness of line. Default: 1.
         """
 
         K_inv = np.linalg.inv(intrinsics)
@@ -769,8 +773,8 @@ def ontology_to_viz_colormap(ontology, void_class_id=255):
     ontology: dgp.proto.ontology_pb2.Ontology
         DGP ontology object for which we want to create a viz-friendly colormap look-up
 
-    void_class_id: int, default: 255
-        Class ID used to denote VOID or IGNORE in ontology
+    void_class_id: int, optional
+        Class ID used to denote VOID or IGNORE in ontology. Default: 255.
 
     Returns
     -------
@@ -806,17 +810,18 @@ def visualize_semantic_segmentation_2d(
     ontology: dgp.proto.ontology_pb2.Ontology
         Ontology under which we want to visualize the semseg frame
 
-    void_class_id: int, default: 255
-        ID in `semantic_segmentation_2d` that denotes VOID or IGNORE
+    void_class_id: int, optional
+        ID in `semantic_segmentation_2d` that denotes VOID or IGNORE. Default: 255.
 
-    image: np.uint8 array, default: None
-        If specified then will blend image into visualization with weight `alpha`
+    image: np.ndarray, optional
+        If specified then will blend image into visualization with weight `alpha`. Element type is uint8. Default: None.
 
-    alpha: float, default: 0.3
-        If `image` is specified, then will visualize an image/semseg blend with `alpha` weight given to image
+    alpha: float, optional
+        If `image` is specified, then will visualize an image/semseg blend with `alpha` weight given to image.
+        Default: 0.3.
 
-    debug: bool, default: True
-        If True then visualize frame to display
+    debug: bool, optional
+        If True then visualize frame to display. Default: True.
 
     Returns
     -------
@@ -877,36 +882,60 @@ def visualize_bev(
         List of lidar datums as a dictionary.
     class_colormap: Dict
         Mapping from class IDs to RGB colors.
-    show_instance_id_on_bev: Bool, default: False
+    show_instance_id_on_bev: Bool, optional
         If True, then show `instance_id` on a corner of 3D bounding boxes in BEV view.
         If False, then show `class_name` instead.
-    id_to_name: OrderedDict, default: None
-        Mapping from class IDs to class names.
-    camera_datums: List[OrderedDict], default: None
-        List of camera datums as a dictionary.
-    camera_colors: List[Tuple[int]], default: None
-        List of RGB colors associated with each camera. The colors are used to draw frustrum.
-    bev_*:
-        See `BEVImage` for these keyword arguments.
-    radar_datums: List[OrderedDict], default: None
-        List of radar datums to visualize
-    instance_colormap: Dict
-        Mapping from instance id to RGB colors.
-    cuboid_caption_fn: Callable, BoundingBox3d -> Tuple[String,Tuple[3]]
+        Default: False.
+    id_to_name: OrderedDict, optional
+        Mapping from class IDs to class names. Default: None.
+    camera_datums: List[OrderedDict], optional
+        List of camera datums as a dictionary. Default: None.
+    camera_colors: List[Tuple[int]], optional
+        List of RGB colors associated with each camera. The colors are used to draw frustrum. Default: None.
+    bev_metric_width: int, optional
+        See `BEVImage` for this keyword argument. Default: 100.
+    bev_metric_height: int, optional
+        See `BEVImage` for this keyword argument. Default: 100.
+    bev_pixels_per_meter: int, optional
+        See `BEVImage` for this keyword argument. Default: 10.
+    bev_polar_step_size_meters: int, optional
+        See `BEVImage` for this keyword argument. Default: 10.
+    bev_forward: tuple of int, optional
+        See `BEVImage` for this keyword argument. Default: (1, 0, 0)
+    bev_left: tuple of int, optional
+        See `BEVImage` for this keyword argument. Default: (0, 1, 0)
+    bev_background_clr: tuple of int, optional
+        See `BEVImage` for this keyword argument. Default: (0, 0, 0)
+    bev_line_thickness: int, optional
+        See `BEVImage` for this keyword argument. Default: 4.
+    bev_font_scale: float, optional
+        See `BEVImage` for this keyword argument. Default: 0.5.
+    radar_datums: List[OrderedDict], optional
+        List of radar datums to visualize. Default: None.
+    instance_colormap: Dict, optional
+        Mapping from instance id to RGB colors. Default: None.
+    cuboid_caption_fn: Callable, optional
         Function taking a BoundingBox3d object and returning a tuple with the caption string, and the rgb
-        value for that caption. e.g., ( 'car', (255,0,0) )
-    marker_fn: Callable, BoundingBox3d -> Tuple[int,Tuple[3]]
+        value for that caption. e.g., ( 'car', (255,0,0) ).
+        Signature: f(BoundingBox3d) -> Tuple[String, Tuple[3]]
+        Default: None.
+    marker_fn: Callable, optional
         Function taking a BoundingBox3d object and returning a tuple with the caption a marker id, and the rgb
         value for that marker. e.g., ( cv2.MARKER_DIAMOND, (255,0,0) ). Marker should be one of
         cv2.MARKER_CROSS, cv2.MARKER_DIAMOND, cv2.MARKER_SQUARE, cv2.MARKER_STAR, cv2.MARKER_TILTED_CROSS, cv2.MARKER_TRIANGLE_DOWN, cv2.MARKER_TRIANGLE_UP, or None.
-    show_paths_on_bev: Bool, default: False
+        Signature: f(BoundingBox3d) -> Tuple[int,Tuple[3]]
+        Default: None.
+    marker_scale: float, optional
+        Default: 0.5.
+    show_paths_on_bev: bool, optional
         If true draw a path for each cuboid. Paths are stored in cuboid attributes under the 'path' key, i.e.,
         path = cuboid.attributes['path'], paths are themselves a list of pose objects transformed to the
         correct frame. This method does not handle creating or transforming the paths.
-    bev_enter_offset_w: int, default: 0
-        Offset in pixels to move ego center in BEV.
-    bev_center_offset_h: int, default: 0
-        Offset in pixels to move ego center in BEV.
+        Default: False.
+    bev_center_offset_w: int, optional
+        Offset in pixels to move ego center in BEV. Default: 0.
+    bev_center_offset_h: int, optional
+        Offset in pixels to move ego center in BEV. Default: 0.
 
     Returns
     -------
@@ -1023,24 +1052,26 @@ def visualize_cameras(
     """Create camera visualization that shows 3D bounding boxes, and optionally projected pointcloud.
     Parameters
     ----------
-    camera_datums: List[OrderedDict], default: None
+    camera_datums: List[OrderedDict]
         List of camera datums as a dictionary.
-    id_to_name: OrderedDict, default: None
+    id_to_name: OrderedDict
         Mapping from class IDs to class names.
-    lidar_datums: List[OrderedDict] or None, default: None
-        List of lidar datums as a dictionary. If given, then draw pointcloud contained in all datums.
-    rgb_resize_factor: float, default: 1.0
-        Resize images by this factor before tiling them into a single panel.
-    bbox3d_font_scale: float, default: 1.0
-        Font scale used for text labels.
-    bbox3d_line_thickness: int, default: 4
-        Thickness of lines used for drawing 3D bounding boxes.
-    pc_rgb_norm_depth: int, default: 10
-        Depth value to normalize (inverse) pointcloud depths in color mapping.
-    pc_rgb_dilation: int, default: 3
-        Dilation factor applied on each point in pointcloud.
-    radar_datums: List[OrderedDict], default: None
-        List of radar datums to visualize
+    lidar_datums: List[OrderedDict] or None, optional
+        List of lidar datums as a dictionary. If given, then draw pointcloud contained in all datums. Default: None.
+    rgb_resize_factor: float, optional
+        Resize images by this factor before tiling them into a single panel. Default: 1.0.
+    bbox3d_font_scale: float, optional
+        Font scale used for text labels. Default: 1.0.
+    bbox3d_line_thickness: int, optional
+        Thickness of lines used for drawing 3D bounding boxes. Default: 4.
+    pc_rgb_cmap: color_map
+        A matplotlib color map. Default: MPL_JET_CMAP.
+    pc_rgb_norm_depth: int, optional
+        Depth value to normalize (inverse) pointcloud depths in color mapping. Default: 10.
+    pc_rgb_dilation: int, optional
+        Dilation factor applied on each point in pointcloud. Default: 3.
+    radar_datums: List[OrderedDict], optional
+        List of radar datums to visualize. Default: None.
     Returns
     -------
     rgb_viz: List[np.ndarray]

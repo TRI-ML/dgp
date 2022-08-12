@@ -164,14 +164,14 @@ class _SynchronizedDataset(BaseDataset):
 
         Parameters
         ----------
-        backward: int, default: 1
-            Backward context in frames [T-backward, ..., T-1]
+        backward: int, optional
+            Backward context in frames [T-backward, ..., T-1]. Default: 1.
 
-        forward: int, default: 1
-            Forward context in frames [T+1, ..., T+forward]
+        forward: int, optional
+            Forward context in frames [T+1, ..., T+forward]. Default: 1.
 
-        accumulation_context: dict, default None
-            dictionary of accumulation context
+        accumulation_context: dict, optional
+            Dictionary of accumulation context. Default: None
         """
         assert backward >= 0 and forward >= 0, 'Provide valid context'
 
@@ -226,6 +226,11 @@ class _SynchronizedDataset(BaseDataset):
 
         datum_name: str
             Datum within the sample.
+
+        Raises
+        ------
+        ValueError
+            Raised if the type of the requested datum is unsupported.
         """
         # Get corresponding datum and load it
         datum = self.get_datum(scene_idx, sample_idx_in_scene, datum_name)

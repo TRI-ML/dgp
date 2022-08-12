@@ -127,13 +127,20 @@ class SceneContainer:
         datum_names: list
             List of datum names to be used for instance of dataset
 
-        requested_annotations: tuple, default: None
+        requested_annotations: tuple, optional
             Tuple of annotation types, i.e. ('bounding_box_2d', 'bounding_box_3d'). Should be equivalent
             to directory containing annotation from dataset root.
+            Default: None.
 
-        requested_autolabels: tuple[str], default: None
+        requested_autolabels: tuple[str], optional
             Tuple of annotation types similar to `requested_annotations`, but associated with a particular autolabeling model.
             Expected format is "<model_id>/<annotation_type>"
+            Default: None.
+
+        Raises
+        ------
+        ValueError
+            Raised if datum_names is not a list or tuple or if it is a sequence with no elements.
         """
         if not isinstance(datum_names, (list, tuple)) or len(datum_names) == 0:
             raise ValueError('Provide a set of datum names as a list.')
@@ -188,14 +195,20 @@ class SceneContainer:
 
     @lru_cache(maxsize=1024)
     def get_datum_type(self, datum_name):
-        """Get datum type based on the datum name"""
+        """Get datum type based on the datum name
+
+        Parameters
+        ----------
+        datum_name: str
+            The name of the datum to find a type for.
+        """
         for datum in self.data:
             if datum.id.name.lower() == datum_name.lower():
                 return datum.datum.WhichOneof('datum_oneof')
         return None
 
     @property
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=None)  # pylint: disable=method-cache-max-size-none
     def datum_names(self):
         """"Gets the list of datums names available within a scene."""
         logging.debug(f'Listing all available datum names in scene={self}.')
@@ -316,7 +329,7 @@ class SceneContainer:
         return calibration_files
 
     @property
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=None)  # pylint: disable=method-cache-max-size-none
     def annotation_index(self):
         """Build 2D boolean DataArray for annotations. Rows correspond to the `datum_idx_in_scene`
         and columns correspond to requested annotation types.
@@ -376,7 +389,7 @@ class SceneContainer:
         return scene_annotation_index
 
     @property
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=None)  # pylint: disable=method-cache-max-size-none
     def datum_index(self):
         """Build a multidimensional DataArray to represent a scene.
         Rows correspond to samples, and columns correspond to datums. The value at each location
@@ -441,7 +454,7 @@ class SceneContainer:
         return scene_datum_index
 
     @property
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=None)  # pylint: disable=method-cache-max-size-none
     def metadata_index(self):
         """Helper for building metadata index.
 
@@ -491,6 +504,11 @@ class SceneContainer:
         Returns
         -------
         bool: True if datum file exists
+
+        Raises
+        ------
+        TypeError
+            Raised if the referenced datum has an unuspported type.
         """
         datum = self.data[datum_idx_in_scene]
         if datum.datum.HasField('image'):
@@ -516,9 +534,6 @@ class SceneContainer:
 
         Parameters
         ----------
-        scene_idx: int
-            Index of the scene.
-
         sample_idx_in_scene: int
             Index of the sample within the scene at scene_idx.
 
@@ -581,7 +596,7 @@ class DatasetMetadata:
         self.ontology_table = ontology_table
 
     @property
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=None)  # pylint: disable=method-cache-max-size-none
     def metadata(self):
         st = time.time()
         logging.info('Computing SceneDataset statistics on-the-fly.')
@@ -631,8 +646,13 @@ class DatasetMetadata:
         requested_autolabels: List(str)
             List of autolabels, such as['model_a/bounding_box_3d', 'model_a/bounding_box_2d']
 
-        autolabel_root: str, default: None
-            Optional path to autolabel root directory
+        autolabel_root: str, optional
+            Optional path to autolabel root directory. Default: None.
+
+        Raises
+        ------
+        Exception
+            Raised if an ontology in a scene has no corresponding implementation yet.
         """
         assert len(scene_containers), 'SceneContainers is empty.'
         requested_annotations = [] if requested_annotations is None else requested_annotations
@@ -1183,7 +1203,7 @@ class BaseDataset:
         return metadata
 
     @property
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=None)  # pylint: disable=method-cache-max-size-none
     def metadata_index(self):
         """Builds an index of metadata items that refer to the scene index,
         sample index index.
@@ -1344,6 +1364,11 @@ class BaseDataset:
             For different datums, we return different types.
             For image types, we return a PIL.Image
             For point cloud types, we return a numpy float64 array
+
+        Raises
+        ------
+        TypeError
+            Raised if the datum type is unsupported.
         """
         # Get which scene datum comes from, otherwise use dataset directory
         scene_dir = self.scenes[scene_idx].directory
@@ -1390,6 +1415,11 @@ class BaseDataset:
         -------
         annotations: dict
             Dictionary mapping annotation key to Annotation object for given annotation type.
+
+        Raises
+        ------
+        Exception
+            Raised if we cannot load an annotation type due to not finding an ontology for a requested annotation.
         """
         datum = self.get_datum(scene_idx, sample_idx_in_scene, datum_name)
         annotations = self.get_annotations(datum)
@@ -1547,6 +1577,11 @@ class BaseDataset:
         -------
         datum_pose: Pose
             Pose object of datum's ego pose
+
+        Raises
+        ------
+        TypeError
+            Raised if datum type is unsupported.
         """
 
         if datum.datum.HasField('image'):
@@ -1790,7 +1825,7 @@ class BaseDataset:
         # to index into the numpy array with.
         channels = list(datum.datum.radar_point_cloud.point_format)
 
-        def fetch_channel_index_if_available(channel_ids, channel_format):
+        def fetch_channel_index_if_available(channel_ids, channel_format):  # pylint: disable=missing-any-param-doc
             """ Helper function, returns index into channel_format that map to the requested chanels_ids.
                If not all of the channel ids are available in the channel_format, then return None.
             """
@@ -1909,6 +1944,11 @@ def _parse_autolabeled_scenes(
     -------
     autolabeled_scenes: dict
         Mapping from requested_autolabel key "<autolabel_model>/<annotation_key>" to SceneContainer
+
+    Raises
+    ------
+    ValueError
+        Raised if we encounter an invalid autolabel format in requested_autolabels.
     """
     autolabeled_scenes = {}
     for autolabel in requested_autolabels:

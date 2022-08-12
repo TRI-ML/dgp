@@ -61,46 +61,71 @@ def visualize_dataset_3d(
     ----------
     dataset: _SynchronizedDataset
         A multimodel dataset of which `__getitem__` returns a list of `OrderedDict`, one item for each datum.
-    lidar_datum_names: None or List[str], default: None
+    lidar_datum_names: None or List[str], optional
         Names of lidar datums. If None, then use all datums whose type is `point_cloud` and are available in all scenes.
-    camera_datum_names: None or List[str], default: None
+        Default: None.
+    camera_datum_names: None or List[str], optional
         Names of camera_datums. If None, then use all datums whose type is `image` and are available in all scenes.
         In the output video, the image visualizations are tiled in row-major order according to the order of this list.
-    render_pointcloud_on_images: bool, default: True
-        Whether or not to render projected pointclouds on images.
-    show_instance_id_on_bev: bool, default: True
+        Default: None.
+    render_pointcloud_on_images: bool, optional
+        Whether or not to render projected pointclouds on images. Default: True.
+    show_instance_id_on_bev: bool, optional
         If True, then show `instance_id` on a corner of 3D bounding boxes in BEV view.
         If False, then show `class_name` instead.
-    max_num_items: None or int, default: None
+        Default: True.
+    max_num_items: None or int, optional
         If not None, then show only up to this number of items. This is useful for debugging a large dataset.
-    caption_fn: Callable or None
+        Default: None.
+    caption_fn: Callable, optional
         A function that take as input a `_SynchronizedDataset` and index, and return a text (str).
-        The text is put as caption at the top left corner of video.
-    output_video_file: None or str, default: None
-        If not None, then write the visualization on a video of this name. It must ends with `.avi`.
-    output_video_fps: int, default: 30
-        Frame rate of the video.
-    overwrite_output_file: bool, default: False
-        If True, then FFMPEG overwrites existing output file without prompting confirmation.
-        This is useful when the `output_video_file` is created by `tempfile` with context manager.
-    class_colormap: dict or None, default: None
-        Dict of class name to RGB color tuple. If None, then use class color defined in `dataset`.
-    adjust_lightness_factor: float, default: 1.0
-        Enhance the brightness of colormap by this factor.
-    rgb_resize_factor: float, default: 0.5
-        Resize images by this factor before tiling them into a single panel.
-    rgb_border_thickness: int, default: 10
+        The text is put as caption at the top left corner of video. Default: None.
+    output_video_file: None or str, optional
+        If not None, then write the visualization on a video of this name. It must ends with `.avi`. Default: None.
+    output_video_fps: int, optional
+        Frame rate of the video. Default: 30.
+    class_colormap: dict, optional
+        Dict of class name to RGB color tuple. If None, then use class color defined in `dataset`. Default: None.
+    adjust_lightness_factor: float, optional
+        Enhance the brightness of colormap by this factor. Default: 1.0.
+    rgb_resize_factor: float, optional
+        Resize images by this factor before tiling them into a single panel. Default: 0.5.
+    rgb_border_thickness: int, optional
         Put a colored boundary on camera visualization of this thickness before tiling them into single panel.
-    bev-*:
-        See `BEVImage` for these keyword arguments.
-    bbox3d-*:
-        See `geometry.BoundingBox3D` for these keyword arguments.
-    pc_rgb-*:
-        See `render_pointcloud_on_image()` for these keyword arguments.
-    radar_datum_names: None or List[str], default: None
-        Names of the radar datums
-    render_radar_pointcloud_on_images: bool, default: True
-        Whether or not to render projected radar pointclouds on images.
+        Default: 4.
+    bev_metric_width: float, optional
+        See `BEVImage` for this keyword argument. Default: 100.0.
+    bev_metric_height: float, optional
+        See `BEVImage` for this keyword argument. Default: 100.0.
+    bev_pixels_per_meter: float, optional
+        See `BEVImage` for this keyword argument. Default: 10.0.
+    bev_polar_step_size_meters: int, optional
+        See `BEVImage` for this keyword argument. Default: 10.
+    bev_forward: tuple of int, optional
+        See `BEVImage` for this keyword argument. Default: (1, 0, 0).
+    bev_left: tuple of int, optional
+        See `BEVImage` for this keyword argument. Default: (0, 1, 0).
+    bev_background_clr: tuple of int
+        See `BEVImage` for this keyword argument. Default: (0, 0, 0).
+    bev_font_scale: float
+        See `BEVImage` for this keyword argument. Default: 0.5.
+    bev_line_thickness: int
+        See `BEVImage` for this keyword argument. Default: 4.
+    bbox3d_font_scale: float
+        See `geometry.BoundingBox3D` for this keyword argument. Default: 1.0.
+    bbox3d_line_thickness: int
+        See `geometry.BoundingBox3D` for this keyword argument. Default: 4.
+    pc_rgb_cmap: optional
+        See `render_pointcloud_on_image()` for this keyword argument. The value type comes from
+        matplotlib.cm.get_cmap. Default: MPL_JET_CMAP.
+    pc_rgb_norm_depth: int, optional
+        See `render_pointcloud_on_image()` for this keyword argument. Default: 10.
+    pc_rgb_dilation: int, optional
+        See `render_pointcloud_on_image()` for this keyword argument. Default: 3.
+    radar_datum_names: List[str], optional
+        Names of the radar datums. Default: None
+    render_radar_pointcloud_on_images: bool, optional
+        Whether or not to render projected radar pointclouds on images. Default: True.
     """
     if output_video_file:
         assert output_video_file.endswith('.avi'), "'output_video' must ends with `.avi`."
@@ -235,37 +260,42 @@ def visualize_dataset_2d(
     dataset: _SynchronizedDataset
         A multimodel dataset of which `__getitem__` returns a list of `OrderedDict`, one item for each datum.
 
-    camera_datum_names: None or List[str], default: None
+    camera_datum_names: None or List[str], optional
         Names of camera_datums. If None, then use all datums whose type is `image` and are available in all scenes.
         In the output video, the image visualizations are tiled in row-major order according to the order of this list.
+        Default: None.
 
-    max_num_items: None or int, default: None
+    max_num_items: None or int, optional
         If not None, then show only up to this number of items. This is useful for debugging a large dataset.
+        Default: None.
 
-    caption_fn: Callable or None
+    caption_fn: Callable, optional
         A function that take as input a `_SynchronizedDataset` and index, and return a text (str).
         The text is put as caption at the top left corner of video.
+        Default: None.
 
-    show_instance_id: bool, default: False
+    show_instance_id: bool, optional
         Option to show instance id instead of instance class name on annotated images.
+        Default: False.
 
-    output_video_file: None or str, default: None
+    output_video_file: None or str, optional
         If not None, then write the visualization on a video of this name. It must ends with `.avi`.
+        Default: None.
 
-    output_video_fps: int, default: 30
-        Frame rate of the video.
+    output_video_fps: int, optional
+        Frame rate of the video. Default: 30
 
-    class_colormap: dict or None, default: None
-        Dict of class name to RGB color tuple. If None, then use class color defined in `dataset`.
+    class_colormap: dict or None, optional
+        Dict of class name to RGB color tuple. If None, then use class color defined in `dataset`. Default: None.
 
-    adjust_lightness_factor: float, default: 1.0
-        Enhance the brightness of colormap by this factor.
+    adjust_lightness_factor: float, optional
+        Enhance the brightness of colormap by this factor. Default: 1.0.
 
-    font_scale: float, default: 1
-        Font scale used for all text.
+    font_scale: float, optional
+        Font scale used for all text. Default: 1.
 
-    rgb_resize_factor: float, default: 0.5
-        Resize images by this factor before tiling them into a single panel.
+    rgb_resize_factor: float, optional
+        Resize images by this factor before tiling them into a single panel. Default: 0.5.
     """
     if output_video_file:
         assert output_video_file.endswith('.avi'), "'output_video' must ends with `.avi`."
@@ -424,31 +454,56 @@ def visualize_dataset_sample_3d(
         scene index into dataset
     sample_idx: int
         index of sample in scene
-    lidar_datum_names: None or List[str], default: None
-        Names of lidar datum
-    camera_datum_names: None or List[str], default: None
-        Names of camera_datums
-    render_pointcloud_on_images: bool, default: True
-        Whether or not to render projected pointclouds on images.
-    show_instance_id_on_bev: bool, default: True
+    lidar_datum_names: None or List[str], optional
+        Names of lidar datum. Default: None.
+    camera_datum_names: None or List[str], optional
+        Names of camera_datums. Default: None.
+    render_pointcloud_on_images: bool, optional
+        Whether or not to render projected pointclouds on images. Default: True.
+    show_instance_id_on_bev: bool, optional
         If True, then show `instance_id` on a corner of 3D bounding boxes in BEV view.
         If False, then show `class_name` instead.
-    class_colormap: dict or None, default: None
-        Dict of class name to RGB color tuple. If None, then use class color defined in `dataset`.
-    adjust_lightness_factor: float, default: 1.0
-        Enhance the brightness of colormap by this factor.
-    rgb_resize_factor: float, default: 0.5
-        Resize images by this factor before tiling them into a single panel.
-    rgb_border_thickness: int, default: 10
+        Default: True.
+    class_colormap: dict or None, optional
+        Dict of class name to RGB color tuple. If None, then use class color defined in `dataset`. Default: None.
+    adjust_lightness_factor: float, optional
+        Enhance the brightness of colormap by this factor. Default: 1.0.
+    rgb_resize_factor: float, optional
+        Resize images by this factor before tiling them into a single panel. Default: 0.5.
+    rgb_border_thickness: int, optional
         Put a colored boundary on camera visualization of this thickness before tiling them into single panel.
-    bev-*:
-        See `BEVImage` for these keyword arguments.
-    bbox3d-*:
-        See `geometry.BoundingBox3D` for these keyword arguments.
-    pc_rgb-*:
-        See `render_pointcloud_on_image()` for these keyword arguments.
-    radar_datum_names: None or List[str], default: None
-        Names of the radar datums
+        Default: 4.
+    bev_metric_width: float, optional
+        See `BEVImage` for this keyword argument. Default: 100.0.
+    bev_metric_height: float, optional
+        See `BEVImage` for this keyword argument. Default: 100.0.
+    bev_pixels_per_meter: float, optional
+        See `BEVImage` for this keyword argument. Default: 10.0.
+    bev_polar_step_size_meters: int, optional
+        See `BEVImage` for this keyword argument. Default: 10.
+    bev_forward: tuple, optional
+        See `BEVImage` for this keyword argument. Default: (1, 0, 0).
+    bev_left: tuple, optional
+        See `BEVImage` for this keyword argument. Default: (0, 1, 0).
+    bev_background_clr: tuple, optional
+        See `BEVImage` for this keyword argument. Default: (0, 0, 0).
+    bev_font_scale: float, optional
+        See `BEVImage` for this keyword argument. Default: 0.5.
+    bev_line_thickness: int, optional
+        See `BEVImage` for this keyword argument. Default: 4.
+    bbox3d_font_scale: float, optional
+        See `geometry.BoundingBox3D` for these keyword arguments. Default: 1.0.
+    bbox3d_line_thickness: int, optional
+        See `geometry.BoundingBox3D` for these keyword arguments. Default: 4.
+    pc_rgb_cmap: optional
+        See `render_pointcloud_on_image()` for these keyword arguments. The value type comes from
+        matplotlib.cm.get_cmap. Default: MPL_JET_CMAP.
+    pc_rgb_norm_depth: int, optional
+        See `render_pointcloud_on_image()` for these keyword arguments. Default: 10.
+    pc_rgb_dilation: int, optional
+        See `render_pointcloud_on_image()` for these keyword arguments. Default: 3.
+    radar_datum_names: None or List[str], optional
+        Names of the radar datums. Default: None.
 
     Returns
     -------
@@ -560,24 +615,28 @@ def visualize_dataset_sample_2d(
     dataset: _SynchronizedDataset
         A multimodel dataset of which `__getitem__` returns a list of `OrderedDict`, one item for each datum.
 
-    camera_datum_names: None or List[str], default: None
+    scene_idx: int
+        The scene index into the dataset.
+
+    sample_idx: int
+        The sample index into the scene.
+
+    camera_datum_names: None or List[str], optional
         Names of camera_datums. If None, then use all datums whose type is `image` and are available in all scenes.
         In the output video, the image visualizations are tiled in row-major order according to the order of this list.
+        Default: None.
 
-    max_num_items: None or int, default: None
-        If not None, then show only up to this number of items. This is useful for debugging a large dataset.
+    show_instance_id: bool, optional
+        Option to show instance id instead of instance class name on annotated images. Default: False.
 
-    show_instance_id: bool, default: False
-        Option to show instance id instead of instance class name on annotated images.
+    class_colormap: dict or None, optional
+        Dict of class name to RGB color tuple. If None, then use class color defined in `dataset`. Default: None.
 
-    class_colormap: dict or None, default: None
-        Dict of class name to RGB color tuple. If None, then use class color defined in `dataset`.
+    adjust_lightness_factor: float, optional
+        Enhance the brightness of colormap by this factor. Default: 1.0.
 
-    adjust_lightness_factor: float, default: 1.0
-        Enhance the brightness of colormap by this factor.
-
-    rgb_resize_factor: float, default: 0.5
-        Resize images by this factor before tiling them into a single panel.
+    rgb_resize_factor: float, optional
+        Resize images by this factor before tiling them into a single panel. Default: 0.5.
 
     Returns
     -------

@@ -18,7 +18,7 @@ def remap_bounding_box_annotations(bounding_box_annotations, lookup_table, origi
     bounding_box_annotations: BoundingBox2DAnnotationList or BoundingBox3DAnnotationList
         Annotations to remap
 
-    lookup: dict
+    lookup_table: dict
         Lookup from old class names to new class names
         e.g.:
             {
@@ -60,10 +60,10 @@ def remap_semantic_segmentation_2d_annotation(
     """
     Parameters
     ----------
-    semantic_segmentation_2d_annotation: SemanticSegmentation2DAnnotation
+    semantic_segmentation_annotation: SemanticSegmentation2DAnnotation
         Annotation to remap
 
-    lookup: dict
+    lookup_table: dict
         Lookup from old class names to new class names
         e.g.:
             {
@@ -103,10 +103,10 @@ def remap_instance_segmentation_2d_annotation(
     """
     Parameters
     ----------
-    instance_segmentation_2d_annotation: PanopticSegmentation2DAnnotation
+    instance_segmentation_annotation: PanopticSegmentation2DAnnotation
         Annotation to remap
 
-    lookup: dict
+    lookup_table: dict
         Lookup from old class names to new class names
         e.g.:
             {

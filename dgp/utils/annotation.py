@@ -1,4 +1,6 @@
 # Copyright 2021 Toyota Research Institute.  All rights reserved.
+import locale
+
 from dgp.utils.cache import diskcache
 from dgp.utils.camera import Camera, generate_depth_map
 from dgp.utils.protobuf import open_pbobject
@@ -9,15 +11,18 @@ def is_empty_annotation(annotation_file, annotation_type):
 
     Parameters
     ----------
-    annotations: str
+    annotation_file: str
         Path to JSON file containing annotations for 2D/3D bounding boxes
+
+    annotation_type: object
+        Protobuf pb2 object we want to load into.
 
     Returns
     -------
     bool:
         True if empty annotation, otherwise False
     """
-    with open(annotation_file) as _f:
+    with open(annotation_file, encoding=locale.getpreferredencoding()) as _f:
         annotations = open_pbobject(annotation_file, annotation_type)
         return len(list(annotations.annotations)) == 0
 
