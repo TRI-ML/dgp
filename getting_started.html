@@ -143,6 +143,21 @@ needing to set up a local virtual environment.</p>
 dgp$ make <span class="nb">test</span>
 </pre></div>
 </div>
+<p>To set up linters wherever you plan on using <code class="docutils literal notranslate"><span class="pre">git</span></code> from (either on your host or
+inside the container), run</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># If in Docker, run the following; otherwise skip this block.
+dgp$ apt update
+dgp$ apt install -y git
+dgp$ git config --global --add safe.directory /home/dgp
+
+# Set up the linters.
+dgp$ make setup-linters
+</pre></div>
+</div>
+<p>You may need to first <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pre-commit</span></code> if you use <code class="docutils literal notranslate"><span class="pre">git</span></code> in an environment
+that does not have DGP’s <code class="docutils literal notranslate"><span class="pre">requirements-dev.txt</span></code> installed. Note that if you run
+linting outside of Docker, ensure that you use the same Python version DGP’s Docker
+environment uses for a consistent linting experience.</p>
 </div>
 </div>
 
