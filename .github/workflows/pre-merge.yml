@@ -49,6 +49,8 @@ jobs:
           VALIDATE_HTML: false # Handled by pre-commit.
           VALIDATE_JSCPD: false
           VALIDATE_JSON: false # Handled by pre-commit.
+          VALIDATE_MARKDOWN: false # Handled by pre-commit.
+          VALIDATE_NATURAL_LANGUAGE: false # No corresponding pre-commit hook but not critical.
           VALIDATE_PROTOBUF: false
           VALIDATE_PYTHON_BLACK: false
           VALIDATE_PYTHON_FLAKE8: false # Formatted by YAPF.
