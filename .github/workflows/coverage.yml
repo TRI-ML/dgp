@@ -15,61 +15,61 @@ jobs:
       PYTHON: '3.9'
       COVERAGE_TOTAL: 49 # Coverage threshold percentage
     steps:
-    - name: Checkout (admin token)
-      if: ${{github.event_name != 'pull_request'}} # We don't want to use the admin token for PR flows
-      uses: actions/checkout@master
-      with:
-        token: '${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}'
-        fetch-depth: "2" # Original commit + code cov badge commit
-    - name: Checkout (normal flow)
-      if: ${{github.event_name == 'pull_request'}}
-      uses: actions/checkout@master
-      with:
-        fetch-depth: "2" # Original commit + code cov badge commit
-    - name: Setup Python
-      uses: actions/setup-python@master
-      with:
-        python-version: 3.9
-    - name: Install dependencies
-      id: coverage-installer
-      run: |
-        python -m pip install --upgrade pip
-        pip install cython==0.29.21 numpy==1.23.2
-        sudo apt-get install jq
-        pip install -r requirements.txt
-        pip install -r requirements-dev.txt
-        pip install coverage-badge
-    - name: Run tests and calculate coverage
-      id: test-runner
-      run: |
-        coverage run -m pytest
-        coverage-badge -f -o docs/coverage.svg
-        COVERAGE_SCORE=$(coverage json -o /dev/stdout | jq .totals.percent_covered)
-        echo "::set-output name=coverageScore::$COVERAGE_SCORE"
-    - name: Verify Changed files
-      uses: tj-actions/verify-changed-files@v6
-      id: changed_files
-      with:
-        files: docs/coverage.svg
-    - name: Commit code coverage badge
-      if: ${{ steps.changed_files.outputs.files_changed == 'true' && github.event_name != 'pull_request'}}
-      run: |
-        git config --local user.name "$(git log -1 --pretty=format:'%an' | xargs)"
-        git config --local user.email "$(git log -1 --pretty=format:'%ae' | xargs)"
-        git add docs/coverage.svg
-        git commit -m "test: update coverage.svg"
-        git reset --soft HEAD~2
-        # shellcheck disable=SC1083 # code is irrelevant because git needs this literal
-        git commit -m "$(git log --format=%B --reverse HEAD..HEAD@{1})"
-    - name: Push code coverage badge
-      if: ${{ steps.changed_files.outputs.files_changed == 'true' && github.event_name != 'pull_request'}}
-      uses: ad-m/github-push-action@master
-      with:
-        force: true
-        github_token: ${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}
-        branch: ${{ github.event.pull_request.head.repo.full_name }}
-    - name: Coverage total fail - exit
-      if: ${{github.event_name == 'pull_request' && steps.test-runner.outputs.coverageScore < env.COVERAGE_TOTAL}}
-      run: |
-        echo "cov total fail ${{ steps.test-runner.outputs.coverageScore }}"
-        exit 1
+      - name: Checkout (admin token)
+        if: ${{github.event_name != 'pull_request'}} # We don't want to use the admin token for PR flows
+        uses: actions/checkout@master
+        with:
+          token: '${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}'
+          fetch-depth: "2" # Original commit + code cov badge commit
+      - name: Checkout (normal flow)
+        if: ${{github.event_name == 'pull_request'}}
+        uses: actions/checkout@master
+        with:
+          fetch-depth: "2" # Original commit + code cov badge commit
+      - name: Setup Python
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        id: coverage-installer
+        run: |
+          python -m pip install --upgrade pip
+          pip install cython==0.29.21 numpy==1.23.2
+          sudo apt-get install jq
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+          pip install coverage-badge
+      - name: Run tests and calculate coverage
+        id: test-runner
+        run: |
+          coverage run -m pytest
+          coverage-badge -f -o docs/coverage.svg
+          COVERAGE_SCORE=$(coverage json -o /dev/stdout | jq .totals.percent_covered)
+          echo "::set-output name=coverageScore::$COVERAGE_SCORE"
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v6
+        id: changed_files
+        with:
+          files: docs/coverage.svg
+      - name: Commit code coverage badge
+        if: ${{ steps.changed_files.outputs.files_changed == 'true' && github.event_name != 'pull_request'}}
+        run: |
+          git config --local user.name "$(git log -1 --pretty=format:'%an' | xargs)"
+          git config --local user.email "$(git log -1 --pretty=format:'%ae' | xargs)"
+          git add docs/coverage.svg
+          git commit -m "test: update coverage.svg"
+          git reset --soft HEAD~2
+          # shellcheck disable=SC1083 # code is irrelevant because git needs this literal
+          git commit -m "$(git log --format=%B --reverse HEAD..HEAD@{1})"
+      - name: Push code coverage badge
+        if: ${{ steps.changed_files.outputs.files_changed == 'true' && github.event_name != 'pull_request'}}
+        uses: ad-m/github-push-action@master
+        with:
+          force: true
+          github_token: ${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}
+          branch: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Coverage total fail - exit
+        if: ${{github.event_name == 'pull_request' && steps.test-runner.outputs.coverageScore < env.COVERAGE_TOTAL}}
+        run: |
+          echo "cov total fail ${{ steps.test-runner.outputs.coverageScore }}"
+          exit 1

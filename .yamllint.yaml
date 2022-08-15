@@ -1,0 +1,8 @@
+extends: default
+
+rules:
+  line-length: disable
+  document-start: disable # Allow missing "---" file prelude.
+  truthy:
+    check-keys: false # Allow keys that look like truthy literals, such as `on`.
+  comments: disable # Allow single space between non-comment and comment.
