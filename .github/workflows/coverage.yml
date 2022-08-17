@@ -8,11 +8,11 @@ on:
       - 'master'
 jobs:
   code-coverage:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     env:
       ENVIRONMENT: TEST_RUNNER
-      OS: ubuntu-18.04
-      PYTHON: '3.7'
+      OS: ubuntu-20.04
+      PYTHON: '3.9'
       COVERAGE_TOTAL: 49 # Coverage threshold percentage
     steps:
     - name: Checkout (admin token)
@@ -20,21 +20,21 @@ jobs:
       uses: actions/checkout@master
       with:
         token: '${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}'
-        fetch-depth: ‘2’ # Original commit + code cov badge commit
+        fetch-depth: "2" # Original commit + code cov badge commit
     - name: Checkout (normal flow)
       if: ${{github.event_name == 'pull_request'}}
       uses: actions/checkout@master
       with:
-        fetch-depth: ‘2’ # Original commit + code cov badge commit
+        fetch-depth: "2" # Original commit + code cov badge commit
     - name: Setup Python
       uses: actions/setup-python@master
       with:
-        python-version: 3.7
+        python-version: 3.9
     - name: Install dependencies
       id: coverage-installer
       run: |
         python -m pip install --upgrade pip
-        pip install cython==0.29.21 numpy==1.19.4
+        pip install cython==0.29.21 numpy==1.23.2
         sudo apt-get install jq
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
