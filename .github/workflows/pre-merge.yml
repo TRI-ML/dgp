@@ -9,7 +9,7 @@ on:
 
 jobs:
   pre-merge-tests:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     env:
       ENVIRONMENT: TEST_RUNNER
     steps:
@@ -21,14 +21,14 @@ jobs:
         uses: wagoid/commitlint-github-action@v4
         with:
           configFile: .commitlintrc.yml
-      - name: Install Python 3.7
+      - name: Install Python 3.9
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.9
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install cython==0.29.21 numpy==1.19.4
+          pip install cython==0.29.21 numpy==1.23.2
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
       - name: Lint all files with pre-commit

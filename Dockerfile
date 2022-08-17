@@ -1,6 +1,6 @@
 FROM nvidia/cuda:11.2.0-devel-ubuntu20.04
 
-ARG python=3.8
+ARG python=3.9
 ENV PYTORCH_VERSION=1.8.1+cu111
 ENV TORCHVISION_VERSION=0.9.1+cu111
 
