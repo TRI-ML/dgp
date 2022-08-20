@@ -7,7 +7,15 @@ import numpy as np
 from matplotlib.cm import get_cmap
 
 from dgp.utils.camera import Camera
-from dgp.utils.colors import (DARKGRAY, GRAY, GREEN, RED, WHITE, YELLOW, get_unique_colors)
+from dgp.utils.colors import (
+    DARKGRAY,
+    GRAY,
+    GREEN,
+    RED,
+    WHITE,
+    YELLOW,
+    get_unique_colors,
+)
 from dgp.utils.pose import Pose
 
 # Time to wait before key press in debug visualizations

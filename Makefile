@@ -65,8 +65,9 @@ docker-start-interactive:
 docker-stop:
 	docker stop $(DOCKER_IMAGE_NAME)
 
-link-githooks:
-	bash .githooks/link_githooks.sh
+setup-linters:
+	pre-commit install
+	pre-commit install --hook-type commit-msg
 
 test: clean build-proto
 	PYTHONPATH=$(PWD):$(PYTHONPATH) \

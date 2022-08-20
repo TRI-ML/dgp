@@ -3,8 +3,10 @@ from collections import OrderedDict
 
 from dgp.annotations import ONTOLOGY_REGISTRY
 from dgp.annotations.transform_utils import (
-    construct_remapped_ontology, remap_bounding_box_annotations, remap_instance_segmentation_2d_annotation,
-    remap_semantic_segmentation_2d_annotation
+    construct_remapped_ontology,
+    remap_bounding_box_annotations,
+    remap_instance_segmentation_2d_annotation,
+    remap_semantic_segmentation_2d_annotation,
 )
 
 

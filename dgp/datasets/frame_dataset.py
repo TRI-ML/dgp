@@ -13,7 +13,10 @@ from multiprocessing import Pool, cpu_count
 import numpy as np
 import xarray as xr
 
-from dgp.constants import (ALL_ANNOTATION_TYPES, DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE)
+from dgp.constants import (
+    ALL_ANNOTATION_TYPES,
+    DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE,
+)
 from dgp.datasets import BaseDataset, DatasetMetadata
 
 SUPPORTED_ANNOTATIONS_TABLE = xr.DataArray(

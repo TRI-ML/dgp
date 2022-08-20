@@ -4,8 +4,12 @@ from collections import OrderedDict
 import numpy as np
 
 from dgp.annotations import (
-    BoundingBoxOntology, InstanceSegmentationOntology, Ontology, PanopticSegmentation2DAnnotation,
-    SemanticSegmentation2DAnnotation, SemanticSegmentationOntology
+    BoundingBoxOntology,
+    InstanceSegmentationOntology,
+    Ontology,
+    PanopticSegmentation2DAnnotation,
+    SemanticSegmentation2DAnnotation,
+    SemanticSegmentationOntology,
 )
 from dgp.proto.ontology_pb2 import Ontology as OntologyPB2
 from dgp.proto.ontology_pb2 import OntologyItem

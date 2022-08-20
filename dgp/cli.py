@@ -15,7 +15,10 @@ from dgp.datasets.synchronized_dataset import SynchronizedScene
 from dgp.proto.dataset_pb2 import SceneDataset
 from dgp.utils.cli_utils import add_options
 from dgp.utils.protobuf import open_pbobject
-from dgp.utils.visualization_engine import (visualize_dataset_2d, visualize_dataset_3d)
+from dgp.utils.visualization_engine import (
+    visualize_dataset_2d,
+    visualize_dataset_3d,
+)
 from dgp.utils.visualization_utils import make_caption
 
 VISUALIZE_OPTIONS = [

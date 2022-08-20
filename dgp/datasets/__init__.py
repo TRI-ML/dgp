@@ -8,4 +8,7 @@ from dgp.datasets.synchronized_dataset import (  # isort:skip
     SynchronizedScene, SynchronizedSceneDataset
 )
 
-from dgp.datasets.pd_dataset import (ParallelDomainScene, ParallelDomainSceneDataset)
+from dgp.datasets.pd_dataset import (
+    ParallelDomainScene,
+    ParallelDomainSceneDataset,
+)

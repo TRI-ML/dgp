@@ -6,8 +6,9 @@ import numpy as np
 
 from dgp.annotations.base_annotation import Annotation
 from dgp.annotations.ontology import SemanticSegmentationOntology
-from dgp.utils.dataset_conversion import \
-    generate_uid_from_semantic_segmentation_2d_annotation
+from dgp.utils.dataset_conversion import (
+    generate_uid_from_semantic_segmentation_2d_annotation,
+)
 
 
 class SemanticSegmentation2DAnnotation(Annotation):

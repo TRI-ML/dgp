@@ -2,8 +2,12 @@
 import unittest
 
 from numpy.testing import (
-    assert_allclose, assert_almost_equal, assert_approx_equal, assert_array_almost_equal, assert_array_equal,
-    assert_array_less
+    assert_allclose,
+    assert_almost_equal,
+    assert_approx_equal,
+    assert_array_almost_equal,
+    assert_array_equal,
+    assert_array_less,
 )
 
 __all__ = [

@@ -1,6 +1,7 @@
 import numpy as np
-from numpy.lib.ufunclike import fix
 import pytest
+from numpy.lib.ufunclike import fix
+
 from dgp.utils.structures.key_line_2d import KeyLine2D
 
 

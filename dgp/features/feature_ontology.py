@@ -5,7 +5,11 @@ from collections import OrderedDict
 
 from dgp.proto.ontology_pb2 import FeatureOntology as FeatureOntologyPb2
 from dgp.proto.ontology_pb2 import FeatureOntologyItem
-from dgp.utils.protobuf import (generate_uid_from_pbobject, open_feature_ontology_pbobject, save_pbobject_as_json)
+from dgp.utils.protobuf import (
+    generate_uid_from_pbobject,
+    open_feature_ontology_pbobject,
+    save_pbobject_as_json,
+)
 
 
 class FeatureOntology:

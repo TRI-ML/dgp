@@ -3,10 +3,17 @@ import numpy as np
 
 from dgp.annotations.base_annotation import Annotation
 from dgp.annotations.ontology import BoundingBoxOntology
-from dgp.proto.annotations_pb2 import (BoundingBox3DAnnotation, BoundingBox3DAnnotations)
+from dgp.proto.annotations_pb2 import (
+    BoundingBox3DAnnotation,
+    BoundingBox3DAnnotations,
+)
 from dgp.utils.camera import Camera
 from dgp.utils.pose import Pose
-from dgp.utils.protobuf import (generate_uid_from_pbobject, open_pbobject, save_pbobject_as_json)
+from dgp.utils.protobuf import (
+    generate_uid_from_pbobject,
+    open_pbobject,
+    save_pbobject_as_json,
+)
 from dgp.utils.structures.bounding_box_3d import BoundingBox3D
 
 

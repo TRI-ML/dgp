@@ -4,8 +4,9 @@ from collections import OrderedDict
 
 import numpy as np
 
-from dgp.annotations.bounding_box_3d_annotation import \
-    BoundingBox3DAnnotationList
+from dgp.annotations.bounding_box_3d_annotation import (
+    BoundingBox3DAnnotationList,
+)
 # pylint: disable=W0611
 from dgp.contribs.pd.metadata_pb2 import ParallelDomainSceneMetadata
 # pylint: enable=W0611

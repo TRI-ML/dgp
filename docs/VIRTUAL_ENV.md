@@ -16,16 +16,13 @@ While active, running python will run the virtual environment's python, and inst
 
 ```sh
 dgp$ pip install --upgrade pip
-dgp$ pip install cython==0.29.21 numpy==1.19.4 grpcio==1.41.0 grpcio-tools==1.41.0 pytest==6.2.5 pytest-timeout==2.0.1
+dgp$ pip install cython==0.29.21 numpy==1.19.4
+dgp$ pip install -r requirements.txt -r requirements-dev.txt
 ```
 
 Finally DGP can be installed. Installing in editable mode means that changes you make to DGP locally will be reflected in the version installed in pip which makes local development very convenient. From DGP repository root:
 ```sh
 dgp$ pip install --editable .
-```
-Alternatively, you can install cython, numpy, grpc and DGP by running:
-```sh
-dgp$ make develop
 ```
 
 To check if DGP is installed correctly, run the unit tests by running:
@@ -46,3 +43,12 @@ Finally to deactivate the environment
 ```sh
 dgp$ deactivate
 ```
+
+To set up linters, run
+
+```none
+dgp$ make setup-linters
+```
+
+Note that if your environment's Python version does not match the version DGP
+targets, your linting experience might not match that in CI.

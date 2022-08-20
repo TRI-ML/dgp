@@ -1,4 +1,5 @@
 import pytest
+
 from dgp.utils.colors import get_unique_colors
 
 

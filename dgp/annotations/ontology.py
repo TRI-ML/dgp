@@ -7,7 +7,11 @@ import numpy as np
 from dgp.proto.dataset_pb2 import Ontology as OntologyV1Pb2
 from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
 from dgp.proto.ontology_pb2 import OntologyItem
-from dgp.utils.protobuf import (generate_uid_from_pbobject, open_ontology_pbobject, save_pbobject_as_json)
+from dgp.utils.protobuf import (
+    generate_uid_from_pbobject,
+    open_ontology_pbobject,
+    save_pbobject_as_json,
+)
 
 
 class Ontology:

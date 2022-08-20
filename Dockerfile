@@ -32,6 +32,10 @@ RUN ln -sf /usr/bin/python${PYTHON_VERSION} /usr/bin/python3
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
   python3 get-pip.py && \
   rm get-pip.py
+# The above appears to install pip into /usr/local/, but some tools expect /usr/bin/.
+# TODO(tk-woven): `apt install python3-pip` and remove these symlinks when we update the base Ubuntu image.
+RUN ln -sf /usr/local/bin/pip /usr/bin/pip
+RUN ln -sf /usr/local/bin/pip3 /usr/bin/pip3
 
 # Install Pytorch
 RUN pip install --no-cache-dir \
