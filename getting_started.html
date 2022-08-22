@@ -102,15 +102,16 @@
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Dockerized environment is encouraged for all DGP contributors and users. Alternatively, you can use python virtual environments. Please see <a class="reference external" href="VIRTUAL_ENV.md">virtual environment setup</a> for instructions.</p>
+<p>Dockerized environment is encouraged for all DGP contributors and users.
+Alternatively, you can use python virtual environments. Please see
+<a class="reference external" href="VIRTUAL_ENV.md">virtual environment setup</a> for instructions.</p>
 <p>To setup DGP docker image:</p>
 <ul>
 <li><p>You can pull the latest master docker via:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>   dgp$ docker pull ghcr.io/tri-ml/dgp:master <span class="o">&amp;&amp;</span> docker image tag ghcr.io/tri-ml/dgp:master dgp:latest
-
----or---
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ docker pull ghcr.io/tri-ml/dgp:master <span class="o">&amp;&amp;</span> docker image tag ghcr.io/tri-ml/dgp:master dgp:latest
 </pre></div>
 </div>
+<p>—or—</p>
 </li>
 <li><p>Build the docker from scratch via:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make docker-build
@@ -130,22 +131,24 @@
 </div>
 <div class="section" id="develop-within-docker">
 <h2>Develop within docker<a class="headerlink" href="#develop-within-docker" title="Permalink to this headline">¶</a></h2>
-<p>In order to start development, the quickest way to get started would
-be use the interactive docker mode via:</p>
+<p>In order to start development, the quickest way to get started would be use the
+interactive docker mode via:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make docker-start-interactive
 </pre></div>
 </div>
-<p>The DGP base directory is mounted within the
-docker container, and gives you a sandbox to develop quickly without
-needing to set up a local virtual environment.</p>
-<p>Within the interactive docker container (after <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-start-interactive</span></code>), you can now build the proto definitions (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build-proto</span></code>) and run the tests (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code>) to make sure everything is functioning properly.</p>
+<p>The DGP base directory is mounted within the docker container, and gives you a
+sandbox to develop quickly without needing to set up a local virtual
+environment.</p>
+<p>Within the interactive docker container (after <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-start-interactive</span></code>),
+you can now build the proto definitions (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build-proto</span></code>) and run the tests
+(<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code>) to make sure everything is functioning properly.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make build-proto
 dgp$ make <span class="nb">test</span>
 </pre></div>
 </div>
 <p>To set up linters wherever you plan on using <code class="docutils literal notranslate"><span class="pre">git</span></code> from (either on your host or
 inside the container), run</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># If in Docker, run the following; otherwise skip this block.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># If in Docker, run the following; otherwise skip this block.
 dgp$ apt update
 dgp$ apt install -y git
 dgp$ git config --global --add safe.directory /home/dgp
@@ -154,10 +157,10 @@ dgp$ git config --global --add safe.directory /home/dgp
 dgp$ make setup-linters
 </pre></div>
 </div>
-<p>You may need to first <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pre-commit</span></code> if you use <code class="docutils literal notranslate"><span class="pre">git</span></code> in an environment
-that does not have DGP’s <code class="docutils literal notranslate"><span class="pre">requirements-dev.txt</span></code> installed. Note that if you run
-linting outside of Docker, ensure that you use the same Python version DGP’s Docker
-environment uses for a consistent linting experience.</p>
+<p>You may need to first <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pre-commit</span></code> if you use <code class="docutils literal notranslate"><span class="pre">git</span></code> in an
+environment that does not have DGP’s <code class="docutils literal notranslate"><span class="pre">requirements-dev.txt</span></code> installed. Note that
+if you run linting outside of Docker, ensure that you use the same Python
+version DGP’s Docker environment uses for a consistent linting experience.</p>
 </div>
 </div>
 

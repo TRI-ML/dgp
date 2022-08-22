@@ -96,39 +96,47 @@
             
   <div class="section" id="tri-dataset-governance-policy-dgp-schema">
 <h1>TRI Dataset Governance Policy (DGP) Schema<a class="headerlink" href="#tri-dataset-governance-policy-dgp-schema" title="Permalink to this headline">¶</a></h1>
-<p>DGP-compliant datasets follow the structure and schema defined in this directory. Top-level
-data containers are listed below:</p>
+<p>DGP-compliant datasets follow the structure and schema defined in this
+directory. Top-level data containers are listed below:</p>
 <div class="section" id="scenedataset-data-structure-description">
 <h2>SceneDataset data structure description<a class="headerlink" href="#scenedataset-data-structure-description" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>SceneDataset: A SceneDataset contains <code class="docutils literal notranslate"><span class="pre">DatasetMetadata</span></code> and a collection of <code class="docutils literal notranslate"><span class="pre">Scene</span></code>
-assigned to different <code class="docutils literal notranslate"><span class="pre">split</span></code> for training, evaluation and inference.</p></li>
-<li><p>Scene: A Scene consists of consecutive <code class="docutils literal notranslate"><span class="pre">Sample</span></code> extracted at a fixed frequency in
-a robot session. Normally we extract 10~20 seconds Scenes at 10Hz from raw driving logs.</p></li>
-<li><p>Sample: A sample is a container that encapsulates time-synchronized sensory <code class="docutils literal notranslate"><span class="pre">Datum</span></code>
-(images, point clouds, radar point clouds, etc) and calibrations.</p></li>
-<li><p>Datum: A Datum encapsulates sensory data (image, point cloud, radar point cloud, etc),
-along with their associated annotations.</p></li>
+<li><p>SceneDataset: A SceneDataset contains <code class="docutils literal notranslate"><span class="pre">DatasetMetadata</span></code> and a collection of
+<code class="docutils literal notranslate"><span class="pre">Scene</span></code> assigned to different <code class="docutils literal notranslate"><span class="pre">split</span></code> for training, evaluation and inference.</p></li>
+<li><p>Scene: A Scene consists of consecutive <code class="docutils literal notranslate"><span class="pre">Sample</span></code> extracted at a fixed frequency
+in a robot session. Normally we extract 10~20 seconds Scenes at 10Hz from raw
+driving logs.</p></li>
+<li><p>Sample: A sample is a container that encapsulates time-synchronized sensory
+<code class="docutils literal notranslate"><span class="pre">Datum</span></code> (images, point clouds, radar point clouds, etc) and calibrations.</p></li>
+<li><p>Datum: A Datum encapsulates sensory data (image, point cloud, radar point
+cloud, etc), along with their associated annotations.</p></li>
 </ul>
 </div>
 <div class="section" id="agentdataset-data-structure-description">
 <h2>AgentDataset data structure description<a class="headerlink" href="#agentdataset-data-structure-description" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>AgentDataset: Dataset for agent-centric prediction or planning use cases,but guaranteeing trajectory of main agent is present in any fetched sample.</p></li>
-<li><p>AgentSnapshot: An Agent in a Scene can be represented by either an AgentSnapshot2D or AgentSnapshot3D. If it is AgentSnaphot3D, then the agent is represented as a BoundingBox3D along with other fields such as features, instance id’s, etc. In case it is represented as AgentSnapshot2D, then a BoundingBox2D is used.</p></li>
+<li><p>AgentDataset: Dataset for agent-centric prediction or planning use cases,but
+guaranteeing trajectory of main agent is present in any fetched sample.</p></li>
+<li><p>AgentSnapshot: An Agent in a Scene can be represented by either an
+AgentSnapshot2D or AgentSnapshot3D. If it is AgentSnaphot3D, then the agent is
+represented as a BoundingBox3D along with other fields such as features,
+instance id’s, etc. In case it is represented as AgentSnapshot2D, then a
+BoundingBox2D is used.</p></li>
 <li><p>AgentSlice: Encapsulates all Agents in a Sample.</p></li>
 <li><p>AgentTrack: The track of a single Agent in the Scene.</p></li>
 <li><p>AgentGroup: Encapsulates all Agents in a Scene.</p></li>
-<li><p>Feature: Agent’s requested feature type can include agent_2d, agent_3d, ego_intention, corridor, intersection or parked car.</p></li>
-<li><p>Ontology: An Ontology represents a set of unique objects such as Vehicle, Truck, Pedestrian, etc.</p></li>
-<li><p>Feature Ontology: A Feature Ontology represents a set of unique feature fields such as Speed, Parking attribute, etc.</p></li>
+<li><p>Feature: Agent’s requested feature type can include agent_2d, agent_3d,
+ego_intention, corridor, intersection or parked car.</p></li>
+<li><p>Ontology: An Ontology represents a set of unique objects such as Vehicle,
+Truck, Pedestrian, etc.</p></li>
+<li><p>Feature Ontology: A Feature Ontology represents a set of unique feature fields
+such as Speed, Parking attribute, etc.</p></li>
 </ul>
 </div>
 <div class="section" id="protobuf-directory-structure">
 <h2>Protobuf Directory Structure<a class="headerlink" href="#protobuf-directory-structure" title="Permalink to this headline">¶</a></h2>
-<p>All the protobuf schemas are defined under this <a class="reference external" href="./">proto/</a>
-directory. Schema for the following types are specified their
-corresponding <code class="docutils literal notranslate"><span class="pre">proto</span></code> files.</p>
+<p>All the protobuf schemas are defined under this <a class="reference external" href="./">proto/</a> directory. Schema
+for the following types are specified their corresponding <code class="docutils literal notranslate"><span class="pre">proto</span></code> files.</p>
 <ul class="simple">
 <li><p>Agent: <cite>``agent.proto`</cite> &lt;./agent.proto&gt;`_</p></li>
 <li><p>Annotations and Annotation Types: <cite>``annotations.proto`</cite> &lt;./annotations.proto&gt;`_</p></li>
@@ -139,7 +147,8 @@ corresponding <code class="docutils literal notranslate"><span class="pre">proto
 <li><p>Image container: <cite>``image.proto`</cite> &lt;./image.proto&gt;`_</p></li>
 <li><p>Ontology: <cite>``ontology.proto`</cite> &lt;./ontology.proto&gt;`_</p></li>
 <li><p>PointCloud container: <cite>``point_cloud.proto`</cite> &lt;./point_cloud.proto&gt;`_</p></li>
-<li><p>Radar PointCloud container: <cite>``radar_point_cloud.proto`</cite> &lt;./radar_point_cloud.proto&gt;`_</p></li>
+<li><p>Radar PointCloud container:
+<cite>``radar_point_cloud.proto`</cite> &lt;./radar_point_cloud.proto&gt;`_</p></li>
 <li><p>Remote Storage: <cite>``remote.proto`</cite> &lt;./remote.proto&gt;`_</p></li>
 </ul>
 <div class="section" id="scenedataset-schema-graph">
@@ -229,8 +238,13 @@ corresponding <code class="docutils literal notranslate"><span class="pre">proto
 </div>
 <div class="section" id="autolabel-structure">
 <h3>Autolabel Structure<a class="headerlink" href="#autolabel-structure" title="Permalink to this headline">¶</a></h3>
-<p>Autolabes should be stored within their parent scene directory under <code class="docutils literal notranslate"><span class="pre">&lt;parent</span> <span class="pre">scene</span> <span class="pre">dir&gt;/autolabels/&lt;autolabel</span> <span class="pre">model&gt;</span></code> folder. Autolabels may also be stored outside of the parent scene folder, in this case they must be stored with the following directory structure: <code class="docutils literal notranslate"><span class="pre">&lt;autolabel</span> <span class="pre">root&gt;/&lt;parent</span> <span class="pre">scene</span> <span class="pre">dir</span> <span class="pre">basename&gt;/autolabels/&lt;autolabel</span> <span class="pre">model&gt;</span></code>.</p>
-<p>In both cases <code class="docutils literal notranslate"><span class="pre">&lt;autolabel</span> <span class="pre">model&gt;</span></code> should be unique a string denoting which model or process generated the autolabels.</p>
+<p>Autolabes should be stored within their parent scene directory under
+<code class="docutils literal notranslate"><span class="pre">&lt;parent</span> <span class="pre">scene</span> <span class="pre">dir&gt;/autolabels/&lt;autolabel</span> <span class="pre">model&gt;</span></code> folder. Autolabels may also be
+stored outside of the parent scene folder, in this case they must be stored with
+the following directory structure:
+<code class="docutils literal notranslate"><span class="pre">&lt;autolabel</span> <span class="pre">root&gt;/&lt;parent</span> <span class="pre">scene</span> <span class="pre">dir</span> <span class="pre">basename&gt;/autolabels/&lt;autolabel</span> <span class="pre">model&gt;</span></code>.</p>
+<p>In both cases <code class="docutils literal notranslate"><span class="pre">&lt;autolabel</span> <span class="pre">model&gt;</span></code> should be unique a string denoting which model
+or process generated the autolabels.</p>
 </div>
 </div>
 </div>
