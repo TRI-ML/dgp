@@ -6,9 +6,9 @@ matplotlib>=3.0.3,<4.0
 opencv-python>=4.5.3.56
 Pillow>=8.3.2
 pycocotools>=2.0.0
-pyquaternion==0.9.5
+pyquaternion>=0.9.5,<=1.0.0
 torch>=1.8.1
 torchvision>=0.9.1
 tqdm>=4.29.1
 tenacity>=6.0.0
-xarray==0.16.2
+xarray==2022.6.0

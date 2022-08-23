@@ -5,22 +5,22 @@ on:
       - 'master'
 jobs:
   run:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     env:
-      OS: ubuntu-18.04
-      PYTHON: '3.7'
+      OS: ubuntu-20.04
+      PYTHON: '3.9'
     steps:
     - uses: actions/checkout@master
       with:
-        fetch-depth: ‘1’
+        fetch-depth: "1"
     - name: Setup Python
       uses: actions/setup-python@master
       with:
-        python-version: 3.7
+        python-version: 3.9
     - name: Setup requirements and run sphinx
       run: |
         python -m pip install --upgrade pip
-        pip install cython==0.29.21 numpy==1.19.4
+          pip install cython==0.29.21 numpy==1.23.2
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
         pip install -r docs/requirements-doc.txt
