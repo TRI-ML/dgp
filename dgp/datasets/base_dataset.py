@@ -363,7 +363,7 @@ class SceneContainer:
             total_annotations += list(self.autolabeled_scenes.keys())
 
         scene_annotation_index = xr.DataArray(
-            np.zeros((len(self.data), len(total_annotations)), dtype=np.bool),
+            np.zeros((len(self.data), len(total_annotations)), dtype=bool),
             dims=["datums", "annotations"],
             coords={"annotations": total_annotations}
         )

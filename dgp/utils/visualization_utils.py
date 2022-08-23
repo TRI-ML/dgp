@@ -99,7 +99,7 @@ def mosaic(items, scale=1.0, pad=3, grid_width=None):
     N = len(items)
     assert N > 0, 'No items to mosaic!'
     grid_width = grid_width if grid_width else np.ceil(np.sqrt(N)).astype(int)
-    grid_height = np.ceil(N * 1. / grid_width).astype(np.int)
+    grid_height = np.ceil(N * 1.0 / grid_width).astype(int)
     input_size = items[0].shape[:2]
     target_shape = (int(input_size[1] * scale), int(input_size[0] * scale))
     mosaic_items = []
@@ -340,7 +340,7 @@ def render_radar_pointcloud_on_image(
             v_2d = row_tail - row
             v_2d = clip_norm(v_2d, velocity_max_pix * W)
             cx, cy = row
-            cx2, cy2 = row + v_2d.astype(np.int)
+            cx2, cy2 = row + v_2d.astype(int)
             cx2 = np.clip(cx2, 0, W - 1)
             cy2 = np.clip(cy2, 0, H - 1)
             cv2.arrowedLine(img, (cx, cy), (cx2, cy2), color, thickness=2, line_type=cv2.LINE_AA)
@@ -552,7 +552,7 @@ class BEVImage:
                 v_2d = clip_norm(v_2d, velocity_max_pix * W)
 
                 cx, cy = row
-                cx2, cy2 = row + v_2d.astype(np.int)
+                cx2, cy2 = row + v_2d.astype(int)
 
                 cx2 = np.clip(cx2, 0, W - 1)
                 cy2 = np.clip(cy2, 0, H - 1)

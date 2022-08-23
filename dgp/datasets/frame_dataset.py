@@ -20,7 +20,7 @@ from dgp.constants import (
 from dgp.datasets import BaseDataset, DatasetMetadata
 
 SUPPORTED_ANNOTATIONS_TABLE = xr.DataArray(
-    np.zeros((len(DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE), len(ALL_ANNOTATION_TYPES)), dtype=np.bool),
+    np.zeros((len(DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE), len(ALL_ANNOTATION_TYPES)), dtype=bool),
     dims=["datum_types", "annotations"],
     coords={
         "datum_types": list(DATUM_TYPE_TO_SUPPORTED_ANNOTATION_TYPE),
