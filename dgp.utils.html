@@ -396,7 +396,7 @@ Note: This function works for both torch and numpy.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.camera.Distortion">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.camera.</span></span><span class="sig-name descname"><span class="pre">Distortion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0],</span> <span class="pre">dtype=float32)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.camera.Distortion" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.camera.</span></span><span class="sig-name descname"><span class="pre">Distortion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.,</span> <span class="pre">0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.camera.Distortion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Distortion via distortion parameters or full distortion map</p>
 <dl class="py property">
@@ -890,7 +890,7 @@ color: list</p>
 <p>General-purpose class for rigid-body transformations.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.pose.Pose">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.pose.</span></span><span class="sig-name descname"><span class="pre">Pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wxyz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0],</span> <span class="pre">dtype=float32)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.pose.</span></span><span class="sig-name descname"><span class="pre">Pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wxyz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1.,</span> <span class="pre">0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>SE(3) rigid transform class that allows compounding of 6-DOF poses
 and provides common transformations that are commonly seen in geometric problems.</p>
@@ -1241,7 +1241,7 @@ precision.</p>
 instead of this function for more consistent floating point
 comparisons.</p>
 </div>
-<p>The test verifies that the elements of <code class="docutils literal notranslate"><span class="pre">actual</span></code> and <code class="docutils literal notranslate"><span class="pre">desired</span></code> satisfy.</p>
+<p>The test verifies that the elements of <cite>actual</cite> and <cite>desired</cite> satisfy.</p>
 <blockquote>
 <div><p><code class="docutils literal notranslate"><span class="pre">abs(desired-actual)</span> <span class="pre">&lt;</span> <span class="pre">1.5</span> <span class="pre">*</span> <span class="pre">10**(-decimal)</span></code></p>
 </div></blockquote>
@@ -1270,9 +1270,9 @@ delegates to assert_array_almost_equal</p>
 </dd>
 </dl>
 <p>assert_array_almost_equal_nulp, assert_array_max_ulp, assert_equal</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy.testing</span> <span class="k">as</span> <span class="nn">npt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">npt</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="mf">2.3333333333333</span><span class="p">,</span> <span class="mf">2.33333334</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">npt</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="mf">2.3333333333333</span><span class="p">,</span> <span class="mf">2.33333334</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy.testing</span> <span class="kn">import</span> <span class="n">assert_almost_equal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="mf">2.3333333333333</span><span class="p">,</span> <span class="mf">2.33333334</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="mf">2.3333333333333</span><span class="p">,</span> <span class="mf">2.33333334</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
     <span class="o">...</span>
 <span class="gr">AssertionError</span>:
@@ -1281,8 +1281,8 @@ delegates to assert_array_almost_equal</p>
 <span class="go"> DESIRED: 2.33333334</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">npt</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.3333333333333</span><span class="p">]),</span>
-<span class="gp">... </span>                        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.33333334</span><span class="p">]),</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.3333333333333</span><span class="p">]),</span>
+<span class="gp">... </span>                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.33333334</span><span class="p">]),</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
     <span class="o">...</span>
 <span class="gr">AssertionError</span>:
