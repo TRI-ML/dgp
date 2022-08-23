@@ -33,6 +33,12 @@ repos:
     hooks:
       - id: isort
         exclude: _pb2\.py$
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.7.1
+    hooks:
+      - id: prettier
+        types: [markdown]
+        args: [--embedded-language-formatting=off, --prose-wrap=always]
   - repo: https://github.com/PyCQA/pylint
     rev: v2.14.5
     hooks:

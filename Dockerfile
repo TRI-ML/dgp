@@ -1,6 +1,6 @@
-FROM nvidia/cuda:11.1.1-devel-ubuntu18.04
+FROM nvidia/cuda:11.2.0-devel-ubuntu20.04
 
-ARG python=3.7
+ARG python=3.9
 ENV PYTORCH_VERSION=1.8.1+cu111
 ENV TORCHVISION_VERSION=0.9.1+cu111
 
@@ -33,7 +33,6 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
   python3 get-pip.py && \
   rm get-pip.py
 # The above appears to install pip into /usr/local/, but some tools expect /usr/bin/.
-# TODO(tk-woven): `apt install python3-pip` and remove these symlinks when we update the base Ubuntu image.
 RUN ln -sf /usr/local/bin/pip /usr/bin/pip
 RUN ln -sf /usr/local/bin/pip3 /usr/bin/pip3
 
@@ -53,7 +52,7 @@ RUN pip install --no-cache-dir -r /tmp/requirements-dev.txt
 
 # Settings for S3
 RUN aws configure set default.s3.max_concurrent_requests 100 && \
-    aws configure set default.s3.max_queue_size 10000
+  aws configure set default.s3.max_queue_size 10000
 
 # Copy workspace and setup PYTHONPATH
 COPY . ${WORKSPACE}
