@@ -380,7 +380,7 @@ pose.tvec.x, pose.tvec.y, pose.tvec.z, width, length, height).</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>2D instance mask object.</p>
 <dl class="simple">
-<dt>mask: np.ndarray[np.bool, np.uint8, np.int64]</dt><dd><p>2D boolean array describiing instance mask.</p>
+<dt>mask: np.ndarray[bool, np.uint8, np.int64]</dt><dd><p>2D boolean array describiing instance mask.</p>
 </dd>
 <dt>class_id: int, default: GENERIC_OBJECT_CLASS</dt><dd><p>Integer class ID (0 reserved for background).</p>
 </dd>
@@ -469,7 +469,7 @@ defaults to empty dict.</p>
 <p>Container of RLE-encoded mask.</p>
 <p>See <a class="reference external" href="https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/mask.py">https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/mask.py</a> for RLE format.</p>
 <dl class="simple">
-<dt>size: list[int] or np.ndarray[np.int]</dt><dd><p>Height and width of mask.</p>
+<dt>size: list[int] or np.ndarray[int]</dt><dd><p>Height and width of mask.</p>
 </dd>
 <dt>counts: list[int]</dt><dd><p>Count-encoding of RLE format.</p>
 </dd>
