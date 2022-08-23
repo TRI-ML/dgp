@@ -35,26 +35,3 @@ jobs:
         run: |
           pre-commit install
           pre-commit run --all-files
-      - name: Lint code base with SuperLinter
-        # Documentation: https://github.com/github/super-linter#how-to-use
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: master
-          FILTER_REGEX_EXCLUDE: .*pb2*py
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINTER_RULES_PATH: .
-          VALIDATE_ALL_CODEBASE: false # Only new or edited files will be parsed for validation.
-          VALIDATE_DOCKERFILE_HADOLINT: false
-          VALIDATE_GITLEAKS: false # Handled by pre-commit.
-          VALIDATE_HTML: false # Handled by pre-commit.
-          VALIDATE_JSCPD: false
-          VALIDATE_JSON: false # Handled by pre-commit.
-          VALIDATE_MARKDOWN: false # Handled by pre-commit.
-          VALIDATE_NATURAL_LANGUAGE: false # No corresponding pre-commit hook but not critical.
-          VALIDATE_PROTOBUF: false
-          VALIDATE_PYTHON_BLACK: false
-          VALIDATE_PYTHON_FLAKE8: false # Formatted by YAPF.
-          VALIDATE_PYTHON_ISORT: false # Formatted by YAPF.
-          VALIDATE_PYTHON_MYPY: false
-          VALIDATE_PYTHON_PYLINT: false # Handled by pre-commit.
-          VALIDATE_SHELL_SHFMT: false # Handled by pre-commit.
