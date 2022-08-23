@@ -1,6 +1,6 @@
 # TODO(tk-woven) Bump mistune version when Sphinx API issue is fixed.
 # https://github.com/sphinx-contrib/openapi/issues/121
-mistune==0.8.4
+mistune==2.0.3
 m2r2==0.3.2
 rinohtype==0.5.4
 solar-theme==1.3.3
