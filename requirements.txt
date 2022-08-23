@@ -11,4 +11,4 @@ torch>=1.8.1
 torchvision>=0.9.1
 tqdm>=4.29.1
 tenacity>=6.0.0
-xarray==0.16.2
+xarray==2022.6.0
