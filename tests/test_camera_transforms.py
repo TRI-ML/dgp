@@ -13,7 +13,11 @@ from dgp.annotations.camera_transforms import (
     ScaleHeightTransform,
     calc_affine_transform,
 )
+from dgp.annotations.key_point_2d_annotation import KeyPoint2DAnnotationList
+from dgp.annotations.ontology import KeyPointOntology
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
+from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
+from dgp.utils.structures.key_point_2d import KeyPoint2D
 from dgp.utils.visualization_utils import visualize_cameras
 from tests import TEST_DATA_DIR
 
@@ -21,7 +25,7 @@ from tests import TEST_DATA_DIR
 DEBUG = False
 
 
-def assert_almost_mostly_equal(datum1, datum2, valid_region=None):
+def assert_almost_equal(datum1, datum2, valid_region=None):
     """Test if two camera datums are the same by comparing their annotations and rgb values.
     Since we intend to use this to test operations that can remove information (like borders when you rotate)
     we can compare values at a central region by passing valid_region.
@@ -34,7 +38,7 @@ def assert_almost_mostly_equal(datum1, datum2, valid_region=None):
     datum2: dict(str, any)
         Another camera datum
 
-    valid_region: Tuple[float,float,float,float], default = None
+    valid_region: tuple
         An [x1,y2, x1,y2] region on which to compare image values. If None, uses entire image
     """
 
@@ -83,7 +87,7 @@ def assert_almost_mostly_equal(datum1, datum2, valid_region=None):
 
         # We cannot directly compare two images. One image may have been scaled heavily and therefore blurred
         # so we compare peak signal to noise. The threshold here is abitrary and set manually
-        # TODO: get better threshold
+        # TODO(chrisochoatri): get better threshold
         assert cv2.PSNR(rgb1, rgb2) >= 30.0
 
     if 'bounding_box_2d' in keys1:
@@ -113,6 +117,11 @@ def assert_almost_mostly_equal(datum1, datum2, valid_region=None):
         for box1, box2 in zip(boxes1, boxes2):
             assert np.allclose(box1.corners, box2.corners, atol=1e-3), f'{box1.corners}, {box2.corners}'
             assert box1.class_id == box2.class_id
+
+    if 'key_point_2d' in keys1:
+        points1 = datum1['key_point_2d']
+        points2 = datum2['key_point_2d']
+        assert np.allclose(points1.xy, points2.xy)
 
     if 'rgb' in keys1 and 'bounding_box_3d' in keys1:
         # Render the cuboids on the image, check that both images are similar
@@ -148,7 +157,67 @@ def assert_almost_mostly_equal(datum1, datum2, valid_region=None):
 
         assert cv2.PSNR(rgb1, rgb2) >= 20.0
 
-    # TODO: test other annotations
+    if 'rgb' in keys1 and 'key_point_2d' in keys1:
+        # Render the points on the images and compare images
+        rgb1 = np.array(datum1['rgb'])
+        for point in datum1['key_point_2d'].xy:
+            rgb1 = cv2.circle(rgb1, (int(point[0]), int(point[1])), 5, (255, 0, 0), -1)
+
+        rgb2 = np.array(datum2['rgb'])
+        for point in datum2['key_point_2d'].xy:
+            rgb2 = cv2.circle(rgb2, (int(point[0]), int(point[1])), 5, (255, 0, 0), -1)
+
+        if valid_region is None:
+            h, w = rgb1.shape[:2]
+            x1, y1, x2, y2 = (0, 0, w, h)
+        else:
+            x1, y1, x2, y2 = valid_region
+
+        rgb1 = rgb1[y1:y2, x1:x2]
+        rgb2 = rgb2[y1:y2, x1:x2]
+
+        if DEBUG:
+            idx = np.random.randint(1000)
+            cv2.imwrite(f'kp_{idx}.jpeg', rgb1)
+            cv2.imwrite(f'kp_{idx}_2.jpeg', rgb2)
+
+        # We cannot directly compare two images. One image may have been scaled heavily and therefore blurred
+        # so we compare peak signal to noise. The threshold here is abitrary and set manually
+        # TODO(chrisochoatri): get better threshold
+        assert cv2.PSNR(rgb1, rgb2) >= 20.0
+
+    # TODO(chrisochoatri): test other annotations
+
+
+def add_keypoints2d(datum):
+    """Helper function to add some keypoints to a datum for testing
+
+    Parameters
+    ----------
+    datum: dict
+        The datum to process
+
+    Returns
+    -------
+    new_datum: dict
+        A datum with keypoints added
+    """
+
+    # Make a mini ontology
+    ontology_pb2 = OntologyV2Pb2()
+    item = ontology_pb2.items.add()
+    item.id = 1
+    item.isthing = True
+    item.name = 'Orb'
+    ontology = KeyPointOntology(ontology_pb2)
+
+    # Make some points
+    pointlist = [
+        KeyPoint2D(np.array([1.0 * i, j]), class_id=1) for i in range(0, 1000, 100) for j in range(0, 1000, 20)
+    ]
+
+    datum['key_point_2d'] = KeyPoint2DAnnotationList(ontology, pointlist)
+    return datum
 
 
 class TestTransforms(unittest.TestCase):
@@ -175,6 +244,9 @@ class TestTransforms(unittest.TestCase):
         """Test base class by generating a transform, applying it, and then applying the inverse"""
         cam_datum = self.dataset[0][0][0]
 
+        # This dataset does not have keypoints, add some for testing
+        cam_datum = add_keypoints2d(cam_datum)
+
         # Initial image size. Note: pil size is w,h not h,w
         w, h = cam_datum['rgb'].size
         A = calc_affine_transform(theta=45, scale=.9, flip=1, shiftx=10, shifty=-20, shear=0, img_shape=(h, w))
@@ -187,8 +259,13 @@ class TestTransforms(unittest.TestCase):
                 {i: ''
                  for i in range(32)},
                 None,
-            )
-            cv2.imwrite('affine_test_intermediate.jpeg', rgb_viz[0])
+            )[0]
+
+            if 'key_point_2d' in cam_datum2:
+                for point in cam_datum2['key_point_2d'].xy:
+                    rgb_viz = cv2.circle(rgb_viz, (int(point[0]), int(point[1])), 5, (255, 0, 0), -1)
+
+            cv2.imwrite('affine_test_intermediate.jpeg', rgb_viz)
 
         # Test round trip. We should be able to (mostly) recover the initial datum
         Ainv = np.linalg.inv(tr.A)
@@ -202,12 +279,13 @@ class TestTransforms(unittest.TestCase):
         dh = h // 4
         valid_region = (dw, dh, w - dw, h - dh)
 
-        assert_almost_mostly_equal(cam_datum, cam_datum3, valid_region=valid_region)
+        assert_almost_equal(cam_datum, cam_datum3, valid_region=valid_region)
 
     def test_scale_transform(self):
         """Test scale transform"""
 
         cam_datum = self.dataset[0][0][0]
+        cam_datum = add_keypoints2d(cam_datum)
 
         # Initial image size. Note: pil size is w,h not h,w
         w, h = cam_datum['rgb'].size
@@ -224,11 +302,12 @@ class TestTransforms(unittest.TestCase):
         tr_inv = ScaleAffineTransform(1 / s)
         cam_datum3 = tr_inv(cam_datum2)
 
-        assert_almost_mostly_equal(cam_datum, cam_datum3)
+        assert_almost_equal(cam_datum, cam_datum3)
 
     def test_scale_height_transform(self):
         """Test scale by height transform"""
         cam_datum = self.dataset[0][0][0]
+        cam_datum = add_keypoints2d(cam_datum)
         _, h = cam_datum['rgb'].size
 
         s = 2
@@ -244,11 +323,12 @@ class TestTransforms(unittest.TestCase):
         tr_inv = ScaleHeightTransform(hs)
         cam_datum3 = tr_inv(cam_datum2)
 
-        assert_almost_mostly_equal(cam_datum, cam_datum3)
+        assert_almost_equal(cam_datum, cam_datum3)
 
     def test_crop_scale_transform(self):
         """Test the crop transform"""
         cam_datum = self.dataset[0][0][0]
+        cam_datum = add_keypoints2d(cam_datum)
         w, h = cam_datum['rgb'].size
 
         target_shape = (h // 2, w // 2)
@@ -271,13 +351,14 @@ class TestTransforms(unittest.TestCase):
         dh = (h - h2) // 2 + 1
         valid_region = (dw, dh, w - dw, h - dh)
 
-        assert_almost_mostly_equal(cam_datum, cam_datum3, valid_region=valid_region)
+        assert_almost_equal(cam_datum, cam_datum3, valid_region=valid_region)
 
     def test_composite_transform(self):
         """Test that we can compose transforms correctly. We test that we can get the
         same datum by applying multiple transformation consecutively vs all at once.
         We also test that apply the inverse works correctly"""
         cam_datum = self.dataset[0][0][0]
+        cam_datum = add_keypoints2d(cam_datum)
 
         w, h = cam_datum['rgb'].size
         A1 = calc_affine_transform(theta=15, scale=1, flip=0, shiftx=0, shifty=0, shear=0, img_shape=(h, w))
@@ -300,7 +381,7 @@ class TestTransforms(unittest.TestCase):
         dh = h // 4
         valid_region = (dw, dh, w - dw, h - dh)
 
-        assert_almost_mostly_equal(cam_datum2, cam_datum3, valid_region=valid_region)
+        assert_almost_equal(cam_datum2, cam_datum3, valid_region=valid_region)
 
         # test round trip
         Ainv = np.linalg.inv(tr_comp.A)
@@ -313,13 +394,13 @@ class TestTransforms(unittest.TestCase):
         dh = h // 4
         valid_region = (dw, dh, w - dw, h - dh)
 
-        assert_almost_mostly_equal(cam_datum, cam_datum4, valid_region=valid_region)
+        assert_almost_equal(cam_datum, cam_datum4, valid_region=valid_region)
 
         # Finally, if we compose with the inverse, nothing should really happen
         tr_comp = CompositeAffineTransform(transforms=[tr2, tr1, tr_inv], )
         cam_datum5 = tr_comp(cam_datum)
         assert np.allclose(tr_comp.A, np.eye(3))
-        assert_almost_mostly_equal(
+        assert_almost_equal(
             cam_datum,
             cam_datum5,
         )

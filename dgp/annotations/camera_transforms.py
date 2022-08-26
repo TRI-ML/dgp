@@ -29,9 +29,8 @@ from dgp.utils.structures.bounding_box_2d import BoundingBox2D
 
 logger = logging.getLogger(__name__)
 
-# Some opencv operations can lead to deadlocks when using multiprocess.fork instead of spawn
-# we disable opencv multithreading to be safe
-cv2.setNumThreads(0)
+# NOTE: Some opencv operations can lead to deadlocks when using multiprocess.fork instead of spawn.
+# If you experience deadlocks, try adding cv2.setNumThreads(0)
 
 
 def calc_affine_transform(
@@ -72,7 +71,7 @@ def calc_affine_transform(
     h, w = img_shape[:2]
 
     # Rotate and scale
-    # TODO: break scale into scale_y and scale_x?
+    # TODO(chrisochoatri): break scale into scale_y and scale_x?
     R = cv2.getRotationMatrix2D((w / 2, h / 2), theta, scale)
     R = np.vstack([R, np.array([0, 0, 1.0])])
 
@@ -88,7 +87,7 @@ def calc_affine_transform(
         F[0][0] = -1
         F[0][-1] = w
 
-    # TODO: expose operation order
+    # TODO(chrisochoatri): expose operation order
     A = F @ S @ R
 
     return A
@@ -106,7 +105,7 @@ def box_crop_affine_transform(
     box_xyxy: list or tuple
         Box corners expressed as x1,y1,x2,y2.
     target_shape: tuple
-        Desired image shape after cropping and resizing.
+        Desired image shape (h,w) after cropping and resizing.
 
     Returns
     -------
@@ -173,7 +172,7 @@ def transform_box_2d(box: BoundingBox2D, A: np.ndarray) -> BoundingBox2D:
     x1, y1 = new_points.min(axis=0)
     x2, y2 = new_points.max(axis=0)
     # Note these new points could be outside of the image now.
-    # TODO: expose option to either clip, remove, or keep these boxes
+    # TODO(chrisochoatri): expose option to either clip, remove, or keep these boxes
 
     box.l = x1
     box.t = y1
@@ -460,13 +459,13 @@ class AffineCameraTransform(BaseTransform):
         """
         new_depth = deepcopy(depth)
         new_depth._depth = self.transform_image(new_depth._depth, mode=cv2.INTER_LINEAR)
-        # TODO: do we want to scale depth values by the new focal length?
+        # TODO(chrisochoatri): do we want to scale depth values by the new focal length?
         return new_depth
 
     def transform_panoptic_segmentation_2d(
         self,
-        panoptic_seg: PanopticSegmentation2DAnnotation,
-    ) -> PanopticSegmentation2DAnnotation:
+        panoptic_seg: Optional[PanopticSegmentation2DAnnotation],
+    ) -> Optional[PanopticSegmentation2DAnnotation]:
         """Applies transformation to panoptic segmentation annotation.
 
         Parameters
@@ -477,7 +476,7 @@ class AffineCameraTransform(BaseTransform):
         Returns
         -------
         new_panoptic_seg: PanopticSegmentation2DAnnotation
-            New transformed panoptic segmentation annotation.
+            New transformed panoptic segmentation annotation or None if the input panoptic_sg is None
         """
         if panoptic_seg is None:
             return None
@@ -487,26 +486,26 @@ class AffineCameraTransform(BaseTransform):
             panoptic._bitmask = self.transform_image(panoptic.bitmask.astype(np.float32),
                                                      mode=cv2.INTER_NEAREST).astype(np.bool)
 
-            # TODO: how to treat zero mass results? ie if after a transformation,
-            # if the bitmask is all zeros, should we delete this mask?
-            # currently we just keep the mask
+            # TODO(chrisochoatri): how to treat masks with no valid pixels? ie if after a transformation,
+            # if the bitmask is all zeros, should we delete this mask? currently we just keep the mask
 
         return new_panoptic_seg
 
     def transform_mask_2d(
         self,
-        mask: np.ndarray,
-    ) -> np.ndarray:
+        mask: Optional[np.ndarray],
+    ) -> Optional[np.ndarray]:
         """Transform image mask
 
         Parameters
         ----------
         mask: np.ndarray
-            A boolean mask of same shape as image that denotes a valid pixel
+            A boolean mask of same shape as the image that denotes a valid pixel
 
         Returns
         -------
         new_mask: np.ndarray
+            The transformed mask or None if the input mask was None
         """
 
         if mask is None:
@@ -518,8 +517,8 @@ class AffineCameraTransform(BaseTransform):
 
     def transform_keypoints_2d(
         self,
-        keypoints: KeyPoint2DAnnotationList,
-    ) -> KeyPoint2DAnnotationList:
+        keypoints: Optional[KeyPoint2DAnnotationList],
+    ) -> Optional[KeyPoint2DAnnotationList]:
         """Applies transformation matrix to list of keypoints:
 
         Parameters
@@ -530,19 +529,19 @@ class AffineCameraTransform(BaseTransform):
         Returns
         -------
         new_keypoints: Keypoint2DAnnotationList
-            List of transformed bounding keypoint annotations.
+            List of transformed bounding keypoint annotations or None if keypoints is None
         """
-        logger.warning('keypoints not yet been tested, please use caution using this')
-        # TODO: test keypoint 2d
+
         if keypoints is None:
             return None
 
         new_keypoints = deepcopy(keypoints)
+
         for kp in new_keypoints:
-            x, y = kp.point
+            x, y = kp.x, kp.y
             new_pt = self.A[:2, :] @ np.array([x, y, 1])
-            kp.point = np.float32([new_pt[0], new_pt[1]])
-            # TODO: test this and vectorize it, probably don't need a loop here
+            kp.x, kp.y = new_pt[0], new_pt[1]
+            kp._point = np.float32([new_pt[0], new_pt[1]])
 
         return new_keypoints
 
@@ -552,7 +551,7 @@ class AffineCameraTransform(BaseTransform):
         Parameters
         ----------
         cam_datum: OrderedDict
-            Camera datum to transform.
+            Camera datum to transform with at least the following keys: datum_type, rgb, pose, intrinsics, extrinsics
 
         Returns
         -------
@@ -607,9 +606,9 @@ class AffineCameraTransform(BaseTransform):
             boxes = new_datum['bounding_box_2d']
             boxes = self.transform_detections_2d(boxes, )
             new_datum['bounding_box_2d'] = boxes
-            # TODO: remove zero w and h boxes
-            # TODO: clip to image size
-            # TODO: maybe convert back to int if input is int?
+            # TODO(chrisochoatri): remove zero w and h boxes
+            # TODO(chrisochoatri): clip to image size
+            # TODO(chrisochoatri): maybe convert back to int if input is int?
 
         if 'semantic_segmentation_2d' in new_datum:
             sem_seg = new_datum['semantic_segmentation_2d']
@@ -631,11 +630,10 @@ class AffineCameraTransform(BaseTransform):
             instance_seg = self.transform_panoptic_segmentation_2d(instance_seg, )
             new_datum['instance_segmentation_2d'] = instance_seg
 
-        # TODO: verify behavior when Nonetype is passed for each annotation
-        # TODO: line 2d/3d annotations
-        # TODO: polygon annotation
-        # TODO: flow 2d
-        # TODO: generic feature type
+        # TODO(chrisochoatri): verify behavior when Nonetype is passed for each annotation
+        # TODO(chrisochoatri): line 2d/3d annotations
+        # TODO(chrisochoatri): polygon annotation
+        # TODO(chrisochoatri): flow 2d
 
         return new_datum
 
@@ -702,7 +700,7 @@ class CropScaleTransform(AffineCameraTransform):
         Parameters
         ----------
         target_shape: tuple
-            Shape after transformation.
+            Shape (h,w) after transformation.
         fix_h: bool, default=True
             If True, fixes the height and modifies the width to maintain the desired aspect ratio.
             Otherwise fixes the width and moifies the height.
