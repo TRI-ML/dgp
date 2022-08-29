@@ -46,7 +46,6 @@ def calc_affine_transform(
 
     Parameters
     ----------
-
     theta: float
         Rotation angle in degrees.
     scale: float
@@ -64,7 +63,6 @@ def calc_affine_transform(
 
     Returns
     -------
-
     A: np.ndarray
         3x3 matrix that expresses the requested transformations.
     """
@@ -94,7 +92,7 @@ def calc_affine_transform(
 
 
 def box_crop_affine_transform(
-    box_xyxy: Tuple[int, int, int, int],
+    box_ltrb: Tuple[int, int, int, int],
     target_shape: Tuple[int, int],
 ) -> np.ndarray:
     """Generates a matrix that crops a rectangular area from an image and resizes it to target shape.
@@ -102,8 +100,8 @@ def box_crop_affine_transform(
 
     Parameters
     ----------
-    box_xyxy: list or tuple
-        Box corners expressed as x1,y1,x2,y2.
+    box_ltrb: list or tuple
+        Box corners expressed as left, top, right, bottom (x1,y1,x2,y2).
     target_shape: tuple
         Desired image shape (h,w) after cropping and resizing.
 
@@ -113,7 +111,7 @@ def box_crop_affine_transform(
         3x3 matrix that expresses the requested transformation.
     """
     # get box center
-    x1, y1, x2, y2 = box_xyxy
+    x1, y1, x2, y2 = box_ltrb
     cx, cy = (x1 + x2) / 2, (y1 + y2) / 2
     w, h = x2 - x1, y2 - y1
 
@@ -272,6 +270,11 @@ class AffineCameraTransform(BaseTransform):
         -------
         new_img: np.ndarray or PIL.Image.Image
             New transformed image.
+
+        Raises
+        ------
+        ValueError
+            If the mode is not one of cv2.INTER_LINEAR or cv2.INTER_NEAREST
         """
         h, w = self.shape[:2]
 
@@ -284,6 +287,8 @@ class AffineCameraTransform(BaseTransform):
                 mode = PIL.Image.BILINEAR
             elif mode == cv2.INTER_NEAREST:
                 mode = PIL.Image.NEAREST
+            else:
+                raise ValueError(f'{mode} not supported')
 
             new_img = tx.transform((w, h), img, resample=mode)
         else:
@@ -304,7 +309,6 @@ class AffineCameraTransform(BaseTransform):
 
         Returns
         -------
-
         mtxR: np.array
             new camera intrinsics
         new_pose: Pose
@@ -316,7 +320,8 @@ class AffineCameraTransform(BaseTransform):
         # Transform the camera matrix
         h, w = self.shape[:2]
 
-        # Flipping leads to the wrong rotation below, so when there is a flip present, we unflip, do everything, and re flip
+        # Flipping leads to the wrong rotation below, so when there is a flip present,
+        # we unflip, do everything, and re flip
         flip_mat = np.eye(3)
         flip = False
         if self.A[0, 0] < 0:
@@ -499,12 +504,12 @@ class AffineCameraTransform(BaseTransform):
 
         Parameters
         ----------
-        mask: np.ndarray
+        mask: np.ndarray, optional
             A boolean mask of same shape as the image that denotes a valid pixel
 
         Returns
         -------
-        new_mask: np.ndarray
+        new_mask: np.ndarray, optional
             The transformed mask or None if the input mask was None
         """
 
@@ -629,6 +634,9 @@ class AffineCameraTransform(BaseTransform):
             instance_seg = new_datum['instance_segmentation_2d']
             instance_seg = self.transform_panoptic_segmentation_2d(instance_seg, )
             new_datum['instance_segmentation_2d'] = instance_seg
+
+        if 'key_line_2d' in new_datum:
+            logger.warning('key_line_2d curently not supported')
 
         # TODO(chrisochoatri): verify behavior when Nonetype is passed for each annotation
         # TODO(chrisochoatri): line 2d/3d annotations
