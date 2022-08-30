@@ -13,10 +13,12 @@ from dgp.annotations.camera_transforms import (
     ScaleHeightTransform,
     calc_affine_transform,
 )
+from dgp.annotations.key_line_2d_annotation import KeyLine2DAnnotationList
 from dgp.annotations.key_point_2d_annotation import KeyPoint2DAnnotationList
-from dgp.annotations.ontology import KeyPointOntology
+from dgp.annotations.ontology import KeyLineOntology, KeyPointOntology
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
 from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
+from dgp.utils.structures.key_line_2d import KeyLine2D
 from dgp.utils.structures.key_point_2d import KeyPoint2D
 from dgp.utils.visualization_utils import visualize_cameras
 from tests import TEST_DATA_DIR
@@ -186,6 +188,35 @@ def assert_almost_equal(datum1, datum2, valid_region=None):
         # TODO(chrisochoatri): get better threshold
         assert cv2.PSNR(rgb1, rgb2) >= 20.0
 
+    if 'rgb' in keys1 and 'key_line_2d' in keys1:
+        rgb1 = np.array(datum1['rgb'])
+        for line in datum1['key_line_2d'].linelist:
+            polyline = line.xy.T.astype(np.int32)
+            polyline = np.expand_dims(polyline, 0)
+            rgb1 = cv2.polylines(rgb1, polyline, False, (0, 255, 0), 10, cv2.LINE_AA)
+
+        rgb2 = np.array(datum2['rgb'])
+        for line in datum2['key_line_2d'].linelist:
+            polyline = line.xy.T.astype(np.int32)
+            polyline = np.expand_dims(polyline, 0)
+            rgb2 = cv2.polylines(rgb2, polyline, False, (0, 255, 0), 10, cv2.LINE_AA)
+
+        if valid_region is None:
+            h, w = rgb1.shape[:2]
+            x1, y1, x2, y2 = (0, 0, w, h)
+        else:
+            x1, y1, x2, y2 = valid_region
+
+        rgb1 = rgb1[y1:y2, x1:x2]
+        rgb2 = rgb2[y1:y2, x1:x2]
+
+        if DEBUG:
+            idx = np.random.randint(1000)
+            cv2.imwrite(f'kl_{idx}.jpeg', rgb1)
+            cv2.imwrite(f'kl_{idx}_2.jpeg', rgb2)
+
+        assert cv2.PSNR(rgb1, rgb2) >= 20.0
+
     # TODO(chrisochoatri): test other annotations
 
 
@@ -220,6 +251,39 @@ def add_keypoints2d(datum):
     return datum
 
 
+def add_keylines2d(datum):
+    """Helper function to add some keylines to a datum for testing
+
+    Parameters
+    ----------
+    datum: dict
+        The datum to process
+
+    Returns
+    -------
+    new_datum: dict
+        A datum with keylines added
+    """
+
+    # Make a mini ontology
+    ontology_pb2 = OntologyV2Pb2()
+    item = ontology_pb2.items.add()
+    item.id = 1
+    item.isthing = True
+    item.name = 'SomeLine'
+    ontology = KeyLineOntology(ontology_pb2)
+
+    # Make some lines
+    linelist = []
+    for y in range(0, 1000, 200):
+        points = np.stack([np.array([x, 1.0 * y]) for x in range(0, 1000, 100)])
+        line = KeyLine2D(line=points, class_id=1)
+        linelist.append(line)
+
+    datum['key_line_2d'] = KeyLine2DAnnotationList(ontology, linelist)
+    return datum
+
+
 class TestTransforms(unittest.TestCase):
     """Test camera datum transformations"""
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
@@ -246,6 +310,7 @@ class TestTransforms(unittest.TestCase):
 
         # This dataset does not have keypoints, add some for testing
         cam_datum = add_keypoints2d(cam_datum)
+        cam_datum = add_keylines2d(cam_datum)
 
         # Initial image size. Note: pil size is w,h not h,w
         w, h = cam_datum['rgb'].size
@@ -264,6 +329,13 @@ class TestTransforms(unittest.TestCase):
             if 'key_point_2d' in cam_datum2:
                 for point in cam_datum2['key_point_2d'].xy:
                     rgb_viz = cv2.circle(rgb_viz, (int(point[0]), int(point[1])), 5, (255, 0, 0), -1)
+
+            if 'key_line_2d' in cam_datum2:
+                lines = cam_datum2['key_line_2d'].linelist
+                for line in lines:
+                    ll = line.xy.T.astype(np.int32)
+                    ll = np.expand_dims(ll, 0)
+                    rgb_viz = cv2.polylines(rgb_viz, ll, False, (0, 255, 0), 10, cv2.LINE_AA)
 
             cv2.imwrite('affine_test_intermediate.jpeg', rgb_viz)
 
@@ -286,6 +358,7 @@ class TestTransforms(unittest.TestCase):
 
         cam_datum = self.dataset[0][0][0]
         cam_datum = add_keypoints2d(cam_datum)
+        cam_datum = add_keylines2d(cam_datum)
 
         # Initial image size. Note: pil size is w,h not h,w
         w, h = cam_datum['rgb'].size
@@ -308,6 +381,7 @@ class TestTransforms(unittest.TestCase):
         """Test scale by height transform"""
         cam_datum = self.dataset[0][0][0]
         cam_datum = add_keypoints2d(cam_datum)
+        cam_datum = add_keylines2d(cam_datum)
         _, h = cam_datum['rgb'].size
 
         s = 2
@@ -329,6 +403,7 @@ class TestTransforms(unittest.TestCase):
         """Test the crop transform"""
         cam_datum = self.dataset[0][0][0]
         cam_datum = add_keypoints2d(cam_datum)
+        cam_datum = add_keylines2d(cam_datum)
         w, h = cam_datum['rgb'].size
 
         target_shape = (h // 2, w // 2)
@@ -359,6 +434,7 @@ class TestTransforms(unittest.TestCase):
         We also test that apply the inverse works correctly"""
         cam_datum = self.dataset[0][0][0]
         cam_datum = add_keypoints2d(cam_datum)
+        cam_datum = add_keylines2d(cam_datum)
 
         w, h = cam_datum['rgb'].size
         A1 = calc_affine_transform(theta=15, scale=1, flip=0, shiftx=0, shifty=0, shear=0, img_shape=(h, w))

@@ -16,6 +16,7 @@ from dgp.annotations.bounding_box_3d_annotation import (
     BoundingBox3DAnnotationList,
 )
 from dgp.annotations.depth_annotation import DenseDepthAnnotation
+from dgp.annotations.key_line_2d_annotation import KeyLine2DAnnotationList
 from dgp.annotations.key_point_2d_annotation import KeyPoint2DAnnotationList
 from dgp.annotations.panoptic_segmentation_2d_annotation import (
     PanopticSegmentation2DAnnotation,
@@ -550,6 +551,39 @@ class AffineCameraTransform(BaseTransform):
 
         return new_keypoints
 
+    def transform_keylines_2d(
+        self,
+        keylines: Optional[KeyLine2DAnnotationList],
+    ) -> Optional[KeyLine2DAnnotationList]:
+        """Applies transformation matrix to key lines:
+
+        Parameters
+        ----------
+        keylines: KeyLine2dAnnotationList
+            Keyline2d annotation list
+
+        Returns
+        -------
+        new_keylines: Keyline2DAnnotationList
+            Transformed keylines or None if keylines is None
+        """
+
+        if keylines is None:
+            return None
+
+        new_keylines = deepcopy(keylines)
+
+        for line in new_keylines:
+            points = line.xy.T  # (N,2)
+            ones = np.expand_dims(np.ones(points.shape[0]), 1)  # (N,2)
+            new_points = self.A[:2, :] @ np.concatenate([points, ones], axis=-1).T
+            new_points = new_points.T[:, :2]
+            line._point = new_points
+            line.x = new_points[:, 0].tolist()
+            line.y = new_points[:, 1].tolist()
+
+        return new_keylines
+
     def transform_datum(self, cam_datum: Dict[str, Any]) -> Dict[str, Any]:  # pylint: disable=arguments-renamed
         """Applies transformation to a camera datum.
 
@@ -636,7 +670,9 @@ class AffineCameraTransform(BaseTransform):
             new_datum['instance_segmentation_2d'] = instance_seg
 
         if 'key_line_2d' in new_datum:
-            logger.warning('key_line_2d curently not supported')
+            keylines = new_datum['key_line_2d']
+            keylines = self.transform_keylines_2d(keylines, )
+            new_datum['key_line_2d'] = keylines
 
         # TODO(chrisochoatri): verify behavior when Nonetype is passed for each annotation
         # TODO(chrisochoatri): line 2d/3d annotations
