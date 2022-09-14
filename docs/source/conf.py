@@ -12,6 +12,7 @@
 #
 import os
 import sys
+from subprocess import run
 
 import solar_theme
 
@@ -26,7 +27,8 @@ copyright = '2021, Toyota Research Institute'
 author = 'Toyota Research Institute'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+cmd = "git describe --tags --match v[0-9]*.[0-9]*"
+release = run(cmd.split(), capture_output=True, check=True).stdout.decode().strip()
 
 # -- General configuration ---------------------------------------------------
 
