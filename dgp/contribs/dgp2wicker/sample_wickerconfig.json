@@ -1,0 +1,6 @@
+{
+    "aws_s3_config": {
+      "s3_datasets_path": "<path to s3 where wicker data will be stored>",
+      "region": "<region ie us-west-2 etc>"
+    }
+}

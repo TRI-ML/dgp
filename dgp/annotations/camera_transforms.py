@@ -633,7 +633,7 @@ class AffineCameraTransform(BaseTransform):
             rgb_mask = self.transform_mask_2d(rgb_mask)
             new_datum['rgb_mask'] = rgb_mask
 
-        if 'bounding_box_3d' in new_datum:
+        if 'bounding_box_3d' in new_datum and new_datum['bounding_box_3d'] is not None:
             # Note: DGP camera class does not model the full camera matrix just focal length and center
             # if using DGP camera class, do not use transformations that add a skew!
             boxes = new_datum['bounding_box_3d']
@@ -641,7 +641,7 @@ class AffineCameraTransform(BaseTransform):
             boxes = self.transform_detections_3d(boxes, pose_correction)
             new_datum['bounding_box_3d'] = boxes
 
-        if 'bounding_box_2d' in new_datum:
+        if 'bounding_box_2d' in new_datum and new_datum['bounding_box_2d'] is not None:
             boxes = new_datum['bounding_box_2d']
             boxes = self.transform_detections_2d(boxes, )
             new_datum['bounding_box_2d'] = boxes
