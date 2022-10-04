@@ -71,7 +71,18 @@ def compute_image_statistics(image_list, image_open_fn, single_process=False, nu
         Dict mapping from filenames to image sizes (C, H, W)
     """
 
-    valid_extensions = (".jpg", ".png", ".bmp", ".pgm", ".tiff")
+    valid_extensions = (
+        ".jpg",
+        ".png",
+        ".bmp",
+        ".pgm",
+        ".tiff",
+        ".JPG",
+        ".PNG",
+        ".BMP",
+        ".PGM",
+        ".TIFF",
+    )
     image_list = list(filter(lambda x: x.endswith(valid_extensions), image_list))
 
     if single_process:
