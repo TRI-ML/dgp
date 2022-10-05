@@ -69,10 +69,24 @@ def compute_image_statistics(image_list, image_open_fn, single_process=False, nu
 
     all_image_sizes: dict
         Dict mapping from filenames to image sizes (C, H, W)
+
+    Raises
+    ------
+    ValueError
+        Raised if all the images are invalid extensions.
     """
 
-    valid_extensions = (".jpg", ".png", ".bmp", ".pgm", ".tiff")
-    image_list = list(filter(lambda x: x.endswith(valid_extensions), image_list))
+    valid_extensions = (
+        ".jpg",
+        ".jpeg"
+        ".png",
+        ".bmp",
+        ".pgm",
+        ".tiff",
+    )
+    image_list = list(filter(lambda x: x.lower().endswith(valid_extensions), image_list))
+    if not image_list:
+        raise ValueError("There are no valid images for image statistics calculation.")
 
     if single_process:
         image_stats_per_process = []
