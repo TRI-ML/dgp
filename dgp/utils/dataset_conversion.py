@@ -78,7 +78,7 @@ def compute_image_statistics(image_list, image_open_fn, single_process=False, nu
 
     valid_extensions = (
         ".jpg",
-        ".jpeg"
+        ".jpeg",
         ".png",
         ".bmp",
         ".pgm",
