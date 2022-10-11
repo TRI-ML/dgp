@@ -24,7 +24,7 @@ __version__ = importlib.import_module('dgp2wicker').__version__
 with open('requirements.txt', 'r', encoding='utf-8') as f:
     requirements = f.read().splitlines()
 
-with open('readme.md', 'r', encoding='utf-8') as f:
+with open('README.md', 'r', encoding='utf-8') as f:
     readme = f.read()
 
 packages = find_packages(exclude=['tests'])
@@ -32,7 +32,7 @@ setup(
     name="dgp2wicker",
     version=__version__,
     description="Tools to convert TRI's DGP to L5's Wicker format.",
-    long_description= readme,
+    long_description=readme,
     long_description_content_type='text/markdown',
     author="Chris Ochoa, Kuan Lee",
     author_email='charles.ochoa@woven-planet.global, kuan-hui.lee@woven-planet.global',
