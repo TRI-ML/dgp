@@ -142,7 +142,7 @@ class TestDDGP2Wicker(unittest.TestCase):
                 org = sample_dict[datum_key][datum_field]
                 assert org == unserialized
 
-    @unittest.skipUnless(s3_is_configured(), True)
+    @unittest.skipUnless(s3_is_configured(), 'Requires S3')
     def test_ingest(self):
         """Test ingestion"""
         # The test dataset is really small, smaller than the expected partition size
@@ -168,7 +168,7 @@ class TestDDGP2Wicker(unittest.TestCase):
         assert output['train'] == 6
         assert output['val'] == 6
 
-    @unittest.skipUnless(s3_is_configured(), True)
+    @unittest.skipUnless(s3_is_configured(), 'Requires S3')
     def test_ingest_cli(self):
         """Test ingestion via the cli"""
 
@@ -189,7 +189,7 @@ class TestDDGP2Wicker(unittest.TestCase):
 
         assert result.exit_code == 0
 
-    @unittest.skipUnless(s3_is_configured(), True)
+    @unittest.skipUnless(s3_is_configured(), 'Requires S3')
     def test_dataset(self):
         """Test That we can read a dataset from wicker"""
         self.test_ingest()

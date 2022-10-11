@@ -1,3 +1,4 @@
+# Copyright 2022 Woven Planet. All rights reserved.
 FROM dgp:latest
 
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \

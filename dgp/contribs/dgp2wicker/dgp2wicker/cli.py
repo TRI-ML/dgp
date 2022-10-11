@@ -114,6 +114,7 @@ def ingest(
         data_uri=data_uri,
     )
 
+    print('Finished ingest!')
     print(results)
 
 

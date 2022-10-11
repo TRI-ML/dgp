@@ -1,6 +1,7 @@
 # DGP SynchronizedScene to Wicker Conversion
 
-This adds support for using DGP data in [wicker](https://github.com/woven-planet/wicker)
+This adds support for using DGP data in
+[wicker](https://github.com/woven-planet/wicker)
 
 Specifically this saves the output of SynchronizedScene to wicker
 
@@ -13,9 +14,10 @@ cd dgp/contribs/dgp2wicker
 pip install --editable .
 ```
 
-or, use the included docker.
-Note: the s3 location of the wicker datasets is specified in a required wicker config file, please see Wicker documentaiton for more details. An example sample_wickerconfig.json is included in the docker, this can be modified
-with the s3 bucket path and will work with the docker.
+or, use the included docker. Note: the s3 location of the wicker datasets is
+specified in a required wicker config file, please see Wicker documentaiton for
+more details. An example sample_wickerconfig.json is included in the docker,
+this can be modified with the s3 bucket path and will work with the docker.
 
 ```bash
 cd dgp/contribs/dgp2wicker

@@ -221,7 +221,7 @@ class DGPS3Dataset(S3Dataset):
             A context window with samples as dicts keyed by datum name.
         """
         wicker_samples = self.wicker_sample_index[index]
-        idx = wicker_samples[0]
+
         context = []
         for idx in wicker_samples:
             raw = super().__getitem__(idx)

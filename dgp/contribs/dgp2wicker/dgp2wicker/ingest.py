@@ -342,13 +342,13 @@ def ingest_dgp_to_wicker(
     skip_camera_cuboids: bool, default: True
         Optional to flag to skip converting 'bounding_box_3d' for image_datum types.
 
-    num_partitions: int, default=None
+    num_partitions: int, default: None
         Number of partitions to map scenes over. If None, defaults to number of scenes
 
-    num_repartitions: int, default=None
+    num_repartitions: int, default: None
         Number of partitions to shuffle all samples over. If none, defaults to num_scenes*5
 
-    is_pd: bool, default=False
+    is_pd: bool, default: False
         Flag to indicate if the dataset to laod is a Parallel Domain dataset. If true, the scenes
         will be loaded with ParallelDomainScene with use_virtual_cameras set to False.
 
