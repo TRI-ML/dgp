@@ -1,5 +1,8 @@
-# Copyright 2021 Toyota Research Institute.  All rights reserved.
+# Copyright 2021-2022 Woven Planet. All rights reserved.
 from collections import OrderedDict
+from typing import Any, Dict
+
+import numpy as np
 
 from dgp.annotations import ONTOLOGY_REGISTRY
 from dgp.annotations.transform_utils import (
@@ -8,6 +11,7 @@ from dgp.annotations.transform_utils import (
     remap_instance_segmentation_2d_annotation,
     remap_semantic_segmentation_2d_annotation,
 )
+from dgp.utils.accumulate import points_in_cuboid
 
 
 class Compose:
@@ -196,5 +200,55 @@ class OntologyMapper(BaseTransform):
                 datum[annotation_key] = remap_instance_segmentation_2d_annotation(
                     datum[annotation_key], lookup_table, original_ontology, remapped_ontology
                 )
+
+        return datum
+
+
+class AddLidarCuboidPoints(BaseTransform):
+    """Populate the num_points field for bounding_box_3d"""
+    def __init__(self, subsample: int = 1) -> None:
+        """Populate the num_points field for bounding_box_3d. Optionally downsamples the point cloud for speed.
+
+        Parameters
+        ----------
+        subsample: int, default: 1
+            Fraction of point cloud to use for computing the number of points. i.e., subsample=10 indicates that
+            1/10th of the points should be used.
+        """
+        super().__init__()
+        self.subsample = subsample
+
+    def transform_datum(self, datum: Dict[str, Any]) -> Dict[str, Any]:
+        """Populate the num_points field for bounding_box_3d
+        Parameters
+        ----------
+        datum: Dict[str,Any]
+            A dgp lidar or point cloud datum. Must contain keys bounding_box_3d and point_cloud
+
+        Returns
+        -------
+        datum: Dict[str,Any]
+            The datum with num_points added to the cuboids
+        """
+        if 'bounding_box_3d' not in datum:
+            return datum
+
+        boxes = datum['bounding_box_3d']
+        if boxes is None or len(boxes) == 0:
+            return datum
+
+        assert 'point_cloud' in datum, 'datum should contain point_cloud key'
+        point_cloud = datum['point_cloud']
+        if self.subsample > 1:
+            N = point_cloud.shape[0]
+            sample_idx = np.random.choice(N, N // self.subsample)
+            point_cloud = point_cloud[sample_idx].copy()
+
+        for box in boxes:
+            # If a box is missing this num_points value we expect it will have a value of 0
+            # so only run this for boxes that might be missing the value
+            if box.num_points == 0:
+                in_cuboid = points_in_cuboid(point_cloud, box)
+                box._num_points = np.sum(in_cuboid) * self.subsample
 
         return datum
