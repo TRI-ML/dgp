@@ -82,6 +82,8 @@ def compute_columns(
     if with_ontology_table and requested_annotations is not None:
         for ann in requested_annotations:
             if ann in ANNOTATION_REGISTRY:
+                if ann == 'depth': # DenseDepth does not require an ontology
+                    continue
                 columns_to_load.append(gen_wicker_key('ontology', ann))
 
     return columns_to_load
