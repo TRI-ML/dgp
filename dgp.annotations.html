@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dgp.annotations package &#8212; DGP v1.4-6-g0386a84 documentation</title>
+    <title>dgp.annotations package &#8212; DGP v1.4-7-gfa3aaa2 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="dgp.html" title="dgp package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.4-6-g0386a84 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.4-7-gfa3aaa2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" accesskey="U">dgp package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.annotations package</a></li> 
       </ul>
@@ -1159,6 +1159,29 @@ e.g.:</p>
 <div class="section" id="module-dgp.annotations.transforms">
 <span id="dgp-annotations-transforms-module"></span><h2>dgp.annotations.transforms module<a class="headerlink" href="#module-dgp.annotations.transforms" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.AddLidarCuboidPoints">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.transforms.</span></span><span class="sig-name descname"><span class="pre">AddLidarCuboidPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsample</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.annotations.transforms.AddLidarCuboidPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dgp.annotations.transforms.BaseTransform" title="dgp.annotations.transforms.BaseTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">dgp.annotations.transforms.BaseTransform</span></code></a></p>
+<p>Populate the num_points field for bounding_box_3d</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dgp.annotations.transforms.AddLidarCuboidPoints.transform_datum">
+<span class="sig-name descname"><span class="pre">transform_datum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datum</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dgp.annotations.transforms.AddLidarCuboidPoints.transform_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populate the num_points field for bounding_box_3d
+Parameters
+———-
+datum: Dict[str,Any]</p>
+<blockquote>
+<div><p>A dgp lidar or point cloud datum. Must contain keys bounding_box_3d and point_cloud</p>
+</div></blockquote>
+<dl class="simple">
+<dt>datum: Dict[str,Any]</dt><dd><p>The datum with num_points added to the cuboids</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="dgp.annotations.transforms.BaseTransform">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.annotations.transforms.</span></span><span class="sig-name descname"><span class="pre">BaseTransform</span></span><a class="headerlink" href="#dgp.annotations.transforms.BaseTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -1400,7 +1423,7 @@ If False, then use “modal” bounding box (i.e. tight bounding box of instance
         <li class="right" >
           <a href="dgp.html" title="dgp package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.4-6-g0386a84 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.4-7-gfa3aaa2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.annotations package</a></li> 
       </ul>
