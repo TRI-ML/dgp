@@ -23,7 +23,7 @@ def get_ontology_kl(scene_dataset_json, annotation_type):
 @pytest.fixture
 def kl_ontology():
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
-    scenes_dataset_json = os.path.join(DGP_TEST_DATASET_DIR, "keypoints", "scene_dataset.json")
+    scenes_dataset_json = os.path.join(DGP_TEST_DATASET_DIR, "key_line_2d", "scene_dataset.json")
     return get_ontology_kl(scene_dataset_json=scenes_dataset_json, annotation_type="key_line_2d")
 
 
@@ -38,7 +38,7 @@ def test_kl2d_load(kl_ontology):
     expected_output = "b67e1"
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "keypoints/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
+        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
     )
     kl2d_list = KeyLine2DAnnotationList.load(scenes_dataset_json, kl_ontology)
     assert kl2d_list.hexdigest[0:5] == expected_output
@@ -48,7 +48,7 @@ def test_kl2d_proto(kl_ontology):
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "keypoints/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
+        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
     )
     kl2d_list = KeyLine2DAnnotationList.load(scenes_dataset_json, kl_ontology)
     ouput_proto = kl2d_list.to_proto()
@@ -59,7 +59,7 @@ def test_kl2d_save(kl_ontology):
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "keypoints/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
+        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
     )
     kl2d_list = KeyLine2DAnnotationList.load(scenes_dataset_json, kl_ontology)
     kl2d_list.save(".")
