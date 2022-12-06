@@ -19,7 +19,9 @@ from dgp.annotations.bounding_box_3d_annotation import BoundingBox3DAnnotationLi
 from dgp.annotations.panoptic_segmentation_2d_annotation import PanopticSegmentation2DAnnotation  # isort:skip
 from dgp.annotations.semantic_segmentation_2d_annotation import SemanticSegmentation2DAnnotation  # isort:skip
 from dgp.annotations.key_line_2d_annotation import KeyLine2DAnnotationList  # isort:skip
+from dgp.annotations.key_line_3d_annotation import KeyLine3DAnnotationList  # isort:skip
 from dgp.annotations.key_point_2d_annotation import KeyPoint2DAnnotationList  # isort:skip
+from dgp.annotations.key_point_3d_annotation import KeyPoint3DAnnotationList  # isort:skip
 from dgp.annotations.depth_annotation import DenseDepthAnnotation  # isort:skip
 
 # Ontology handlers for each annotation type
@@ -31,7 +33,9 @@ ONTOLOGY_REGISTRY = {
     "instance_segmentation_2d": InstanceSegmentationOntology,
     "instance_segmentation_3d": InstanceSegmentationOntology,
     "key_point_2d": KeyPointOntology,
+    "key_point_3d": KeyPointOntology,
     "key_line_2d": KeyLineOntology,
+    "key_line_3d": KeyLineOntology,
     "agent_behavior": AgentBehaviorOntology,
     "depth": None,
     "surface_normals_2d": None,
@@ -48,6 +52,7 @@ ANNOTATION_REGISTRY = {
     "instance_segmentation_2d": PanopticSegmentation2DAnnotation,
     "key_point_2d": KeyPoint2DAnnotationList,
     "key_line_2d": KeyLine2DAnnotationList,
+    "key_line_3d": KeyLine3DAnnotationList,
     "depth": DenseDepthAnnotation
 }
 
