@@ -1,0 +1,22 @@
+{
+    "metadata": {
+	"name": "nehal-mamgain",
+        "version": "1.0",
+        "creation_date": "2022-12-06T00:44:56.237604Z",
+        "creator": "Woven Planet",
+        "origin": "INTERNAL",
+        "available_annotation_types": [
+            17
+        ],
+        "metadata": {},
+        "description": "",
+        "frame_per_second": 0.0
+    },
+    "scene_splits": {
+        "0": {
+            "filenames": [
+                "scene_000000/scene_23d1725bfb52a43491ce3609073ce4d75b7785a5.json"
+            ]
+        }
+    }
+}
