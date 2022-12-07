@@ -1,0 +1,103 @@
+{
+  "items": [
+    {
+      "name": "ego_line",
+      "color": {
+        "r": 255,
+        "g": 153,
+        "b": 0
+      },
+      "isthing": true,
+      "id": 0,
+      "supercategory": ""
+    },
+    {
+      "name": "ego_line_extrapolated_to_horizon",
+      "id": 1,
+      "color": {
+        "r": 255,
+        "g": 0,
+        "b": 0
+      },
+      "isthing": true,
+      "supercategory": ""
+    },
+    {
+      "name": "adjacent1_left",
+      "id": 2,
+      "color": {
+        "g": 255,
+        "r": 0,
+        "b": 0
+      },
+      "isthing": true,
+      "supercategory": ""
+    },
+    {
+      "name": "adjacent1_right",
+      "id": 3,
+      "color": {
+        "g": 255,
+        "r": 0,
+        "b": 0
+      },
+      "isthing": true,
+      "supercategory": ""
+    },
+    {
+      "name": "adjacent2_left",
+      "id": 4,
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 0
+      },
+      "isthing": true,
+      "supercategory": ""
+    },
+    {
+      "name": "adjacent2_right",
+      "id": 5,
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 0
+      },
+      "isthing": true,
+      "supercategory": ""
+    },
+    {
+      "name": "other_ego_line",
+      "id": 6,
+      "color": {
+        "r": 46,
+        "g": 181,
+        "b": 140
+      },
+      "isthing": true,
+      "supercategory": ""
+    },
+    {
+      "name": "other_line",
+      "id": 7,
+      "color": {
+        "r": 244,
+        "g": 204,
+        "b": 204
+      },
+      "isthing": true,
+      "supercategory": ""
+    },
+    {
+      "name": "line_break_due_to_grad",
+      "id": 8,
+      "color": {
+        "b": 255,
+        "r": 0,
+        "g": 0
+      },
+      "isthing": true,
+      "supercategory": ""
+    }
+  ]
+}

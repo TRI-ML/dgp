@@ -1,0 +1,98 @@
+{
+  "name": "scene_000000",
+  "samples": [
+    {
+      "id": {
+        "timestamp": "2022-11-10T01:00:27.752Z",
+        "log": "",
+        "name": "",
+        "index": "0"
+      },
+      "datum_keys": [
+        "2ea9448ddf12dd58062335f3ec1889d87b0ef6202211707cf351f90b4a6ab83b"
+      ],
+      "calibration_key": "0a6700143aaff8364a37e018e0768085b0564e47",
+      "metadata": {}
+    }
+  ],
+  "metadata": {
+    "TOTORO": {
+      "@type": "type.googleapis.com/dgp.proto.ParallelDomainSceneMetadata",
+      "location": "motorway_37_673810_-122_389930_0_006000",
+      "time_of_day": "DAYTIME",
+      "fog_intensity": 0.45,
+      "rain_intensity": 0.9,
+      "wetness": 0.9,
+      "version": 1,
+      "cloud_cover": 0.8,
+      "attributes": {
+        "is_curved_highway": "True"
+      },
+      "region_type": "SYNTHETIC_REGION",
+      "scene_type": "SYNTHETIC_SCENE",
+      "sun_elevation": 0.0,
+      "sun_azimuth": 0.0,
+      "street_lights": 0.0,
+      "batch_id": 0
+    }
+  },
+  "data": [
+    {
+      "id": {
+        "name": "lcm_25tm",
+        "timestamp": "2022-11-10T01:00:27.752Z",
+        "log": "",
+        "index": "0"
+      },
+      "key": "2ea9448ddf12dd58062335f3ec1889d87b0ef6202211707cf351f90b4a6ab83b",
+      "datum": {
+        "image": {
+          "filename": "rgb/lcm_25tm/000000000000000005.png",
+          "height": 768,
+          "width": 1280,
+          "channels": 4,
+          "annotations": {
+            "17": "key_line_3d/lcm_25tm/000000000000000005_21e2436af96fb6388eb0c64cc029cfdc928a3e95.json"
+          },
+          "metadata": {
+            "TOTORO": {
+              "@type": "type.googleapis.com/dgp.proto.ParallelDomainSampleMetadata",
+              "attributes": {
+                "type_of_scene": "NORMAL",
+                "lane_change": "False",
+                "elevation_variation": "False",
+                "road": "HIGHWAY",
+                "sensor_id": "lcm_25tm",
+                "branching_in_view": "False",
+                "merging_in_view": "False",
+                "ego_merging": "False",
+                "road_radius": "0.0",
+                "partition_0": "PD"
+              }
+            }
+          },
+          "pose": {
+            "translation": {
+              "x": -110.28236389160156,
+              "y": -1078.1033935546875,
+              "z": 8.57644271850586
+            },
+            "rotation": {
+              "qx": -0.6510899207948903,
+              "qy": 0.1869702528681094,
+              "qz": -0.2021379216584355,
+              "qw": 0.7072936449660401
+            }
+          }
+        }
+      },
+      "next_key": "",
+      "prev_key": ""
+    }
+  ],
+  "ontologies": {
+    "17": "a5b601b09ac109191fdbdc4a21fa18dfbe69b1a1"
+  },
+  "description": "",
+  "log": ""
+}
