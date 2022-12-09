@@ -4,7 +4,8 @@ PACKAGE_NAME ?= dgp
 WORKSPACE ?= /home/$(PACKAGE_NAME)
 DOCKER_IMAGE_NAME ?= $(PACKAGE_NAME)
 DOCKER_IMAGE ?= $(DOCKER_IMAGE_NAME):latest
-DOCKER_OPTS ?= \
+DOCKER_EXTRA_OPTS ?=
+DOCKER_COMMON_OPTS ?= \
 	-it \
 	--rm \
 	--shm-size=1G \
@@ -14,10 +15,20 @@ DOCKER_OPTS ?= \
 	-e DISPLAY=${DISPLAY} \
 	-v $(PWD):$(WORKSPACE) \
 	-v /var/run/docker.sock:/var/run/docker.sock \
-	-v ~/.ssh:/root/.ssh \
-	-v ~/.aws:/root/.aws \
 	-v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0 \
-	--net=host --ipc=host
+	--net=host --ipc=host \
+	$(DOCKER_EXTRA_OPTS)
+DOCKER_ROOT_OPTS ?= $(DOCKER_COMMON_OPTS) \
+	-v ~/.ssh:/root/.ssh \
+	-v ~/.aws:/root/.aws
+DOCKER_USER_OPTS ?= $(DOCKER_COMMON_OPTS) \
+	-v ~/.ssh:$(HOME)/.ssh \
+	-v ~/.aws:$(HOME)/.aws \
+	-e DGP_HOME=$(HOME) \
+	-e DGP_USER=$$(id -u -n) \
+	-e DGP_UID=$$(id -u) \
+	-e DGP_GROUP=$$(id -g -n) \
+	-e DGP_GID=$$(id -g)
 
 # Unit tests
 UNITTEST ?= pytest
@@ -54,13 +65,14 @@ docker-exec:
 docker-run-tests: build-proto
 	docker run \
 	--name $(DOCKER_IMAGE_NAME)-tests \
-	$(DOCKER_OPTS) $(DOCKER_IMAGE) \
+	$(DOCKER_ROOT_OPTS) $(DOCKER_IMAGE) \
 	$(UNITTEST) $(UNITTTEST_OPTS) $(WORKSPACE)/tests
 
 docker-start-interactive:
 	docker run \
-	$(DOCKER_OPTS) \
-	$(DOCKER_IMAGE) bash
+	$(DOCKER_USER_OPTS) \
+	$(DOCKER_IMAGE) \
+	bash --login $(WORKSPACE)/scripts/with_the_same_user bash
 
 docker-stop:
 	docker stop $(DOCKER_IMAGE_NAME)
