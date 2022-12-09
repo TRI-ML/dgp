@@ -48,7 +48,10 @@ repos:
     rev: v0.0.17
     hooks:
       - id: shellcheck
-      - id: shfmt
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.5.1-2
+    hooks:
+      - id: shfmt-docker
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.27.1
     hooks:
