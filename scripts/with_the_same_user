@@ -16,6 +16,10 @@ getent passwd "${DGP_UID}" || adduser --gid "${DGP_GID}" --uid "${DGP_UID}" \
 usermod -a -G sudo "${DGP_USER}"
 echo "${DGP_USER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-nopasswd-sudo
 
+# This line is needed because "${DGP_HOME}" is created before `adduser`
+# due `docker run -v -v ~/.ssh:$(HOME)/.ssh` in Makefile.
+chown "${DGP_UID}":"${DGP_GID}" "${DGP_HOME}"
+
 # Pack environment variables to preserve into an array.
 if [[ ! -z ${CUDA_VISIBLE_DEVICES+x} ]]; then
     preserved_envs=(CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES})
