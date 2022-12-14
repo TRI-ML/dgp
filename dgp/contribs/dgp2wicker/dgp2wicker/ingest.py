@@ -7,7 +7,6 @@ import os
 import tempfile
 import time
 import traceback
-from collections import OrderedDict
 from copy import deepcopy
 from functools import partial
 from typing import Any, Callable, Dict, Generator, List, Optional, Tuple, Union
@@ -113,7 +112,7 @@ def wicker_types_from_sample(
     wicker_types: List
         The Wicker schema types corresponding to the `wicker_keys`.
     """
-    wicker_types = OrderedDict()
+    wicker_types = {}
     for datum in sample:
         datum_name = datum['datum_name']
         datum_type = datum['datum_type']
@@ -533,7 +532,7 @@ def ingest_dgp_to_wicker(
     )
 
     wicker_dataset_schema = wicker.schema.DatasetSchema(
-        primary_keys=['scene_index', 'sample_index_in_scene'], fields=wicker_types.values()
+        primary_keys=['scene_index', 'sample_index_in_scene'], fields=list(wicker_types.values())
     )
 
     # Chunk the scenes

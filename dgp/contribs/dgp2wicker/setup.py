@@ -36,7 +36,7 @@ setup(
     long_description_content_type='text/markdown',
     author="Chris Ochoa, Kuan Lee",
     author_email='charles.ochoa@woven-planet.global, kuan-hui.lee@woven-planet.global',
-    url="https://github.tri-ad.tech/kuan-hui-lee/dgp2wicker",
+    url="https://github.com/TRI-ML/dgp/tree/master/dgp/contribs/dgp2wicker",
     packages=packages,
     entry_points={'console_scripts': [
         'dgp2wicker=dgp2wicker.cli:cli',
