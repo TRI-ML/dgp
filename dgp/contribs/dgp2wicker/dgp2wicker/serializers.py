@@ -146,7 +146,9 @@ class RGBSerializer(WickerSerializer):
 
 class PointCloudSerializer(WickerSerializer):
     def schema(self, name: str, data: Any):
-        return NumpyField(name, shape=(-1, data.shape[1]), dtype='float32', is_heavy_pointer=True)
+        # Support shapes like (N,3) for points, (N,) for offsets, (N,3,3) for covariances etc
+        shp = (-1, *data.shape[1:])
+        return NumpyField(name, shape=shp, dtype='float32', is_heavy_pointer=True)
 
     def serialize(self, point_cloud: np.ndarray) -> np.ndarray:
         return point_cloud.astype(np.float32)

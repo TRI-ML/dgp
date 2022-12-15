@@ -61,8 +61,10 @@ def compute_columns(
         # Add extra information for different datum type.
         if datum_type == 'image':
             fields.extend(['intrinsics', 'rgb', 'distortion'])
-        elif datum_type in ['point_cloud', 'radar_point_cloud']:
+        elif datum_type == 'point_cloud':
             fields.extend(['point_cloud', 'extra_channels'])
+        elif datum_type == 'radar_point_cloud':
+            fields.extend(['point_cloud', 'extra_channels', 'velocity', 'covariance'])
 
         if requested_annotations is not None:
             fields.extend(requested_annotations)

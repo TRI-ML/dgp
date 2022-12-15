@@ -64,7 +64,7 @@ datums:
 
 - [x] image
 - [x] point_cloud
-- [ ] radar_point_cloud
+- [x] radar_point_cloud
 - [ ] file_datum
 - [ ] agent
 
