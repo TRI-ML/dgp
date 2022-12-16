@@ -45,6 +45,8 @@ FIELD_TO_WICKER_SERIALIZER = {
     'semantic_segmentation_2d': ws.SemanticSegmentation2DSerializer,
     'instance_segmentation_2d': ws.InstanceSegmentation2DSerializer,
     'depth': ws.DepthSerializer,
+    'velocity': ws.PointCloudSerializer,
+    'covariance': ws.PointCloudSerializer,
 }
 
 logger = logging.getLogger(__name__)
