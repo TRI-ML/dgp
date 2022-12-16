@@ -304,6 +304,7 @@ def ingest_dgp_to_wicker(
     num_repartitions: int = None,
     is_pd: bool = False,
     data_uri: str = None,
+    alternate_scene_uri: str = None,
 ) -> Dict[str, int]:
     """Ingest DGP dataset into Wicker datastore
 
@@ -355,11 +356,21 @@ def ingest_dgp_to_wicker(
 
     data_uri: str
         Optional path to raw data location if raw data is not stored alongside scene_dataset_json.
+
+    alternate_scene_uri:
+        If provided, download additional scene data from an alternate location. This happens before the
+        scene containing scene_json_uri is downloaded and everything in scene_json_uri's location will
+        overwrite this. This also expects that the scenes are structured as <data_uri>/<scene_dir>/scene.json
+        and so any addtional data for this scene should be in alternate_scene_uri/<scene_dir>.
+        This is useful if for some reason a scene json and an additional annotation are in a different location
+        than the rest of the scene data.
+
     """
     def open_scene(
         scene_json_uri: str,
         temp_dir: str,
         dataset_kwargs: Dict[str, Any],
+        alternate_scene_uri: Optional[str] = None,
     ) -> Union[SynchronizedScene, ParallelDomainScene]:
         """Utility function to download a scene and open it
 
@@ -375,6 +386,9 @@ def ingest_dgp_to_wicker(
             Arguments for data loader. i.e, datum_names, requested annotations etc. If this is a PD scene
             the dataset_kwargs should contain an `is_pd` key set to True.
 
+        alternate_scene_uri: str, default = None
+            Optional additional location to sync
+
         Returns
         -------
         dataset: A DGP dataset
@@ -385,8 +399,13 @@ def ingest_dgp_to_wicker(
         if scene_dir_uri.startswith('s3://'):
             # If the scene is in s3, fetch it
             local_path = temp_dir
-            logger.info(f'downloading scene from {scene_dir_uri} to {local_path}')
             assert not temp_dir.startswith('s3'), f'{temp_dir}'
+            if alternate_scene_uri is not None:
+                alternate_scene_dir = os.path.join(alternate_scene_uri, os.path.basename(scene_dir_uri))
+                logger.info(f'downloading additional scene data from {alternate_scene_dir} to {local_path}')
+                sync_dir(alternate_scene_dir, local_path)
+
+            logger.info(f'downloading scene from {scene_dir_uri} to {local_path}')
             sync_dir(scene_dir_uri, local_path)
         else:
             # Otherwise we expect the scene is on disk somewhere, so we just ignore the temp_dir
@@ -446,7 +465,9 @@ def ingest_dgp_to_wicker(
                 # TODO (chris.ochoa): check the number of samples before syncing the entire scene
                 try:
                     # Download and open the scene
-                    dataset = open_scene(scene_json_uri, temp_dir, dataset_kwargs)
+                    dataset = open_scene(
+                        scene_json_uri, temp_dir, dataset_kwargs, alternate_scene_uri=alternate_scene_uri
+                    )
                 except Exception as e:
                     logger.error(f'Failed to open {scene_json_uri}, skipping...')
                     logger.error(e)
@@ -515,7 +536,7 @@ def ingest_dgp_to_wicker(
     # TODO (chris.ochoa): generate the keys we expect for a specific combination of datums/annotations/ontologies
     _, _, scene_json_uri = scenes[0]
     with tempfile.TemporaryDirectory() as temp_dir:
-        dataset = open_scene(scene_json_uri, temp_dir, dataset_kwargs)
+        dataset = open_scene(scene_json_uri, temp_dir, dataset_kwargs, alternate_scene_uri=alternate_scene_uri)
         logger.info(f'Got dataset with {len(dataset)} samples')
         sample = dataset[0][0]
         # Apply any transformations
