@@ -65,6 +65,7 @@ def cli():
 @click.option("--data-uri", required=False, default=None, help="Alternate location for scene data")
 @click.option("--add-lidar-points", is_flag=True, help="Add lidar point count to lidar cuboids")
 @click.option("--half-size-images", is_flag=True, help="Resize image datums to half size")
+@click.option("--alternate-scene-uri", required=False, default=None, help="Alternate scene locaiton to sync")
 def ingest(
     scene_dataset_json,
     wicker_dataset_name,
@@ -82,6 +83,7 @@ def ingest(
     data_uri,
     add_lidar_points,
     half_size_images,
+    alternate_scene_uri,
 ):
     datum_names = [x.strip() for x in datum_names.split(',')]
     requested_annotations = [x.strip() for x in requested_annotations.split(',')] if requested_annotations else None
@@ -112,6 +114,7 @@ def ingest(
         num_repartitions=num_repartitions,
         is_pd=is_pd,
         data_uri=data_uri,
+        alternate_scene_uri=alternate_scene_uri,
     )
 
     print('Finished ingest!')
