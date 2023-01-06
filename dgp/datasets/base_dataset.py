@@ -39,7 +39,7 @@ from dgp.utils.camera import Camera
 from dgp.utils.pose import Pose
 from dgp.utils.protobuf import open_pbobject
 
-AVAILABLE_DATUM_TYPES = ("image", "point_cloud")
+AVAILABLE_DATUM_TYPES = ("image", "point_cloud", "radar_point_cloud")
 AVAILABLE_DISTORTION_PARAMS = (
     'k1',
     'k2',
@@ -816,9 +816,11 @@ class BaseDataset:
     autolabel_root: str, default: None
        Optional path to autolabel root directory.
 
-    load_image_rgb: bool, default: True
-        If set to false, raw image data will be skipped when loading and image datums will be returned having an 'rgb'
-        key set to None. This is useful when only annotations or extrinsics are needed.
+    ignore_raw_datum: Optional[list[str]], default: None
+        Optionally pass a list of datum types to skip loading their raw data (but still load their annotations). For
+        example, ignore_raw_datum=['image'] will skip loading the image rgb data. The rgb key will be set to None.
+        This is useful when only annotations or extrinsics are needed. Allowed values are any combination of
+        'image','point_cloud','radar_point_cloud'
     """
     def __init__(
         self,
@@ -829,7 +831,7 @@ class BaseDataset:
         requested_autolabels=None,
         split=None,
         autolabel_root=None,
-        load_image_rgb=True,
+        ignore_raw_datum=None,
     ):
         logging.info(f'Instantiating dataset with {len(scenes)} scenes.')
         # Dataset metadata
@@ -891,7 +893,13 @@ class BaseDataset:
         if self.autolabel_root is not None:
             self.autolabel_root = os.path.abspath(self.autolabel_root)
 
-        self.load_image_rgb = load_image_rgb
+        # Ignore loading of raw rgb or point cloud data
+        if ignore_raw_datum is None:
+            ignore_raw_datum = []
+        for datum_name in ignore_raw_datum:
+            assert datum_name in AVAILABLE_DATUM_TYPES
+
+        self.ignore_raw_datum = ignore_raw_datum
 
     @staticmethod
     def _extract_scenes_from_scene_dataset_json(
@@ -1672,7 +1680,7 @@ class BaseDataset:
 
         # Populate data for image data
         image = None
-        if self.load_image_rgb:
+        if 'image' not in self.ignore_raw_datum:
             image = self.load_datum(scene_idx, sample_idx_in_scene, datum_name)
 
         annotations = self.load_annotations(scene_idx, sample_idx_in_scene, datum_name)
@@ -1748,15 +1756,18 @@ class BaseDataset:
         # Points are described in the Lidar sensor (S) frame captured at the
         # corresponding lidar timestamp (Ts).
         # Points are in the lidar sensor's (S) frame.
-        X_S = self.load_datum(scene_idx, sample_idx_in_scene, datum_name)
+        X_S = None
+        if 'point_cloud' not in self.ignore_raw_datum:
+            X_S = self.load_datum(scene_idx, sample_idx_in_scene, datum_name)
+
         annotations = self.load_annotations(scene_idx, sample_idx_in_scene, datum_name)
         data = OrderedDict({
             "timestamp": datum.id.timestamp.ToMicroseconds(),
             "datum_name": datum.id.name,
             "extrinsics": pose_VS,
             "pose": pose_WS_Ts,
-            "point_cloud": X_S[:, :3],
-            "extra_channels": X_S[:, 3:],
+            "point_cloud": X_S[:, :3] if X_S is not None else None,
+            "extra_channels": X_S[:, 3:] if X_S is not None else None,
         })
         return data, annotations
 
@@ -1827,7 +1838,9 @@ class BaseDataset:
         # Points are described in the Radar sensor (S) frame captured at the
         # corresponding radar timestamp (Ts).
         # Points are in the radar sensor's (S) frame.
-        X_S = self.load_datum(scene_idx, sample_idx_in_scene, datum_name)
+        X_S = None
+        if 'radar_point_cloud' not in self.ignore_raw_datum:
+            X_S = self.load_datum(scene_idx, sample_idx_in_scene, datum_name)
 
         data = OrderedDict({
             "timestamp": datum.id.timestamp.ToMicroseconds(),
@@ -1860,7 +1873,7 @@ class BaseDataset:
         ]
         xyz_idx = fetch_channel_index_if_available(xyz_ids, channels)
         if xyz_idx:
-            data['point_cloud'] = X_S[:, xyz_idx]
+            data['point_cloud'] = X_S[:, xyz_idx] if X_S is not None else None
             fetched_columns.extend(xyz_idx)
 
         vel_ids = [
@@ -1869,7 +1882,7 @@ class BaseDataset:
         ]
         vel_idx = fetch_channel_index_if_available(vel_ids, channels)
         if vel_idx:
-            data['velocity'] = X_S[:, vel_idx]
+            data['velocity'] = X_S[:, vel_idx] if X_S is not None else None
             fetched_columns.extend(vel_idx)
 
         cov_ids = [ radar_point_cloud_pb2.RadarPointCloud.COV_XX, radar_point_cloud_pb2.RadarPointCloud.COV_XY, radar_point_cloud_pb2.RadarPointCloud.COV_XZ, \
@@ -1877,11 +1890,11 @@ class BaseDataset:
                     radar_point_cloud_pb2.RadarPointCloud.COV_ZX, radar_point_cloud_pb2.RadarPointCloud.COV_ZY, radar_point_cloud_pb2.RadarPointCloud.COV_ZZ]
         cov_idx = fetch_channel_index_if_available(cov_ids, channels)
         if cov_idx:
-            data['covariance'] = X_S[:, cov_idx].reshape(-1, 3, 3)
+            data['covariance'] = X_S[:, cov_idx].reshape(-1, 3, 3) if X_S is not None else None
             fetched_columns.extend(cov_idx)
 
         # Dump whatever we did not explictly ask for into "extra_channels"
-        data['extra_channels'] = np.delete(X_S, fetched_columns, axis=1)
+        data['extra_channels'] = np.delete(X_S, fetched_columns, axis=1) if X_S is not None else None
 
         annotations = self.load_annotations(scene_idx, sample_idx_in_scene, datum_name)
 

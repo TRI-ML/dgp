@@ -24,7 +24,7 @@ class TestDataset(unittest.TestCase):
     ])
 
     @staticmethod
-    def _test_labeled_dataset(dataset, with_rgb=True):
+    def _test_labeled_dataset(dataset, with_rgb=True, with_points=True):
         """Test the dataset
 
         Parameters
@@ -32,7 +32,13 @@ class TestDataset(unittest.TestCase):
         dataset: a dgp dataset
         with_rgb: bool, default: True
             Determines how we should test the output of datum['rgb']. If false, datum['rgb'] should be None
+        with_points: bool, default: True
+            Determines how we should test the output of datum['point_cloud'] and datum['extra_channels']
 
+        Raises
+        ------
+        RuntimeError
+            If an unexpected datum is found
         """
         expected_camera_fields = set([
             'rgb',
@@ -73,6 +79,14 @@ class TestDataset(unittest.TestCase):
                     if datum['datum_name'] == 'LIDAR':
                         # LIDAR should have point_cloud set
                         assert_true(set(datum.keys()) == expected_lidar_fields)
+                        if with_points:
+                            N = datum['point_cloud'].shape[0]
+                            assert_true(datum['point_cloud'].shape == (N, 3))
+                            assert_true(datum['extra_channels'].shape[0] == N)
+                        else:
+                            assert_true(datum['point_cloud'] is None)
+                            assert_true(datum['extra_channels'] is None)
+
                     elif datum['datum_name'].startswith('CAMERA_'):
                         # CAMERA_01 should have intrinsics/extrinsics set
                         assert_true(datum['intrinsics'].shape == (3, 3))
@@ -184,7 +198,7 @@ class TestDataset(unittest.TestCase):
         TestDataset._test_labeled_dataset(dataset)
 
     def test_synchronized_scene_without_rgb(self):
-        """Test a single synchronized scene with labels"""
+        """Test a single synchronized scene with labels but without rgb loading"""
         scene_json = os.path.join(
             self.DGP_TEST_DATASET_DIR, "test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json"
         )
@@ -194,9 +208,24 @@ class TestDataset(unittest.TestCase):
             forward_context=1,
             backward_context=1,
             requested_annotations=("bounding_box_2d", "bounding_box_3d"),
-            load_image_rgb=False,
+            ignore_raw_datum=['image'],
         )
         TestDataset._test_labeled_dataset(dataset, with_rgb=False)
+
+    def test_synchronized_scene_without_points(self):
+        """Test a single synchronized scene with labels but without point loading"""
+        scene_json = os.path.join(
+            self.DGP_TEST_DATASET_DIR, "test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json"
+        )
+        dataset = SynchronizedScene(
+            scene_json,
+            datum_names=['LIDAR', 'CAMERA_01', 'CAMERA_05', 'CAMERA_06'],
+            forward_context=1,
+            backward_context=1,
+            requested_annotations=("bounding_box_2d", "bounding_box_3d"),
+            ignore_raw_datum=['point_cloud'],
+        )
+        TestDataset._test_labeled_dataset(dataset, with_points=False)
 
     def test_cached_synchronized_scene_dataset(self):
         """Test cached synchronized scene dataset"""

@@ -64,9 +64,11 @@ class _SynchronizedDataset(BaseDataset):
     autolabel_root: str, default: None
         Path to autolabels.
 
-    load_image_rgb: bool, default: True
-        If set to false, raw image data will be skipped when loading and image datums will be returned having an 'rgb'
-        key set to None. This is useful when only annotations or extrinsics are needed.
+    ignore_raw_datum: Optional[list[str]], default: None
+        Optionally pass a list of datum types to skip loading their raw data (but still load their annotations). For
+        example, ignore_raw_datum=['image'] will skip loading the image rgb data. The rgb key will be set to None.
+        This is useful when only annotations or extrinsics are needed. Allowed values are any combination of
+        'image','point_cloud','radar_point_cloud'    
     """
     def __init__(
         self,
@@ -82,7 +84,7 @@ class _SynchronizedDataset(BaseDataset):
         only_annotated_datums=False,
         transform_accumulated_box_points=False,
         autolabel_root=None,
-        load_image_rgb=True,
+        ignore_raw_datum=None,
     ):
         self.set_context(backward=backward_context, forward=forward_context, accumulation_context=accumulation_context)
         self.generate_depth_from_datum = generate_depth_from_datum
@@ -96,7 +98,7 @@ class _SynchronizedDataset(BaseDataset):
             requested_annotations=requested_annotations,
             requested_autolabels=requested_autolabels,
             autolabel_root=autolabel_root,
-            load_image_rgb=load_image_rgb,
+            ignore_raw_datum=ignore_raw_datum,
         )
 
     def _build_item_index(self):
@@ -422,9 +424,11 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
         autolabel_root = '/some-autolabels' means the autolabel scene.json is found at
         /some-autolabels/<scene-dir>/autolabels/my-model/scene.json.
 
-    load_image_rgb: bool, default: True
-        If set to false, raw image data will be skipped when loading and image datums will be returned having an 'rgb'
-        key set to None. This is useful when only annotations or extrinsics are needed.
+    ignore_raw_datum: Optional[list[str]], default: None
+        Optionally pass a list of datum types to skip loading their raw data (but still load their annotations). For
+        example, ignore_raw_datum=['image'] will skip loading the image rgb data. The rgb key will be set to None.
+        This is useful when only annotations or extrinsics are needed. Allowed values are any combination of
+        'image','point_cloud','radar_point_cloud'
 
     Refer to _SynchronizedDataset for remaining parameters.
     """
@@ -445,7 +449,7 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
         transform_accumulated_box_points=False,
         use_diskcache=True,
         autolabel_root=None,
-        load_image_rgb=True,
+        ignore_raw_datum=None,
     ):
         if not use_diskcache:
             logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
@@ -479,7 +483,7 @@ class SynchronizedSceneDataset(_SynchronizedDataset):
             only_annotated_datums=only_annotated_datums,
             transform_accumulated_box_points=transform_accumulated_box_points,
             autolabel_root=autolabel_root,
-            load_image_rgb=load_image_rgb,
+            ignore_raw_datum=ignore_raw_datum,
         )
 
 
@@ -536,9 +540,11 @@ class SynchronizedScene(_SynchronizedDataset):
         autolabel_root = '/some-autolabels' means the autolabel scene.json is found at
         /some-autolabels/<scene-dir>/autolabels/my-model/scene.json.
 
-    load_image_rgb: bool, default: True
-        If set to false, raw image data will be skipped when loading and image datums will be returned having an 'rgb'
-        key set to None. This is useful when only annotations or extrinsics are needed.
+    ignore_raw_datum: Optional[list[str]], default: None
+        Optionally pass a list of datum types to skip loading their raw data (but still load their annotations). For
+        example, ignore_raw_datum=['image'] will skip loading the image rgb data. The rgb key will be set to None.
+        This is useful when only annotations or extrinsics are needed. Allowed values are any combination of
+        'image','point_cloud','radar_point_cloud'
 
     Refer to _SynchronizedDataset for remaining parameters.
     """
@@ -556,7 +562,7 @@ class SynchronizedScene(_SynchronizedDataset):
         transform_accumulated_box_points=False,
         use_diskcache=True,
         autolabel_root=None,
-        load_image_rgb=True,
+        ignore_raw_datum=None,
     ):
         if not use_diskcache:
             logging.warning('Instantiating a dataset with use_diskcache=False may exhaust memory with a large dataset.')
@@ -590,5 +596,5 @@ class SynchronizedScene(_SynchronizedDataset):
             only_annotated_datums=only_annotated_datums,
             transform_accumulated_box_points=transform_accumulated_box_points,
             autolabel_root=autolabel_root,
-            load_image_rgb=load_image_rgb,
+            ignore_raw_datum=ignore_raw_datum,
         )
