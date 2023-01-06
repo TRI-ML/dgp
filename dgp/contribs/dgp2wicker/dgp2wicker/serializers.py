@@ -22,16 +22,20 @@ from dgp.annotations import (
     DenseDepthAnnotation,
     PanopticSegmentation2DAnnotation,
     SemanticSegmentation2DAnnotation,
+    KeyPoint2DAnnotationList,
 )
 from dgp.annotations.ontology import Ontology
 from dgp.proto.annotations_pb2 import (
     BoundingBox2DAnnotations,
     BoundingBox3DAnnotations,
+    KeyPoint2DAnnotations,
 )
 from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
 from dgp.utils.pose import Pose
 from dgp.utils.structures.bounding_box_2d import BoundingBox2D
 from dgp.utils.structures.bounding_box_3d import BoundingBox3D
+from dgp.utils.structures.key_point_2d import KeyPoint2D
+
 
 WICKER_RAW_NONE_VALUE = b'\x00\x00\x00\x00'
 
@@ -211,12 +215,12 @@ class BoundingBox3DSerializer(WickerSerializer):
     def schema(self, name: str, data: Any):
         return BytesField(name, required=False, is_heavy_pointer=True)
 
-    def serialize(self, annotation: Optional[BoundingBox3DAnnotationList]) -> bytes:
+    def serialize(self, annotation: Optional[KeyPoint2DAnnotationList]) -> bytes:
         if annotation is None:
             return WICKER_RAW_NONE_VALUE
         return annotation.to_proto().SerializeToString()
 
-    def unserialize(self, raw: bytes) -> BoundingBox3DAnnotationList:
+    def unserialize(self, raw: bytes) -> KeyPoint2DAnnotationList:
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
@@ -360,3 +364,43 @@ class OntologySerializer():
         ontology = OntologyV2Pb2()
         ontology.ParseFromString(raw)
         return ONTOLOGY_REGISTRY[self.ontology_type](ontology)
+
+
+class KeyPoint2DSerializer(WickerSerializer):
+    def __init__(self, ):
+        super().__init__()
+        self._ontology = None
+
+    @property
+    def ontology(self) -> Ontology:
+        return self._ontology
+
+    @ontology.setter
+    def ontology(self, ontology: Ontology):
+        self._ontology = ontology
+
+    def schema(self, name: str, data: Any):
+        return BytesField(name, required=False, is_heavy_pointer=True)
+
+    def serialize(self, annotation: Optional[KeyPoint2DAnnotationList]) -> bytes:
+        if annotation is None:
+            return WICKER_RAW_NONE_VALUE
+        return annotation.to_proto().SerializeToString()
+
+    def unserialize(self, raw: bytes) -> KeyPoint2DAnnotationList:
+        if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
+            return None
+
+        _keypoints = KeyPoint2DAnnotations()
+        _keypoints.ParseFromString(raw)
+
+        boxlist = [
+            KeyPoint2D(
+                point=np.float32([ann.point.x, ann.point.y]),
+                class_id=self.ontology.class_id_to_contiguous_id[ann.class_id],
+                color=self.ontology.colormap[ann.class_id],
+                attributes=getattr(ann, "attributes", {}),
+            ) for ann in _keypoints.annotations
+        ]
+
+        return KeyPoint2DAnnotationList(self.ontology, boxlist)
