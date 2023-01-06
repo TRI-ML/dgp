@@ -11,8 +11,6 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
 import cv2
-from dgp.annotations import ontology
-from dgp.utils.protobuf import open_ontology_pbobject
 import numpy as np
 from PIL import Image
 from wicker.schema import BytesField, LongField, NumpyField, StringField
@@ -22,15 +20,17 @@ from dgp.annotations import (
     BoundingBox2DAnnotationList,
     BoundingBox3DAnnotationList,
     DenseDepthAnnotation,
+    KeyLine2DAnnotationList,
+    KeyLine3DAnnotationList,
+    KeyPoint2DAnnotationList,
+    KeyPoint3DAnnotationList,
     PanopticSegmentation2DAnnotation,
     SemanticSegmentation2DAnnotation,
-    KeyPoint2DAnnotationList,
-    KeyLine2DAnnotationList,
-    KeyPoint3DAnnotationList,
-    KeyLine3DAnnotationList,
+    ontology,
 )
 from dgp.annotations.ontology import Ontology
 from dgp.utils.pose import Pose
+from dgp.utils.protobuf import open_ontology_pbobject
 
 WICKER_RAW_NONE_VALUE = b'\x00\x00\x00\x00'
 
@@ -178,7 +178,7 @@ class BoundingBox2DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        return BoundingBox2DAnnotationList.load(raw,self.ontology)
+        return BoundingBox2DAnnotationList.load(raw, self.ontology)
 
 
 class BoundingBox3DSerializer(WickerSerializer):
@@ -206,7 +206,7 @@ class BoundingBox3DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        return BoundingBox3DAnnotationList.load(raw,self.ontology)
+        return BoundingBox3DAnnotationList.load(raw, self.ontology)
 
 
 class SemanticSegmentation2DSerializer(WickerSerializer):
@@ -237,7 +237,7 @@ class SemanticSegmentation2DSerializer(WickerSerializer):
     def unserialize(self, raw: bytes) -> SemanticSegmentation2DAnnotation:
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
-        return SemanticSegmentation2DAnnotation.load(raw,self.ontology)
+        return SemanticSegmentation2DAnnotation.load(raw, self.ontology)
 
     def set_ontology(self, ontology: Ontology):
         self.ontology = ontology
@@ -345,7 +345,7 @@ class KeyPoint2DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        return KeyPoint2DAnnotationList.load(raw,self.ontology)
+        return KeyPoint2DAnnotationList.load(raw, self.ontology)
 
 
 class KeyLine2DSerializer(WickerSerializer):
@@ -373,7 +373,8 @@ class KeyLine2DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        return KeyLine2DAnnotationList.load(raw,self.ontology)
+        return KeyLine2DAnnotationList.load(raw, self.ontology)
+
 
 class KeyPoint3DSerializer(WickerSerializer):
     def __init__(self, ):
@@ -400,7 +401,7 @@ class KeyPoint3DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        return KeyPoint3DAnnotationList.load(raw,self.ontology)
+        return KeyPoint3DAnnotationList.load(raw, self.ontology)
 
 
 class KeyLine3DSerializer(WickerSerializer):
@@ -428,4 +429,4 @@ class KeyLine3DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        return KeyLine3DAnnotationList.load(raw,self.ontology)
+        return KeyLine3DAnnotationList.load(raw, self.ontology)

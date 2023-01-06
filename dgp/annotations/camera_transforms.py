@@ -648,6 +648,7 @@ class AffineCameraTransform(BaseTransform):
             # TODO(chrisochoatri): remove zero w and h boxes
             # TODO(chrisochoatri): clip to image size
             # TODO(chrisochoatri): maybe convert back to int if input is int?
+            # TODO(chrisochoatri): re-estimate 2d boxes after transform from instance masks if available
 
         if 'semantic_segmentation_2d' in new_datum:
             sem_seg = new_datum['semantic_segmentation_2d']
@@ -676,7 +677,7 @@ class AffineCameraTransform(BaseTransform):
 
         if 'key_line_3d' in new_datum:
             raise NotImplementedError('key_line_3d not yet supported')
-        
+
         if 'key_point_3d' in new_datum:
             raise NotImplementedError('key_point_3d not yet supported')
 

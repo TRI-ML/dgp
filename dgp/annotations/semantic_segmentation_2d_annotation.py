@@ -1,9 +1,9 @@
 # Copyright 2021 Toyota Research Institute.  All rights reserved.
+import io
 import os
 
 import cv2
 import numpy as np
-import io
 
 from dgp.annotations.base_annotation import Annotation
 from dgp.annotations.ontology import SemanticSegmentationOntology
@@ -50,7 +50,7 @@ class SemanticSegmentation2DAnnotation(Annotation):
         SemanticSegmentation2DAnnotation
             Annotation object instantiated from file.
         """
-        if isinstance(annotation_file,bytes):
+        if isinstance(annotation_file, bytes):
             raw_bytes = io.BytesIO(annotation_file)
             segmentation_image = cv2.imdecode(np.frombuffer(raw_bytes.getbuffer(), np.uint8), cv2.IMREAD_UNCHANGED)
         else:
@@ -99,7 +99,7 @@ class SemanticSegmentation2DAnnotation(Annotation):
             Full path to saved annotation
         """
         segmentation_image = self._convert_contiguous_to_class()
-        
+
         # Save the image as PNG
         output_annotation_file = os.path.join(
             save_dir, f"{generate_uid_from_semantic_segmentation_2d_annotation(segmentation_image)}.png"
