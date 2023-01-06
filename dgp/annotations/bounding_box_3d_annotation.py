@@ -11,7 +11,7 @@ from dgp.utils.camera import Camera
 from dgp.utils.pose import Pose
 from dgp.utils.protobuf import (
     generate_uid_from_pbobject,
-    open_pbobject,
+    parse_pbobject,
     save_pbobject_as_json,
 )
 from dgp.utils.structures.bounding_box_3d import BoundingBox3D
@@ -45,8 +45,8 @@ class BoundingBox3DAnnotationList(Annotation):
 
         Parameters
         ----------
-        annotation_file: str
-            Full path to annotation
+        annotation_file: str or bytes
+            Full path to annotation or bytestring
 
         ontology: BoundingBoxOntology
             Ontology for 3D bounding box tasks.
@@ -56,7 +56,7 @@ class BoundingBox3DAnnotationList(Annotation):
         BoundingBox3DAnnotationList
             Annotation object instantiated from file.
         """
-        _annotation_pb2 = open_pbobject(annotation_file, BoundingBox3DAnnotations)
+        _annotation_pb2 = parse_pbobject(annotation_file, BoundingBox3DAnnotations)
         boxlist = [
             BoundingBox3D(
                 pose=Pose.load(ann.box.pose),

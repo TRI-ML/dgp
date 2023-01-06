@@ -9,7 +9,7 @@ from dgp.proto.annotations_pb2 import (
 )
 from dgp.utils.protobuf import (
     generate_uid_from_pbobject,
-    open_pbobject,
+    parse_pbobject,
     save_pbobject_as_json,
 )
 from dgp.utils.structures.key_point_3d import KeyPoint3D
@@ -41,8 +41,8 @@ class KeyPoint3DAnnotationList(Annotation):
 
         Parameters
         ----------
-        annotation_file: str
-            Full path to annotation
+        annotation_file: str or bytes
+            Full path to annotation or bytestring
 
         ontology: KeyPointOntology
             Ontology for 3D keypoint tasks.
@@ -52,7 +52,7 @@ class KeyPoint3DAnnotationList(Annotation):
         KeyPoint3DAnnotationList
             Annotation object instantiated from file.
         """
-        _annotation_pb2 = open_pbobject(annotation_file, KeyPoint3DAnnotations)
+        _annotation_pb2 = parse_pbobject(annotation_file, KeyPoint3DAnnotations)
         pointlist = [
             KeyPoint3D(
                 point=np.float32([ann.point.x, ann.point.y, ann.point.z]),
