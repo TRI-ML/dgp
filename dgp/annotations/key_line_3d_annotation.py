@@ -6,7 +6,7 @@ from dgp.annotations.ontology import KeyLineOntology
 from dgp.proto.annotations_pb2 import KeyLine3DAnnotation, KeyLine3DAnnotations
 from dgp.utils.protobuf import (
     generate_uid_from_pbobject,
-    open_pbobject,
+    parse_pbobject,
     save_pbobject_as_json,
 )
 from dgp.utils.structures.key_line_3d import KeyLine3D
@@ -39,8 +39,8 @@ class KeyLine3DAnnotationList(Annotation):
 
         Parameters
         ----------
-        annotation_file: str
-            Full path to annotation
+        annotation_file: str or bytes
+            Full path to annotation or bytestring
 
         ontology: KeyLineOntology
             Ontology for 3D keyline tasks.
@@ -50,7 +50,7 @@ class KeyLine3DAnnotationList(Annotation):
         KeyLine3DAnnotationList
             Annotation object instantiated from file.
         """
-        _annotation_pb2 = open_pbobject(annotation_file, KeyLine3DAnnotations)
+        _annotation_pb2 = parse_pbobject(annotation_file, KeyLine3DAnnotations)
         linelist = [
             KeyLine3D(
                 line=np.float32([[vertex.x, vertex.y, vertex.z] for vertex in ann.vertices]),

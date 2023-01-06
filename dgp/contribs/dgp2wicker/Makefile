@@ -16,7 +16,8 @@ DOCKER_OPTS ?= \
 	-e VAULT_ASSUMED_ROLE \
 	-e WICKER_CONFIG_PATH \
 	-e DISPLAY=${DISPLAY} \
-	-v $(PWD):$(WORKSPACE)
+	-v $(PWD):$(WORKSPACE) \
+	-v /home/ubuntu/dgp:/home/dgp
 
 develop:
 	pip install --editable .

@@ -44,6 +44,27 @@ def open_pbobject(path, pb_class):
         pb_object = Parse(json_file.read(), pb_class())
     return pb_object
 
+def parse_pbobject(source, pb_class):
+    """Like open_pboject but source can be a path or a bytestring
+    
+    Parameters
+    ----------
+    source: str or bytes
+        Local JSON file path, remote s3 path to object, or bytestring of serialized object
+    
+    Returns
+    pb_object: pb2 object or None
+        Desired pb2 ojbect to be parsed or None if loading fails
+    """
+    if isinstance(source, str):
+        return open_pbobject(source, pb_class)
+    elif isinstance(source, bytes):
+        pb_object = pb_class()
+        pb_object.ParseFromString(source)
+        return pb_object
+    else:
+        logging.error(f'cannot parse type {type(source)}')
+
 
 def open_remote_pb_object(s3_object_uri, pb_class):
     """Load JSON as a protobuf (pb2) object from S3 remote
@@ -116,8 +137,8 @@ def open_ontology_pbobject(ontology_file):
 
     Parameters
     ----------
-    ontology_file: str
-        JSON ontology file path to load.
+    ontology_file: str or bytes
+        JSON ontology file path to load or bytestring.
 
     Returns
     -------
@@ -126,19 +147,22 @@ def open_ontology_pbobject(ontology_file):
         None if neither fails to load.
     """
     try:
-        ontology = open_pbobject(ontology_file, OntologyV2Pb2)
+        ontology = parse_pbobject(ontology_file, OntologyV2Pb2)
         if ontology is not None:
             logging.info('Successfully loaded Ontology V2 spec.')
             return ontology
     except Exception:
         logging.error('Failed to load ontology file with V2 spec, trying V1 spec.')
     try:
-        ontology = open_pbobject(ontology_file, OntologyV1Pb2)
+        ontology = parse_pbobject(ontology_file, OntologyV1Pb2)
         if ontology is not None:
             logging.info('Successfully loaded Ontology V1 spec.')
             return ontology
     except Exception:
-        logging.error('Failed to load ontology file' + ontology_file + 'with V1 spec also, returning None.')
+        if isinstance(ontology_file,str):
+            logging.error('Failed to load ontology file' + ontology_file + 'with V1 spec also, returning None.')
+        else:
+            logging.error('Failed to load ontology file with V1 spec also, returning None.')
 
 
 def open_feature_ontology_pbobject(ontology_file):

@@ -50,6 +50,8 @@ FIELD_TO_WICKER_SERIALIZER = {
     'covariance': ws.PointCloudSerializer,
     'key_point_2d': ws.KeyPoint2DSerializer,
     'key_line_2d': ws.KeyLine2DSerializer,
+    'key_point_3d': ws.KeyPoint3DSerializer,
+    'key_line_3d': ws.KeyLine3DSerializer,
 }
 
 logger = logging.getLogger(__name__)

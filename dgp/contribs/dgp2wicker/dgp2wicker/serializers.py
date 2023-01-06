@@ -11,6 +11,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
 import cv2
+from dgp.utils.protobuf import open_ontology_pbobject
 import numpy as np
 from PIL import Image
 from wicker.schema import BytesField, LongField, NumpyField, StringField
@@ -24,20 +25,11 @@ from dgp.annotations import (
     SemanticSegmentation2DAnnotation,
     KeyPoint2DAnnotationList,
     KeyLine2DAnnotationList,
+    KeyPoint3DAnnotationList,
+    KeyLine3DAnnotationList,
 )
 from dgp.annotations.ontology import Ontology
-from dgp.proto.annotations_pb2 import (
-    BoundingBox2DAnnotations,
-    BoundingBox3DAnnotations,
-    KeyPoint2DAnnotations,
-    KeyLine2DAnnotations,
-)
-from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
 from dgp.utils.pose import Pose
-from dgp.utils.structures.bounding_box_2d import BoundingBox2D
-from dgp.utils.structures.bounding_box_3d import BoundingBox3D
-from dgp.utils.structures.key_point_2d import KeyPoint2D
-from dgp.utils.structures.key_line_2d import KeyLine2D
 
 WICKER_RAW_NONE_VALUE = b'\x00\x00\x00\x00'
 
@@ -185,20 +177,7 @@ class BoundingBox2DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        _box = BoundingBox2DAnnotations()
-        _box.ParseFromString(raw)
-
-        boxlist = [
-            BoundingBox2D(
-                box=np.float32([ann.box.x, ann.box.y, ann.box.w, ann.box.h]),
-                class_id=self.ontology.class_id_to_contiguous_id[ann.class_id],
-                instance_id=ann.instance_id,
-                color=self.ontology.colormap[ann.class_id],
-                attributes=getattr(ann, "attributes", {}),
-            ) for ann in _box.annotations
-        ]
-
-        return BoundingBox2DAnnotationList(self.ontology, boxlist)
+        return BoundingBox2DAnnotationList.load(raw,self.ontology)
 
 
 class BoundingBox3DSerializer(WickerSerializer):
@@ -226,24 +205,7 @@ class BoundingBox3DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        _box = BoundingBox3DAnnotations()
-        _box.ParseFromString(raw)
-
-        boxlist = [
-            BoundingBox3D(
-                pose=Pose.load(ann.box.pose),
-                sizes=np.float32([ann.box.width, ann.box.length, ann.box.height]),
-                class_id=self.ontology.class_id_to_contiguous_id[ann.class_id],
-                instance_id=ann.instance_id,
-                color=self.ontology.colormap[ann.class_id],
-                attributes=getattr(ann, "attributes", {}),
-                num_points=ann.num_points,
-                occlusion=ann.box.occlusion,
-                truncation=ann.box.truncation
-            ) for ann in _box.annotations
-        ]
-
-        return BoundingBox3DAnnotationList(self.ontology, boxlist)
+        return BoundingBox3DAnnotationList.load(raw,self.ontology)
 
 
 class SemanticSegmentation2DSerializer(WickerSerializer):
@@ -267,24 +229,14 @@ class SemanticSegmentation2DSerializer(WickerSerializer):
             return WICKER_RAW_NONE_VALUE
 
         # Save the image as PNG
-        _, buffer = cv2.imencode(".png", annotation._segmentation_image)
+        segmentation_image = annotation._convert_contiguous_to_class()
+        _, buffer = cv2.imencode(".png", segmentation_image)
         return io.BytesIO(buffer).getvalue()
 
     def unserialize(self, raw: bytes) -> SemanticSegmentation2DAnnotation:
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
-
-        raw_bytes = io.BytesIO(raw)
-        segmentation_image = cv2.imdecode(np.frombuffer(raw_bytes.getbuffer(), np.uint8), cv2.IMREAD_UNCHANGED)
-
-        if len(segmentation_image.shape) == 3:
-            segmentation_image = segmentation_image[:, :, 2].copy(order='C')
-
-        # Pixels of value VOID_ID are not remapped to a label.
-        not_ignore = segmentation_image != self.ontology.VOID_ID
-        segmentation_image[not_ignore] = self.ontology.label_lookup[segmentation_image[not_ignore]]
-
-        return SemanticSegmentation2DAnnotation(self.ontology, segmentation_image)
+        return SemanticSegmentation2DAnnotation(raw,self.ontology)
 
     def set_ontology(self, ontology: Ontology):
         self.ontology = ontology
@@ -363,8 +315,7 @@ class OntologySerializer():
         if raw == WICKER_RAW_NONE_VALUE:
             return None
 
-        ontology = OntologyV2Pb2()
-        ontology.ParseFromString(raw)
+        ontology = open_ontology_pbobject(raw)
         return ONTOLOGY_REGISTRY[self.ontology_type](ontology)
 
 
@@ -393,19 +344,7 @@ class KeyPoint2DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        _keypoints = KeyPoint2DAnnotations()
-        _keypoints.ParseFromString(raw)
-
-        keypointlist = [
-            KeyPoint2D(
-                point=np.float32([ann.point.x, ann.point.y]),
-                class_id=self.ontology.class_id_to_contiguous_id[ann.class_id],
-                color=self.ontology.colormap[ann.class_id],
-                attributes=getattr(ann, "attributes", {}),
-            ) for ann in _keypoints.annotations
-        ]
-
-        return KeyPoint2DAnnotationList(self.ontology, keypointlist)
+        return KeyPoint2DAnnotationList.load(raw,self.ontology)
 
 
 class KeyLine2DSerializer(WickerSerializer):
@@ -433,16 +372,59 @@ class KeyLine2DSerializer(WickerSerializer):
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 
-        _lines = KeyLine2DAnnotations()
-        _lines.ParseFromString(raw)
+        return KeyLine2DAnnotationList.load(raw,self.ontology)
 
-        linelist = [
-            KeyLine2D(
-                line=np.float32([[vertex.x, vertex.y] for vertex in ann.vertices]),
-                class_id=self.ontology.class_id_to_contiguous_id[ann.class_id],
-                color=self.ontology.colormap[ann.class_id],
-                attributes=getattr(ann, "attributes", {}),
-            ) for ann in _lines.annotations
-        ]
+class KeyPoint3DSerializer(WickerSerializer):
+    def __init__(self, ):
+        super().__init__()
+        self._ontology = None
 
-        return KeyLine2DAnnotationList(self.ontology, linelist)
+    @property
+    def ontology(self) -> Ontology:
+        return self._ontology
+
+    @ontology.setter
+    def ontology(self, ontology: Ontology):
+        self._ontology = ontology
+
+    def schema(self, name: str, data: Any):
+        return BytesField(name, required=False, is_heavy_pointer=True)
+
+    def serialize(self, annotation: Optional[KeyPoint3DAnnotationList]) -> bytes:
+        if annotation is None:
+            return WICKER_RAW_NONE_VALUE
+        return annotation.to_proto().SerializeToString()
+
+    def unserialize(self, raw: bytes) -> KeyPoint3DAnnotationList:
+        if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
+            return None
+
+        return KeyPoint3DAnnotationList.load(raw,self.ontology)
+
+
+class KeyLine3DSerializer(WickerSerializer):
+    def __init__(self, ):
+        super().__init__()
+        self._ontology = None
+
+    @property
+    def ontology(self) -> Ontology:
+        return self._ontology
+
+    @ontology.setter
+    def ontology(self, ontology: Ontology):
+        self._ontology = ontology
+
+    def schema(self, name: str, data: Any):
+        return BytesField(name, required=False, is_heavy_pointer=True)
+
+    def serialize(self, annotation: Optional[KeyLine3DAnnotationList]) -> bytes:
+        if annotation is None:
+            return WICKER_RAW_NONE_VALUE
+        return annotation.to_proto().SerializeToString()
+
+    def unserialize(self, raw: bytes) -> KeyLine3DAnnotationList:
+        if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
+            return None
+
+        return KeyLine3DAnnotationList.load(raw,self.ontology)
