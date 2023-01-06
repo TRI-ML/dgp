@@ -596,6 +596,11 @@ class AffineCameraTransform(BaseTransform):
         -------
         new_datum: OrderedDict
             Camera datum with transformed image and annotations.
+
+        Raises
+        ------
+        NotImplementedError
+            If any field is not yet supported.
         """
 
         assert cam_datum['datum_type'] == 'image', 'expected an image datum_type'

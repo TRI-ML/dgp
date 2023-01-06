@@ -53,7 +53,11 @@ def parse_pbobject(source, pb_class):
     source: str or bytes
         Local JSON file path, remote s3 path to object, or bytestring of serialized object
     
+    pb_class: object
+        Protobuf pb2 object we want to load into.
+
     Returns
+    -------
     pb_object: pb2 object or None
         Desired pb2 ojbect to be parsed or None if loading fails
     """
