@@ -17,7 +17,7 @@ import pyspark
 import wicker
 import wicker.plugins.spark as wsp
 from wicker.schema import IntField, StringField
-wsp.SPARK_PARTITION_SIZE = 12
+#wsp.SPARK_PARTITION_SIZE = 12
 
 from dgp.datasets import ParallelDomainScene, SynchronizedScene
 from dgp.proto import dataset_pb2
@@ -25,9 +25,9 @@ from dgp.proto.dataset_pb2 import SceneDataset
 from dgp.utils.cloud.s3 import sync_dir
 from dgp.utils.protobuf import open_pbobject
 
-ILLEGAL_COMBINATIONS = set([('point_cloud', 'depth'), ('point_cloud', 'semantic_segmentation_2d'),
-                            ('point_cloud', 'instance_segmentation_2d'), ('point_cloud', 'bounding_box_2d'), ('point_cloud','key_point_2d')])
-
+PC_DATUMS = ('point_cloud','radar_point_cloud')
+NON_PC_FIELDS = ('depth','semantic_segmentation_2d','instance_segmentation_2d','bounding_box_2d','key_point_2d','key_line_2d')
+ILLEGAL_COMBINATIONS = { (pc_datum, field) for pc_datum in PC_DATUMS for field in NON_PC_FIELDS}
 WICKER_KEY_SEPARATOR = '____'
 
 # Map keys in SynchronizedScene output to wicker serialization methods
@@ -49,6 +49,7 @@ FIELD_TO_WICKER_SERIALIZER = {
     'velocity': ws.PointCloudSerializer,
     'covariance': ws.PointCloudSerializer,
     'key_point_2d': ws.KeyPoint2DSerializer,
+    'key_line_2d': ws.KeyLine2DSerializer,
 }
 
 logger = logging.getLogger(__name__)
