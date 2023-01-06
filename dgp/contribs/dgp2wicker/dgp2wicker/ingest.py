@@ -17,7 +17,6 @@ import pyspark
 import wicker
 import wicker.plugins.spark as wsp
 from wicker.schema import IntField, StringField
-#wsp.SPARK_PARTITION_SIZE = 12
 
 from dgp.datasets import ParallelDomainScene, SynchronizedScene
 from dgp.proto import dataset_pb2
@@ -570,6 +569,9 @@ def ingest_dgp_to_wicker(
     # Shuffle the scenes
     scene_shuffle_idx = np.random.permutation(len(scenes)).tolist()
     scenes = [ scenes[i] for i in scene_shuffle_idx]
+    if len(scenes) < 2:
+        wsp.SPARK_PARTITION_SIZE = 3
+
 
     # Setup spark
     if spark_context is None:

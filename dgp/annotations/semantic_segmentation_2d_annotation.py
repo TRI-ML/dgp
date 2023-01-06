@@ -83,6 +83,7 @@ class SemanticSegmentation2DAnnotation(Annotation):
         segmentation_image = np.copy(self._segmentation_image)
         not_ignore = segmentation_image != self.ontology.VOID_ID
         segmentation_image[not_ignore] = reverse_label_lookup[segmentation_image[not_ignore]]
+        return segmentation_image
 
     def save(self, save_dir):
         """Serialize Annotation object and saved to specified directory. Annotations are saved in format <save_dir>/<sha>.<ext>

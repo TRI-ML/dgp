@@ -11,6 +11,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
 import cv2
+from dgp.annotations import ontology
 from dgp.utils.protobuf import open_ontology_pbobject
 import numpy as np
 from PIL import Image
@@ -236,7 +237,7 @@ class SemanticSegmentation2DSerializer(WickerSerializer):
     def unserialize(self, raw: bytes) -> SemanticSegmentation2DAnnotation:
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
-        return SemanticSegmentation2DAnnotation(raw,self.ontology)
+        return SemanticSegmentation2DAnnotation.load(raw,self.ontology)
 
     def set_ontology(self, ontology: Ontology):
         self.ontology = ontology
