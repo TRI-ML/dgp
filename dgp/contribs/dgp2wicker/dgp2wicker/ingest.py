@@ -17,6 +17,7 @@ import pyspark
 import wicker
 import wicker.plugins.spark as wsp
 from wicker.schema import IntField, StringField
+wsp.SPARK_PARTITION_SIZE = 12
 
 from dgp.datasets import ParallelDomainScene, SynchronizedScene
 from dgp.proto import dataset_pb2
@@ -25,7 +26,7 @@ from dgp.utils.cloud.s3 import sync_dir
 from dgp.utils.protobuf import open_pbobject
 
 ILLEGAL_COMBINATIONS = set([('point_cloud', 'depth'), ('point_cloud', 'semantic_segmentation_2d'),
-                            ('point_cloud', 'instance_segmentation_2d'), ('point_cloud', 'bounding_box_2d')])
+                            ('point_cloud', 'instance_segmentation_2d'), ('point_cloud', 'bounding_box_2d'), ('point_cloud','key_point_2d')])
 
 WICKER_KEY_SEPARATOR = '____'
 
@@ -47,6 +48,7 @@ FIELD_TO_WICKER_SERIALIZER = {
     'depth': ws.DepthSerializer,
     'velocity': ws.PointCloudSerializer,
     'covariance': ws.PointCloudSerializer,
+    'key_point_2d': ws.KeyPoint2DSerializer,
 }
 
 logger = logging.getLogger(__name__)
@@ -496,6 +498,7 @@ def ingest_dgp_to_wicker(
                             ontology_table=ontology_table,
                             scene_uri=os.path.join(os.path.basename(scene_dir_uri), scene_json),
                         )
+                        #import pdb; pdb.set_trace()
 
                         assert wicker_sample is not None
                         for k, v in wicker_sample.items():
@@ -562,7 +565,8 @@ def ingest_dgp_to_wicker(
     scenes = chunk_scenes(scenes, max_len=max_len, chunk_size=chunk_size)
 
     # Shuffle the scenes
-    scenes = np.random.permutation(scenes).tolist()
+    scene_shuffle_idx = np.random.permutation(len(scenes)).tolist()
+    scenes = [ scenes[i] for i in scene_shuffle_idx]
 
     # Setup spark
     if spark_context is None:
