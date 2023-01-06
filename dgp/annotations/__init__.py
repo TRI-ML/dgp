@@ -21,7 +21,7 @@ from dgp.annotations.semantic_segmentation_2d_annotation import SemanticSegmenta
 from dgp.annotations.key_line_2d_annotation import KeyLine2DAnnotationList  # isort:skip
 from dgp.annotations.key_line_3d_annotation import KeyLine3DAnnotationList  # isort:skip
 from dgp.annotations.key_point_2d_annotation import KeyPoint2DAnnotationList  # isort:skip
-from dgp.annotations.key_point_3d_annotation import KeyPoint3DAnnotationList # isort:skip
+from dgp.annotations.key_point_3d_annotation import KeyPoint3DAnnotationList  # isort:skip
 from dgp.annotations.depth_annotation import DenseDepthAnnotation  # isort:skip
 
 # Ontology handlers for each annotation type

@@ -24,9 +24,11 @@ from dgp.proto.dataset_pb2 import SceneDataset
 from dgp.utils.cloud.s3 import sync_dir
 from dgp.utils.protobuf import open_pbobject
 
-PC_DATUMS = ('point_cloud','radar_point_cloud')
-NON_PC_FIELDS = ('depth','semantic_segmentation_2d','instance_segmentation_2d','bounding_box_2d','key_point_2d','key_line_2d')
-ILLEGAL_COMBINATIONS = { (pc_datum, field) for pc_datum in PC_DATUMS for field in NON_PC_FIELDS}
+PC_DATUMS = ('point_cloud', 'radar_point_cloud')
+NON_PC_FIELDS = (
+    'depth', 'semantic_segmentation_2d', 'instance_segmentation_2d', 'bounding_box_2d', 'key_point_2d', 'key_line_2d'
+)
+ILLEGAL_COMBINATIONS = {(pc_datum, field) for pc_datum in PC_DATUMS for field in NON_PC_FIELDS}
 WICKER_KEY_SEPARATOR = '____'
 
 # Map keys in SynchronizedScene output to wicker serialization methods
@@ -568,10 +570,9 @@ def ingest_dgp_to_wicker(
 
     # Shuffle the scenes
     scene_shuffle_idx = np.random.permutation(len(scenes)).tolist()
-    scenes = [ scenes[i] for i in scene_shuffle_idx]
+    scenes = [scenes[i] for i in scene_shuffle_idx]
     if len(scenes) < 2:
         wsp.SPARK_PARTITION_SIZE = 3
-
 
     # Setup spark
     if spark_context is None:

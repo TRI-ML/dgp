@@ -272,11 +272,14 @@ class SceneContainer:
         # TODO: work with PD to have consistent protos
         for ann_id in self.scene.ontologies:
             if ann_id not in ANNOTATION_TYPE_ID_TO_KEY:
-                logging.warning(f'Found annotation type id {ann_id} however only the following ids are allowed {set(ANNOTATION_TYPE_ID_TO_KEY.keys())} are defined. Skipping...' )
+                logging.warning(
+                    f'Found annotation type id {ann_id} however only the following ids are allowed {set(ANNOTATION_TYPE_ID_TO_KEY.keys())} are defined. Skipping...'
+                )
 
         ontology_files = {
             ANNOTATION_TYPE_ID_TO_KEY[ann_id]: os.path.join(self.directory, ONTOLOGY_FOLDER, "{}.json".format(f))
-            for ann_id, f in self.scene.ontologies.items() if ann_id in ANNOTATION_TYPE_ID_TO_KEY
+            for ann_id, f in self.scene.ontologies.items()
+            if ann_id in ANNOTATION_TYPE_ID_TO_KEY
         }
 
         # Load autolabeled items in the scene.

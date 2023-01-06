@@ -44,6 +44,7 @@ def open_pbobject(path, pb_class):
         pb_object = Parse(json_file.read(), pb_class())
     return pb_object
 
+
 def parse_pbobject(source, pb_class):
     """Like open_pboject but source can be a path or a bytestring
     
@@ -159,7 +160,7 @@ def open_ontology_pbobject(ontology_file):
             logging.info('Successfully loaded Ontology V1 spec.')
             return ontology
     except Exception:
-        if isinstance(ontology_file,str):
+        if isinstance(ontology_file, str):
             logging.error('Failed to load ontology file' + ontology_file + 'with V1 spec also, returning None.')
         else:
             logging.error('Failed to load ontology file with V1 spec also, returning None.')
