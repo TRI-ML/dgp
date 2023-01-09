@@ -197,7 +197,7 @@ class BoundingBox3DSerializer(WickerSerializer):
     def schema(self, name: str, data: Any):
         return BytesField(name, required=False, is_heavy_pointer=True)
 
-    def serialize(self, annotation: Optional[KeyPoint2DAnnotationList]) -> bytes:
+    def serialize(self, annotation: Optional[BoundingBox3DAnnotationList]) -> bytes:
         if annotation is None:
             return WICKER_RAW_NONE_VALUE
         return annotation.to_proto().SerializeToString()

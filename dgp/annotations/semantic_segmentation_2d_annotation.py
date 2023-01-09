@@ -68,7 +68,7 @@ class SemanticSegmentation2DAnnotation(Annotation):
 
     def _convert_contiguous_to_class(self):
         """Helper function to run pre processing prior to saving
-        
+
         Returns
         -------
         segmentation_image: np.array

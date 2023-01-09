@@ -47,12 +47,12 @@ def open_pbobject(path, pb_class):
 
 def parse_pbobject(source, pb_class):
     """Like open_pboject but source can be a path or a bytestring
-    
+
     Parameters
     ----------
     source: str or bytes
         Local JSON file path, remote s3 path to object, or bytestring of serialized object
-    
+
     pb_class: object
         Protobuf pb2 object we want to load into.
 
