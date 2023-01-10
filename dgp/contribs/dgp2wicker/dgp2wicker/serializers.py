@@ -202,7 +202,7 @@ class BoundingBox3DSerializer(WickerSerializer):
             return WICKER_RAW_NONE_VALUE
         return annotation.to_proto().SerializeToString()
 
-    def unserialize(self, raw: bytes) -> KeyPoint2DAnnotationList:
+    def unserialize(self, raw: bytes) -> BoundingBox3DAnnotationList:
         if raw == WICKER_RAW_NONE_VALUE or self.ontology is None:
             return None
 

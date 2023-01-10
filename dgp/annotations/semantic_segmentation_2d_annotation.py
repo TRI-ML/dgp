@@ -54,7 +54,6 @@ class SemanticSegmentation2DAnnotation(Annotation):
             raw_bytes = io.BytesIO(annotation_file)
             segmentation_image = cv2.imdecode(np.frombuffer(raw_bytes.getbuffer(), np.uint8), cv2.IMREAD_UNCHANGED)
         else:
-            # segmentation_image = np.array(Image.open(annotation_file), dtype=np.uint8)
             segmentation_image = cv2.imread(annotation_file, cv2.IMREAD_UNCHANGED)
 
         if len(segmentation_image.shape) == 3:
