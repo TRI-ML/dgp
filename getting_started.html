@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting Started &#8212; DGP v1.5-4-g730d73f documentation</title>
+    <title>Getting Started &#8212; DGP v1.5-5-gba9e7ec documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="cli.html" title="DGP Command-Line Interface"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-4-g730d73f documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-5-gba9e7ec documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Getting Started</a></li> 
       </ul>
     </div>
@@ -108,24 +108,24 @@ Alternatively, you can use python virtual environments. Please see
 <p>To setup DGP docker image:</p>
 <ul>
 <li><p>You can pull the latest master docker via:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ docker pull ghcr.io/tri-ml/dgp:master <span class="o">&amp;&amp;</span> docker image tag ghcr.io/tri-ml/dgp:master dgp:latest
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/tri-ml/dgp:master<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>image<span class="w"> </span>tag<span class="w"> </span>ghcr.io/tri-ml/dgp:master<span class="w"> </span>dgp:latest
 </pre></div>
 </div>
 <p>—or—</p>
 </li>
 <li><p>Build the docker from scratch via:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make docker-build
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>make<span class="w"> </span>docker-build
 </pre></div>
 </div>
 </li>
 </ul>
 <p>Inspect if docker image <code class="docutils literal notranslate"><span class="pre">dgp:latest</span></code> has been pulled or built successfully:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ docker inspect --type<span class="o">=</span>image dgp:latest
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>docker<span class="w"> </span>inspect<span class="w"> </span>--type<span class="o">=</span>image<span class="w"> </span>dgp:latest
 </pre></div>
 </div>
 <p>If you get a response, then you already have DGP docker image on the machine!</p>
 <p>To check if DGP docker image is built successfully, run the unit tests via:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make docker-run-tests
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>make<span class="w"> </span>docker-run-tests
 </pre></div>
 </div>
 </div>
@@ -133,7 +133,7 @@ Alternatively, you can use python virtual environments. Please see
 <h2>Develop within docker<a class="headerlink" href="#develop-within-docker" title="Permalink to this headline">¶</a></h2>
 <p>In order to start development, the quickest way to get started would be use the
 interactive docker mode via:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make docker-start-interactive
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>make<span class="w"> </span>docker-start-interactive
 </pre></div>
 </div>
 <p>The DGP base directory is mounted within the docker container, and gives you a
@@ -142,8 +142,8 @@ environment.</p>
 <p>Within the interactive docker container (after <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-start-interactive</span></code>),
 you can now build the proto definitions (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build-proto</span></code>) and run the tests
 (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code>) to make sure everything is functioning properly.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ make build-proto
-dgp$ make <span class="nb">test</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>make<span class="w"> </span>build-proto
+dgp$<span class="w"> </span>make<span class="w"> </span><span class="nb">test</span>
 </pre></div>
 </div>
 <p>To set up linters wherever you plan on using <code class="docutils literal notranslate"><span class="pre">git</span></code> from (either on your host or
@@ -186,7 +186,7 @@ version DGP’s Docker environment uses for a consistent linting experience.</p>
         <li class="right" >
           <a href="cli.html" title="DGP Command-Line Interface"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-4-g730d73f documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-5-gba9e7ec documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Getting Started</a></li> 
       </ul>
     </div>

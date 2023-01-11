@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DGP Command-Line Interface &#8212; DGP v1.5-4-g730d73f documentation</title>
+    <title>DGP Command-Line Interface &#8212; DGP v1.5-5-gba9e7ec documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to DGP’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-4-g730d73f documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-5-gba9e7ec documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">DGP Command-Line Interface</a></li> 
       </ul>
     </div>
@@ -99,7 +99,7 @@ visualize DGP-compliant data.</p>
 <li><p>To visualize a split of a <a href="#id1"><span class="problematic" id="id2">**</span></a><a class="reference external" href="proto/dataset.proto#L127">DGP SceneDataset</a><a href="#id3"><span class="problematic" id="id4">**</span></a>,
 run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">dgp/cli.py</span> <span class="pre">visualize-scenes</span></code>:</p>
 <p>Show the help message via:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scenes --help
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>python<span class="w"> </span>dgp/cli.py<span class="w"> </span>visualize-scenes<span class="w"> </span>--help
 </pre></div>
 </div>
 <p>Example command to visualize the images from <code class="docutils literal notranslate"><span class="pre">CAMERA_01,</span> <span class="pre">CAMERA_05,</span> <span class="pre">CAMERA_06</span></code>
@@ -108,7 +108,7 @@ and point cloud from <code class="docutils literal notranslate"><span class="pre
 <code class="docutils literal notranslate"><span class="pre">tests/data/dgp/test_scene/scene_dataset_v1.0.json</span></code>, and store the resulting
 videos in <code class="docutils literal notranslate"><span class="pre">--dst-dir</span> <span class="pre">vis</span></code>. One can find the resulting 3D visualization videos
 in <code class="docutils literal notranslate"><span class="pre">vis/3d</span></code> and 2D visualization videos in <code class="docutils literal notranslate"><span class="pre">vis/2d</span></code>.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>python<span class="w"> </span>dgp/cli.py<span class="w"> </span>visualize-scenes<span class="w"> </span>--scene-dataset-json<span class="w"> </span>tests/data/dgp/test_scene/scene_dataset_v1.0.json<span class="w"> </span>--split<span class="w"> </span>train<span class="w"> </span>--dst-dir<span class="w"> </span>vis<span class="w"> </span>-l<span class="w"> </span>LIDAR<span class="w"> </span>-c<span class="w"> </span>CAMERA_01<span class="w"> </span>-c<span class="w"> </span>CAMERA_05<span class="w"> </span>-c<span class="w"> </span>CAMERA_06<span class="w"> </span>-a<span class="w"> </span>bounding_box_2d<span class="w"> </span>-a<span class="w"> </span>bounding_box_3d
 </pre></div>
 </div>
 <p align="center">
@@ -116,7 +116,7 @@ in <code class="docutils literal notranslate"><span class="pre">vis/3d</span></c
 </p></li>
 </ul>
 <p>Add flag <code class="docutils literal notranslate"><span class="pre">render-pointcloud</span></code> to render projected pointcloud onto images:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scenes --scene-dataset-json tests/data/dgp/test_scene/scene_dataset_v1.0.json --split train --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d --render-pointcloud
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>python<span class="w"> </span>dgp/cli.py<span class="w"> </span>visualize-scenes<span class="w"> </span>--scene-dataset-json<span class="w"> </span>tests/data/dgp/test_scene/scene_dataset_v1.0.json<span class="w"> </span>--split<span class="w"> </span>train<span class="w"> </span>--dst-dir<span class="w"> </span>vis<span class="w"> </span>-l<span class="w"> </span>LIDAR<span class="w"> </span>-c<span class="w"> </span>CAMERA_01<span class="w"> </span>-c<span class="w"> </span>CAMERA_05<span class="w"> </span>-c<span class="w"> </span>CAMERA_06<span class="w"> </span>-a<span class="w"> </span>bounding_box_2d<span class="w"> </span>-a<span class="w"> </span>bounding_box_3d<span class="w"> </span>--render-pointcloud
 </pre></div>
 </div>
 <p align="center">
@@ -125,7 +125,7 @@ in <code class="docutils literal notranslate"><span class="pre">vis/3d</span></c
 <li><p>To visualize a single <a href="#id5"><span class="problematic" id="id6">**</span></a><a class="reference external" href="proto/scene.proto#L14">DGP Scene</a><a href="#id7"><span class="problematic" id="id8">**</span></a>, run
 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">dgp/cli.py</span> <span class="pre">visualize-scene</span></code>:</p>
 <p>Show the help message via:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scene --help
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>python<span class="w"> </span>dgp/cli.py<span class="w"> </span>visualize-scene<span class="w"> </span>--help
 </pre></div>
 </div>
 <p>Example command to visualize the images from <code class="docutils literal notranslate"><span class="pre">CAMERA_01,</span> <span class="pre">CAMERA_05,</span> <span class="pre">CAMERA_06</span></code>
@@ -134,7 +134,7 @@ and point cloud from <code class="docutils literal notranslate"><span class="pre
 <code class="docutils literal notranslate"><span class="pre">tests/data/dgp/test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json</span></code>,
 and store the resulting videos in <code class="docutils literal notranslate"><span class="pre">--dst-dir</span> <span class="pre">vis</span></code>. One can find the resulting
 3D visualization video in <code class="docutils literal notranslate"><span class="pre">vis/3d</span></code> and 2D visualization video in <code class="docutils literal notranslate"><span class="pre">vis/2d</span></code>.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py visualize-scene --scene-json tests/data/dgp/test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json --dst-dir vis -l LIDAR -c CAMERA_01 -c CAMERA_05 -c CAMERA_06 -a bounding_box_2d -a bounding_box_3d
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>python<span class="w"> </span>dgp/cli.py<span class="w"> </span>visualize-scene<span class="w"> </span>--scene-json<span class="w"> </span>tests/data/dgp/test_scene/scene_01/scene_a8dc5ed1da0923563f85ea129f0e0a83e7fe1867.json<span class="w"> </span>--dst-dir<span class="w"> </span>vis<span class="w"> </span>-l<span class="w"> </span>LIDAR<span class="w"> </span>-c<span class="w"> </span>CAMERA_01<span class="w"> </span>-c<span class="w"> </span>CAMERA_05<span class="w"> </span>-c<span class="w"> </span>CAMERA_06<span class="w"> </span>-a<span class="w"> </span>bounding_box_2d<span class="w"> </span>-a<span class="w"> </span>bounding_box_3d
 </pre></div>
 </div>
 </li>
@@ -147,7 +147,7 @@ url) of the dataset, its raw dataset url, the set of available annotation types
 contained in the dataset, etc. For more information, see relevant metadata
 stored with a dataset artifact in <a class="reference external" href="proto/dataset.proto">DatasetMetadata</a> and
 <a class="reference external" href="proto/artifacts.proto">DatasetArtifacts</a>.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py info --scene-dataset-json &lt;scene-dataset-json&gt;
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>python<span class="w"> </span>dgp/cli.py<span class="w"> </span>info<span class="w"> </span>--scene-dataset-json<span class="w"> </span>&lt;scene-dataset-json&gt;
 </pre></div>
 </div>
 </div>
@@ -155,7 +155,7 @@ stored with a dataset artifact in <a class="reference external" href="proto/data
 <h2>Coming soon: Validate a dataset<a class="headerlink" href="#coming-soon-validate-a-dataset" title="Permalink to this headline">¶</a></h2>
 <p>DGP CLI provides a simplified mechanism for validating newly created datasets,
 ensuring that the dataset schema is maintained and valid. This is done via:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$ python dgp/cli.py validate --scene-dataset-json &lt;scene-dataset-json&gt;
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>python<span class="w"> </span>dgp/cli.py<span class="w"> </span>validate<span class="w"> </span>--scene-dataset-json<span class="w"> </span>&lt;scene-dataset-json&gt;
 </pre></div>
 </div>
 </div>
@@ -183,7 +183,7 @@ ensuring that the dataset schema is maintained and valid. This is done via:</p>
         <li class="right" >
           <a href="index.html" title="Welcome to DGP’s documentation!"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-4-g730d73f documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-5-gba9e7ec documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">DGP Command-Line Interface</a></li> 
       </ul>
     </div>
