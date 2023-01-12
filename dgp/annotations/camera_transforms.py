@@ -596,6 +596,11 @@ class AffineCameraTransform(BaseTransform):
         -------
         new_datum: OrderedDict
             Camera datum with transformed image and annotations.
+
+        Raises
+        ------
+        NotImplementedError
+            If any field is not yet supported.
         """
 
         assert cam_datum['datum_type'] == 'image', 'expected an image datum_type'
@@ -626,7 +631,7 @@ class AffineCameraTransform(BaseTransform):
         new_datum['pose'] = pose
         new_datum['extrinsics'] = ext
 
-        # This is not actually part of DGP, but you define a mask for the image, we can keep track of points
+        # This is not actually part of DGP, but if you define a mask for the image, we can keep track of points
         # that are not part of that mask a result of these operations.
         if 'rgb_mask' in new_datum:
             rgb_mask = new_datum['rgb_mask']
@@ -648,6 +653,7 @@ class AffineCameraTransform(BaseTransform):
             # TODO(chrisochoatri): remove zero w and h boxes
             # TODO(chrisochoatri): clip to image size
             # TODO(chrisochoatri): maybe convert back to int if input is int?
+            # TODO(chrisochoatri): re-estimate 2d boxes after transform from instance masks if available
 
         if 'semantic_segmentation_2d' in new_datum:
             sem_seg = new_datum['semantic_segmentation_2d']
@@ -673,6 +679,12 @@ class AffineCameraTransform(BaseTransform):
             keylines = new_datum['key_line_2d']
             keylines = self.transform_keylines_2d(keylines, )
             new_datum['key_line_2d'] = keylines
+
+        if 'key_line_3d' in new_datum:
+            raise NotImplementedError('key_line_3d not yet supported')
+
+        if 'key_point_3d' in new_datum:
+            raise NotImplementedError('key_point_3d not yet supported')
 
         # TODO(chrisochoatri): verify behavior when Nonetype is passed for each annotation
         # TODO(chrisochoatri): line 2d/3d annotations

@@ -1,4 +1,5 @@
 # Copyright 2021 Toyota Research Institute.  All rights reserved.
+import io
 import os
 
 import cv2
@@ -38,8 +39,8 @@ class SemanticSegmentation2DAnnotation(Annotation):
 
         Parameters
         ----------
-        annotation_file: str
-            Full path to annotation
+        annotation_file: str or bytes
+            Full path to annotation or bytestring
 
         ontology: SemanticSegmentationOntology
             Ontology for semantic segmentation tasks.
@@ -49,8 +50,12 @@ class SemanticSegmentation2DAnnotation(Annotation):
         SemanticSegmentation2DAnnotation
             Annotation object instantiated from file.
         """
-        # segmentation_image = np.array(Image.open(annotation_file), dtype=np.uint8)
-        segmentation_image = cv2.imread(annotation_file, cv2.IMREAD_UNCHANGED)
+        if isinstance(annotation_file, bytes):
+            raw_bytes = io.BytesIO(annotation_file)
+            segmentation_image = cv2.imdecode(np.frombuffer(raw_bytes.getbuffer(), np.uint8), cv2.IMREAD_UNCHANGED)
+        else:
+            segmentation_image = cv2.imread(annotation_file, cv2.IMREAD_UNCHANGED)
+
         if len(segmentation_image.shape) == 3:
             # ParllelDomain used RGBA image, and uses only R-channel.
             # TODO: discuss with PD on changing this to single-channel np.uint8 image.
@@ -59,6 +64,25 @@ class SemanticSegmentation2DAnnotation(Annotation):
         not_ignore = segmentation_image != ontology.VOID_ID
         segmentation_image[not_ignore] = ontology.label_lookup[segmentation_image[not_ignore]]
         return cls(ontology, segmentation_image)
+
+    def _convert_contiguous_to_class(self):
+        """Helper function to run pre processing prior to saving
+
+        Returns
+        -------
+        segmentation_image: np.array
+            A copy of self._segmentation_image with contiguous_id mapped back to class_id for saving
+        """
+        # Convert the segmentation image back to original class IDs
+        reverse_label_lookup = np.ones(self.ontology.VOID_ID + 1, dtype=np.uint8) * self.ontology.VOID_ID
+        for contiguous_id, class_id in self.ontology.contiguous_id_to_class_id.items():
+            reverse_label_lookup[contiguous_id] = class_id
+
+        # Create a copy and map IDs back to original set
+        segmentation_image = np.copy(self._segmentation_image)
+        not_ignore = segmentation_image != self.ontology.VOID_ID
+        segmentation_image[not_ignore] = reverse_label_lookup[segmentation_image[not_ignore]]
+        return segmentation_image
 
     def save(self, save_dir):
         """Serialize Annotation object and saved to specified directory. Annotations are saved in format <save_dir>/<sha>.<ext>
@@ -73,15 +97,7 @@ class SemanticSegmentation2DAnnotation(Annotation):
         output_annotation_file: str
             Full path to saved annotation
         """
-        # Convert the segmentation image back to original class IDs
-        reverse_label_lookup = np.ones(self.ontology.VOID_ID + 1, dtype=np.uint8) * self.ontology.VOID_ID
-        for contiguous_id, class_id in self.ontology.contiguous_id_to_class_id.items():
-            reverse_label_lookup[contiguous_id] = class_id
-
-        # Create a copy and map IDs back to original set
-        segmentation_image = np.copy(self._segmentation_image)
-        not_ignore = segmentation_image != self.ontology.VOID_ID
-        segmentation_image[not_ignore] = reverse_label_lookup[segmentation_image[not_ignore]]
+        segmentation_image = self._convert_contiguous_to_class()
 
         # Save the image as PNG
         output_annotation_file = os.path.join(

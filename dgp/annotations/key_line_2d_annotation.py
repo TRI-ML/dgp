@@ -6,7 +6,7 @@ from dgp.annotations.ontology import KeyLineOntology
 from dgp.proto.annotations_pb2 import KeyLine2DAnnotation, KeyLine2DAnnotations
 from dgp.utils.protobuf import (
     generate_uid_from_pbobject,
-    open_pbobject,
+    parse_pbobject,
     save_pbobject_as_json,
 )
 from dgp.utils.structures.key_line_2d import KeyLine2D
@@ -39,8 +39,8 @@ class KeyLine2DAnnotationList(Annotation):
 
         Parameters
         ----------
-        annotation_file: str
-            Full path to annotation
+        annotation_file: str or bytes
+            Full path to annotation or bytestring
 
         ontology: KeyLineOntology
             Ontology for 2D keyline tasks.
@@ -50,7 +50,7 @@ class KeyLine2DAnnotationList(Annotation):
         KeyLine2DAnnotationList
             Annotation object instantiated from file.
         """
-        _annotation_pb2 = open_pbobject(annotation_file, KeyLine2DAnnotations)
+        _annotation_pb2 = parse_pbobject(annotation_file, KeyLine2DAnnotations)
         linelist = [
             KeyLine2D(
                 line=np.float32([[vertex.x, vertex.y] for vertex in ann.vertices]),

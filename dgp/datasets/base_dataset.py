@@ -265,9 +265,21 @@ class SceneContainer:
             filename = scene.ontology_files['bounding_box_2d']
         """
         # Load ontology files.
+
+        # Note: When loading some experimental datasets from other sources such as Parallel Domain
+        # It is possible to have annotation types that are not supported. For now we will throw
+        # a warning and move on.
+        # TODO: work with PD to have consistent protos
+        for ann_id in self.scene.ontologies:
+            if ann_id not in ANNOTATION_TYPE_ID_TO_KEY:
+                logging.warning(
+                    f'Found annotation type id {ann_id} however only the following ids are allowed {set(ANNOTATION_TYPE_ID_TO_KEY.keys())} are defined. Skipping...'
+                )
+
         ontology_files = {
             ANNOTATION_TYPE_ID_TO_KEY[ann_id]: os.path.join(self.directory, ONTOLOGY_FOLDER, "{}.json".format(f))
             for ann_id, f in self.scene.ontologies.items()
+            if ann_id in ANNOTATION_TYPE_ID_TO_KEY
         }
 
         # Load autolabeled items in the scene.

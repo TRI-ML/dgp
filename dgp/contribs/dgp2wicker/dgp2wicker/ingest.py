@@ -24,9 +24,11 @@ from dgp.proto.dataset_pb2 import SceneDataset
 from dgp.utils.cloud.s3 import sync_dir
 from dgp.utils.protobuf import open_pbobject
 
-ILLEGAL_COMBINATIONS = set([('point_cloud', 'depth'), ('point_cloud', 'semantic_segmentation_2d'),
-                            ('point_cloud', 'instance_segmentation_2d'), ('point_cloud', 'bounding_box_2d')])
-
+PC_DATUMS = ('point_cloud', 'radar_point_cloud')
+NON_PC_FIELDS = (
+    'depth', 'semantic_segmentation_2d', 'instance_segmentation_2d', 'bounding_box_2d', 'key_point_2d', 'key_line_2d'
+)
+ILLEGAL_COMBINATIONS = {(pc_datum, field) for pc_datum in PC_DATUMS for field in NON_PC_FIELDS}
 WICKER_KEY_SEPARATOR = '____'
 
 # Map keys in SynchronizedScene output to wicker serialization methods
@@ -47,6 +49,10 @@ FIELD_TO_WICKER_SERIALIZER = {
     'depth': ws.DepthSerializer,
     'velocity': ws.PointCloudSerializer,
     'covariance': ws.PointCloudSerializer,
+    'key_point_2d': ws.KeyPoint2DSerializer,
+    'key_line_2d': ws.KeyLine2DSerializer,
+    'key_point_3d': ws.KeyPoint3DSerializer,
+    'key_line_3d': ws.KeyLine3DSerializer,
 }
 
 logger = logging.getLogger(__name__)
@@ -496,6 +502,7 @@ def ingest_dgp_to_wicker(
                             ontology_table=ontology_table,
                             scene_uri=os.path.join(os.path.basename(scene_dir_uri), scene_json),
                         )
+                        #import pdb; pdb.set_trace()
 
                         assert wicker_sample is not None
                         for k, v in wicker_sample.items():
@@ -562,7 +569,10 @@ def ingest_dgp_to_wicker(
     scenes = chunk_scenes(scenes, max_len=max_len, chunk_size=chunk_size)
 
     # Shuffle the scenes
-    scenes = np.random.permutation(scenes).tolist()
+    scene_shuffle_idx = np.random.permutation(len(scenes)).tolist()
+    scenes = [scenes[i] for i in scene_shuffle_idx]
+    if len(scenes) < 2:
+        wsp.SPARK_PARTITION_SIZE = 3
 
     # Setup spark
     if spark_context is None:

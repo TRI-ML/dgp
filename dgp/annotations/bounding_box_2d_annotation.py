@@ -9,7 +9,7 @@ from dgp.proto.annotations_pb2 import (
 )
 from dgp.utils.protobuf import (
     generate_uid_from_pbobject,
-    open_pbobject,
+    parse_pbobject,
     save_pbobject_as_json,
 )
 from dgp.utils.structures.bounding_box_2d import BoundingBox2D
@@ -41,8 +41,8 @@ class BoundingBox2DAnnotationList(Annotation):
 
         Parameters
         ----------
-        annotation_file: str
-            Full path to annotation
+        annotation_file: str or bytes
+            Full path to annotation or bytestring
 
         ontology: BoundingBoxOntology
             Ontology for 2D bounding box tasks.
@@ -52,8 +52,7 @@ class BoundingBox2DAnnotationList(Annotation):
         BoundingBox2DAnnotationList
             Annotation object instantiated from file.
         """
-
-        _annotation_pb2 = open_pbobject(annotation_file, BoundingBox2DAnnotations)
+        _annotation_pb2 = parse_pbobject(annotation_file, BoundingBox2DAnnotations)
         boxlist = [
             BoundingBox2D(
                 box=np.float32([ann.box.x, ann.box.y, ann.box.w, ann.box.h]),
