@@ -70,4 +70,5 @@ repos:
           -e, '*env*',
           -e, 'build/*'
         ]
+        exclude: '\w*pb2.py'
         additional_dependencies: [toml]

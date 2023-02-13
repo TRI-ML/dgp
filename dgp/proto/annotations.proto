@@ -115,7 +115,7 @@ message BoundingBox2DAnnotation {
   uint32 instance_id = 5;
 
   // A map of attribute names to their values.
-  // This can be used to stored `agent_behavior` states (i.e., parked car, 
+  // This can be used to stored `agent_behavior` states (i.e., parked car,
   // pedestrian intent).
   map<string, string> attributes = 6;
 }
@@ -124,7 +124,7 @@ message BoundingBox2DAnnotation {
 message BoundingBox3D {
   // 3D Bounding box. Produced by first constructing a box of dimensions
   // width, length, height centered at the origin, then rotating it by the
-  // specified quaternion and finally translating the box to the center 
+  // specified quaternion and finally translating the box to the center
   // coordinate.
 
   // 6DoF pose of bounding 3D.
@@ -313,6 +313,52 @@ message Polygon3DAnnotation{
   map<string, string> attributes = 3;
 }
 
+// 3D point.
+message SemanticSegmentationPoint3D {
+  // (x, y, z) point (in 3D Cartesian coordinates).
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+// Semantic segmentation 3D annotation.
+message SemanticSegmentation3DAnnotation {
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
+  uint32 class_id = 1;
+
+  // 3D point.
+  SemanticSegmentationPoint3D point = 2;
+
+  // A map of attribute names to their values.
+  map<string, string> attributes = 3;
+}
+
+// 3D point.
+message InstanceSegmentationPoint3D {
+  // (x, y, z) point (in 3D Cartesian coordinates).
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+// Instance segmentation 3D annotation.
+message InstanceSegmentation3DAnnotation {
+  // Instance identifier (should be in [0, num_instances - 1]),
+  // where num_instances is the total number of instances in your
+  // point cloud.
+  uint32 instance_id = 1;
+
+  // Class identifier (should be in [0, num_classes - 1]),
+  // where num_classes is the total number of classes in your ontology.
+  uint32 class_id = 2;
+
+  // 3D point.
+  InstanceSegmentationPoint3D point = 3;
+
+  // A map of attribute names to their values.
+  map<string, string> attributes = 4;
+}
 
 // List of BoundingBox2DAnnotation
 message BoundingBox2DAnnotations {
@@ -357,4 +403,14 @@ message KeyLine3DAnnotations {
 // List of Polygon3DAnnotation.
 message Polygon3DAnnotations {
   repeated Polygon3DAnnotation annotations = 1;
+}
+
+// List of SemanticSegmentation3DAnnotation.
+message SemanticSegmentation3DAnnotations {
+  repeated SemanticSegmentation3DAnnotation annotations = 1;
+}
+
+// List of InstanceSegmentation3DAnnotation.
+message InstanceSegmentation3DAnnotations {
+  repeated InstanceSegmentation3DAnnotation annotations = 1;
 }
