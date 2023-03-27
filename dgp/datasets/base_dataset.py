@@ -38,6 +38,7 @@ from dgp.proto.scene_pb2 import Scene as ScenePb2
 from dgp.utils.camera import Camera
 from dgp.utils.pose import Pose
 from dgp.utils.protobuf import open_pbobject
+from dgp.utils.dataset_conversion import read_cloud_ply
 
 AVAILABLE_DATUM_TYPES = ("image", "point_cloud", "radar_point_cloud")
 AVAILABLE_DISTORTION_PARAMS = (
@@ -1412,7 +1413,17 @@ class BaseDataset:
             return Image.open(os.path.join(scene_dir, datum.datum.image.filename)).convert('RGB')
         # Point clouds are read from compressed numpy arrays from the 'data' key.
         elif datum.datum.HasField('point_cloud'):
-            X = np.load(os.path.join(scene_dir, datum.datum.point_cloud.filename))['data']
+            _pointcloud_extension = os.path.splitext(datum.datum.point_cloud.filename)[-1]
+            if _pointcloud_extension == ".npz":
+                X = np.load(os.path.join(scene_dir, datum.datum.point_cloud.filename))['data']
+            elif _pointcloud_extension == ".ply":
+                X, intensities, timestamps = read_cloud_ply(os.path.join(scene_dir, datum.datum.point_cloud.filename))
+                if intensities.size:
+                    X = np.hstack([X, np.expand_dims(intensities, 1)])
+                if timestamps.size:
+                    X = np.hstack([X, np.expand_dims(timestamps, 1)])
+            else:
+                raise Exception(f"Pointcloud file extension '{_pointcloud_extension}' is not a supported file extension")
             # If structured array, extract relevant fields.
             # Otherwise, load numpy array as-is, XYZI in (N, 4) format
             if X.dtype.fields is not None:

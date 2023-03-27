@@ -4,6 +4,8 @@ import datetime
 import hashlib
 import logging
 import os
+import sys
+import mmap
 from collections import OrderedDict
 from functools import lru_cache
 
@@ -22,6 +24,14 @@ from dgp.utils.protobuf import (
 )
 
 
+numpy_endianness_map = {
+    ">": "big",
+    "<": "little",
+    "=": sys.byteorder,
+    "|": sys.byteorder,
+}
+
+
 @lru_cache(maxsize=None)
 def _mkdir(dirname):
     """Smarter mkdir by caching on dirname to avoid redundant disk I/O."""
@@ -32,6 +42,106 @@ def _write_point_cloud(filename, X):
     """Utility function for writing point clouds."""
     _mkdir(os.path.dirname(filename))
     np.savez_compressed(filename, data=X)
+
+
+def write_cloud_ply(file, points, intensities=None, timestamps=None):
+    """Write pointcloud and, if provided, intensities and timestamps to PLY standard output
+
+    Parameters
+    ----------
+    file: str
+        Filename to save cloud . It should have .ply extension
+    points: numpy array [N, 3] float
+        Point cloud of (x, y, z) coordinates in Lidar frame
+    intensities: numpy array [N, ] uint8
+        Measured intensities
+    timestamps: numpy array [N, ] float
+        Array of measurements timestamps
+    """
+
+    assert file.endswith("ply"), f"Extension of {file} must be 'ply'"
+    list_data = [points]
+    file = open(file, "w")
+    endianness = numpy_endianness_map[points.dtype.byteorder]
+    header = f"ply\nformat binary_{endianness}_endian 1.0\nelement vertex {points.shape[0]}\n"
+    header += "property double x\nproperty double y\nproperty double z\n"
+    if intensities is not None:
+        header += "property double intensity\n"
+        list_data.append(np.expand_dims(intensities, 1))
+    if timestamps is not None:
+        header += "property double timestamps\n"
+        list_data.append(np.expand_dims(timestamps, 1))
+    header += "end_header\n"
+    file.write(header)
+    data = np.hstack(list_data)
+    data.tofile(file)
+    file.close()
+
+
+def read_cloud_ply(file):
+    """Read pointcloud PLY file into numpy array(s)
+
+    Parameters
+    ----------
+    file: str
+        Filename with pointcloud. It should have .ply extension
+
+    Returns
+    -------
+    tuple
+        - points: numpy array [N, 3] float
+            Point cloud of (x, y, z) coordinates in Lidar frame
+        - intensities: numpy array [N, ] uint8
+            If present in source file, measured intensities. Otherwise empty array
+        - timestamps: numpy array [N, ] float
+            If present in source file, array of measurements timestamps. Otherwise empty array
+    """
+    properties = []
+    properties_types = []
+    number_points = None
+
+    with open(file, "rb") as f, \
+            mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ) as s:
+        i = 0
+        while True:
+            line = s.readline().decode("ascii").rstrip()
+            if i == 0:
+                assert line == "ply", f" File {file} is not a valid 'ply' file"
+            elif "element vertex" in line:
+                number_points = int(line.split()[-1])
+            elif "property" in line:
+                properties.append(line.split()[-1])
+                properties_types.append(line.split()[-2])
+            elif "end_header" in line or i > 20:
+                break
+            i += 1
+
+        for i, prop in enumerate(properties):
+            if prop in ["intensity", "nx"]:
+                properties_types[i] = np.uint8
+            else:
+                properties_types[i] = np.float64
+
+        data = np.fromfile(f, dtype=properties_types[0], offset=s.tell())
+        assert data.size % len(properties) == 0, f"Data length not divisible by number of columns in {file}. Possibly file is corrupted"
+        data = data.reshape((-1, len(properties)))
+        assert data.shape[0] == number_points, f"Number of points loaded from {file} different from expected. Possibly file is corrupted"
+
+        points = np.empty(0)
+        intensities = np.empty(0)
+        timestamps = np.empty(0)
+
+        points_idx = [properties.index(k) for k in ["x", "y", "z"]]
+        intensities_idx = [properties.index(k) for k in ["intensity", "nx"] if k in properties]
+        timestamps_idx = [properties.index(k) for k in ["timestamps"] if k in properties]
+        if points_idx:
+            points = data[:, points_idx].astype(properties_types[points_idx[0]])
+        if intensities_idx:
+            intensities = data[:, intensities_idx].astype(properties_types[intensities_idx[0]]).ravel()
+        if timestamps_idx:
+            timestamps = data[:, timestamps_idx].astype(properties_types[timestamps_idx[0]]).ravel()
+
+        return tuple([points, intensities, timestamps])
 
 
 def _write_annotation(filename, annotation):
