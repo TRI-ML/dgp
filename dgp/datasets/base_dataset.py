@@ -61,6 +61,7 @@ AVAILABLE_DISTORTION_PARAMS = (
     'fov',
     'fisheye',
     'w',
+    'equirectangular'
 )
 
 
