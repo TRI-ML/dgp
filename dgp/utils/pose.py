@@ -11,7 +11,8 @@ class Pose:
     """SE(3) rigid transform class that allows compounding of 6-DOF poses
     and provides common transformations that are commonly seen in geometric problems.
     """
-    def __init__(self, wxyz=np.float32([1., 0., 0., 0.]), tvec=np.float32([0., 0., 0.])):
+    def __init__(self, wxyz=np.float32([1., 0., 0., 0.]), tvec=np.float32([0., 0., 0.]),
+                 reference_coordinate_system=""):
         """Initialize a Pose with Quaternion and 3D Position
 
         Parameters
@@ -21,6 +22,8 @@ class Pose:
 
         tvec: np.float32 (default: np.float32([0,0,0]))
             Translation (xyz)
+        reference_coordinate_system: str
+            Reference coordinate system this Pose (Transform) is expressed with respect to
         """
         assert isinstance(wxyz, (np.ndarray, Quaternion))
         assert isinstance(tvec, np.ndarray)
@@ -28,13 +31,14 @@ class Pose:
         if isinstance(wxyz, np.ndarray):
             assert np.abs(1.0 - np.linalg.norm(wxyz)) < 1.0e-3
 
+        self.reference_coordinate_system = reference_coordinate_system
         self.quat = Quaternion(wxyz)
         self.tvec = tvec
 
     def __repr__(self):
         formatter = {'float_kind': lambda x: '%.2f' % x}
         tvec_str = np.array2string(self.tvec, formatter=formatter)
-        return 'wxyz: {}, tvec: ({})'.format(self.quat, tvec_str)
+        return 'wxyz: {}, tvec: ({}) wrt. `{}`'.format(self.quat, tvec_str, self.reference_coordinate_system)
 
     def copy(self):
         """Return a copy of this pose object.
@@ -44,7 +48,7 @@ class Pose:
         result: Pose
             Copied pose object.
         """
-        return self.__class__(Quaternion(self.quat), self.tvec.copy())
+        return self.__class__(Quaternion(self.quat), self.tvec.copy(), self.reference_coordinate_system)
 
     def __mul__(self, other):
         """Left-multiply Pose with another Pose or 3D-Points.
@@ -77,7 +81,7 @@ class Pose:
     def __rmul__(self, other):
         raise NotImplementedError('Right multiply not implemented yet!')
 
-    def inverse(self):
+    def inverse(self, new_reference_coordinate_system=""):
         """Returns a new Pose that corresponds to the
         inverse of this one.
 
@@ -87,7 +91,8 @@ class Pose:
             Inverted pose
         """
         qinv = self.quat.inverse
-        return self.__class__(qinv, qinv.rotate(-self.tvec))
+        return self.__class__(qinv, qinv.rotate(-self.tvec),
+                              reference_coordinate_system=new_reference_coordinate_system)
 
     @property
     def matrix(self):
@@ -137,7 +142,7 @@ class Pose:
         return self.tvec
 
     @classmethod
-    def from_matrix(cls, transformation_matrix):
+    def from_matrix(cls, transformation_matrix, reference_coordinate_system=""):
         """Initialize pose from 4x4 transformation matrix
 
         Parameters
@@ -149,10 +154,12 @@ class Pose:
         -------
         Pose
         """
-        return cls(wxyz=Quaternion(matrix=transformation_matrix[:3, :3]), tvec=np.float32(transformation_matrix[:3, 3]))
+        return cls(wxyz=Quaternion(matrix=transformation_matrix[:3, :3]),
+                   tvec=np.float32(transformation_matrix[:3, 3]),
+                   reference_coordinate_system=reference_coordinate_system)
 
     @classmethod
-    def from_rotation_translation(cls, rotation_matrix, tvec):
+    def from_rotation_translation(cls, rotation_matrix, tvec, reference_coordinate_system=""):
         """Initialize pose from rotation matrix and translation vector.
 
         Parameters
@@ -162,7 +169,8 @@ class Pose:
         tvec : np.ndarray
             length-3 translation vector
         """
-        return cls(wxyz=Quaternion(matrix=rotation_matrix), tvec=np.float64(tvec))
+        return cls(wxyz=Quaternion(matrix=rotation_matrix), tvec=np.float64(tvec),
+                   reference_coordinate_system=reference_coordinate_system)
 
     @classmethod
     def load(cls, pose_proto):
@@ -190,7 +198,10 @@ class Pose:
             pose_proto.translation.y,
             pose_proto.translation.z,
         ])
-        return cls(wxyz=rotation, tvec=translation)
+        reference_coordinate_system = pose_proto.reference_coordinate_system
+
+        return cls(wxyz=rotation, tvec=translation,
+                   reference_coordinate_system=reference_coordinate_system)
 
     def to_proto(self):
         """Convert Pose into pb object.
@@ -209,7 +220,10 @@ class Pose:
         pose_0S.translation.x = self.tvec[0]
         pose_0S.translation.y = self.tvec[1]
         pose_0S.translation.z = self.tvec[2]
+        pose_0S.reference_coordinate_system = self.reference_coordinate_system
         return pose_0S
 
     def __eq__(self, other):
-        return self.quat == other.quat and (self.tvec == other.tvec).all()
+        return (self.quat == other.quat and
+                (self.tvec == other.tvec).all() and
+                self.reference_coordinate_system == other.reference_coordinate_system)

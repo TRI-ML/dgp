@@ -32,6 +32,11 @@ message Quaternion {
 message Pose {
   Vector3 translation = 1;
   Quaternion rotation = 2;
+  // Indicate the name of the coordinate system the above transform is from:
+  //   i.e. let x_ref be a vector in reference_coordinate_system and x_pose a vector in this Pose's coordinate system (e.g. sensor's),
+  //   then x_ref = rotation . x_pose + translation
+  //   TODO: Coordinate systems Naming Convention
+  string reference_coordinate_system = 3;
 }
 
 message CameraIntrinsics {
