@@ -58,7 +58,8 @@ def write_cloud_ply(file, points, intensities=None, timestamps=None):
     timestamps: numpy array [N, ] float
         Array of measurements timestamps
     """
-
+    if intensities is not None:
+        assert intensities.dtype == np.uint8, f"'intensities' must be of type uint8 but are {intensities.dtype}"
     assert file.endswith("ply"), f"Extension of {file} must be 'ply'"
     list_data = [points]
     file = open(file, "w")
