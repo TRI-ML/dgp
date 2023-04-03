@@ -58,7 +58,8 @@ def write_cloud_ply(file, points, intensities=None, timestamps=None):
     timestamps: numpy array [N, ] float
         Array of measurements timestamps
     """
-
+    if intensities is not None:
+        assert intensities.dtype == np.uint8, f"'intensities' must be of type uint8 but are {intensities.dtype}"
     assert file.endswith("ply"), f"Extension of {file} must be 'ply'"
     list_data = [points]
     file = open(file, "w")
@@ -112,12 +113,12 @@ def read_cloud_ply(file):
             elif "property" in line:
                 properties.append(line.split()[-1])
                 properties_types.append(line.split()[-2])
-            elif "end_header" in line or i > 20:
+            elif "end_header" in line:
                 break
             i += 1
 
         for i, prop in enumerate(properties):
-            if prop in ["intensity", "nx"]:
+            if prop == "intensity":
                 properties_types[i] = np.uint8
             else:
                 properties_types[i] = np.float64
@@ -132,7 +133,7 @@ def read_cloud_ply(file):
         timestamps = np.empty(0)
 
         points_idx = [properties.index(k) for k in ["x", "y", "z"]]
-        intensities_idx = [properties.index(k) for k in ["intensity", "nx"] if k in properties]
+        intensities_idx = [properties.index(k) for k in ["intensity"] if k in properties]
         timestamps_idx = [properties.index(k) for k in ["timestamps"] if k in properties]
         if points_idx:
             points = data[:, points_idx].astype(properties_types[points_idx[0]])
