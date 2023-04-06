@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1b\x64gp/proto/point_cloud.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x18\x64gp/proto/geometry.proto\"\xa6\x04\n\nPointCloud\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t\x12;\n\x0b\x61nnotations\x18\x02 \x03(\x0b\x32&.dgp.proto.PointCloud.AnnotationsEntry\x12\x35\n\x08metadata\x18\x03 \x03(\x0b\x32#.dgp.proto.PointCloud.MetadataEntry\x12\x37\n\x0cpoint_format\x18\x04 \x03(\x0e\x32!.dgp.proto.PointCloud.ChannelType\x12\x14\n\x0cpoint_fields\x18\x05 \x03(\t\x12\x1d\n\x04pose\x18\x06 \x01(\x0b\x32\x0f.dgp.proto.Pose\x1a\x32\n\x10\x41nnotationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\xa8\x01\n\x0b\x43hannelType\x12\x05\n\x01X\x10\x00\x12\x05\n\x01Y\x10\x01\x12\x05\n\x01Z\x10\x02\x12\r\n\tINTENSITY\x10\x03\x12\x05\n\x01R\x10\x04\x12\x05\n\x01G\x10\x05\x12\x05\n\x01\x42\x10\x06\x12\x08\n\x04RING\x10\x07\x12\x0c\n\x08NORMAL_X\x10\x08\x12\x0c\n\x08NORMAL_Y\x10\t\x12\x0c\n\x08NORMAL_Z\x10\n\x12\x0c\n\x08\x43LASS_ID\x10\x0b\x12\x0f\n\x0bINSTANCE_ID\x10\x0c\x12\r\n\tTIMESTAMP\x10\rb\x06proto3'
+  serialized_pb=b'\n\x1b\x64gp/proto/point_cloud.proto\x12\tdgp.proto\x1a\x19google/protobuf/any.proto\x1a\x18\x64gp/proto/geometry.proto\"\xaa\x04\n\nPointCloud\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t\x12;\n\x0b\x61nnotations\x18\x02 \x03(\x0b\x32&.dgp.proto.PointCloud.AnnotationsEntry\x12\x35\n\x08metadata\x18\x03 \x03(\x0b\x32#.dgp.proto.PointCloud.MetadataEntry\x12\x37\n\x0cpoint_format\x18\x04 \x03(\x0e\x32!.dgp.proto.PointCloud.ChannelType\x12\x14\n\x0cpoint_fields\x18\x05 \x03(\t\x12\x1d\n\x04pose\x18\x06 \x01(\x0b\x32\x0f.dgp.proto.Pose\x1a\x32\n\x10\x41nnotationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x45\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any:\x02\x38\x01\"\xac\x01\n\x0b\x43hannelType\x12\x05\n\x01X\x10\x00\x12\x05\n\x01Y\x10\x01\x12\x05\n\x01Z\x10\x02\x12\r\n\tINTENSITY\x10\x03\x12\x05\n\x01R\x10\x04\x12\x05\n\x01G\x10\x05\x12\x05\n\x01\x42\x10\x06\x12\x08\n\x04RING\x10\x07\x12\x0c\n\x08NORMAL_X\x10\x08\x12\x0c\n\x08NORMAL_Y\x10\t\x12\x0c\n\x08NORMAL_Z\x10\n\x12\r\n\tTIMESTAMP\x10\r\"\x04\x08\x0b\x10\x0b\"\x04\x08\x0c\x10\x0c*\x08\x43LASS_ID*\x0bINSTANCE_IDb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,dgp_dot_proto_dot_geometry__pb2.DESCRIPTOR,])
 
@@ -90,17 +90,7 @@ _POINTCLOUD_CHANNELTYPE = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLASS_ID', index=11, number=11,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='INSTANCE_ID', index=12, number=12,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='TIMESTAMP', index=13, number=13,
+      name='TIMESTAMP', index=11, number=13,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
@@ -108,7 +98,7 @@ _POINTCLOUD_CHANNELTYPE = _descriptor.EnumDescriptor(
   containing_type=None,
   serialized_options=None,
   serialized_start=478,
-  serialized_end=646,
+  serialized_end=650,
 )
 _sym_db.RegisterEnumDescriptor(_POINTCLOUD_CHANNELTYPE)
 
@@ -253,7 +243,7 @@ _POINTCLOUD = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=96,
-  serialized_end=646,
+  serialized_end=650,
 )
 
 _POINTCLOUD_ANNOTATIONSENTRY.containing_type = _POINTCLOUD

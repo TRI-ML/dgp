@@ -19,8 +19,7 @@ message PointCloud {
   // Maps dgp.proto.AnnotationType (segmentation, instances) to the filename
   // containing the point cloud annotation.
   //
-  // Point cloud annotations are written in to compressed numpy arrays (npz)
-  // under the 'data' key.
+  // Point cloud annotation schemas are defined in 'annotations.proto'.
   map<int32, string> annotations = 2;
 
   // Optional metadata (i.e. miscellaneous enriched annotations)
@@ -29,8 +28,11 @@ message PointCloud {
 
   // Used to describe the values in the pointcloud.
   // The ChannelType refers to the dtypes of the point cloud
-  // stored under the 'data' key.
+  // stored under the 'filename' key.
   enum ChannelType {
+    reserved 11, 12;
+    reserved "CLASS_ID", "INSTANCE_ID";
+
     // X, Y, and Z coordinates of point.
     X = 0;
     Y = 1;
@@ -46,9 +48,7 @@ message PointCloud {
     NORMAL_X = 8;
     NORMAL_Y = 9;
     NORMAL_Z = 10;
-    // Class/Instance ID for point cloud semantic segmentation
-    CLASS_ID = 11;
-    INSTANCE_ID = 12;
+
     // Timestamp of this point sample, stored as UTC in microseconds
     TIMESTAMP = 13;
   }
