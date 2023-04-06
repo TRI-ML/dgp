@@ -30,6 +30,10 @@ message PointCloud {
   // The ChannelType refers to the dtypes of the point cloud
   // stored under the 'filename' key.
   enum ChannelType {
+    // These types are deprecated to preventing mixing of point cloud sensor
+    // and point cloud annotation information. If you would like to attach
+    // semantic or instance segmentation annotation data, please use the
+    // 'annotations' map.
     reserved 11, 12;
     reserved "CLASS_ID", "INSTANCE_ID";
 
