@@ -30,13 +30,6 @@ message PointCloud {
   // The ChannelType refers to the dtypes of the point cloud
   // stored under the 'filename' key.
   enum ChannelType {
-    // These types are deprecated to preventing mixing of point cloud sensor
-    // and point cloud annotation information. If you would like to attach
-    // semantic or instance segmentation annotation data, please use the
-    // 'annotations' map.
-    reserved 11, 12;
-    reserved "CLASS_ID", "INSTANCE_ID";
-
     // X, Y, and Z coordinates of point.
     X = 0;
     Y = 1;
@@ -52,6 +45,13 @@ message PointCloud {
     NORMAL_X = 8;
     NORMAL_Y = 9;
     NORMAL_Z = 10;
+
+    // These types are deprecated to preventing mixing of point cloud sensor
+    // and point cloud annotation information. If you would like to attach
+    // semantic or instance segmentation annotation data, please use the
+    // 'annotations' map.
+    reserved 11, 12;
+    reserved "CLASS_ID", "INSTANCE_ID";
 
     // Timestamp of this point sample, stored as UTC in microseconds
     TIMESTAMP = 13;
