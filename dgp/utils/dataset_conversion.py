@@ -24,11 +24,22 @@ from dgp.utils.protobuf import (
 )
 
 
-numpy_endianness_map = {
+NUMPY_ENDIANNESS_MAP = {
     ">": "big",
     "<": "little",
     "=": sys.byteorder,
     "|": sys.byteorder,
+}
+
+NUMPY_CTYPES_MAP = {
+    "char": np.byte,
+    "uchar": np.ubyte,
+    "short": np.short,
+    "ushort": np.ushort,
+    "int": np.intc,
+    "uint": np.uintc,
+    "float": np.float32,
+    "double": np.float64
 }
 
 
@@ -51,27 +62,28 @@ def write_cloud_ply(file, points, intensities=None, timestamps=None):
     ----------
     file: str
         Filename to save cloud . It should have .ply extension
-    points: numpy array [N, 3] float
+    points: numpy array [N, 3] float64
         Point cloud of (x, y, z) coordinates in Lidar frame
     intensities: numpy array [N, ] uint8
         Measured intensities
-    timestamps: numpy array [N, ] float
+    timestamps: numpy array [N, ] float64
         Array of measurements timestamps
     """
     if intensities is not None:
         assert intensities.dtype == np.uint8, f"'intensities' must be of type uint8 but are {intensities.dtype}"
     assert file.endswith("ply"), f"Extension of {file} must be 'ply'"
-    list_data = [points]
+
+    list_data = [points.astype(np.float64)]
     file = open(file, "w")
-    endianness = numpy_endianness_map[points.dtype.byteorder]
+    endianness = NUMPY_ENDIANNESS_MAP[points.dtype.byteorder]
     header = f"ply\nformat binary_{endianness}_endian 1.0\nelement vertex {points.shape[0]}\n"
     header += "property double x\nproperty double y\nproperty double z\n"
     if intensities is not None:
-        header += "property double intensity\n"
-        list_data.append(np.expand_dims(intensities, 1))
+        header += "property uchar intensity\n"
+        list_data.append(np.expand_dims(intensities.astype(np.uint8), 1))
     if timestamps is not None:
         header += "property double timestamps\n"
-        list_data.append(np.expand_dims(timestamps, 1))
+        list_data.append(np.expand_dims(timestamps.astype(np.float64), 1))
     header += "end_header\n"
     file.write(header)
     data = np.hstack(list_data)
@@ -90,11 +102,11 @@ def read_cloud_ply(file):
     Returns
     -------
     tuple
-        - points: numpy array [N, 3] float
+        - points: numpy array [N, 3]
             Point cloud of (x, y, z) coordinates in Lidar frame
-        - intensities: numpy array [N, ] uint8
+        - intensities: numpy array [N, ]
             If present in source file, measured intensities. Otherwise empty array
-        - timestamps: numpy array [N, ] float
+        - timestamps: numpy array [N, ]
             If present in source file, array of measurements timestamps. Otherwise empty array
     """
     properties = []
@@ -117,12 +129,11 @@ def read_cloud_ply(file):
                 break
             i += 1
 
-        for i, prop in enumerate(properties):
-            if prop == "intensity":
-                properties_types[i] = np.uint8
+        for i, _type in enumerate(properties_types):
+            if _type in NUMPY_CTYPES_MAP:
+                properties_types[i] = NUMPY_CTYPES_MAP[_type]
             else:
-                properties_types[i] = np.float64
-
+                raise Exception(f"Type {_type} is not supported")
         data = np.fromfile(f, dtype=properties_types[0], offset=s.tell())
         assert data.size % len(properties) == 0, f"Data length not divisible by number of columns in {file}. Possibly file is corrupted"
         data = data.reshape((-1, len(properties)))

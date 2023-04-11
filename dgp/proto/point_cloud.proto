@@ -12,7 +12,7 @@ import "dgp/proto/geometry.proto";
 // Basic point cloud container for DGP
 message PointCloud {
   // Relative file path for the point cloud
-  // Supported point cloud formats: compressed numpy (npz) format.
+  // Supported point cloud formats: compressed numpy (npz) format, polygon file format (ply).
   string filename = 1;
 
   // PointCloud annotations
