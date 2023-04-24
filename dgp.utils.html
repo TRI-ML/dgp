@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dgp.utils package &#8212; DGP v1.5-8-gcf305f6 documentation</title>
+    <title>dgp.utils package &#8212; DGP v1.5-9-g2493d71 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="dgp.scripts.html" title="dgp.scripts package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-8-gcf305f6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-9-g2493d71 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" accesskey="U">dgp package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils package</a></li> 
       </ul>
@@ -1296,9 +1296,9 @@ delegates to assert_array_almost_equal</p>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Arrays are not almost equal to 10 decimals</span>
-<span class="go"> ACTUAL: 2.3333333333333</span>
-<span class="go"> DESIRED: 2.33333334</span>
+<span class="x">Arrays are not almost equal to 10 decimals</span>
+<span class="x"> ACTUAL: 2.3333333333333</span>
+<span class="x"> DESIRED: 2.33333334</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.3333333333333</span><span class="p">]),</span>
@@ -1306,13 +1306,13 @@ delegates to assert_array_almost_equal</p>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Arrays are not almost equal to 9 decimals</span>
+<span class="x">Arrays are not almost equal to 9 decimals</span>
 
-<span class="go">Mismatched elements: 1 / 2 (50%)</span>
-<span class="go">Max absolute difference: 6.66669964e-09</span>
-<span class="go">Max relative difference: 2.85715698e-09</span>
-<span class="go"> x: array([1.         , 2.333333333])</span>
-<span class="go"> y: array([1.        , 2.33333334])</span>
+<span class="x">Mismatched elements: 1 / 2 (50%)</span>
+<span class="x">Max absolute difference: 6.66669964e-09</span>
+<span class="x">Max relative difference: 2.85715698e-09</span>
+<span class="x"> x: array([1.         , 2.333333333])</span>
+<span class="x"> y: array([1.        , 2.33333334])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1361,9 +1361,9 @@ that agree.</p>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Items are not equal to 8 significant digits:</span>
-<span class="go"> ACTUAL: 1.234567e-21</span>
-<span class="go"> DESIRED: 1.2345672e-21</span>
+<span class="x">Items are not equal to 8 significant digits:</span>
+<span class="x"> ACTUAL: 1.234567e-21</span>
+<span class="x"> DESIRED: 1.2345672e-21</span>
 </pre></div>
 </div>
 <p>the evaluated condition that raises the exception is</p>
@@ -1426,13 +1426,13 @@ objects have NaNs in the same positions.</p>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Arrays are not almost equal to 5 decimals</span>
+<span class="x">Arrays are not almost equal to 5 decimals</span>
 
-<span class="go">Mismatched elements: 1 / 3 (33.3%)</span>
-<span class="go">Max absolute difference: 6.e-05</span>
-<span class="go">Max relative difference: 2.57136612e-05</span>
-<span class="go"> x: array([1.     , 2.33333,     nan])</span>
-<span class="go"> y: array([1.     , 2.33339,     nan])</span>
+<span class="x">Mismatched elements: 1 / 3 (33.3%)</span>
+<span class="x">Max absolute difference: 6.e-05</span>
+<span class="x">Max relative difference: 2.57136612e-05</span>
+<span class="x"> x: array([1.     , 2.33333,     nan])</span>
+<span class="x"> y: array([1.     , 2.33339,     nan])</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_almost_equal</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.33333</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
@@ -1440,11 +1440,11 @@ objects have NaNs in the same positions.</p>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Arrays are not almost equal to 5 decimals</span>
+<span class="x">Arrays are not almost equal to 5 decimals</span>
 
-<span class="go">x and y nan location mismatch:</span>
-<span class="go"> x: array([1.     , 2.33333,     nan])</span>
-<span class="go"> y: array([1.     , 2.33333, 5.     ])</span>
+<span class="x">x and y nan location mismatch:</span>
+<span class="x"> x: array([1.     , 2.33333,     nan])</span>
+<span class="x"> y: array([1.     , 2.33333, 5.     ])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1494,13 +1494,13 @@ the scalar.</p>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Arrays are not equal</span>
+<span class="x">Arrays are not equal</span>
 
-<span class="go">Mismatched elements: 1 / 3 (33.3%)</span>
-<span class="go">Max absolute difference: 4.4408921e-16</span>
-<span class="go">Max relative difference: 1.41357986e-16</span>
-<span class="go"> x: array([1.      , 3.141593,      nan])</span>
-<span class="go"> y: array([1.      , 3.141593,      nan])</span>
+<span class="x">Mismatched elements: 1 / 3 (33.3%)</span>
+<span class="x">Max absolute difference: 4.4408921e-16</span>
+<span class="x">Max relative difference: 1.41357986e-16</span>
+<span class="x"> x: array([1.      , 3.141593,      nan])</span>
+<span class="x"> y: array([1.      , 3.141593,      nan])</span>
 </pre></div>
 </div>
 <p>Use <cite>assert_allclose</cite> or one of the nulp (number of floating point values)
@@ -1551,37 +1551,37 @@ assert_array_almost_equal: test objects for equality up to precision</p>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Arrays are not less-ordered</span>
+<span class="x">Arrays are not less-ordered</span>
 
-<span class="go">Mismatched elements: 1 / 3 (33.3%)</span>
-<span class="go">Max absolute difference: 1.</span>
-<span class="go">Max relative difference: 0.5</span>
-<span class="go"> x: array([ 1.,  1., nan])</span>
-<span class="go"> y: array([ 1.,  2., nan])</span>
+<span class="x">Mismatched elements: 1 / 3 (33.3%)</span>
+<span class="x">Max absolute difference: 1.</span>
+<span class="x">Max relative difference: 0.5</span>
+<span class="x"> x: array([ 1.,  1., nan])</span>
+<span class="x"> y: array([ 1.,  2., nan])</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_less</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Arrays are not less-ordered</span>
+<span class="x">Arrays are not less-ordered</span>
 
-<span class="go">Mismatched elements: 1 / 2 (50%)</span>
-<span class="go">Max absolute difference: 2.</span>
-<span class="go">Max relative difference: 0.66666667</span>
-<span class="go"> x: array([1., 4.])</span>
-<span class="go"> y: array(3)</span>
+<span class="x">Mismatched elements: 1 / 2 (50%)</span>
+<span class="x">Max absolute difference: 2.</span>
+<span class="x">Max relative difference: 0.66666667</span>
+<span class="x"> x: array([1., 4.])</span>
+<span class="x"> y: array(3)</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_less</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">])</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="gr">AssertionError</span><span class="w">:</span>
-<span class="go">Arrays are not less-ordered</span>
+<span class="x">Arrays are not less-ordered</span>
 
-<span class="go">(shapes (3,), (1,) mismatch)</span>
-<span class="go"> x: array([1., 2., 3.])</span>
-<span class="go"> y: array([4])</span>
+<span class="x">(shapes (3,), (1,) mismatch)</span>
+<span class="x"> x: array([1., 2., 3.])</span>
+<span class="x"> y: array([4])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2422,7 +2422,7 @@ shape: (H, W, 3)</p>
         <li class="right" >
           <a href="dgp.scripts.html" title="dgp.scripts package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-8-gcf305f6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-9-g2493d71 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils package</a></li> 
       </ul>
