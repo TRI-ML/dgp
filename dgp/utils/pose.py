@@ -44,8 +44,8 @@ class Pose:
         """Return a copy of this pose object.
 
         Returns
-        ----------
-        result: Pose
+        -------
+        Pose
             Copied pose object.
         """
         return self.__class__(Quaternion(self.quat), self.tvec.copy(), self.reference_coordinate_system)
@@ -62,8 +62,8 @@ class Pose:
                (i.e. X' = self_pose * X)
 
         Returns
-        ----------
-        result: Pose or np.ndarray
+        -------
+        Pose or np.ndarray
             Transformed pose or point cloud
         """
         if isinstance(other, Pose):
@@ -85,10 +85,15 @@ class Pose:
         """Returns a new Pose that corresponds to the
         inverse of this one.
 
-        Returns
+        Parameters
         ----------
-        result: Pose
-            Inverted pose
+        new_reference_coordinate_system: str
+            The reference coordinate system the inverse Pose (Transform) is expressed with respect to. I.e. the name of the current Pose
+
+        Returns
+        -------
+        Pose
+            new_reference_coordinate_system pose
         """
         qinv = self.quat.inverse
         return self.__class__(qinv, qinv.rotate(-self.tvec),
@@ -99,7 +104,7 @@ class Pose:
         """Returns a 4x4 homogeneous matrix of the form [R t; 0 1]
 
         Returns
-        ----------
+        -------
         result: np.ndarray
             4x4 homogeneous matrix
         """
@@ -112,8 +117,8 @@ class Pose:
         """Returns the 3x3 rotation matrix (R)
 
         Returns
-        ----------
-        result: np.ndarray
+        -------
+        np.ndarray
             3x3 rotation matrix
         """
         result = self.quat.transformation_matrix
@@ -124,8 +129,8 @@ class Pose:
         """Return the rotation component of the pose as a Quaternion object.
 
         Returns
-        ----------
-        self.quat: Quaternion
+        -------
+        Quaternion
             Rotation component of the Pose object.
         """
         return self.quat
@@ -135,8 +140,8 @@ class Pose:
         """Return the translation component of the pose as a np.ndarray.
 
         Returns
-        ----------
-        self.tvec: np.ndarray
+        -------
+        np.ndarray
             Translation component of the Pose object.
         """
         return self.tvec
@@ -149,6 +154,8 @@ class Pose:
         ----------
         transformation_matrix: np.ndarray
             4x4 containing rotation/translation
+        reference_coordinate_system: str
+            Reference coordinate system this Pose (Transform) is expressed with respect to
 
         Returns
         -------
@@ -168,6 +175,8 @@ class Pose:
             3x3 rotation matrix
         tvec : np.ndarray
             length-3 translation vector
+        reference_coordinate_system: str
+            Reference coordinate system this Pose (Transform) is expressed with respect to
         """
         return cls(wxyz=Quaternion(matrix=rotation_matrix), tvec=np.float64(tvec),
                    reference_coordinate_system=reference_coordinate_system)
