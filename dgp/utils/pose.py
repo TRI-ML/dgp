@@ -88,7 +88,9 @@ class Pose:
         Returns
         ----------
         result: Pose
-            Inverted pose
+            new_reference_coordinate_system pose
+        reference_coordinate_system: str
+            The reference coordinate system the inverse Pose (Transform) is expressed with respect to. I.e. the name of the current Pose
         """
         qinv = self.quat.inverse
         return self.__class__(qinv, qinv.rotate(-self.tvec),
@@ -149,6 +151,8 @@ class Pose:
         ----------
         transformation_matrix: np.ndarray
             4x4 containing rotation/translation
+        reference_coordinate_system: str
+            Reference coordinate system this Pose (Transform) is expressed with respect to
 
         Returns
         -------
@@ -168,6 +172,8 @@ class Pose:
             3x3 rotation matrix
         tvec : np.ndarray
             length-3 translation vector
+        reference_coordinate_system: str
+            Reference coordinate system this Pose (Transform) is expressed with respect to
         """
         return cls(wxyz=Quaternion(matrix=rotation_matrix), tvec=np.float64(tvec),
                    reference_coordinate_system=reference_coordinate_system)
