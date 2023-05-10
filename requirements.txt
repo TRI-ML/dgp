@@ -2,7 +2,7 @@ boto3
 botocore
 Click>=7.1.2
 diskcache>=4.1.0
-protobuf==3.20.1
+protobuf>=3.20.1,<4.0.0
 matplotlib>=3.0.3,<4.0
 opencv-python>=4.5.3.56
 Pillow>=8.3.2
