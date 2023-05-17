@@ -332,6 +332,9 @@ message SemanticSegmentation3DAnnotation {
 
   // A map of attribute names to their values.
   map<string, string> attributes = 3;
+
+  // Reference to the index of the original point in datum point cloud.
+  uint32 point_index = 4;
 }
 
 // 3D point.
@@ -358,6 +361,9 @@ message InstanceSegmentation3DAnnotation {
 
   // A map of attribute names to their values.
   map<string, string> attributes = 4;
+
+  // Reference to the index of the original point in datum point cloud.
+  uint32 point_index = 5;
 }
 
 // List of BoundingBox2DAnnotation
