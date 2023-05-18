@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1b\x64gp/proto/annotations.proto\x12\tdgp.proto\x1a\x18\x64gp/proto/geometry.proto\";\n\rBoundingBox2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\t\n\x01w\x18\x03 \x01(\r\x12\t\n\x01h\x18\x04 \x01(\r\"\x81\x02\n\x17\x42oundingBox2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox2D\x12\x0c\n\x04\x61rea\x18\x03 \x01(\r\x12\x0f\n\x07iscrowd\x18\x04 \x01(\x08\x12\x13\n\x0binstance_id\x18\x05 \x01(\r\x12\x46\n\nattributes\x18\x06 \x03(\x0b\x32\x32.dgp.proto.BoundingBox2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x84\x01\n\rBoundingBox3D\x12\x1d\n\x04pose\x18\x01 \x01(\x0b\x32\x0f.dgp.proto.Pose\x12\r\n\x05width\x18\x02 \x01(\x01\x12\x0e\n\x06length\x18\x03 \x01(\x01\x12\x0e\n\x06height\x18\x04 \x01(\x01\x12\x11\n\tocclusion\x18\x05 \x01(\r\x12\x12\n\ntruncation\x18\x06 \x01(\x01\"\xf6\x01\n\x17\x42oundingBox3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox3D\x12\x13\n\x0binstance_id\x18\x03 \x01(\r\x12\x46\n\nattributes\x18\x04 \x03(\x0b\x32\x32.dgp.proto.BoundingBox3DAnnotation.AttributesEntry\x12\x12\n\nnum_points\x18\x05 \x01(\r\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\"\n\nKeyPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xd3\x01\n\x14KeyPoint2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12$\n\x05point\x18\x02 \x01(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x43\n\nattributes\x18\x03 \x03(\x0b\x32/.dgp.proto.KeyPoint2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd4\x01\n\x13KeyLine2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\'\n\x08vertices\x18\x02 \x03(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.KeyLine2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"&\n\x0ePolygonPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xcb\x01\n\x13Polygon2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12+\n\x08vertices\x18\x02 \x03(\x0b\x32\x19.dgp.proto.PolygonPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.Polygon2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa8\x01\n\x18\x43lassificationAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12G\n\nattributes\x18\x02 \x03(\x0b\x32\x33.dgp.proto.ClassificationAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"-\n\nKeyPoint3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\xd3\x01\n\x14KeyPoint3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12$\n\x05point\x18\x02 \x01(\x0b\x32\x15.dgp.proto.KeyPoint3D\x12\x43\n\nattributes\x18\x03 \x03(\x0b\x32/.dgp.proto.KeyPoint3DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd4\x01\n\x13KeyLine3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\'\n\x08vertices\x18\x02 \x03(\x0b\x32\x15.dgp.proto.KeyPoint3D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.KeyLine3DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"1\n\x0ePolygonPoint3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\xcb\x01\n\x13Polygon3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12+\n\x08vertices\x18\x02 \x03(\x0b\x32\x19.dgp.proto.PolygonPoint3D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.Polygon3DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\">\n\x1bSemanticSegmentationPoint3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\xef\x01\n SemanticSegmentation3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\x35\n\x05point\x18\x02 \x01(\x0b\x32&.dgp.proto.SemanticSegmentationPoint3D\x12O\n\nattributes\x18\x03 \x03(\x0b\x32;.dgp.proto.SemanticSegmentation3DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\">\n\x1bInstanceSegmentationPoint3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\x84\x02\n InstanceSegmentation3DAnnotation\x12\x13\n\x0binstance_id\x18\x01 \x01(\r\x12\x10\n\x08\x63lass_id\x18\x02 \x01(\r\x12\x35\n\x05point\x18\x03 \x01(\x0b\x32&.dgp.proto.InstanceSegmentationPoint3D\x12O\n\nattributes\x18\x04 \x03(\x0b\x32;.dgp.proto.InstanceSegmentation3DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"S\n\x18\x42oundingBox2DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox2DAnnotation\"S\n\x18\x42oundingBox3DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox3DAnnotation\"M\n\x15KeyPoint2DAnnotations\x12\x34\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1f.dgp.proto.KeyPoint2DAnnotation\"K\n\x14KeyLine2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.KeyLine2DAnnotation\"K\n\x14Polygon2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.Polygon2DAnnotation\"U\n\x19\x43lassificationAnnotations\x12\x38\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32#.dgp.proto.ClassificationAnnotation\"M\n\x15KeyPoint3DAnnotations\x12\x34\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1f.dgp.proto.KeyPoint3DAnnotation\"K\n\x14KeyLine3DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.KeyLine3DAnnotation\"K\n\x14Polygon3DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.Polygon3DAnnotation\"e\n!SemanticSegmentation3DAnnotations\x12@\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32+.dgp.proto.SemanticSegmentation3DAnnotation\"e\n!InstanceSegmentation3DAnnotations\x12@\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32+.dgp.proto.InstanceSegmentation3DAnnotation*\xa9\x03\n\x0e\x41nnotationType\x12\x13\n\x0f\x42OUNDING_BOX_2D\x10\x00\x12\x13\n\x0f\x42OUNDING_BOX_3D\x10\x01\x12\x1c\n\x18SEMANTIC_SEGMENTATION_2D\x10\x02\x12\x1c\n\x18SEMANTIC_SEGMENTATION_3D\x10\x03\x12\x1c\n\x18INSTANCE_SEGMENTATION_2D\x10\x04\x12\x1c\n\x18INSTANCE_SEGMENTATION_3D\x10\x05\x12\t\n\x05\x44\x45PTH\x10\x06\x12\x16\n\x12SURFACE_NORMALS_2D\x10\r\x12\x16\n\x12SURFACE_NORMALS_3D\x10\x07\x12\x15\n\x11MOTION_VECTORS_2D\x10\x08\x12\x15\n\x11MOTION_VECTORS_3D\x10\t\x12\x10\n\x0cKEY_POINT_2D\x10\n\x12\x0f\n\x0bKEY_LINE_2D\x10\x0b\x12\x0e\n\nPOLYGON_2D\x10\x0c\x12\x12\n\x0e\x41GENT_BEHAVIOR\x10\x0e\x12\x12\n\x0e\x43LASSIFICATION\x10\x0f\x12\x10\n\x0cKEY_POINT_3D\x10\x10\x12\x0f\n\x0bKEY_LINE_3D\x10\x11\x12\x0e\n\nPOLYGON_3D\x10\x12\x62\x06proto3'
+  serialized_pb=b'\n\x1b\x64gp/proto/annotations.proto\x12\tdgp.proto\x1a\x18\x64gp/proto/geometry.proto\";\n\rBoundingBox2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\t\n\x01w\x18\x03 \x01(\r\x12\t\n\x01h\x18\x04 \x01(\r\"\x81\x02\n\x17\x42oundingBox2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox2D\x12\x0c\n\x04\x61rea\x18\x03 \x01(\r\x12\x0f\n\x07iscrowd\x18\x04 \x01(\x08\x12\x13\n\x0binstance_id\x18\x05 \x01(\r\x12\x46\n\nattributes\x18\x06 \x03(\x0b\x32\x32.dgp.proto.BoundingBox2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x84\x01\n\rBoundingBox3D\x12\x1d\n\x04pose\x18\x01 \x01(\x0b\x32\x0f.dgp.proto.Pose\x12\r\n\x05width\x18\x02 \x01(\x01\x12\x0e\n\x06length\x18\x03 \x01(\x01\x12\x0e\n\x06height\x18\x04 \x01(\x01\x12\x11\n\tocclusion\x18\x05 \x01(\r\x12\x12\n\ntruncation\x18\x06 \x01(\x01\"\xf6\x01\n\x17\x42oundingBox3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12%\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x18.dgp.proto.BoundingBox3D\x12\x13\n\x0binstance_id\x18\x03 \x01(\r\x12\x46\n\nattributes\x18\x04 \x03(\x0b\x32\x32.dgp.proto.BoundingBox3DAnnotation.AttributesEntry\x12\x12\n\nnum_points\x18\x05 \x01(\r\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\"\n\nKeyPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xd3\x01\n\x14KeyPoint2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12$\n\x05point\x18\x02 \x01(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x43\n\nattributes\x18\x03 \x03(\x0b\x32/.dgp.proto.KeyPoint2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd4\x01\n\x13KeyLine2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\'\n\x08vertices\x18\x02 \x03(\x0b\x32\x15.dgp.proto.KeyPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.KeyLine2DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"&\n\x0ePolygonPoint2D\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"\xcb\x01\n\x13Polygon2DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12+\n\x08vertices\x18\x02 \x03(\x0b\x32\x19.dgp.proto.PolygonPoint2D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.Polygon2DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa8\x01\n\x18\x43lassificationAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12G\n\nattributes\x18\x02 \x03(\x0b\x32\x33.dgp.proto.ClassificationAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"-\n\nKeyPoint3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\xd3\x01\n\x14KeyPoint3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12$\n\x05point\x18\x02 \x01(\x0b\x32\x15.dgp.proto.KeyPoint3D\x12\x43\n\nattributes\x18\x03 \x03(\x0b\x32/.dgp.proto.KeyPoint3DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd4\x01\n\x13KeyLine3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\'\n\x08vertices\x18\x02 \x03(\x0b\x32\x15.dgp.proto.KeyPoint3D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.KeyLine3DAnnotation.AttributesEntry\x12\x0b\n\x03key\x18\x04 \x01(\t\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"1\n\x0ePolygonPoint3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\xcb\x01\n\x13Polygon3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12+\n\x08vertices\x18\x02 \x03(\x0b\x32\x19.dgp.proto.PolygonPoint3D\x12\x42\n\nattributes\x18\x03 \x03(\x0b\x32..dgp.proto.Polygon3DAnnotation.AttributesEntry\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\">\n\x1bSemanticSegmentationPoint3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\x84\x02\n SemanticSegmentation3DAnnotation\x12\x10\n\x08\x63lass_id\x18\x01 \x01(\r\x12\x35\n\x05point\x18\x02 \x01(\x0b\x32&.dgp.proto.SemanticSegmentationPoint3D\x12O\n\nattributes\x18\x03 \x03(\x0b\x32;.dgp.proto.SemanticSegmentation3DAnnotation.AttributesEntry\x12\x13\n\x0bpoint_index\x18\x04 \x01(\r\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\">\n\x1bInstanceSegmentationPoint3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\x99\x02\n InstanceSegmentation3DAnnotation\x12\x13\n\x0binstance_id\x18\x01 \x01(\r\x12\x10\n\x08\x63lass_id\x18\x02 \x01(\r\x12\x35\n\x05point\x18\x03 \x01(\x0b\x32&.dgp.proto.InstanceSegmentationPoint3D\x12O\n\nattributes\x18\x04 \x03(\x0b\x32;.dgp.proto.InstanceSegmentation3DAnnotation.AttributesEntry\x12\x13\n\x0bpoint_index\x18\x05 \x01(\r\x1a\x31\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"S\n\x18\x42oundingBox2DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox2DAnnotation\"S\n\x18\x42oundingBox3DAnnotations\x12\x37\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\".dgp.proto.BoundingBox3DAnnotation\"M\n\x15KeyPoint2DAnnotations\x12\x34\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1f.dgp.proto.KeyPoint2DAnnotation\"K\n\x14KeyLine2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.KeyLine2DAnnotation\"K\n\x14Polygon2DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.Polygon2DAnnotation\"U\n\x19\x43lassificationAnnotations\x12\x38\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32#.dgp.proto.ClassificationAnnotation\"M\n\x15KeyPoint3DAnnotations\x12\x34\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1f.dgp.proto.KeyPoint3DAnnotation\"K\n\x14KeyLine3DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.KeyLine3DAnnotation\"K\n\x14Polygon3DAnnotations\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.dgp.proto.Polygon3DAnnotation\"e\n!SemanticSegmentation3DAnnotations\x12@\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32+.dgp.proto.SemanticSegmentation3DAnnotation\"e\n!InstanceSegmentation3DAnnotations\x12@\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32+.dgp.proto.InstanceSegmentation3DAnnotation*\xa9\x03\n\x0e\x41nnotationType\x12\x13\n\x0f\x42OUNDING_BOX_2D\x10\x00\x12\x13\n\x0f\x42OUNDING_BOX_3D\x10\x01\x12\x1c\n\x18SEMANTIC_SEGMENTATION_2D\x10\x02\x12\x1c\n\x18SEMANTIC_SEGMENTATION_3D\x10\x03\x12\x1c\n\x18INSTANCE_SEGMENTATION_2D\x10\x04\x12\x1c\n\x18INSTANCE_SEGMENTATION_3D\x10\x05\x12\t\n\x05\x44\x45PTH\x10\x06\x12\x16\n\x12SURFACE_NORMALS_2D\x10\r\x12\x16\n\x12SURFACE_NORMALS_3D\x10\x07\x12\x15\n\x11MOTION_VECTORS_2D\x10\x08\x12\x15\n\x11MOTION_VECTORS_3D\x10\t\x12\x10\n\x0cKEY_POINT_2D\x10\n\x12\x0f\n\x0bKEY_LINE_2D\x10\x0b\x12\x0e\n\nPOLYGON_2D\x10\x0c\x12\x12\n\x0e\x41GENT_BEHAVIOR\x10\x0e\x12\x12\n\x0e\x43LASSIFICATION\x10\x0f\x12\x10\n\x0cKEY_POINT_3D\x10\x10\x12\x0f\n\x0bKEY_LINE_3D\x10\x11\x12\x0e\n\nPOLYGON_3D\x10\x12\x62\x06proto3'
   ,
   dependencies=[dgp_dot_proto_dot_geometry__pb2.DESCRIPTOR,])
 
@@ -130,8 +130,8 @@ _ANNOTATIONTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3951,
-  serialized_end=4376,
+  serialized_start=3993,
+  serialized_end=4418,
 )
 _sym_db.RegisterEnumDescriptor(_ANNOTATIONTYPE)
 
@@ -1373,6 +1373,13 @@ _SEMANTICSEGMENTATION3DANNOTATION = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='point_index', full_name='dgp.proto.SemanticSegmentation3DAnnotation.point_index', index=3,
+      number=4, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1386,7 +1393,7 @@ _SEMANTICSEGMENTATION3DANNOTATION = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=2453,
-  serialized_end=2692,
+  serialized_end=2713,
 )
 
 
@@ -1431,8 +1438,8 @@ _INSTANCESEGMENTATIONPOINT3D = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2694,
-  serialized_end=2756,
+  serialized_start=2715,
+  serialized_end=2777,
 )
 
 
@@ -1510,6 +1517,13 @@ _INSTANCESEGMENTATION3DANNOTATION = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='point_index', full_name='dgp.proto.InstanceSegmentation3DAnnotation.point_index', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1522,8 +1536,8 @@ _INSTANCESEGMENTATION3DANNOTATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2759,
-  serialized_end=3019,
+  serialized_start=2780,
+  serialized_end=3061,
 )
 
 
@@ -1554,8 +1568,8 @@ _BOUNDINGBOX2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3021,
-  serialized_end=3104,
+  serialized_start=3063,
+  serialized_end=3146,
 )
 
 
@@ -1586,8 +1600,8 @@ _BOUNDINGBOX3DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3106,
-  serialized_end=3189,
+  serialized_start=3148,
+  serialized_end=3231,
 )
 
 
@@ -1618,8 +1632,8 @@ _KEYPOINT2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3191,
-  serialized_end=3268,
+  serialized_start=3233,
+  serialized_end=3310,
 )
 
 
@@ -1650,8 +1664,8 @@ _KEYLINE2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3270,
-  serialized_end=3345,
+  serialized_start=3312,
+  serialized_end=3387,
 )
 
 
@@ -1682,8 +1696,8 @@ _POLYGON2DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3347,
-  serialized_end=3422,
+  serialized_start=3389,
+  serialized_end=3464,
 )
 
 
@@ -1714,8 +1728,8 @@ _CLASSIFICATIONANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3424,
-  serialized_end=3509,
+  serialized_start=3466,
+  serialized_end=3551,
 )
 
 
@@ -1746,8 +1760,8 @@ _KEYPOINT3DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3511,
-  serialized_end=3588,
+  serialized_start=3553,
+  serialized_end=3630,
 )
 
 
@@ -1778,8 +1792,8 @@ _KEYLINE3DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3590,
-  serialized_end=3665,
+  serialized_start=3632,
+  serialized_end=3707,
 )
 
 
@@ -1810,8 +1824,8 @@ _POLYGON3DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3667,
-  serialized_end=3742,
+  serialized_start=3709,
+  serialized_end=3784,
 )
 
 
@@ -1842,8 +1856,8 @@ _SEMANTICSEGMENTATION3DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3744,
-  serialized_end=3845,
+  serialized_start=3786,
+  serialized_end=3887,
 )
 
 
@@ -1874,8 +1888,8 @@ _INSTANCESEGMENTATION3DANNOTATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3847,
-  serialized_end=3948,
+  serialized_start=3889,
+  serialized_end=3990,
 )
 
 _BOUNDINGBOX2DANNOTATION_ATTRIBUTESENTRY.containing_type = _BOUNDINGBOX2DANNOTATION
