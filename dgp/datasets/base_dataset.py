@@ -1420,7 +1420,9 @@ class BaseDataset:
                 # TODO: Expose all point fields.
                 # fields = datum.datum.point_cloud.point_format
                 # PointCloudPb2.ChannelType.DESCRIPTOR.values_by_name['X'].number
-                X = np.hstack([X['X'], X['Y'], X['Z'], X['INTENSITY']])
+                X = np.hstack([
+                    X['X'].reshape(-1, 1), X['Y'].reshape(-1, 1), X['Z'].reshape(-1, 1), X['INTENSITY'].reshape(-1, 1)
+                ])
             return X
         elif datum.datum.HasField('file_datum'):
             return datum.datum.file_datum.datum.filename
