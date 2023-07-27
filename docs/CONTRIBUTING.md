@@ -14,7 +14,7 @@ GitWorkflow.
 4. Enable githooks (linting, autoformatting) via:
 
 ```sh
-dgp$ make link-githooks
+dgp$ make setup-linters
 ```
 
 ## Getting started
@@ -100,7 +100,7 @@ DGP runs `isort` and `yapf` to autoformat the files in pre-commit, and perform
 additional linting using `pylint` in pre-push. One can enable githooks via:
 
 ```sh
-dgp$ make link-githooks
+dgp$ make setup-linters
 ```
 
 ### Making a pull request
