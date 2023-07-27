@@ -82,4 +82,6 @@ message CameraIntrinsics {
   // Parameters for Double Sphere model
   double xi = 25;
 
+  // Flag to indicate camera model is Equirectangular
+  int32  equirectangular = 26;
 }
