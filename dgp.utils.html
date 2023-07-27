@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dgp.utils package &#8212; DGP v1.5-14-g77fe17e documentation</title>
+    <title>dgp.utils package &#8212; DGP v1.5-15-ga64e360 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="dgp.scripts.html" title="dgp.scripts package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-14-g77fe17e documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-15-ga64e360 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" accesskey="U">dgp package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils package</a></li> 
       </ul>
@@ -894,7 +894,7 @@ color: list</p>
 <p>General-purpose class for rigid-body transformations.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.pose.Pose">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.pose.</span></span><span class="sig-name descname"><span class="pre">Pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wxyz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1.,</span> <span class="pre">0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.pose.</span></span><span class="sig-name descname"><span class="pre">Pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wxyz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1.,</span> <span class="pre">0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_coordinate_system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>SE(3) rigid transform class that allows compounding of 6-DOF poses
 and provides common transformations that are commonly seen in geometric problems.</p>
@@ -903,17 +903,19 @@ and provides common transformations that are commonly seen in geometric problems
 <span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a copy of this pose object.</p>
 <dl class="simple">
-<dt>result: Pose</dt><dd><p>Copied pose object.</p>
+<dt>Pose</dt><dd><p>Copied pose object.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.pose.Pose.from_matrix">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformation_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose.from_matrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformation_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_coordinate_system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose.from_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize pose from 4x4 transformation matrix</p>
 <dl class="simple">
 <dt>transformation_matrix: np.ndarray</dt><dd><p>4x4 containing rotation/translation</p>
+</dd>
+<dt>reference_coordinate_system: str</dt><dd><p>Reference coordinate system this Pose (Transform) is expressed with respect to</p>
 </dd>
 </dl>
 <p>Pose</p>
@@ -921,23 +923,29 @@ and provides common transformations that are commonly seen in geometric problems
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.pose.Pose.from_rotation_translation">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_rotation_translation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rotation_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose.from_rotation_translation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_rotation_translation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rotation_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_coordinate_system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose.from_rotation_translation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize pose from rotation matrix and translation vector.</p>
 <dl class="simple">
 <dt>rotation_matrix<span class="classifier">np.ndarray</span></dt><dd><p>3x3 rotation matrix</p>
 </dd>
 <dt>tvec<span class="classifier">np.ndarray</span></dt><dd><p>length-3 translation vector</p>
 </dd>
+<dt>reference_coordinate_system: str</dt><dd><p>Reference coordinate system this Pose (Transform) is expressed with respect to</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.pose.Pose.inverse">
-<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose.inverse" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_reference_coordinate_system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.pose.Pose.inverse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new Pose that corresponds to the
 inverse of this one.</p>
 <dl class="simple">
-<dt>result: Pose</dt><dd><p>Inverted pose</p>
+<dt>new_reference_coordinate_system: str</dt><dd><p>The reference coordinate system the inverse Pose (Transform) is expressed with respect to. I.e. the name of the current Pose</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Pose</dt><dd><p>new_reference_coordinate_system pose</p>
 </dd>
 </dl>
 </dd></dl>
@@ -968,7 +976,7 @@ inverse of this one.</p>
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rotation</span></span><a class="headerlink" href="#dgp.utils.pose.Pose.rotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the rotation component of the pose as a Quaternion object.</p>
 <dl class="simple">
-<dt>self.quat: Quaternion</dt><dd><p>Rotation component of the Pose object.</p>
+<dt>Quaternion</dt><dd><p>Rotation component of the Pose object.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -978,7 +986,7 @@ inverse of this one.</p>
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rotation_matrix</span></span><a class="headerlink" href="#dgp.utils.pose.Pose.rotation_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the 3x3 rotation matrix (R)</p>
 <dl class="simple">
-<dt>result: np.ndarray</dt><dd><p>3x3 rotation matrix</p>
+<dt>np.ndarray</dt><dd><p>3x3 rotation matrix</p>
 </dd>
 </dl>
 </dd></dl>
@@ -998,7 +1006,7 @@ inverse of this one.</p>
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">translation</span></span><a class="headerlink" href="#dgp.utils.pose.Pose.translation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the translation component of the pose as a np.ndarray.</p>
 <dl class="simple">
-<dt>self.tvec: np.ndarray</dt><dd><p>Translation component of the Pose object.</p>
+<dt>np.ndarray</dt><dd><p>Translation component of the Pose object.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1967,7 +1975,7 @@ These are used to construct a rotation transformation from the body frame to the
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.visualization_utils.BEVImage.render_bounding_box_3d">
-<span class="sig-name descname"><span class="pre">render_bounding_box_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">bboxes3d</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span></em>, <em class="sig-param"><span class="pre">colors=((0</span></em>, <em class="sig-param"><span class="pre">255</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">)</span></em>, <em class="sig-param"><span class="pre">side_color_fraction=0.7</span></em>, <em class="sig-param"><span class="pre">rear_color_fraction=0.5</span></em>, <em class="sig-param"><span class="pre">texts=None</span></em>, <em class="sig-param"><span class="pre">line_thickness=2</span></em>, <em class="sig-param"><span class="pre">font_scale=0.5</span></em>, <em class="sig-param"><span class="pre">font_colors=((255</span></em>, <em class="sig-param"><span class="pre">255</span></em>, <em class="sig-param"><span class="pre">255)</span></em>, <em class="sig-param"><span class="pre">)</span></em>, <em class="sig-param"><span class="pre">markers=None</span></em>, <em class="sig-param"><span class="pre">marker_scale=0.5</span></em>, <em class="sig-param"><span class="pre">marker_colors=((255</span></em>, <em class="sig-param"><span class="pre">0</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_bounding_box_3d" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">render_bounding_box_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">bboxes3d</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span> <span class="pre">wrt.</span> <span class="pre">``</span></em>, <em class="sig-param"><span class="pre">colors=((0</span></em>, <em class="sig-param"><span class="pre">255</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">)</span></em>, <em class="sig-param"><span class="pre">side_color_fraction=0.7</span></em>, <em class="sig-param"><span class="pre">rear_color_fraction=0.5</span></em>, <em class="sig-param"><span class="pre">texts=None</span></em>, <em class="sig-param"><span class="pre">line_thickness=2</span></em>, <em class="sig-param"><span class="pre">font_scale=0.5</span></em>, <em class="sig-param"><span class="pre">font_colors=((255</span></em>, <em class="sig-param"><span class="pre">255</span></em>, <em class="sig-param"><span class="pre">255)</span></em>, <em class="sig-param"><span class="pre">)</span></em>, <em class="sig-param"><span class="pre">markers=None</span></em>, <em class="sig-param"><span class="pre">marker_scale=0.5</span></em>, <em class="sig-param"><span class="pre">marker_colors=((255</span></em>, <em class="sig-param"><span class="pre">0</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_bounding_box_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render bounding box 3d in BEV perspective.</p>
 <dl class="simple">
 <dt>bboxes3d: List[BoundingBox3D]</dt><dd><p>3D annotations in the sensor coordinate frame.</p>
@@ -2021,7 +2029,7 @@ camera center and top-left / top-right corners of image plane.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.visualization_utils.BEVImage.render_paths">
-<span class="sig-name descname"><span class="pre">render_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">paths</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span></em>, <em class="sig-param"><span class="pre">colors=((0</span></em>, <em class="sig-param"><span class="pre">255</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">)</span></em>, <em class="sig-param"><span class="pre">line_thickness=1</span></em>, <em class="sig-param"><span class="pre">tint=1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_paths" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">render_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">paths</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span> <span class="pre">wrt.</span> <span class="pre">``</span></em>, <em class="sig-param"><span class="pre">colors=((0</span></em>, <em class="sig-param"><span class="pre">255</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">)</span></em>, <em class="sig-param"><span class="pre">line_thickness=1</span></em>, <em class="sig-param"><span class="pre">tint=1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render object paths on bev.</p>
 <dl class="simple">
 <dt>paths: list[list[Pose]]</dt><dd><p>List of object poses in the coordinate frame of the current timestep.</p>
@@ -2040,7 +2048,7 @@ Default: Identity pose.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.visualization_utils.BEVImage.render_point_cloud">
-<span class="sig-name descname"><span class="pre">render_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">point_cloud</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span></em>, <em class="sig-param"><span class="pre">color=(100</span></em>, <em class="sig-param"><span class="pre">100</span></em>, <em class="sig-param"><span class="pre">100)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_point_cloud" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">render_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">point_cloud</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span> <span class="pre">wrt.</span> <span class="pre">``</span></em>, <em class="sig-param"><span class="pre">color=(100</span></em>, <em class="sig-param"><span class="pre">100</span></em>, <em class="sig-param"><span class="pre">100)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_point_cloud" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render point cloud in BEV perspective.</p>
 <dl class="simple">
 <dt>point_cloud: np.ndarray</dt><dd><p>3D cloud points in the sensor coordinate frame. Shape is (N, 3).</p>
@@ -2055,7 +2063,7 @@ Default: Identity pose.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.visualization_utils.BEVImage.render_radar_point_cloud">
-<span class="sig-name descname"><span class="pre">render_radar_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">point_cloud</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span></em>, <em class="sig-param"><span class="pre">color=(255</span></em>, <em class="sig-param"><span class="pre">0</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">velocity=None</span></em>, <em class="sig-param"><span class="pre">velocity_scale=1</span></em>, <em class="sig-param"><span class="pre">velocity_max_pix=0.05</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_radar_point_cloud" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">render_radar_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">point_cloud</span></em>, <em class="sig-param"><span class="pre">extrinsics=wxyz:</span> <span class="pre">+1.000</span> <span class="pre">+0.000i</span> <span class="pre">+0.000j</span> <span class="pre">+0.000k</span></em>, <em class="sig-param"><span class="pre">tvec:</span> <span class="pre">([0.00</span> <span class="pre">0.00</span> <span class="pre">0.00])</span> <span class="pre">wrt.</span> <span class="pre">``</span></em>, <em class="sig-param"><span class="pre">color=(255</span></em>, <em class="sig-param"><span class="pre">0</span></em>, <em class="sig-param"><span class="pre">0)</span></em>, <em class="sig-param"><span class="pre">velocity=None</span></em>, <em class="sig-param"><span class="pre">velocity_scale=1</span></em>, <em class="sig-param"><span class="pre">velocity_max_pix=0.05</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.visualization_utils.BEVImage.render_radar_point_cloud" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render radar point cloud in BEV perspective.</p>
 <dl class="simple">
 <dt>point_cloud: np.ndarray</dt><dd><p>Point cloud in rectangular coordinates of sensor frame. Shape is (N, 3).</p>
@@ -2422,7 +2430,7 @@ shape: (H, W, 3)</p>
         <li class="right" >
           <a href="dgp.scripts.html" title="dgp.scripts package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-14-g77fe17e documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-15-ga64e360 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils package</a></li> 
       </ul>
