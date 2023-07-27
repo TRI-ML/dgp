@@ -83,6 +83,7 @@ def compute_image_statistics(image_list, image_open_fn, single_process=False, nu
         ".bmp",
         ".pgm",
         ".tiff",
+        ".dat",
     )
     image_list = list(filter(lambda x: x.lower().endswith(valid_extensions), image_list))
     if not image_list:
