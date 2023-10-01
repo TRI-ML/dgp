@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "color": {
+        "b": 20,
+        "g": 60,
+        "r": 220
+      },
+      "id": 0,
+      "isthing": true,
+      "name": "Person",
+      "supercategory": ""
+    },
+    {
+      "color": {
+        "b": 0,
+        "g": 142,
+        "r": 0
+      },
+      "id": 1,
+      "isthing": true,
+      "name": "Car",
+      "supercategory": ""
+    }
+  ]
+}
