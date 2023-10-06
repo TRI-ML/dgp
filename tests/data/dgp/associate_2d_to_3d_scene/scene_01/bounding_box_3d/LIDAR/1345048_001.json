@@ -1,0 +1,193 @@
+{
+  "annotations": [
+    {
+      "attributes": {},
+      "box": {
+        "height": 1.602,
+        "length": 0.923,
+        "occlusion": 0,
+        "pose": {
+          "reference_coordinate_system": "",
+          "rotation": {
+            "qw": -0.9945361181899448,
+            "qx": 0.005844301846375331,
+            "qy": -0.04575480638969989,
+            "qz": 0.09364962062841337
+          },
+          "translation": {
+            "x": 26.5559912338922,
+            "y": 0.19018018179900764,
+            "z": 0.996752776279834
+          }
+        },
+        "truncation": 0.0,
+        "width": 0.702
+      },
+      "class_id": 0,
+      "instance_id": 4081736164,
+      "num_points": 488
+    },
+    {
+      "attributes": {},
+      "box": {
+        "height": 1.458,
+        "length": 1.003,
+        "occlusion": 0,
+        "pose": {
+          "reference_coordinate_system": "",
+          "rotation": {
+            "qw": -0.9985009114869703,
+            "qx": 0.0028882970852891765,
+            "qy": -0.04603602841012219,
+            "qz": 0.029466448511131504
+          },
+          "translation": {
+            "x": 8.688338234722778,
+            "y": 3.041835891958385,
+            "z": 0.8581381595079947
+          }
+        },
+        "truncation": 0.0,
+        "width": 0.687
+      },
+      "class_id": 0,
+      "instance_id": 3157625369,
+      "num_points": 2506
+    },
+    {
+      "attributes": {},
+      "box": {
+        "height": 1.7,
+        "length": 0.7,
+        "occlusion": 0,
+        "pose": {
+          "reference_coordinate_system": "",
+          "rotation": {
+            "qw": -0.9546205851977209,
+            "qx": 0.015040096910548492,
+            "qy": -0.04360566083379287,
+            "qz": 0.29423099793347873
+          },
+          "translation": {
+            "x": 70.372899118791,
+            "y": -20.94096488390045,
+            "z": -1.8244220886784461
+          }
+        },
+        "truncation": 0.0,
+        "width": 0.7
+      },
+      "class_id": 0,
+      "instance_id": 4002157367,
+      "num_points": 7
+    },
+    {
+      "attributes": {},
+      "box": {
+        "height": 1.7,
+        "length": 0.7,
+        "occlusion": 0,
+        "pose": {
+          "reference_coordinate_system": "",
+          "rotation": {
+            "qw": 0.1857940747174927,
+            "qx": 0.045012389826135105,
+            "qy": 0.010076851391705489,
+            "qz": 0.9815054272025399
+          },
+          "translation": {
+            "x": 44.8594045019388,
+            "y": -5.654335267526108,
+            "z": 0.49063134648028495
+          }
+        },
+        "truncation": 0.0,
+        "width": 0.7
+      },
+      "class_id": 0,
+      "instance_id": 3015682071,
+      "num_points": 75
+    },
+    {
+      "attributes": {},
+      "box": {
+        "height": 1.7,
+        "length": 0.7,
+        "occlusion": 0,
+        "pose": {
+          "reference_coordinate_system": "",
+          "rotation": {
+            "qw": -0.998440882943295,
+            "qx": 0.00297904410121062,
+            "qy": -0.046030245144616705,
+            "qz": 0.03143477525898902
+          },
+          "translation": {
+            "x": -50.56086723143903,
+            "y": -1.4905566498621283,
+            "z": 0.9585148271079902
+          }
+        },
+        "truncation": 0.0,
+        "width": 0.7
+      },
+      "class_id": 0,
+      "instance_id": 3306246368,
+      "num_points": 71
+    },
+    {
+      "attributes": {},
+      "box": {
+        "height": 1.7,
+        "length": 0.7,
+        "occlusion": 0,
+        "pose": {
+          "reference_coordinate_system": "",
+          "rotation": {
+            "qw": -0.998440882943295,
+            "qx": 0.00297904410121062,
+            "qy": -0.046030245144616705,
+            "qz": 0.03143477525898902
+          },
+          "translation": {
+            "x": -50.71478800739544,
+            "y": -0.753365988206383,
+            "z": 1.0237169980551286
+          }
+        },
+        "truncation": 0.0,
+        "width": 0.7
+      },
+      "class_id": 0,
+      "instance_id": 279291877,
+      "num_points": 83
+    },
+    {
+      "attributes": {},
+      "box": {
+        "height": 1.7,
+        "length": 0.7,
+        "occlusion": 0,
+        "pose": {
+          "reference_coordinate_system": "",
+          "rotation": {
+            "qw": -0.9989345200499858,
+            "qx": 0.0015970034043485057,
+            "qy": -0.04609889100571691,
+            "qz": 0.0014718969645083901
+          },
+          "translation": {
+            "x": -80.2643855030285,
+            "y": -3.192519044929213,
+            "z": 0.9625515506138242
+          }
+        },
+        "truncation": 0.0,
+        "width": 0.7
+      },
+      "class_id": 0,
+      "instance_id": 129671060,
+      "num_points": 29
+    }
+  ]
+}

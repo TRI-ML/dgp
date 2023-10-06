@@ -1,0 +1,123 @@
+{
+  "creation_date": "2023-09-20T01:57:01.750472Z",
+  "data": [
+    {
+      "datum": {
+        "image": {
+          "annotations": {
+            "0": "bounding_box_2d/CAMERA_21/6d3e25d9abf1e015564f56ac176e8a7526cdd5ca.json",
+            "1": "bounding_box_3d/CAMERA_21/1345048_001.json"
+          },
+          "channels": 3,
+          "filename": "rgb/CAMERA_21/1345048_001.jpg",
+          "height": 1836,
+          "metadata": {},
+          "pose": {
+            "reference_coordinate_system": "",
+            "rotation": {
+              "qw": -0.11017830669879913,
+              "qx": 0.10803831368684769,
+              "qy": 0.6982220411300659,
+              "qz": -0.6990525126457214
+            },
+            "translation": {
+              "x": 433.2738037109375,
+              "y": 807.4990844726562,
+              "z": -29.08929443359375
+            }
+          },
+          "width": 2692
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "dummy",
+        "name": "CAMERA_21",
+        "timestamp": "2023-04-26T22:35:22.999530Z"
+      },
+      "key": "957a17d7c7c4e17a3693543306fb97af98c75b34",
+      "next_key": "7d1bb4ffb684d380f998dd09c61a182909e271c2",
+      "prev_key": ""
+    },
+    {
+      "datum": {
+        "point_cloud": {
+          "annotations": {
+            "1": "bounding_box_3d/LIDAR/1345048_001.json"
+          },
+          "filename": "point_cloud/LIDAR/1345048_001.npz",
+          "metadata": {},
+          "point_fields": [],
+          "point_format": [
+            "X",
+            "Y",
+            "Z",
+            "INTENSITY"
+          ],
+          "pose": {
+            "reference_coordinate_system": "",
+            "rotation": {
+              "qw": 0.5861750245094299,
+              "qx": -0.036432359367609024,
+              "qy": -0.02829030528664589,
+              "qz": -0.8088703155517578
+            },
+            "translation": {
+              "x": 434.11273193359375,
+              "y": 810.062744140625,
+              "z": -32.15201187133789
+            }
+          }
+        }
+      },
+      "id": {
+        "index": "0",
+        "log": "dummy",
+        "name": "LIDAR",
+        "timestamp": "2023-04-26T22:35:23.070990Z"
+      },
+      "key": "02eabaf3ca2fb9d13ece23c0f9ae74be098b2617",
+      "next_key": "b9442c27d742b2ac0fc232bea2db933518a8b933",
+      "prev_key": ""
+    }
+  ],
+  "description": "",
+  "log": "",
+  "metadata": {},
+  "name": "dummy",
+  "ontologies": {
+    "0": "e77320974afa353aa67d28a8c3c59c595dd9037f",
+    "1": "67f011a9c86852dfe1b2275cbbb6c0c7aa8d1848"
+  },
+  "samples": [
+    {
+      "calibration_key": "e10c7424d73936c7c8306cd02e927b7d2639c1a6",
+      "datum_keys": [
+        "957a17d7c7c4e17a3693543306fb97af98c75b34",
+        "02eabaf3ca2fb9d13ece23c0f9ae74be098b2617"
+      ],
+      "id": {
+        "index": "0",
+        "log": "dummy",
+        "name": "1345048_001",
+        "timestamp": "2023-04-26T22:35:23.070990Z"
+      },
+      "metadata": {}
+    }
+  ],
+  "statistics": {
+    "image_statistics": {
+      "count": "10",
+      "mean": [
+        117.7092,
+        127.629196,
+        117.40488
+      ],
+      "stddev": [
+        7.1080227,
+        6.942289,
+        7.652583
+      ]
+    }
+  }
+}
