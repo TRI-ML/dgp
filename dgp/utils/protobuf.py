@@ -16,6 +16,8 @@ from dgp.utils.cloud.s3 import (
     get_string_from_s3_file,
 )
 
+logger = logging.getLogger(__name__)
+
 
 def open_pbobject(path, pb_class):
     """Load JSON as a protobuf (pb2) object.
@@ -68,7 +70,7 @@ def parse_pbobject(source, pb_class):
         pb_object.ParseFromString(source)
         return pb_object
     else:
-        logging.error(f'cannot parse type {type(source)}')
+        logger.error(f'cannot parse type {type(source)}')
 
 
 def open_remote_pb_object(s3_object_uri, pb_class):
@@ -154,20 +156,20 @@ def open_ontology_pbobject(ontology_file):
     try:
         ontology = parse_pbobject(ontology_file, OntologyV2Pb2)
         if ontology is not None:
-            logging.info('Successfully loaded Ontology V2 spec.')
+            logger.debug('Successfully loaded Ontology V2 spec.')
             return ontology
     except Exception:
-        logging.error('Failed to load ontology file with V2 spec, trying V1 spec.')
+        logger.error('Failed to load ontology file with V2 spec, trying V1 spec.')
     try:
         ontology = parse_pbobject(ontology_file, OntologyV1Pb2)
         if ontology is not None:
-            logging.info('Successfully loaded Ontology V1 spec.')
+            logger.debug('Successfully loaded Ontology V1 spec.')
             return ontology
     except Exception:
         if isinstance(ontology_file, str):
-            logging.error('Failed to load ontology file' + ontology_file + 'with V1 spec also, returning None.')
+            logger.error('Failed to load ontology file' + ontology_file + 'with V1 spec also, returning None.')
         else:
-            logging.error('Failed to load ontology file with V1 spec also, returning None.')
+            logger.error('Failed to load ontology file with V1 spec also, returning None.')
 
 
 def open_feature_ontology_pbobject(ontology_file):
@@ -187,10 +189,10 @@ def open_feature_ontology_pbobject(ontology_file):
     try:
         ontology = open_pbobject(ontology_file, FeatureOntologyPb2)
         if ontology is not None:
-            logging.info('Successfully loaded FeatureOntology spec.')
+            logger.debug('Successfully loaded FeatureOntology spec.')
             return ontology
     except Exception:
-        logging.error('Failed to load ontology file' + ontology_file + '.')
+        logger.error('Failed to load ontology file' + ontology_file + '.')
 
 
 def generate_uid_from_pbobject(pb_object):
