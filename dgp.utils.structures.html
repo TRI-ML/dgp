@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dgp.utils.structures package &#8212; DGP v1.5-19-g76e34d2 documentation</title>
+    <title>dgp.utils.structures package &#8212; DGP v1.5-20-geaeab10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,7 +34,7 @@
         <li class="right" >
           <a href="dgp.utils.cloud.html" title="dgp.utils.cloud package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-19-g76e34d2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-20-geaeab10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="dgp.utils.html" accesskey="U">dgp.utils package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils.structures package</a></li> 
@@ -58,7 +59,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script><!DOCTYPE html>
+<script>document.getElementById('searchbox').style.display = "block"</script><!DOCTYPE html>
 <h3><a href="#">Quick Links</a></h3>
 <ul>
     <li><a class="reference internal" href="cli.html">Command Line Interface Info</a></li>
@@ -66,8 +67,9 @@
     <li><a class="reference internal" href="contributing_guidelines.html">Contributing Guidelines</a></li>
     <li><a class="reference internal" href="dgp_schema.html">DGP Schema</a></li>
 </ul>
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">dgp.utils.structures package</a><ul>
 <li><a class="reference internal" href="#module-dgp.utils.structures.bounding_box_2d">dgp.utils.structures.bounding_box_2d module</a></li>
 <li><a class="reference internal" href="#module-dgp.utils.structures.bounding_box_3d">dgp.utils.structures.bounding_box_3d module</a></li>
@@ -78,12 +80,17 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="dgp.utils.cloud.html"
-                        title="previous chapter">dgp.utils.cloud package</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="dgp.utils.torch_extension.html"
-                        title="next chapter">dgp.utils.torch_extension package</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="dgp.utils.cloud.html"
+                          title="previous chapter">dgp.utils.cloud package</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="dgp.utils.torch_extension.html"
+                          title="next chapter">dgp.utils.torch_extension package</a></p>
+  </div>
         </div>
       </div>
 
@@ -93,12 +100,12 @@
           <div class="body" role="main">
             
   <div class="section" id="dgp-utils-structures-package">
-<h1>dgp.utils.structures package<a class="headerlink" href="#dgp-utils-structures-package" title="Permalink to this headline">¶</a></h1>
+<h1>dgp.utils.structures package<a class="headerlink" href="#dgp-utils-structures-package" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="module-dgp.utils.structures.bounding_box_2d">
-<span id="dgp-utils-structures-bounding-box-2d-module"></span><h2>dgp.utils.structures.bounding_box_2d module<a class="headerlink" href="#module-dgp.utils.structures.bounding_box_2d" title="Permalink to this headline">¶</a></h2>
+<span id="dgp-utils-structures-bounding-box-2d-module"></span><h2>dgp.utils.structures.bounding_box_2d module<a class="headerlink" href="#module-dgp.utils.structures.bounding_box_2d" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.bounding_box_2d.</span></span><span class="sig-name descname"><span class="pre">BoundingBox2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ltwh'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.bounding_box_2d.</span></span><span class="sig-name descname"><span class="pre">BoundingBox2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ltwh'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>2D bounding box object.</p>
 <dl class="simple">
@@ -124,32 +131,32 @@ or “[left, top, right, bottom]”</p>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.area">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">area</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.area" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">area</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.area" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.attributes">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.attributes" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.attributes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.class_id">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.class_id" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.class_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.color">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.color" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.color" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.hexdigest">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.hexdigest" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.hexdigest" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.instance_id">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instance_id</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.instance_id" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instance_id</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.instance_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -168,12 +175,12 @@ or “[left, top, right, bottom]”</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.ltrb">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ltrb</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.ltrb" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ltrb</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.ltrb" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_2d.BoundingBox2D.ltwh">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ltwh</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.ltwh" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ltwh</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_2d.BoundingBox2D.ltwh" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -206,10 +213,10 @@ To serialize a complete annotation, see <cite>dgp/annotations/bounding_box_2d_an
 
 </div>
 <div class="section" id="module-dgp.utils.structures.bounding_box_3d">
-<span id="dgp-utils-structures-bounding-box-3d-module"></span><h2>dgp.utils.structures.bounding_box_3d module<a class="headerlink" href="#module-dgp.utils.structures.bounding_box_3d" title="Permalink to this headline">¶</a></h2>
+<span id="dgp-utils-structures-bounding-box-3d-module"></span><h2>dgp.utils.structures.bounding_box_3d module<a class="headerlink" href="#module-dgp.utils.structures.bounding_box_3d" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.bounding_box_3d.</span></span><span class="sig-name descname"><span class="pre">BoundingBox3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occlusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_ontology_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.bounding_box_3d.</span></span><span class="sig-name descname"><span class="pre">BoundingBox3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.,</span> <span class="pre">0.],</span> <span class="pre">dtype=float32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occlusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_ontology_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>3D bounding box (cuboid) that is centered at <cite>pose</cite> with extent <cite>sizes</cite>.</p>
 <dl class="simple">
@@ -240,17 +247,17 @@ defaults to empty dict.</p>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.attributes">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.attributes" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.attributes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.class_id">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.class_id" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.class_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.corners">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">corners</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.corners" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">corners</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.corners" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get 8 corners of the 3D bounding box.
 Note: The pose is oriented such that x-forward, y-left, z-up.
 This corresponds to L (length) along x, W (width) along y, and H
@@ -263,7 +270,7 @@ This corresponds to L (length) along x, W (width) along y, and H
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.edges">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.edges" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the 12 edge links of the 3D bounding box, indexed by the corners
 defined by <cite>self.corners`</cite>.</p>
 <dl class="simple">
@@ -274,32 +281,32 @@ defined by <cite>self.corners`</cite>.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.feature_ontology_type">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">feature_ontology_type</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.feature_ontology_type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_ontology_type</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.feature_ontology_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.hexdigest">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.hexdigest" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.hexdigest" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.instance_id">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instance_id</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.instance_id" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instance_id</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.instance_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.num_points">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">num_points</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.num_points" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_points</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.num_points" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.occlusion">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">occlusion</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.occlusion" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">occlusion</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.occlusion" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.pose">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">pose</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.pose" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pose</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.pose" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -333,12 +340,12 @@ The type must be uint8.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.sample_idx">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">sample_idx</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.sample_idx" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sample_idx</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.sample_idx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.sizes">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">sizes</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.sizes" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sizes</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.sizes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -355,12 +362,12 @@ To serialize a complete annotation, see <cite>dgp/annotations/bounding_box_3d_an
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.truncation">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">truncation</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.truncation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">truncation</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.truncation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.bounding_box_3d.BoundingBox3D.vectorize">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">vectorize</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.vectorize" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vectorize</span></span><a class="headerlink" href="#dgp.utils.structures.bounding_box_3d.BoundingBox3D.vectorize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a np.ndarray of with 10 dimensions representing the 3D bounding box</p>
 <dl class="simple">
 <dt>box_3d: np.float32 array</dt><dd><p>Box with coordinates (pose.quat.qw, pose.quat.qx, pose.quat.qy, pose.quat.qz,
@@ -373,10 +380,10 @@ pose.tvec.x, pose.tvec.y, pose.tvec.z, width, length, height).</p>
 
 </div>
 <div class="section" id="module-dgp.utils.structures.instance_mask">
-<span id="dgp-utils-structures-instance-mask-module"></span><h2>dgp.utils.structures.instance_mask module<a class="headerlink" href="#module-dgp.utils.structures.instance_mask" title="Permalink to this headline">¶</a></h2>
+<span id="dgp-utils-structures-instance-mask-module"></span><h2>dgp.utils.structures.instance_mask module<a class="headerlink" href="#module-dgp.utils.structures.instance_mask" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.instance_mask.</span></span><span class="sig-name descname"><span class="pre">InstanceMask2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.instance_mask.</span></span><span class="sig-name descname"><span class="pre">InstanceMask2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>2D instance mask object.</p>
 <dl class="simple">
@@ -393,38 +400,38 @@ defaults to empty dict.</p>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.area">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">area</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.area" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">area</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.area" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute intersection over union of this box against other(s).</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.attributes">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.attributes" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.attributes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.bitmask">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">bitmask</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.bitmask" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bitmask</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.bitmask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.class_id">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.class_id" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.class_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.color">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.color" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.color" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.hexdigest">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.hexdigest" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.hexdigest" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.instance_id">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instance_id</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.instance_id" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instance_id</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.instance_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -457,14 +464,14 @@ defaults to empty dict.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.InstanceMask2D.rle">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rle</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.rle" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rle</span></span><a class="headerlink" href="#dgp.utils.structures.instance_mask.InstanceMask2D.rle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.structures.instance_mask.RLEMask">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.instance_mask.</span></span><span class="sig-name descname"><span class="pre">RLEMask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.instance_mask.RLEMask" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.instance_mask.</span></span><span class="sig-name descname"><span class="pre">RLEMask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.instance_mask.RLEMask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Container of RLE-encoded mask.</p>
 <p>See <a class="reference external" href="https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/mask.py">https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/mask.py</a> for RLE format.</p>
@@ -483,10 +490,10 @@ defaults to empty dict.</p>
 
 </div>
 <div class="section" id="module-dgp.utils.structures.key_point_2d">
-<span id="dgp-utils-structures-key-point-2d-module"></span><h2>dgp.utils.structures.key_point_2d module<a class="headerlink" href="#module-dgp.utils.structures.key_point_2d" title="Permalink to this headline">¶</a></h2>
+<span id="dgp-utils-structures-key-point-2d-module"></span><h2>dgp.utils.structures.key_point_2d module<a class="headerlink" href="#module-dgp.utils.structures.key_point_2d" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.structures.key_point_2d.KeyPoint2D">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.key_point_2d.</span></span><span class="sig-name descname"><span class="pre">KeyPoint2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.structures.key_point_2d.</span></span><span class="sig-name descname"><span class="pre">KeyPoint2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>2D keypoint object.</p>
 <dl class="simple">
@@ -505,27 +512,27 @@ defaults to empty dict.</p>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.key_point_2d.KeyPoint2D.attributes">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.attributes" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.attributes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.key_point_2d.KeyPoint2D.class_id">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.class_id" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.class_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.key_point_2d.KeyPoint2D.color">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.color" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.color" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.key_point_2d.KeyPoint2D.hexdigest">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.hexdigest" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hexdigest</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.hexdigest" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.key_point_2d.KeyPoint2D.instance_id">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">instance_id</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.instance_id" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instance_id</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.instance_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -542,14 +549,14 @@ To serialize a complete annotation, see <cite>dgp/annotations/key_point_2d_annot
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.structures.key_point_2d.KeyPoint2D.xy">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xy</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.xy" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">xy</span></span><a class="headerlink" href="#dgp.utils.structures.key_point_2d.KeyPoint2D.xy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="module-dgp.utils.structures">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.utils.structures" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.utils.structures" title="Permalink to this heading">¶</a></h2>
 </div>
 </div>
 
@@ -575,7 +582,7 @@ To serialize a complete annotation, see <cite>dgp/annotations/key_point_2d_annot
         <li class="right" >
           <a href="dgp.utils.cloud.html" title="dgp.utils.cloud package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-19-g76e34d2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-20-geaeab10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="dgp.utils.html" >dgp.utils package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils.structures package</a></li> 
@@ -583,7 +590,7 @@ To serialize a complete annotation, see <cite>dgp/annotations/key_point_2d_annot
     </div>
     <div class="footer">
         &copy; Copyright 2021, Toyota Research Institute.
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.0.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
   </body>
 </html>

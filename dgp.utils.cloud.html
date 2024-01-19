@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dgp.utils.cloud package &#8212; DGP v1.5-19-g76e34d2 documentation</title>
+    <title>dgp.utils.cloud package &#8212; DGP v1.5-20-geaeab10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,7 +34,7 @@
         <li class="right" >
           <a href="dgp.utils.html" title="dgp.utils package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-19-g76e34d2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-20-geaeab10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="dgp.utils.html" accesskey="U">dgp.utils package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils.cloud package</a></li> 
@@ -58,7 +59,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script><!DOCTYPE html>
+<script>document.getElementById('searchbox').style.display = "block"</script><!DOCTYPE html>
 <h3><a href="#">Quick Links</a></h3>
 <ul>
     <li><a class="reference internal" href="cli.html">Command Line Interface Info</a></li>
@@ -66,8 +67,9 @@
     <li><a class="reference internal" href="contributing_guidelines.html">Contributing Guidelines</a></li>
     <li><a class="reference internal" href="dgp_schema.html">DGP Schema</a></li>
 </ul>
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">dgp.utils.cloud package</a><ul>
 <li><a class="reference internal" href="#module-dgp.utils.cloud.s3">dgp.utils.cloud.s3 module</a></li>
 <li><a class="reference internal" href="#module-dgp.utils.cloud">Module contents</a></li>
@@ -75,12 +77,17 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="dgp.utils.html"
-                        title="previous chapter">dgp.utils package</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="dgp.utils.structures.html"
-                        title="next chapter">dgp.utils.structures package</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="dgp.utils.html"
+                          title="previous chapter">dgp.utils package</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="dgp.utils.structures.html"
+                          title="next chapter">dgp.utils.structures package</a></p>
+  </div>
         </div>
       </div>
 
@@ -90,13 +97,13 @@
           <div class="body" role="main">
             
   <div class="section" id="dgp-utils-cloud-package">
-<h1>dgp.utils.cloud package<a class="headerlink" href="#dgp-utils-cloud-package" title="Permalink to this headline">¶</a></h1>
+<h1>dgp.utils.cloud package<a class="headerlink" href="#dgp-utils-cloud-package" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="module-dgp.utils.cloud.s3">
-<span id="dgp-utils-cloud-s3-module"></span><h2>dgp.utils.cloud.s3 module<a class="headerlink" href="#module-dgp.utils.cloud.s3" title="Permalink to this headline">¶</a></h2>
+<span id="dgp-utils-cloud-s3-module"></span><h2>dgp.utils.cloud.s3 module<a class="headerlink" href="#module-dgp.utils.cloud.s3" title="Permalink to this heading">¶</a></h2>
 <p>Various utility functions for AWS S3</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.cloud.s3.RemoteArtifactFile">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">RemoteArtifactFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.RemoteArtifactFile" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.cloud.s3.</span></span><span class="sig-name descname"><span class="pre">RemoteArtifactFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.cloud.s3.RemoteArtifactFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
@@ -469,7 +476,7 @@ e.g. “s3://&lt;s3-bucket&gt;/&lt;task-name&gt;/&lt;wandb-run&gt;/&lt;model-wei
 
 </div>
 <div class="section" id="module-dgp.utils.cloud">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.utils.cloud" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.utils.cloud" title="Permalink to this heading">¶</a></h2>
 </div>
 </div>
 
@@ -495,7 +502,7 @@ e.g. “s3://&lt;s3-bucket&gt;/&lt;task-name&gt;/&lt;wandb-run&gt;/&lt;model-wei
         <li class="right" >
           <a href="dgp.utils.html" title="dgp.utils package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-19-g76e34d2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-20-geaeab10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="dgp.utils.html" >dgp.utils package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils.cloud package</a></li> 
@@ -503,7 +510,7 @@ e.g. “s3://&lt;s3-bucket&gt;/&lt;task-name&gt;/&lt;wandb-run&gt;/&lt;model-wei
     </div>
     <div class="footer">
         &copy; Copyright 2021, Toyota Research Institute.
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.0.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
   </body>
 </html>

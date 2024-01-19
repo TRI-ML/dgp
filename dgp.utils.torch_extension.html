@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dgp.utils.torch_extension package &#8212; DGP v1.5-19-g76e34d2 documentation</title>
+    <title>dgp.utils.torch_extension package &#8212; DGP v1.5-20-geaeab10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -29,7 +30,7 @@
         <li class="right" >
           <a href="dgp.utils.structures.html" title="dgp.utils.structures package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-19-g76e34d2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-20-geaeab10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="dgp.utils.html" accesskey="U">dgp.utils package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils.torch_extension package</a></li> 
@@ -54,7 +55,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script><!DOCTYPE html>
+<script>document.getElementById('searchbox').style.display = "block"</script><!DOCTYPE html>
 <h3><a href="#">Quick Links</a></h3>
 <ul>
     <li><a class="reference internal" href="cli.html">Command Line Interface Info</a></li>
@@ -62,8 +63,9 @@
     <li><a class="reference internal" href="contributing_guidelines.html">Contributing Guidelines</a></li>
     <li><a class="reference internal" href="dgp_schema.html">DGP Schema</a></li>
 </ul>
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">dgp.utils.torch_extension package</a><ul>
 <li><a class="reference internal" href="#module-dgp.utils.torch_extension.camera">dgp.utils.torch_extension.camera module</a></li>
 <li><a class="reference internal" href="#module-dgp.utils.torch_extension.pose">dgp.utils.torch_extension.pose module</a></li>
@@ -73,9 +75,12 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="dgp.utils.structures.html"
-                        title="previous chapter">dgp.utils.structures package</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="dgp.utils.structures.html"
+                          title="previous chapter">dgp.utils.structures package</a></p>
+  </div>
         </div>
       </div>
 
@@ -85,13 +90,13 @@
           <div class="body" role="main">
             
   <div class="section" id="dgp-utils-torch-extension-package">
-<h1>dgp.utils.torch_extension package<a class="headerlink" href="#dgp-utils-torch-extension-package" title="Permalink to this headline">¶</a></h1>
+<h1>dgp.utils.torch_extension package<a class="headerlink" href="#dgp-utils-torch-extension-package" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="module-dgp.utils.torch_extension.camera">
-<span id="dgp-utils-torch-extension-camera-module"></span><h2>dgp.utils.torch_extension.camera module<a class="headerlink" href="#module-dgp.utils.torch_extension.camera" title="Permalink to this headline">¶</a></h2>
+<span id="dgp-utils-torch-extension-camera-module"></span><h2>dgp.utils.torch_extension.camera module<a class="headerlink" href="#module-dgp.utils.torch_extension.camera" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.camera.</span></span><span class="sig-name descname"><span class="pre">Camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.camera.</span></span><span class="sig-name descname"><span class="pre">Camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>Fully-differentiable camera class whose extrinsics operate on the
 appropriate pose manifold. Supports fully-differentiable 3D-to-2D, 2D-to-3D
 projection/back-projections, scaled camera and inverse warp
@@ -107,7 +112,7 @@ back-projection.</p>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.Kinv">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">Kinv</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.Kinv" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Kinv</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.Kinv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Analytic inverse camera intrinsic (K^-1)</p>
 <dl class="simple">
 <dt>Kinv: torch.FloatTensor (B33)</dt><dd><p>Batch of inverse camera matrices K^-1.</p>
@@ -117,7 +122,7 @@ back-projection.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.P">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">P</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.P" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">P</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.P" title="Permalink to this definition">¶</a></dt>
 <dd><p>Projection matrix.</p>
 <dl class="simple">
 <dt>P: torch.Tensor (B34)</dt><dd><p>Projection matrix</p>
@@ -127,17 +132,17 @@ back-projection.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.cx">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">cx</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.cx" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cx</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.cx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.cy">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">cy</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.cy" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cy</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.cy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.from_params">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.from_params" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.from_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create camera batch from calibration parameters.</p>
 <dl class="simple">
 <dt>fx: float</dt><dd><p>Camera focal length along x-axis.</p>
@@ -161,12 +166,12 @@ back-projection.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.fx">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fx</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.fx" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fx</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.fx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.fy">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fy</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.fy" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fy</span></span><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.fy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -241,7 +246,7 @@ reference frame. Shape will be B3HW.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.camera.Camera.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.training" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#dgp.utils.torch_extension.camera.Camera.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -327,14 +332,14 @@ Note: This function works for both torch and numpy.</p>
 
 </div>
 <div class="section" id="module-dgp.utils.torch_extension.pose">
-<span id="dgp-utils-torch-extension-pose-module"></span><h2>dgp.utils.torch_extension.pose module<a class="headerlink" href="#module-dgp.utils.torch_extension.pose" title="Permalink to this headline">¶</a></h2>
+<span id="dgp-utils-torch-extension-pose-module"></span><h2>dgp.utils.torch_extension.pose module<a class="headerlink" href="#module-dgp.utils.torch_extension.pose" title="Permalink to this heading">¶</a></h2>
 <p>Torch utilities for rigid-body pose manipulation.</p>
 <p>Some of the rotation/quaternion utilities have been borrowed from:
 <a class="reference external" href="https://github.com/facebookresearch/QuaterNet/blob/master/common/quaternion.py">https://github.com/facebookresearch/QuaterNet/blob/master/common/quaternion.py</a>
 <a class="reference external" href="https://github.com/arraiyopensource/kornia/blob/master/kornia/geometry/conversions.py">https://github.com/arraiyopensource/kornia/blob/master/kornia/geometry/conversions.py</a></p>
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.Pose">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.pose.</span></span><span class="sig-name descname"><span class="pre">Pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.pose.</span></span><span class="sig-name descname"><span class="pre">Pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Generic rigid-body transformation class that operates on the
 appropriately defined manifold.</p>
@@ -353,7 +358,7 @@ appropriately defined manifold.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.Pose.identity">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">torch.float32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.identity" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">torch.float32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.identity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch of identity matrices.</p>
 <dl class="simple">
 <dt>B: int, optional</dt><dd><p>Batch size. Default: 1.</p>
@@ -381,7 +386,7 @@ appropriately defined manifold.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.Pose.matrix">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">matrix</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.matrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the batched homogeneous matrix as a tensor</p>
 <dl class="simple">
 <dt>result: torch.FloatTensor (B44)</dt><dd><p>Bx4x4 homogeneous matrix</p>
@@ -403,7 +408,7 @@ appropriately defined manifold.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.Pose.rotation_matrix">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rotation_matrix</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.rotation_matrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rotation_matrix</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.rotation_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the 3x3 rotation matrix (R)</p>
 <dl class="simple">
 <dt>result: torch.FloatTensor (B33)</dt><dd><p>Bx3x3 rotation matrix</p>
@@ -453,7 +458,7 @@ appropriately defined manifold.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.Pose.translation">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">translation</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.translation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">translation</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.Pose.translation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the translation component of the pose as a torch.Tensor.</p>
 <dl class="simple">
 <dt>tvec: torch.FloatTensor (B3)</dt><dd><p>Translation component of the Pose object.</p>
@@ -465,7 +470,7 @@ appropriately defined manifold.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.QuaternionPose">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.pose.</span></span><span class="sig-name descname"><span class="pre">QuaternionPose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wxyz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.pose.</span></span><span class="sig-name descname"><span class="pre">QuaternionPose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wxyz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Derived Pose class that operates on the quaternion manifold instead.</p>
 <dl class="simple">
@@ -476,7 +481,7 @@ appropriately defined manifold.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.QuaternionPose.from_matrix">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.from_matrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.from_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a batched QuaternionPose from a batched homogeneous matrix.</p>
 <dl class="simple">
 <dt>value: torch.FloatTensor</dt><dd><p>Batched homogeneous matrix. Shape is B44.</p>
@@ -490,7 +495,7 @@ appropriately defined manifold.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.QuaternionPose.identity">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">torch.float32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.identity" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">torch.float32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.identity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch of identity matrices.</p>
 <dl class="simple">
 <dt>B: int, optional</dt><dd><p>Batch size. Default: 1.</p>
@@ -518,7 +523,7 @@ Returns:</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.QuaternionPose.matrix">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">matrix</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.matrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matrix</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the batched homogeneous matrix as a tensor</p>
 <dl class="simple">
 <dt>result: torch.FloatTensor (B44)</dt><dd><p>Bx4x4 homogeneous matrix</p>
@@ -538,7 +543,7 @@ Returns:</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.QuaternionPose.rotation_matrix">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rotation_matrix</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.rotation_matrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rotation_matrix</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.rotation_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the 3x3 rotation matrix (R)</p>
 <dl class="simple">
 <dt>result: torch.FloatTensor (B33)</dt><dd><p>Bx3x3 rotation matrix</p>
@@ -590,7 +595,7 @@ with quaternions directly.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.pose.QuaternionPose.translation">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">translation</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.translation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">translation</span></span><a class="headerlink" href="#dgp.utils.torch_extension.pose.QuaternionPose.translation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the translation component of the pose as a torch.Tensor.</p>
 <dl class="simple">
 <dt>tvec: torch.FloatTensor (B3)</dt><dd><p>Translation component of the Pose object.</p>
@@ -737,7 +742,7 @@ The quaternion vector has components in (w, x, y, z) format.</p>
 
 </div>
 <div class="section" id="module-dgp.utils.torch_extension.stn">
-<span id="dgp-utils-torch-extension-stn-module"></span><h2>dgp.utils.torch_extension.stn module<a class="headerlink" href="#module-dgp.utils.torch_extension.stn" title="Permalink to this headline">¶</a></h2>
+<span id="dgp-utils-torch-extension-stn-module"></span><h2>dgp.utils.torch_extension.stn module<a class="headerlink" href="#module-dgp.utils.torch_extension.stn" title="Permalink to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="dgp.utils.torch_extension.stn.image_grid">
 <span class="sig-prename descclassname"><span class="pre">dgp.utils.torch_extension.stn.</span></span><span class="sig-name descname"><span class="pre">image_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dgp.utils.torch_extension.stn.image_grid" title="Permalink to this definition">¶</a></dt>
@@ -790,7 +795,7 @@ The quaternion vector has components in (w, x, y, z) format.</p>
 
 </div>
 <div class="section" id="module-dgp.utils.torch_extension">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.utils.torch_extension" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dgp.utils.torch_extension" title="Permalink to this heading">¶</a></h2>
 </div>
 </div>
 
@@ -813,7 +818,7 @@ The quaternion vector has components in (w, x, y, z) format.</p>
         <li class="right" >
           <a href="dgp.utils.structures.html" title="dgp.utils.structures package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-19-g76e34d2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-20-geaeab10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="dgp.html" >dgp package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="dgp.utils.html" >dgp.utils package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">dgp.utils.torch_extension package</a></li> 
@@ -821,7 +826,7 @@ The quaternion vector has components in (w, x, y, z) format.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2021, Toyota Research Institute.
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.0.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
   </body>
 </html>

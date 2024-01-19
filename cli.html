@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DGP Command-Line Interface &#8212; DGP v1.5-19-g76e34d2 documentation</title>
+    <title>DGP Command-Line Interface &#8212; DGP v1.5-20-geaeab10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,7 +34,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to DGP’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-19-g76e34d2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-20-geaeab10 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">DGP Command-Line Interface</a></li> 
       </ul>
     </div>
@@ -56,7 +57,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script><!DOCTYPE html>
+<script>document.getElementById('searchbox').style.display = "block"</script><!DOCTYPE html>
 <h3><a href="#">Quick Links</a></h3>
 <ul>
     <li><a class="reference internal" href="cli.html">Command Line Interface Info</a></li>
@@ -64,8 +65,9 @@
     <li><a class="reference internal" href="contributing_guidelines.html">Contributing Guidelines</a></li>
     <li><a class="reference internal" href="dgp_schema.html">DGP Schema</a></li>
 </ul>
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">DGP Command-Line Interface</a><ul>
 <li><a class="reference internal" href="#visualize-dgp-compliant-scene-and-scenedataset">Visualize DGP-compliant Scene and SceneDataset</a></li>
 <li><a class="reference internal" href="#coming-soon-retrieve-information-about-an-ml-dataset-in-the-dgp">Coming soon: Retrieve information about an ML dataset in the DGP</a></li>
@@ -74,12 +76,17 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to DGP’s documentation!</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="getting_started.html"
-                        title="next chapter">Getting Started</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Welcome to DGP’s documentation!</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="getting_started.html"
+                          title="next chapter">Getting Started</a></p>
+  </div>
         </div>
       </div>
 
@@ -89,10 +96,10 @@
           <div class="body" role="main">
             
   <div class="section" id="dgp-command-line-interface">
-<h1>DGP Command-Line Interface<a class="headerlink" href="#dgp-command-line-interface" title="Permalink to this headline">¶</a></h1>
+<h1>DGP Command-Line Interface<a class="headerlink" href="#dgp-command-line-interface" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference external" href="cli.py">dgp/cli.py</a> is the main CLI entrypoint for handling DGP datasets.</p>
 <div class="section" id="visualize-dgp-compliant-scene-and-scenedataset">
-<h2>Visualize DGP-compliant Scene and SceneDataset<a class="headerlink" href="#visualize-dgp-compliant-scene-and-scenedataset" title="Permalink to this headline">¶</a></h2>
+<h2>Visualize DGP-compliant Scene and SceneDataset<a class="headerlink" href="#visualize-dgp-compliant-scene-and-scenedataset" title="Permalink to this heading">¶</a></h2>
 <p>DGP CLI subcommands <code class="docutils literal notranslate"><span class="pre">visualize-scenes</span></code> and <code class="docutils literal notranslate"><span class="pre">visualize-scene</span></code> can be used to
 visualize DGP-compliant data.</p>
 <ul>
@@ -141,7 +148,7 @@ and store the resulting videos in <code class="docutils literal notranslate"><sp
 </ul>
 </div>
 <div class="section" id="coming-soon-retrieve-information-about-an-ml-dataset-in-the-dgp">
-<h2>Coming soon: Retrieve information about an ML dataset in the DGP<a class="headerlink" href="#coming-soon-retrieve-information-about-an-ml-dataset-in-the-dgp" title="Permalink to this headline">¶</a></h2>
+<h2>Coming soon: Retrieve information about an ML dataset in the DGP<a class="headerlink" href="#coming-soon-retrieve-information-about-an-ml-dataset-in-the-dgp" title="Permalink to this heading">¶</a></h2>
 <p>DGP CLI provides information about a dataset, including the remote location (S3
 url) of the dataset, its raw dataset url, the set of available annotation types
 contained in the dataset, etc. For more information, see relevant metadata
@@ -152,7 +159,7 @@ stored with a dataset artifact in <a class="reference external" href="proto/data
 </div>
 </div>
 <div class="section" id="coming-soon-validate-a-dataset">
-<h2>Coming soon: Validate a dataset<a class="headerlink" href="#coming-soon-validate-a-dataset" title="Permalink to this headline">¶</a></h2>
+<h2>Coming soon: Validate a dataset<a class="headerlink" href="#coming-soon-validate-a-dataset" title="Permalink to this heading">¶</a></h2>
 <p>DGP CLI provides a simplified mechanism for validating newly created datasets,
 ensuring that the dataset schema is maintained and valid. This is done via:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>python<span class="w"> </span>dgp/cli.py<span class="w"> </span>validate<span class="w"> </span>--scene-dataset-json<span class="w"> </span>&lt;scene-dataset-json&gt;
@@ -183,13 +190,13 @@ ensuring that the dataset schema is maintained and valid. This is done via:</p>
         <li class="right" >
           <a href="index.html" title="Welcome to DGP’s documentation!"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-19-g76e34d2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-20-geaeab10 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">DGP Command-Line Interface</a></li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2021, Toyota Research Institute.
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.0.0.Theme is <a href="http://github.com/vimalkvn/solar-theme">Solar</a>
     </div>
   </body>
 </html>
