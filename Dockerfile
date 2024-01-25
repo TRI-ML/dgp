@@ -46,7 +46,7 @@ RUN pip install --no-cache-dir \
 ARG WORKSPACE=/home/dgp
 WORKDIR ${WORKSPACE}
 COPY requirements.txt requirements-dev.txt /tmp/
-RUN pip install --no-cache-dir cython==0.29.21 numpy==1.19.4
+RUN pip install --no-cache-dir cython==0.29.30 numpy==1.20.3
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements-dev.txt
 
