@@ -22,7 +22,7 @@ DGP.
 
 ```sh
 dgp$ pip install --upgrade pip
-dgp$ pip install cython==0.29.21 numpy==1.19.4
+dgp$ pip install cython==0.29.30 numpy==1.20.3
 dgp$ pip install -r requirements.txt -r requirements-dev.txt
 ```
 
