@@ -83,7 +83,7 @@ setup-linters:
 	pre-commit install
 	pre-commit install --hook-type commit-msg
 
-test: clean build-proto
+test: build-proto
 	PYTHONPATH=$(PWD):$(PYTHONPATH) \
 	$(UNITTEST) $(UNITTEST_OPTS) $(PWD)/tests/
 
