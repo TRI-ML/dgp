@@ -53,7 +53,7 @@ clean:
 	find dgp/contribs/pd -name "*_pb2.py" | xargs rm -rf
 
 develop:
-	pip install cython==0.29.21 numpy==1.19.4 grpcio==1.41.0 grpcio-tools==1.41.0
+	pip install cython==0.29.30 numpy==1.20.3 grpcio==1.41.0 grpcio-tools==1.41.0
 	pip install --editable .
 
 docker-build:
@@ -83,7 +83,7 @@ setup-linters:
 	pre-commit install
 	pre-commit install --hook-type commit-msg
 
-test: clean build-proto
+test: build-proto
 	PYTHONPATH=$(PWD):$(PYTHONPATH) \
 	$(UNITTEST) $(UNITTEST_OPTS) $(PWD)/tests/
 
