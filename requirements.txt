@@ -5,7 +5,7 @@ diskcache>=4.1.0
 protobuf>=3.20.1,<4.0.0
 matplotlib>=3.0.3,<4.0
 opencv-python>=4.5.3.56
-Pillow>=8.3.2
+Pillow-SIMD>=8.3.2
 pycocotools>=2.0.0
 pyquaternion>=0.9.5,<=1.0.0
 torch>=1.8.1
