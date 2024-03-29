@@ -311,6 +311,7 @@ def ingest_dgp_to_wicker(
     is_pd: bool = False,
     data_uri: str = None,
     alternate_scene_uri: str = None,
+    skip_missing_data: bool = False,
 ) -> Dict[str, int]:
     """Ingest DGP dataset into Wicker datastore
 
@@ -420,6 +421,7 @@ def ingest_dgp_to_wicker(
 
         dataset_kwargs = deepcopy(dataset_kwargs)
         dataset_kwargs['scene_json'] = os.path.join(local_path, scene_json)
+        dataset_kwargs['skip_missing_data'] = skip_missing_data
 
         is_pd = dataset_kwargs.pop('is_pd')
 
@@ -524,6 +526,7 @@ def ingest_dgp_to_wicker(
             )
 
     dataset_kwargs['is_pd'] = is_pd
+    dataset_kwargs['skip_missing_data'] = skip_missing_data
 
     if pipeline is None:
         pipeline = []
