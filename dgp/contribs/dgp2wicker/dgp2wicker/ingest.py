@@ -587,4 +587,6 @@ def ingest_dgp_to_wicker(
         wicker_dataset_version,
         wicker_dataset_schema,
         rdd,
+        local_reduction=True,
+        sort=True,
     )
