@@ -432,7 +432,7 @@ class TestTransforms(unittest.TestCase):
         assert_almost_equal(cam_datum, cam_datum3, valid_region=valid_region)
 
     def test_crop_scale_transform_simple(self):
-        """Simple test case for crop scale transform"""
+        """Simple test case for crop scale transform with fixed input"""
 
         datum = OrderedDict({
             'datum_name': 'test',
