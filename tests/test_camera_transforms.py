@@ -1,9 +1,11 @@
 # Copyright 2021-2022 Woven Planet. All rights reserved.
 import os
 import unittest
+from typing import OrderedDict
 
 import cv2
 import numpy as np
+import PIL
 
 from dgp.annotations.camera_transforms import (
     AffineCameraTransform,
@@ -18,6 +20,7 @@ from dgp.annotations.key_point_2d_annotation import KeyPoint2DAnnotationList
 from dgp.annotations.ontology import KeyLineOntology, KeyPointOntology
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
 from dgp.proto.ontology_pb2 import Ontology as OntologyV2Pb2
+from dgp.utils.pose import Pose
 from dgp.utils.structures.key_line_2d import KeyLine2D
 from dgp.utils.structures.key_point_2d import KeyPoint2D
 from dgp.utils.visualization_utils import visualize_cameras
@@ -427,6 +430,28 @@ class TestTransforms(unittest.TestCase):
         valid_region = (dw, dh, w - dw, h - dh)
 
         assert_almost_equal(cam_datum, cam_datum3, valid_region=valid_region)
+
+    def test_crop_scale_transform_simple(self):
+        """Simple test case for crop scale transform with fixed input"""
+
+        datum = OrderedDict({
+            'datum_name': 'test',
+            'datum_type': 'image',
+            'pose': Pose(),
+            'extrinsics': Pose(),
+            'intrinsics': np.array([
+                [1976.45, 0, 2692 / 2],
+                [0, 1977.05, 1836 / 2],
+                [0, 0, 1.0],
+            ]),
+            'rgb': PIL.Image.new('RGB', (2692, 1836)),
+        })
+
+        target_shape = (544, 960)
+        tr = CropScaleTransform(target_shape=target_shape, fix_h=False)
+        datum2 = tr(datum)
+        assert np.isclose(datum2['intrinsics'][0, 0], 704.82, atol=1e-3)
+        assert np.isclose(datum2['intrinsics'][1, 1], 705.04, atol=1e-3)
 
     def test_composite_transform(self):
         """Test that we can compose transforms correctly. We test that we can get the

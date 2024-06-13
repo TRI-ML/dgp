@@ -780,7 +780,7 @@ class CropScaleTransform(AffineCameraTransform):
             box = [newx / 2, 0, w - newx / 2, h]
         else:
             newy = h - w * aspect_ratio
-            box = [0, newy / 2, w, h - newy]
+            box = [0, newy / 2, w, h - newy / 2]
 
         return box_crop_affine_transform(box, self.shape)
 
