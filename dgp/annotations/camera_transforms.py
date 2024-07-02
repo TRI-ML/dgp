@@ -749,7 +749,7 @@ class ScaleHeightTransform(AffineCameraTransform):
 
 
 class CropScaleTransform(AffineCameraTransform):
-    def __init__(self, target_shape: Tuple[int, int], fix_h: bool = True) -> None:
+    def __init__(self, target_shape: Tuple[int, int], fix_h: bool = True, crop_top_only: bool = False) -> None:
         """Extracts a crop from the center of an image and resizes to target_shape.
         This attempts to match the aspect ratio of target_shape and does not stretch the crop.
 
@@ -760,9 +760,14 @@ class CropScaleTransform(AffineCameraTransform):
         fix_h: bool, default=True
             If True, fixes the height and modifies the width to maintain the desired aspect ratio.
             Otherwise fixes the width and moifies the height.
+        crop_top_only: bool, default=False
+            only valid when fix_h=False
+            If True, crop the top part of the image.
+            Otherwise crop the top and bottom.
         """
         self.shape = target_shape[:2]
         self.fix_h = fix_h
+        self.crop_top_only = crop_top_only
         super().__init__(shape=self.shape)
 
     def _calc_A(
@@ -780,7 +785,7 @@ class CropScaleTransform(AffineCameraTransform):
             box = [newx / 2, 0, w - newx / 2, h]
         else:
             newy = h - w * aspect_ratio
-            box = [0, newy / 2, w, h - newy / 2]
+            box = [0, newy, w, h] if self.crop_top_only else [0, newy / 2, w, h - newy / 2]
 
         return box_crop_affine_transform(box, self.shape)
 
