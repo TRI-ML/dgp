@@ -95,6 +95,6 @@ class KeyLine3D:
             As defined in `proto/annotations.proto`
         """
         return [
-            annotations_pb2.KeyPoint3D(x=int(self.x[j]), y=int(self.y[j]), z=int(self.z[j]))
+            annotations_pb2.KeyPoint3D(x=float(self.x[j]), y=float(self.y[j]), z=float(self.z[j]))
             for j, _ in enumerate(self.x)
         ]
