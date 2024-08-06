@@ -91,4 +91,4 @@ class KeyPoint3D:
         KeyPoint3D.pb2
             As defined in `proto/annotations.proto`
         """
-        return annotations_pb2.KeyPoint3D(x=int(self.x), y=int(self.y), z=int(self.z))
+        return annotations_pb2.KeyPoint3D(x=float(self.x), y=float(self.y), z=float(self.z))

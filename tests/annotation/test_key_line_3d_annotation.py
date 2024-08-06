@@ -35,7 +35,7 @@ def test_kl3d_annotation(kl_ontology):
 
 def test_kl3d_load(kl_ontology):
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
-    expected_output = "ac354"
+    expected_output = "a28b1"
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
         "key_line_3d/scene_000000/key_line_3d/lcm_25tm/000000000000000005_21e2436af96fb6388eb0c64cc029cfdc928a3e95.json"
@@ -63,6 +63,6 @@ def test_kl3d_save(kl_ontology):
     )
     kl3d_list = KeyLine3DAnnotationList.load(scenes_dataset_json, kl_ontology)
     kl3d_list.save(".")
-    filepath = "./ac35449091ebdd374aaa743be74794db561ec86a.json"
+    filepath = "./a28b1cd7793c14d5ddae40d6a2065576f9856976.json"
     assert os.path.exists(filepath)
     os.remove(filepath)
