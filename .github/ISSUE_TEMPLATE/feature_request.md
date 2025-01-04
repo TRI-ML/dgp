@@ -1,7 +1,7 @@
 ---
 name: "Feature Request"
 about: Submit a proposal/request for a new feature in DGP
-assignees: chrisochoatri, kuanleetri, ryo-takahashi-1206, tk-woven, wadimkehl, ykkawana-woven
+assignees: chrisochoatri, kuanleetri, ryo-takahashi-1206, wadimkehl, ykkawana-woven
 
 ---
 

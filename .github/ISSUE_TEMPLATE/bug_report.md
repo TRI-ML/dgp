@@ -1,7 +1,7 @@
 ---
 name: "Bug Report"
 about: Submit a bug report to help us improve DGP
-assignees: chrisochoatri, kuanleetri, ryo-takahashi-1206, tk-woven, wadimkehl, ykkawana-woven
+assignees: chrisochoatri, kuanleetri, ryo-takahashi-1206, wadimkehl, ykkawana-woven
 
 ---
 
