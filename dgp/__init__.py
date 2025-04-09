@@ -1,7 +1,7 @@
 # Copyright 2021-2022 Toyota Research Institute. All rights reserved.
 import os
 
-__version__ = "2.0.1"
+__version__ = "2.1.0"
 
 DGP_PATH = os.getenv("DGP_PATH", default=os.getenv("HOME", os.getcwd()))
 DGP_DATA_DIR = os.path.join(DGP_PATH, ".dgp")
