@@ -3,7 +3,10 @@ import os
 import numpy as np
 import pytest
 
-from dgp.annotations.key_line_3d_annotation import KeyLine3DAnnotationList
+from dgp.annotations.key_line_3d_annotation import (
+    KeyLine3DAnnotationList,
+    ProbabilisticKeyLine3DAnnotationList,
+)
 from dgp.datasets.synchronized_dataset import SynchronizedSceneDataset
 from dgp.utils.structures.key_line_3d import KeyLine3D
 from tests import TEST_DATA_DIR
@@ -53,6 +56,16 @@ def test_kl3d_proto(kl_ontology):
     kl3d_list = KeyLine3DAnnotationList.load(scenes_dataset_json, kl_ontology)
     output_proto = kl3d_list.to_proto()
     assert output_proto.__sizeof__() in {64, 80}
+
+
+def test_prob_kl3d_proto(kl_ontology):
+    DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
+    scenes_dataset_json = os.path.join(
+        DGP_TEST_DATASET_DIR, "key_line_3d/scene_000000/key_line_3d/lcm_25tm/probabilistic_key_line_annotation.json"
+    )
+    kl3d_list = ProbabilisticKeyLine3DAnnotationList.load(scenes_dataset_json, kl_ontology)
+    output_proto = kl3d_list.to_proto()
+    assert output_proto.__sizeof__() == 64
 
 
 def test_kl3d_save(kl_ontology):
