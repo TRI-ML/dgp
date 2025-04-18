@@ -4,7 +4,7 @@ import logging
 
 import cv2
 import numpy as np
-from matplotlib.cm import get_cmap
+from matplotlib import colormaps
 
 from dgp.utils.camera import Camera
 from dgp.utils.colors import (
@@ -20,7 +20,7 @@ from dgp.utils.pose import Pose
 
 # Time to wait before key press in debug visualizations
 DEBUG_WAIT_TIME = 10000
-MPL_JET_CMAP = get_cmap('jet')
+MPL_JET_CMAP = colormaps.get_cmap('jet')
 
 LOG = logging.getLogger(__name__)
 LOG.setLevel(logging.INFO)

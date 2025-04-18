@@ -12,10 +12,10 @@ from tests import TEST_DATA_DIR
 def get_ontology_kl(scene_dataset_json, annotation_type):
     dataset = SynchronizedSceneDataset(
         scene_dataset_json,
-        split='train',
-        datum_names=['lcm_25tm'],
+        split="train",
+        datum_names=["lcm_25tm"],
         backward_context=0,
-        requested_annotations=("key_line_3d", )
+        requested_annotations=("key_line_3d", ),
     )
     return dataset.dataset_metadata.ontology_table.get(annotation_type, None)
 
@@ -38,7 +38,7 @@ def test_kl3d_load(kl_ontology):
     expected_output = "a28b1"
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "key_line_3d/scene_000000/key_line_3d/lcm_25tm/000000000000000005_21e2436af96fb6388eb0c64cc029cfdc928a3e95.json"
+        "key_line_3d/scene_000000/key_line_3d/lcm_25tm/000000000000000005_21e2436af96fb6388eb0c64cc029cfdc928a3e95.json",
     )
     kl3d_list = KeyLine3DAnnotationList.load(scenes_dataset_json, kl_ontology)
     assert kl3d_list.hexdigest[0:5] == expected_output
@@ -48,18 +48,18 @@ def test_kl3d_proto(kl_ontology):
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "key_line_3d/scene_000000/key_line_3d/lcm_25tm/000000000000000005_21e2436af96fb6388eb0c64cc029cfdc928a3e95.json"
+        "key_line_3d/scene_000000/key_line_3d/lcm_25tm/000000000000000005_21e2436af96fb6388eb0c64cc029cfdc928a3e95.json",
     )
     kl3d_list = KeyLine3DAnnotationList.load(scenes_dataset_json, kl_ontology)
     output_proto = kl3d_list.to_proto()
-    assert output_proto.__sizeof__() == 80
+    assert output_proto.__sizeof__() in {64, 80}
 
 
 def test_kl3d_save(kl_ontology):
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "key_line_3d/scene_000000/key_line_3d/lcm_25tm/000000000000000005_21e2436af96fb6388eb0c64cc029cfdc928a3e95.json"
+        "key_line_3d/scene_000000/key_line_3d/lcm_25tm/000000000000000005_21e2436af96fb6388eb0c64cc029cfdc928a3e95.json",
     )
     kl3d_list = KeyLine3DAnnotationList.load(scenes_dataset_json, kl_ontology)
     kl3d_list.save(".")

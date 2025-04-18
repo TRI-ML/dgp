@@ -1,68 +1,91 @@
-# Copyright 2019 Toyota Research Institute. All rights reserved.
-import importlib
+# Copyright 2025 Toyota Research Institute. All rights reserved.
+import logging
 import os
+from pathlib import Path
 
 from setuptools import find_packages, setup
 from setuptools.command.build_py import build_py
 from setuptools.command.develop import develop
 from setuptools.command.install import install
 
+logger = logging.getLogger(__file__)
 
-def build_protos():
-    SETUP_DIR = os.path.dirname(os.path.abspath(__file__))
-    from grpc.tools import command
-    command.build_package_protos(SETUP_DIR)
+__version__ = "2.0.0"
+
+_ROOT_DIRPATH = Path(__file__).parent.absolute()
+
+# Specify the dev version for development.
+_DEV_VERSION = str(os.environ.get("DGP_DEV_VERSION", ""))
+
+_VERSION = f"{__version__}.{_DEV_VERSION}" if _DEV_VERSION else __version__
+
+with open("requirements.txt", encoding="utf-8") as f:
+    requirements = f.read().splitlines()
+
+with open("requirements-dev.txt", encoding="utf-8") as f:
+    requirements_dev = f.read().splitlines()
+
+install_requires = requirements + [
+    "protobuf>=4.0.0,<5.0.0",
+]
+setup_requires = [
+    "protobuf>=4.0.0,<5.0.0",
+    "grpcio-tools<1.66.0",  # for protobuf 4.X.X support.
+]
 
 
-class CustomBuildPyCommand(build_py):
+def _build_py():
+    from grpc_tools import command
+
+    command.build_package_protos(_ROOT_DIRPATH)
+
+
+class _CustomBuildPyCommand(build_py):
     def run(self):
-        build_protos()
+        _build_py()
         build_py.run(self)
 
 
-class CustomInstallCommand(install):
+class _CustomInstallCommand(install):
     def run(self):
-        build_protos()
+        _build_py()
         install.run(self)
 
 
-class CustomDevelopCommand(develop):
+class _CustomDevelopCommand(develop):
     def run(self):
-        build_protos()
+        _build_py()
         develop.run(self)
 
 
-__version__ = importlib.import_module('dgp').__version__
+packages = find_packages(exclude=["tests"])
 
-with open('requirements.txt', encoding='utf-8') as f:
-    requirements = f.read().splitlines()
-
-with open('requirements-dev.txt', encoding='utf-8') as f:
-    requirements_dev = f.read().splitlines()
-
-packages = find_packages(exclude=['tests'])
 setup(
     name="dgp",
-    version=__version__,
+    version=_VERSION,
     description="Dataset Governance Policy (DGP) for Autonomous Vehicle ML datasets.",
-    long_description=open('README.md', encoding='utf-8').read(),
-    long_description_content_type='text/markdown',
+    long_description=open("README.md", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
     author="Toyota Research Institute",
-    author_email='ml@tri.global',
+    author_email="ml@tri.global",
     url="https://github.com/TRI-ML/dgp",
     packages=packages,
-    entry_points={'console_scripts': [
-        'dgp_cli=dgp.cli:cli',
-    ]},
+    entry_points={
+        "console_scripts": [
+            "dgp_cli=dgp.cli:cli",
+        ],
+    },
     include_package_data=True,
-    setup_requires=['cython==0.29.30', 'grpcio==1.41.0', 'grpcio-tools==1.41.0'],
-    install_requires=requirements,
-    extras_require={'dev': requirements_dev},
+    install_requires=install_requires,
+    setup_requires=setup_requires,
+    extras_require={
+        "dev": requirements_dev,
+    },
     zip_safe=False,
-    python_requires='>=3.6',
+    python_requires=">=3.8",
     cmdclass={
-        'install': CustomInstallCommand,
-        'develop': CustomDevelopCommand,
-        'build_py': CustomBuildPyCommand
-    }
+        "build_py": _CustomBuildPyCommand,
+        "install": _CustomInstallCommand,
+        "develop": _CustomDevelopCommand,
+    },
 )

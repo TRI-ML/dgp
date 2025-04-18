@@ -12,10 +12,10 @@ from tests import TEST_DATA_DIR
 def get_ontology_kl(scene_dataset_json, annotation_type):
     dataset = SynchronizedSceneDataset(
         scene_dataset_json,
-        split='train',
-        datum_names=['locator'],
+        split="train",
+        datum_names=["locator"],
         backward_context=0,
-        requested_annotations=("key_line_2d", )
+        requested_annotations=("key_line_2d", ),
     )
     return dataset.dataset_metadata.ontology_table.get(annotation_type, None)
 
@@ -38,7 +38,7 @@ def test_kl2d_load(kl_ontology):
     expected_output = "b67e1"
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
+        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json",
     )
     kl2d_list = KeyLine2DAnnotationList.load(scenes_dataset_json, kl_ontology)
     assert kl2d_list.hexdigest[0:5] == expected_output
@@ -48,18 +48,18 @@ def test_kl2d_proto(kl_ontology):
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
+        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json",
     )
     kl2d_list = KeyLine2DAnnotationList.load(scenes_dataset_json, kl_ontology)
     ouput_proto = kl2d_list.to_proto()
-    assert ouput_proto.__sizeof__() == 80
+    assert ouput_proto.__sizeof__() in {64, 80}
 
 
 def test_kl2d_save(kl_ontology):
     DGP_TEST_DATASET_DIR = os.path.join(TEST_DATA_DIR, "dgp")
     scenes_dataset_json = os.path.join(
         DGP_TEST_DATASET_DIR,
-        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json"
+        "key_line_2d/scene_000000/key_line_2d/FCM_front/000000000000000005_23caffa10d786a53782f9530a6ad796db0eaea21.json",
     )
     kl2d_list = KeyLine2DAnnotationList.load(scenes_dataset_json, kl_ontology)
     kl2d_list.save(".")

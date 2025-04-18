@@ -2,24 +2,24 @@ name: coverage
 on:
   pull_request:
     branches:
-      - 'master'
+      - "master"
   push:
     branches:
-      - 'master'
+      - "master"
 jobs:
   code-coverage:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       ENVIRONMENT: TEST_RUNNER
-      OS: ubuntu-20.04
-      PYTHON: '3.9'
+      OS: ubuntu-22.04
+      PYTHON: "3.9"
       COVERAGE_TOTAL: 49 # Coverage threshold percentage
     steps:
       - name: Checkout (admin token)
         if: ${{github.event_name != 'pull_request'}} # We don't want to use the admin token for PR flows
         uses: actions/checkout@master
         with:
-          token: '${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}'
+          token: "${{ secrets.GIT_ADMIN_WORKFLOW_TOKEN }}"
           fetch-depth: "2" # Original commit + code cov badge commit
       - name: Checkout (normal flow)
         if: ${{github.event_name == 'pull_request'}}
@@ -34,17 +34,16 @@ jobs:
         id: coverage-installer
         run: |
           python -m pip install --upgrade pip
-          pip install cython==0.29.21 numpy==1.23.2
           sudo apt-get install jq
-          pip install -r requirements.txt
-          pip install -r requirements-dev.txt
           pip install coverage-badge
+          make develop
       - name: Run tests and calculate coverage
         id: test-runner
         run: |
           coverage run -m pytest
           coverage-badge -f -o docs/coverage.svg
-          COVERAGE_SCORE=$(coverage json -o /dev/stdout | jq .totals.percent_covered)
+          coverage json
+          COVERAGE_SCORE=$(jq '.totals.percent_covered' coverage.json)
           echo "::set-output name=coverageScore::$COVERAGE_SCORE"
       - name: Verify Changed files
         uses: tj-actions/verify-changed-files@v6

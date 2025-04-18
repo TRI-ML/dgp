@@ -1,4 +1,6 @@
 # Copyright 2023 Toyota Motor Corporation.  All rights reserved.
+from __future__ import annotations
+
 import logging
 import os
 import time

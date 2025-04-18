@@ -1,8 +1,8 @@
-FROM nvidia/cuda:11.2.2-devel-ubuntu20.04
+FROM nvidia/cuda:11.6.1-cudnn8-devel-ubuntu20.04
 
 ARG python=3.9
-ENV PYTORCH_VERSION=1.8.1+cu111
-ENV TORCHVISION_VERSION=0.9.1+cu111
+ENV PYTORCH_VERSION=1.13.1+cu116
+ENV TORCHVISION_VERSION=0.14.1+cu116
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
@@ -42,11 +42,13 @@ RUN pip install --no-cache-dir \
   torchvision==${TORCHVISION_VERSION} \
   -f https://download.pytorch.org/whl/${PYTORCH_VERSION/*+/}/torch_stable.html
 
+
 # Install python dependencies
 ARG WORKSPACE=/home/dgp
 WORKDIR ${WORKSPACE}
 COPY requirements.txt requirements-dev.txt /tmp/
-RUN pip install --no-cache-dir cython==0.29.30 numpy==1.20.3
+# Install torch-compatible NumPy.
+RUN pip install numpy==1.26.4
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements-dev.txt
 
