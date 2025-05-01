@@ -3,8 +3,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contribution Guidelines &#8212; DGP v1.5-28-g2bcb53d documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Contribution Guidelines &#8212; DGP v1.5-29-g3f1c3e5 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
@@ -34,7 +35,7 @@
         <li class="right" >
           <a href="getting_started.html" title="Getting Started"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-28-g2bcb53d documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-29-g3f1c3e5 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Contribution Guidelines</a></li> 
       </ul>
     </div>
@@ -105,11 +106,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="contribution-guidelines">
+  <section id="contribution-guidelines">
 <h1>Contribution Guidelines<a class="headerlink" href="#contribution-guidelines" title="Permalink to this heading">¶</a></h1>
 <p>Welcome to <code class="docutils literal notranslate"><span class="pre">TRI-ML/dgp</span></code>! This page details contribution guidelines and
 GitWorkflow.</p>
-<div class="section" id="clone-the-repository">
+<section id="clone-the-repository">
 <h2>Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Fork <code class="docutils literal notranslate"><span class="pre">TRI-ML/dgp</span></code> into your GitHub account.</p></li>
@@ -126,24 +127,24 @@ GitWorkflow.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>make<span class="w"> </span>setup-linters
 </pre></div>
 </div>
-</div>
-<div class="section" id="getting-started">
+</section>
+<section id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
 <p>Please follow <a class="reference external" href="GETTING_STARTED.md">Getting Started</a> to setup dockerized
 development workflow.</p>
-</div>
-<div class="section" id="gitworkflow">
+</section>
+<section id="gitworkflow">
 <h2>GitWorkflow<a class="headerlink" href="#gitworkflow" title="Permalink to this heading">¶</a></h2>
 <p>This section assumes you have followed the initial setup instructions and enable
 the githooks.</p>
-<div class="section" id="starting-a-new-branch">
+<section id="starting-a-new-branch">
 <h3>Starting a new branch<a class="headerlink" href="#starting-a-new-branch" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span> <span class="pre">upstream</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">my_pr_branch</span> <span class="pre">upstream/master</span></code></p></li>
 </ol>
-</div>
-<div class="section" id="making-a-commit">
+</section>
+<section id="making-a-commit">
 <h3>Making a commit<a class="headerlink" href="#making-a-commit" title="Permalink to this heading">¶</a></h3>
 <p>There should only be a single commit with all the changes when making a pull
 request. Please squash the commits before opening a PR. This repository follows
@@ -197,16 +198,16 @@ building)</p></li>
 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build-proto</span></code> and also commit the compiled protos. Further, these
 <a class="reference external" href="../dgp/proto">proto schema</a> and their compiled protos must be separated from
 code changes into one independent commit and PR.</p>
-</div>
-<div class="section" id="pre-commit-pre-push">
+</section>
+<section id="pre-commit-pre-push">
 <h3>Pre-commit / Pre-push<a class="headerlink" href="#pre-commit-pre-push" title="Permalink to this heading">¶</a></h3>
 <p>DGP runs <code class="docutils literal notranslate"><span class="pre">isort</span></code> and <code class="docutils literal notranslate"><span class="pre">yapf</span></code> to autoformat the files in pre-commit, and perform
 additional linting using <code class="docutils literal notranslate"><span class="pre">pylint</span></code> in pre-push. One can enable githooks via:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dgp$<span class="w"> </span>make<span class="w"> </span>setup-linters
 </pre></div>
 </div>
-</div>
-<div class="section" id="making-a-pull-request">
+</section>
+<section id="making-a-pull-request">
 <h3>Making a pull request<a class="headerlink" href="#making-a-pull-request" title="Permalink to this heading">¶</a></h3>
 <p>Please follow this procedure to open a pull request. Also note, the git hooks
 require that tools such as isort and yapf are installed on the machine doing the
@@ -256,32 +257,32 @@ workflow.</p></li>
 </ul>
 </li>
 </ol>
-</div>
-<div class="section" id="review">
+</section>
+<section id="review">
 <h3>Review<a class="headerlink" href="#review" title="Permalink to this heading">¶</a></h3>
 <p>The pull request has a reviewable.io review associated with it. (You will need
 to reload the pull request page before the reviewable.io button appears). Please
 add at least one reviewer to review. Note: Any <a class="reference external" href="../dgp/proto">proto schema</a>
 changes require <strong>*at least 2 reviewers.</strong>_</p>
-</div>
-<div class="section" id="merging">
+</section>
+<section id="merging">
 <h3>Merging<a class="headerlink" href="#merging" title="Permalink to this heading">¶</a></h3>
 <p>Once all reviews are complete, and all checks have completed with passing
 scores, the author can click the button <code class="docutils literal notranslate"><span class="pre">Squash</span> <span class="pre">&amp;</span> <span class="pre">Merge</span></code> to merge the PR.</p>
-</div>
-<div class="section" id="code-style">
+</section>
+<section id="code-style">
 <h3>Code Style<a class="headerlink" href="#code-style" title="Permalink to this heading">¶</a></h3>
 <p>Docstrings should follow the
 <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard">Numpy Docstring Standard</a></p>
-</div>
-<div class="section" id="test-coverage-policy">
+</section>
+<section id="test-coverage-policy">
 <h3>Test Coverage Policy<a class="headerlink" href="#test-coverage-policy" title="Permalink to this heading">¶</a></h3>
 <p>All commits (except protobuf schema changes) should include test cases. Test
 cases should be based on pytest. PRs can only be merged if the code coverage
 score is greater than the minimum acceptable code coverage.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -305,7 +306,7 @@ score is greater than the minimum acceptable code coverage.</p>
         <li class="right" >
           <a href="getting_started.html" title="Getting Started"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-28-g2bcb53d documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-29-g3f1c3e5 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Contribution Guidelines</a></li> 
       </ul>
     </div>

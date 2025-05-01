@@ -3,8 +3,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TRI Dataset Governance Policy (DGP) Schema &#8212; DGP v1.5-28-g2bcb53d documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>TRI Dataset Governance Policy (DGP) Schema &#8212; DGP v1.5-29-g3f1c3e5 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
     <link rel="stylesheet" type="text/css" href="_static/tri_colors.css" />
@@ -34,7 +35,7 @@
         <li class="right" >
           <a href="contributing_guidelines.html" title="Contribution Guidelines"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-28-g2bcb53d documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-29-g3f1c3e5 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">TRI Dataset Governance Policy (DGP) Schema</a></li> 
       </ul>
     </div>
@@ -101,11 +102,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="tri-dataset-governance-policy-dgp-schema">
+  <section id="tri-dataset-governance-policy-dgp-schema">
 <h1>TRI Dataset Governance Policy (DGP) Schema<a class="headerlink" href="#tri-dataset-governance-policy-dgp-schema" title="Permalink to this heading">¶</a></h1>
 <p>DGP-compliant datasets follow the structure and schema defined in this
 directory. Top-level data containers are listed below:</p>
-<div class="section" id="scenedataset-data-structure-description">
+<section id="scenedataset-data-structure-description">
 <h2>SceneDataset data structure description<a class="headerlink" href="#scenedataset-data-structure-description" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>SceneDataset: A SceneDataset contains <code class="docutils literal notranslate"><span class="pre">DatasetMetadata</span></code> and a collection of
@@ -118,8 +119,8 @@ driving logs.</p></li>
 <li><p>Datum: A Datum encapsulates sensory data (image, point cloud, radar point
 cloud, etc), along with their associated annotations.</p></li>
 </ul>
-</div>
-<div class="section" id="agentdataset-data-structure-description">
+</section>
+<section id="agentdataset-data-structure-description">
 <h2>AgentDataset data structure description<a class="headerlink" href="#agentdataset-data-structure-description" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>AgentDataset: Dataset for agent-centric prediction or planning use cases,but
@@ -139,8 +140,8 @@ Truck, Pedestrian, etc.</p></li>
 <li><p>Feature Ontology: A Feature Ontology represents a set of unique feature fields
 such as Speed, Parking attribute, etc.</p></li>
 </ul>
-</div>
-<div class="section" id="protobuf-directory-structure">
+</section>
+<section id="protobuf-directory-structure">
 <h2>Protobuf Directory Structure<a class="headerlink" href="#protobuf-directory-structure" title="Permalink to this heading">¶</a></h2>
 <p>All the protobuf schemas are defined under this <a class="reference external" href="./">proto/</a> directory. Schema
 for the following types are specified their corresponding <code class="docutils literal notranslate"><span class="pre">proto</span></code> files.</p>
@@ -158,11 +159,11 @@ for the following types are specified their corresponding <code class="docutils 
 <cite>``radar_point_cloud.proto`</cite> &lt;./radar_point_cloud.proto&gt;`_</p></li>
 <li><p>Remote Storage: <cite>``remote.proto`</cite> &lt;./remote.proto&gt;`_</p></li>
 </ul>
-<div class="section" id="scenedataset-schema-graph">
+<section id="scenedataset-schema-graph">
 <h3>SceneDataset schema graph<a class="headerlink" href="#scenedataset-schema-graph" title="Permalink to this heading">¶</a></h3>
 <a class="reference external image-reference" href="https://raw.githubusercontent.com/TRI-ML/dgp/master/docs/scene-dataset-schema.jpg?raw=true"><img alt="SceneDataset schema" src="https://raw.githubusercontent.com/TRI-ML/dgp/master/docs/scene-dataset-schema.jpg?raw=true" /></a>
-</div>
-<div class="section" id="dgp-scenedataset-structure">
+</section>
+<section id="dgp-scenedataset-structure">
 <h3>DGP SceneDataset Structure<a class="headerlink" href="#dgp-scenedataset-structure" title="Permalink to this heading">¶</a></h3>
 <p>Scenes are stored in the DGP under the following structure:</p>
 <div class="highlight-filelist notranslate"><div class="highlight"><pre><span></span>&lt;dataset_root_dir&gt;
@@ -199,8 +200,8 @@ for the following types are specified their corresponding <code class="docutils 
 └── scene_dataset_v&lt;version&gt;.json
 </pre></div>
 </div>
-</div>
-<div class="section" id="dgp-agentdataset-structure">
+</section>
+<section id="dgp-agentdataset-structure">
 <h3>DGP AgentDataset Structure<a class="headerlink" href="#dgp-agentdataset-structure" title="Permalink to this heading">¶</a></h3>
 <p>Agents are stored in the DGP under the following structure:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>📦&lt;dataset_root_dir&gt;
@@ -242,8 +243,8 @@ for the following types are specified their corresponding <code class="docutils 
  ┗ 📜scene_dataset_v&lt;version&gt;.json
 </pre></div>
 </div>
-</div>
-<div class="section" id="autolabel-structure">
+</section>
+<section id="autolabel-structure">
 <h3>Autolabel Structure<a class="headerlink" href="#autolabel-structure" title="Permalink to this heading">¶</a></h3>
 <p>Autolabes should be stored within their parent scene directory under
 <code class="docutils literal notranslate"><span class="pre">&lt;parent</span> <span class="pre">scene</span> <span class="pre">dir&gt;/autolabels/&lt;autolabel</span> <span class="pre">model&gt;</span></code> folder. Autolabels may also be
@@ -252,9 +253,9 @@ the following directory structure:
 <code class="docutils literal notranslate"><span class="pre">&lt;autolabel</span> <span class="pre">root&gt;/&lt;parent</span> <span class="pre">scene</span> <span class="pre">dir</span> <span class="pre">basename&gt;/autolabels/&lt;autolabel</span> <span class="pre">model&gt;</span></code>.</p>
 <p>In both cases <code class="docutils literal notranslate"><span class="pre">&lt;autolabel</span> <span class="pre">model&gt;</span></code> should be unique a string denoting which model
 or process generated the autolabels.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -278,7 +279,7 @@ or process generated the autolabels.</p>
         <li class="right" >
           <a href="contributing_guidelines.html" title="Contribution Guidelines"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-28-g2bcb53d documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DGP v1.5-29-g3f1c3e5 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">TRI Dataset Governance Policy (DGP) Schema</a></li> 
       </ul>
     </div>
