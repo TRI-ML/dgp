@@ -62,10 +62,33 @@ You can build the base docker image and run the tests within
 [docker container](docs/GETTING_STARTED.md#markdown-header-develop-within-docker)
 via:
 
-```sh
+```shell
 make docker-build
 make docker-run-tests
 ```
+
+Build the Python wheel.
+
+```shell
+make build
+```
+
+For setup local developement.
+
+```shell
+make develop
+```
+
+Runing the test using local development environment.
+
+```shell
+make test
+```
+
+## Versioning
+
+This repository adheres to [PEP 440](https://peps.python.org/pep-0440/) for
+versioning.
 
 ## Contributing
 

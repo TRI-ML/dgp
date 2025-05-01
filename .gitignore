@@ -111,3 +111,13 @@ Pipfile
 Pipfile.lock
 
 \.vscode/
+*.ply
+
+*.pyi
+*_pb2.py
+*_pb2_grpc.py
+
+# Test data
+tests/data/dgp/autolabel_root/
+tests/data/dgp/test_scene/scene_01/autolabels/
+tests/data/dgp/test_scene/scene_02/autolabels/

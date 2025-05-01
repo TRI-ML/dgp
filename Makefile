@@ -1,5 +1,5 @@
 # Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
-PYTHON ?= python3
+PYTHON_EXEC ?= python3
 PACKAGE_NAME ?= dgp
 WORKSPACE ?= /home/$(PACKAGE_NAME)
 DOCKER_IMAGE_NAME ?= $(PACKAGE_NAME)
@@ -36,14 +36,16 @@ DOCKER_USER_OPTS ?= $(DOCKER_COMMON_OPTS) \
 UNITTEST ?= pytest
 UNITTEST_OPTS ?= -v
 
+.PHONY: clean build develop
+
 all: clean test
 
-build-proto:
+
+build:
 	PYTHONPATH=$(PWD):$(PYTHONPATH) \
-	$(PYTHON) setup.py build_py
+	DGP_DEV_VERSION=$(DEV_VERSION) $(PYTHON_EXEC) setup.py bdist_wheel
 
 clean:
-	$(PYTHON) setup.py clean && \
 	rm -rf build dist && \
 	find . -name "*.pyc" | xargs rm -f && \
 	find . -name "__pycache__" | xargs rm -rf
@@ -51,26 +53,25 @@ clean:
 	find dgp/proto -name "*_grpc.py" | xargs rm -rf
 	find dgp/proto -name "*_pb2.py" | xargs rm -rf
 	find dgp/contribs/pd -name "*_pb2.py" | xargs rm -rf
+	find . -name "*eggs" | xargs rm -rf &
+	$(PYTHON_EXEC) setup.py clean
 
 develop:
-	pip install cython==0.29.30 numpy==1.20.3 grpcio==1.41.0 grpcio-tools==1.41.0
-	pip install --editable .
+	DGP_DEV_VERSION=$(DEV_VERSION) $(PYTHON_EXEC) -m pip install --editable ".[dev]"
 
 docker-build:
 	docker build \
 	--build-arg WORKSPACE=$(WORKSPACE) \
 	-t $(DOCKER_IMAGE) .
 
-docker-exec:
+docker-exec: docker-build
 	docker exec -it $(DOCKER_IMAGE_NAME) $(COMMAND)
 
-docker-run-tests: build-proto
-	docker run \
-	--name $(DOCKER_IMAGE_NAME)-tests \
-	$(DOCKER_ROOT_OPTS) $(DOCKER_IMAGE) \
-	$(UNITTEST) $(UNITTTEST_OPTS) $(WORKSPACE)/tests
+docker-run-tests: docker-build
+	docker run --name $(DOCKER_IMAGE_NAME)-tests $(DOCKER_ROOT_OPTS) $(DOCKER_IMAGE) make test
 
-docker-start-interactive:
+
+docker-start-interactive: docker-build
 	docker run \
 	$(DOCKER_USER_OPTS) \
 	$(DOCKER_IMAGE) \
@@ -83,9 +84,9 @@ setup-linters:
 	pre-commit install
 	pre-commit install --hook-type commit-msg
 
-test: build-proto
+test: develop
 	PYTHONPATH=$(PWD):$(PYTHONPATH) \
-	$(UNITTEST) $(UNITTEST_OPTS) $(PWD)/tests/
+	$(UNITTEST) $(UNITTEST_OPTS) $(PWD)/tests/ -vv
 
 unlink-githooks:
 	unlink .git/hooks/pre-push && unlink .git/hooks/pre-commit

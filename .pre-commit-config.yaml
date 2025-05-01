@@ -61,14 +61,21 @@ repos:
     hooks:
       - id: yapf
         # pre-commit requires that we split args at whitespce boundaries.
-        args: [
-          --style, .style.yapf,
-          -i,
-          -e, '*pb2.py',
-          -e, '*pb2_grpc.py',
-          -e, '*eggs*.py',
-          -e, '*env*',
-          -e, 'build/*'
-        ]
+        args:
+          [
+            --style,
+            .style.yapf,
+            -i,
+            -e,
+            "*pb2.py",
+            -e,
+            "*pb2_grpc.py",
+            -e,
+            "*eggs*.py",
+            -e,
+            "*env*",
+            -e,
+            "build/*",
+          ]
         exclude: '\w*pb2.py'
         additional_dependencies: [toml]

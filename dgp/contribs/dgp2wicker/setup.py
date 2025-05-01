@@ -19,35 +19,34 @@ class CustomDevelopCommand(develop):
         develop.run(self)
 
 
-__version__ = importlib.import_module('dgp2wicker').__version__
+__version__ = importlib.import_module("dgp2wicker").__version__
 
-with open('requirements.txt', 'r', encoding='utf-8') as f:
+with open("requirements.txt", "r", encoding="utf-8") as f:
     requirements = f.read().splitlines()
 
-with open('README.md', 'r', encoding='utf-8') as f:
+with open("README.md", "r", encoding="utf-8") as f:
     readme = f.read()
 
-packages = find_packages(exclude=['tests'])
+packages = find_packages(exclude=["tests"])
 setup(
     name="dgp2wicker",
     version=__version__,
     description="Tools to convert TRI's DGP to L5's Wicker format.",
     long_description=readme,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     author="Chris Ochoa, Kuan Lee",
-    author_email='charles.ochoa@woven-planet.global, kuan-hui.lee@woven-planet.global',
+    author_email="charles.ochoa@woven-planet.global, kuan-hui.lee@woven-planet.global",
     url="https://github.com/TRI-ML/dgp/tree/master/dgp/contribs/dgp2wicker",
     packages=packages,
-    entry_points={'console_scripts': [
-        'dgp2wicker=dgp2wicker.cli:cli',
+    entry_points={"console_scripts": [
+        "dgp2wicker=dgp2wicker.cli:cli",
     ]},
     include_package_data=True,
-    setup_requires=['cython==0.29.21', 'grpcio==1.41.0', 'grpcio-tools==1.41.0'],
     install_requires=requirements,
     zip_safe=False,
-    python_requires='>=3.7',
+    python_requires=">=3.8",
     cmdclass={
-        'install': CustomInstallCommand,
-        'develop': CustomDevelopCommand,
-    }
+        "install": CustomInstallCommand,
+        "develop": CustomDevelopCommand,
+    },
 )

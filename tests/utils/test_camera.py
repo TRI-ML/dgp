@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-from numpy.lib.ufunclike import fix
 
 from dgp.utils.camera import Camera
 
@@ -8,8 +7,8 @@ from dgp.utils.camera import Camera
 @pytest.fixture
 def camera():
     k = np.float32([
-        [.5, 0, 2],
-        [0, .25, 3],
+        [0.5, 0, 2],
+        [0, 0.25, 3],
         [0, 0, 1],
     ])
     d = np.zeros(shape=(5, ))
@@ -18,7 +17,7 @@ def camera():
 
 @pytest.fixture
 def camera2():
-    return Camera.from_params(.5, .25, 2, 3)
+    return Camera.from_params(0.5, 0.25, 2, 3)
 
 
 def test_camera_fx(camera, camera2):

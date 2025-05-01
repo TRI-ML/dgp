@@ -1,11 +1,10 @@
 awscli
-coverage==6.0.2
-grpcio==1.41.0
-grpcio-tools==1.41.0
+coverage>=6.0.2
+wheel
 isort >=5.0,<6.0
-pylint>=2.8.1
-pytest==6.2.5
-pytest-timeout==2.0.1
-ujson==5.4.0
-yapf==0.31.0
-pre-commit==2.20.0
+pylint
+pytest
+pytest-timeout
+ujson>=5.4.0
+yapf>=0.31.0
+pre-commit>=2.20.0
