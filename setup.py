@@ -10,7 +10,7 @@ from setuptools.command.install import install
 
 logger = logging.getLogger(__file__)
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 _ROOT_DIRPATH = Path(__file__).parent.absolute()
 
