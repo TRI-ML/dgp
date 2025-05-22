@@ -1,4 +1,5 @@
 # Copyright 2025 Toyota Research Institute. All rights reserved.
+import importlib.util
 import logging
 import os
 from pathlib import Path
@@ -10,9 +11,15 @@ from setuptools.command.install import install
 
 logger = logging.getLogger(__file__)
 
-__version__ = "2.0.0"
-
+_PACKAGE = "dgp"
 _ROOT_DIRPATH = Path(__file__).parent.absolute()
+
+_init_py = _ROOT_DIRPATH / _PACKAGE / "__init__.py"
+_spec = importlib.util.spec_from_file_location(_PACKAGE, _init_py)
+_module = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_module)
+
+__version__ = _module.__version__
 
 # Specify the dev version for development.
 _DEV_VERSION = str(os.environ.get("DGP_DEV_VERSION", ""))
@@ -30,7 +37,8 @@ install_requires = requirements + [
 ]
 setup_requires = [
     "protobuf>=4.0.0,<5.0.0",
-    "grpcio-tools<1.66.0",  # for protobuf 4.X.X support.
+    "grpcio==1.62.2",  # for the latest protobuf 4.X.X support.
+    "grpcio-tools==1.62.2",  # for the latest protobuf 4.X.X support.
 ]
 
 
@@ -61,7 +69,7 @@ class _CustomDevelopCommand(develop):
 packages = find_packages(exclude=["tests"])
 
 setup(
-    name="dgp",
+    name=_PACKAGE,
     version=_VERSION,
     description="Dataset Governance Policy (DGP) for Autonomous Vehicle ML datasets.",
     long_description=open("README.md", encoding="utf-8").read(),
