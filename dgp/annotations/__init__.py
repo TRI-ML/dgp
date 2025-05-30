@@ -20,6 +20,7 @@ from dgp.annotations.panoptic_segmentation_2d_annotation import PanopticSegmenta
 from dgp.annotations.semantic_segmentation_2d_annotation import SemanticSegmentation2DAnnotation  # isort:skip
 from dgp.annotations.key_line_2d_annotation import KeyLine2DAnnotationList  # isort:skip
 from dgp.annotations.key_line_3d_annotation import KeyLine3DAnnotationList  # isort:skip
+from dgp.annotations.key_line_3d_annotation import ProbabilisticKeyLine3DAnnotationList  # isort:skip
 from dgp.annotations.key_point_2d_annotation import KeyPoint2DAnnotationList  # isort:skip
 from dgp.annotations.key_point_3d_annotation import KeyPoint3DAnnotationList  # isort:skip
 from dgp.annotations.depth_annotation import DenseDepthAnnotation  # isort:skip
@@ -36,12 +37,13 @@ ONTOLOGY_REGISTRY = {
     "key_point_3d": KeyPointOntology,
     "key_line_2d": KeyLineOntology,
     "key_line_3d": KeyLineOntology,
+    "probabilistic_key_line_3d": KeyLineOntology,
     "agent_behavior": AgentBehaviorOntology,
     "depth": None,
     "surface_normals_2d": None,
     "surface_normals_3d": None,
     "motion_vectors_2d": None,
-    "motion_vectors_3d": None
+    "motion_vectors_3d": None,
 }
 
 # Annotation objects for each annotation type
@@ -54,7 +56,8 @@ ANNOTATION_REGISTRY = {
     "key_point_3d": KeyPoint3DAnnotationList,
     "key_line_2d": KeyLine2DAnnotationList,
     "key_line_3d": KeyLine3DAnnotationList,
-    "depth": DenseDepthAnnotation
+    "probabilistic_key_line_3d": ProbabilisticKeyLine3DAnnotationList,
+    "depth": DenseDepthAnnotation,
 }
 
 # Annotation groups for each annotation type: 2d/3d
@@ -73,5 +76,6 @@ ANNOTATION_TYPE_TO_ANNOTATION_GROUP = {
     "key_line_2d": "2d",
     "key_point_3d": "3d",
     "key_line_3d": "3d",
-    "depth": "2d"
+    "probabilistic_key_line_3d": "3d",
+    "depth": "2d",
 }
