@@ -90,7 +90,7 @@ setup(
         "dev": requirements_dev,
     },
     zip_safe=False,
-    python_requires=">=3.9",
+    python_requires=">=3.10",
     cmdclass={
         "build_py": _CustomBuildPyCommand,
         "install": _CustomInstallCommand,
