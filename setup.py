@@ -33,12 +33,12 @@ with open("requirements-dev.txt", encoding="utf-8") as f:
     requirements_dev = f.read().splitlines()
 
 install_requires = requirements + [
-    "protobuf>=4.0.0,<5.0.0",
+    "protobuf>=6.30.1",
 ]
 setup_requires = [
-    "protobuf>=4.0.0,<5.0.0",
-    "grpcio==1.62.2",  # for the latest protobuf 4.X.X support.
-    "grpcio-tools==1.62.2",  # for the latest protobuf 4.X.X support.
+    "protobuf>=6.30.1",
+    "grpcio>=1.70.0",
+    "grpcio-tools>=1.70.0",
 ]
 
 
@@ -90,7 +90,7 @@ setup(
         "dev": requirements_dev,
     },
     zip_safe=False,
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     cmdclass={
         "build_py": _CustomBuildPyCommand,
         "install": _CustomInstallCommand,

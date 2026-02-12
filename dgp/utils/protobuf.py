@@ -131,7 +131,7 @@ def save_pbobject_as_json(pb_object, save_path):
     assert save_path.endswith(".json"), 'File extension for {} needs to be json.'.format(save_path)
     with open(save_path, "w", encoding='UTF-8') as _f:
         json.dump(
-            MessageToDict(pb_object, including_default_value_fields=True, preserving_proto_field_name=True),
+            MessageToDict(pb_object, always_print_fields_with_no_presence=True, preserving_proto_field_name=True),
             _f,
             indent=2,
             sort_keys=True
@@ -209,7 +209,7 @@ def generate_uid_from_pbobject(pb_object):
     Hexdigest of annotation content
     """
     json_string = json.dumps(
-        MessageToDict(pb_object, including_default_value_fields=True, preserving_proto_field_name=True),
+        MessageToDict(pb_object, always_print_fields_with_no_presence=True, preserving_proto_field_name=True),
         indent=2,
         sort_keys=True
     )
