@@ -36,7 +36,7 @@ def get_unique_colors(num_colors, in_bgr=False, cmap='tab20'):
     List[Tuple[int]]
         List of colors in 3-tuple.
     """
-    colors = list(matplotlib.cm.get_cmap(cmap).colors)[:num_colors]
+    colors = list(matplotlib.colormaps[cmap].colors)[:num_colors]
 
     if in_bgr:
         colors = [(clr[2], clr[1], clr[0]) for clr in colors]

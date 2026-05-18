@@ -1,5 +1,5 @@
 # Copyright 2019-2021 Toyota Research Institute.  All rights reserved.
-PYTHON_EXEC ?= python3
+PYTHON_EXEC ?= python3.10
 PACKAGE_NAME ?= dgp
 WORKSPACE ?= /home/$(PACKAGE_NAME)
 DOCKER_IMAGE_NAME ?= $(PACKAGE_NAME)
@@ -42,8 +42,7 @@ all: clean test
 
 
 build:
-	PYTHONPATH=$(PWD):$(PYTHONPATH) \
-	DGP_DEV_VERSION=$(DEV_VERSION) $(PYTHON_EXEC) setup.py bdist_wheel
+	DGP_DEV_VERSION=$(DEV_VERSION) uv build --wheel
 
 clean:
 	rm -rf build dist && \

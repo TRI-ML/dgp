@@ -1,8 +1,9 @@
-FROM nvidia/cuda:11.6.1-cudnn8-devel-ubuntu20.04
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
 
-ARG python=3.9
-ENV PYTORCH_VERSION=1.13.1+cu116
-ENV TORCHVISION_VERSION=0.14.1+cu116
+ARG python=3.10
+ENV PYTORCH_VERSION=2.3.1+cu118
+ENV TORCHVISION_VERSION=0.18.1+cu118
+ENV CUDA_VERSION_SHORT=cu118
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
@@ -12,10 +13,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Set default shell to /bin/bash
 SHELL ["/bin/bash", "-cu"]
-
-# Temporary fix for invalid GPG key see
-# https://forums.developer.nvidia.com/t/gpg-error-http-developer-download-nvidia-com-compute-cuda-repos-ubuntu1804-x86-64/212904
-RUN apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
 
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
   build-essential \
@@ -40,15 +37,13 @@ RUN ln -sf /usr/local/bin/pip3 /usr/bin/pip3
 RUN pip install --no-cache-dir \
   torch==${PYTORCH_VERSION} \
   torchvision==${TORCHVISION_VERSION} \
-  -f https://download.pytorch.org/whl/${PYTORCH_VERSION/*+/}/torch_stable.html
+  -f https://download.pytorch.org/whl/${CUDA_VERSION_SHORT}/torch_stable.html
 
 
 # Install python dependencies
 ARG WORKSPACE=/home/dgp
 WORKDIR ${WORKSPACE}
 COPY requirements.txt requirements-dev.txt /tmp/
-# Install torch-compatible NumPy.
-RUN pip install numpy==1.26.4
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements-dev.txt
 
@@ -58,4 +53,4 @@ RUN aws configure set default.s3.max_concurrent_requests 100 && \
 
 # Copy workspace and setup PYTHONPATH
 COPY . ${WORKSPACE}
-ENV PYTHONPATH="${WORKSPACE}:$PYTHONPATH"
+ENV PYTHONPATH="${WORKSPACE}"

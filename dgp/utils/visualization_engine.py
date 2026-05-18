@@ -3,8 +3,8 @@ import logging
 import os
 
 import cv2
+import matplotlib
 import numpy as np
-from matplotlib.cm import get_cmap
 
 from dgp.utils.colors import (
     WHITE,
@@ -20,7 +20,7 @@ from dgp.utils.visualization_utils import (
     visualize_semantic_segmentation_2d,
 )
 
-MPL_JET_CMAP = get_cmap('jet')
+MPL_JET_CMAP = matplotlib.colormaps['jet']
 
 LOG = logging.getLogger(__name__)
 LOG.setLevel(logging.INFO)
