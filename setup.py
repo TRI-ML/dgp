@@ -33,12 +33,7 @@ with open("requirements-dev.txt", encoding="utf-8") as f:
     requirements_dev = f.read().splitlines()
 
 install_requires = requirements + [
-    "protobuf>=6.30.1",
-]
-setup_requires = [
-    "protobuf>=6.30.1",
-    "grpcio>=1.70.0",
-    "grpcio-tools>=1.70.0",
+    "protobuf>=6.30.1,<7.0.0",
 ]
 
 
@@ -85,7 +80,6 @@ setup(
     },
     include_package_data=True,
     install_requires=install_requires,
-    setup_requires=setup_requires,
     extras_require={
         "dev": requirements_dev,
     },
